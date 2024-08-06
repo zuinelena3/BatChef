@@ -14,3 +14,21 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
+Imports: 
+    basilisk,
+    limma,
+    methods,
+    S4Vectors,
+    scater,
+    Seurat,
+    SeuratObject,
+    SingleCellExperiment,
+    singleCellTK,
+    splatter,
+    SummarizedExperiment
+Depends: 
+    R (>= 2.10)
+LazyData: true
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
