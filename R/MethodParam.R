@@ -39,3 +39,48 @@ seuratv3Method <- function(...) {
 seuratv5Method <- function(...) {
   new("seuratv5Method", SimpleList(list(...)))
 }
+
+#' @rdname MethodParam
+#' @export
+#' @importFrom S4Vectors SimpleList
+#' @importFrom methods new
+#'
+fastMNNMethod <- function(...) {
+  new("fastMNNMethod", SimpleList(list(...)))
+}
+
+#' @rdname MethodParam
+#' @export
+#' @importFrom S4Vectors SimpleList
+#' @importFrom methods new
+#'
+harmonyMethod <- function(...) {
+  new("harmonyMethod", SimpleList(list(...)))
+}
+
+#' @rdname MethodParam
+#' @export
+#' @importFrom S4Vectors SimpleList
+#' @importFrom methods new
+#'
+scanoramaMethod <- function(...) {
+  new("scanoramaMethod", SimpleList(list(...)))
+}
+
+#' @rdname MethodParam
+#' @export
+#' @importFrom S4Vectors SimpleList
+#' @importFrom methods new
+#'
+bbknnMethod <- function(...) {
+  new("bbknnMethod", SimpleList(list(...)))
+}
+
+#' @rdname MethodParam
+#' @export
+#' @importFrom S4Vectors SimpleList
+#' @importFrom methods new
+#'
+scVIMethod <- function(...) {
+  new("scVIMethod", SimpleList(list(...)))
+}

@@ -6,6 +6,11 @@
 \alias{scIntegration,combatMethod-method}
 \alias{scIntegration,seuratv3Method-method}
 \alias{scIntegration,seuratv5Method-method}
+\alias{scIntegration,fastMNNMethod-method}
+\alias{scIntegration,harmonyMethod-method}
+\alias{scIntegration,scanoramaMethod-method}
+\alias{scIntegration,bbknnMethod-method}
+\alias{scIntegration,scVIMethod-method}
 \title{scIntegration}
 \usage{
 scIntegration(
@@ -82,15 +87,90 @@ scIntegration(
   METHOD,
   alt_out = FALSE
 )
+
+\S4method{scIntegration}{fastMNNMethod}(
+  obj,
+  batch = NULL,
+  assay = NULL,
+  hvgs = NULL,
+  dims = NULL,
+  reduction = NULL,
+  anchor = NULL,
+  k_anchor = NULL,
+  genelist = NULL,
+  cell_type = NULL,
+  METHOD,
+  alt_out = FALSE
+)
+
+\S4method{scIntegration}{harmonyMethod}(
+  obj,
+  batch = NULL,
+  assay = NULL,
+  hvgs = NULL,
+  dims = NULL,
+  reduction = NULL,
+  anchor = NULL,
+  k_anchor = NULL,
+  genelist = NULL,
+  cell_type = NULL,
+  METHOD,
+  alt_out = FALSE
+)
+
+\S4method{scIntegration}{scanoramaMethod}(
+  obj,
+  batch = NULL,
+  assay = NULL,
+  hvgs = NULL,
+  dims = NULL,
+  reduction = NULL,
+  anchor = NULL,
+  k_anchor = NULL,
+  genelist = NULL,
+  cell_type = NULL,
+  METHOD,
+  alt_out = FALSE
+)
+
+\S4method{scIntegration}{bbknnMethod}(
+  obj,
+  batch = NULL,
+  assay = NULL,
+  hvgs = NULL,
+  dims = NULL,
+  reduction = NULL,
+  anchor = NULL,
+  k_anchor = NULL,
+  genelist = NULL,
+  cell_type = NULL,
+  METHOD,
+  alt_out = FALSE
+)
+
+\S4method{scIntegration}{scVIMethod}(
+  obj,
+  batch = NULL,
+  assay = NULL,
+  hvgs = NULL,
+  dims = NULL,
+  reduction = NULL,
+  anchor = NULL,
+  k_anchor = NULL,
+  genelist = NULL,
+  cell_type = NULL,
+  METHOD,
+  alt_out = FALSE
+)
 }
 \arguments{
-\item{obj}{A SingleCellExperiment object}
+\item{obj}{A SingleCellExperiment}
 
-\item{batch}{a string specifying the batch}
+\item{batch}{a string specifying the batch. batch = NULL when obj is a list}
 
 \item{assay}{a string specifying the assay to use for correction}
 
-\item{hvgs}{a vector specifying which features to use for correction}
+\item{hvgs}{number of highly variable genes}
 
 \item{dims}{number of dimensions to use for dimension reduction}
 
@@ -100,7 +180,7 @@ scIntegration(
 
 \item{k_anchor}{number of anchors (default: k_anchor = 5)}
 
-\item{genelist}{list containing the genes in each batch}
+\item{genelist}{a list of genes}
 
 \item{cell_type}{string specifying the cell-type labels}
 

@@ -22,3 +22,23 @@ setClass("seuratv3Method", contains = "MethodParam")
 #' @export
 #' @rdname MethodParam
 setClass("seuratv5Method", contains = "MethodParam")
+
+#' @export
+#' @rdname MethodParam
+setClass("fastMNNMethod", contains = "MethodParam")
+
+#' @export
+#' @rdname MethodParam
+setClass("harmonyMethod", contains = "MethodParam")
+
+#' @export
+#' @rdname MethodParam
+setClass("scanoramaMethod", contains = "MethodParam")
+
+#' @export
+#' @rdname MethodParam
+setClass("bbknnMethod", contains = "MethodParam")
+
+#' @export
+#' @rdname MethodParam
+setClass("scVIMethod", contains = "MethodParam")

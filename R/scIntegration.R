@@ -160,3 +160,197 @@ setMethod("scIntegration", "seuratv5Method", function(obj, batch = NULL, assay =
   }
   else return(out)
 })
+
+#' @rdname scIntegration
+#' @param obj a SingleCellExperiment object  or a list containing SingleCellExperiment objects
+#' @param batch a string specifying the batch. batch = NULL when obj is a list
+#'
+#' @importFrom batchelor fastMNN
+#' @importFrom SingleCellExperiment reducedDim
+#' @importFrom SummarizedExperiment assays colData
+#' @importFrom Seurat as.sparse
+#'
+setMethod("scIntegration", "fastMNNMethod", function(obj, batch = NULL, assay = NULL, hvgs = NULL,
+                                                     dims = NULL, reduction = NULL, anchor = NULL, k_anchor = NULL,
+                                                     genelist = NULL, cell_type = NULL, METHOD, alt_out = FALSE) {
+  out <- fastMNN(obj = obj, batch = colData(obj)[batch][, 1], subset.row = hvgs, d = dims)
+
+  if (alt_out == TRUE) {
+    res <- new("AltOutput", corrected = as.sparse(as.matrix(assays(out)$reconstructed)),
+               embedding = reducedDim(out, "corrected"),
+               meta = data.frame(cell_id = NA,
+                                 batch = NA,
+                                 cell_type = NA))
+
+    if (is(obj, "list")) {
+      res@meta <- data.frame(cbind(cell_id = unlist(lapply(obj, function(x) colnames(x))),
+                                   batch = unlist(lapply(obj, function(x) colData(x)[, batch])),
+                                   cell_type = unlist(lapply(obj, function(x) colData(x)[, cell_type]))))
+    }
+
+    else {
+      res@meta <- data.frame(cell_id = colnames(obj),
+                             batch = colData(obj)[, batch],
+                             cell_type = colData(obj)[, cell_type])
+    }
+    return(res)
+  }
+
+  else return(out)
+})
+
+#' @rdname scIntegration
+#' @importFrom harmony RunHarmony
+#' @importFrom SingleCellExperiment reducedDim
+#' @importFrom SummarizedExperiment assays colData
+#' @importFrom Seurat as.sparse
+#'
+setMethod("scIntegration", "harmonyMethod", function(obj, batch = NULL, assay = NULL, hvgs = NULL,
+                                                     dims = NULL, reduction = NULL, anchor = NULL, k_anchor = NULL,
+                                                     genelist = NULL, cell_type = NULL, METHOD, alt_out = FALSE) {
+  out <- RunHarmony(obj, batch)
+
+  if (alt_out == TRUE) {
+    res <- new("AltOutput", corrected = NULL,
+               embedding = reducedDim(out, "HARMONY"),
+               meta = data.frame(cbind(cell_id = colnames(obj),
+                                       batch = out$batch,
+                                       cell_type = colData(obj)[, cell_type])))
+    return(res)
+  }
+
+  else return(out)
+})
+
+#' @rdname scIntegration
+#' @param obj a list of "matrix" "array" objects
+#' @param genelist a list of genes
+#' @param hvgs number of highly variable genes
+#'
+#' @importFrom reticulate import
+#' @importFrom basilisk basiliskStart basiliskStop basiliskRun
+#'
+setMethod("scIntegration", "scanoramaMethod", function(obj, batch = NULL, assay = NULL, hvgs = NULL,
+                                                       dims = NULL, reduction = NULL, anchor = NULL, k_anchor = NULL,
+                                                       genelist = NULL, cell_type = NULL, METHOD, alt_out = FALSE) {
+  proc <- basiliskStart(py_env)
+  on.exit(basiliskStop(proc))
+  out <- basiliskRun(proc = proc, fun = function(obj, genelist, hvgs) {
+    scanorama <- import("scanorama")
+    method <- scanorama$correct(obj, genelist, return_dimred = TRUE, return_dense = TRUE, verbose = FALSE, hvg = hvgs, dimred = as.integer(dims))
+  }, obj = obj, genelist = genelist, hvgs = hvgs)
+
+  if (alt_out == TRUE) {
+    corrected_counts <- t(do.call(rbind, out[[2]]))
+    colnames(corrected_counts) <- unlist(lapply(obj, function(x) rownames(x)))
+    rownames(corrected_counts) <- out[[3]]
+
+    embedding <- do.call(rbind, out[[1]])
+    colnames(embedding) <- paste0("Scanorama_", seq(1, dims))
+    rownames(embedding) <- colnames(corrected_counts)
+
+    res <- new("AltOutput", corrected = corrected_counts,
+               embedding = embedding,
+               meta = data.frame(cbind(cell_id = colnames(corrected_counts),
+                                       batch = batch,
+                                       cell_type = cell_type)))
+    return(res)
+  }
+
+  else return(out)
+})
+
+#' @rdname scIntegration
+#' @param obj A SingleCellExperiment
+#'
+#' @importFrom SingleCellExperiment reducedDim colData
+#' @importFrom SingleCellExperiment reducedDim<-
+#' @importFrom zellkonverter SCE2AnnData
+#' @importFrom basilisk basiliskStart basiliskStop basiliskRun
+#' @importFrom reticulate import
+#' @importFrom Rtsne Rtsne_neighbors
+#'
+setMethod("scIntegration", "bbknnMethod", function(obj, batch = NULL, assay = NULL, hvgs = NULL,
+                                                   dims = NULL, reduction = NULL, anchor = NULL, k_anchor = NULL,
+                                                   genelist = NULL, cell_type = NULL, METHOD, alt_out = FALSE) {
+  proc <- basiliskStart(py_env)
+  on.exit(basiliskStop(proc))
+
+  out <- basiliskRun(proc = proc, fun = function(obj, batch, reduction) {
+    bbknn <- import("bbknn")
+    sc <- import("scanpy")
+    anndata <- import("anndata")
+
+    adata <- SCE2AnnData(obj)
+    adata$X <- adata$layers["logcounts"]
+    adata$obs$batch <- colData(obj)[, batch]
+    adata$obsm["X_pca"] <- reducedDim(obj, reduction)
+
+    if (adata$n_obs > 100000) {
+      neighbors_within_batch = 25
+    } else neighbors_within_batch = 3
+
+    bbknn$bbknn(adata, batch_key = batch, neighbors_within_batch = as.integer(neighbors_within_batch))
+    sc$tl$umap(adata)
+    bbknn_umap <- adata$obsm[["X_umap"]]
+    reducedDim(obj, "UMAP_bbknn") <- bbknn_umap
+
+    bbknn <- knn_index_dist(dist = adata$obsp[["distances"]])
+    perplexity <- ncol(x = bbknn$idx) - 1
+    tsne <- Rtsne_neighbors(
+      index = bbknn$idx,
+      distance = bbknn$dist,
+      perplexity = perplexity
+    )$Y
+    colnames(x = tsne) <- paste0("tSNE_", c(1, 2))
+    rownames(x = tsne) <- colnames(obj)
+    reducedDim(obj, "TSNE_bbknn") <- tsne
+    return(obj)
+  }, obj = obj, batch = batch, reduction = reduction)
+
+  if (alt_out == TRUE) {
+    res <- new("AltOutput", corrected = NULL,
+               embedding = list(tSNE = reducedDim(out, "TSNE_bbknn"), UMAP = reducedDim(out, "UMAP_bbknn")),
+               meta = data.frame(cbind(cell_id = colnames(obj),
+                                       batch = colData(obj)[, batch],
+                                       cell_type = colData(obj)[, cell_type])))
+    return(res)
+  }
+  else return(out)
+})
+
+#' @rdname scIntegration
+#'
+#' @importFrom basilisk basiliskStart basiliskStop basiliskRun
+#' @importFrom zellkonverter SCE2AnnData
+#' @importFrom reticulate import
+#'
+setMethod("scIntegration", "scVIMethod", function(obj, batch = NULL, assay = NULL, hvgs = NULL,
+                                                  dims = NULL, reduction = NULL, anchor = NULL, k_anchor = NULL,
+                                                  genelist = NULL, cell_type = NULL, METHOD, alt_out = FALSE) {
+  proc <- basiliskStart(py_env)
+  on.exit(basiliskStop(proc))
+
+  out <- basiliskRun(proc = proc, fun = function(obj, batch, assay) {
+    scvi <- import("scvi")
+
+    andata <- SCE2AnnData(obj)
+    andata$layers["counts"] <- andata$X
+    scvi$model$SCVI$setup_anndata(andata, layer = assay, batch_key = batch)
+    model_scvi <- scvi$model$SCVI(andata)
+    model_scvi$train()
+
+    andata$obsm["X_scVI"] <- model_scvi$get_latent_representation()
+    return(andata)
+  }, obj = obj, batch = batch, assay = assay)
+
+  if (alt_out == TRUE) {
+    res <- new("AltOutput", corrected = NULL,
+               embedding = out$obsm["X_scVI"],
+               meta = data.frame(cbind(cell_id = colnames(obj),
+                                       batch = colData(obj)[, batch],
+                                       cell_type = colData(obj)[, cell_type])))
+    return(res)
+  }
+  else return(out)
+})

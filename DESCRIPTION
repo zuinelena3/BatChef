@@ -16,8 +16,12 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
 Imports: 
     basilisk,
+    batchelor,
+    harmony,
     limma,
     methods,
+    reticulate,
+    Rtsne,
     S4Vectors,
     scater,
     Seurat,
@@ -25,7 +29,8 @@ Imports:
     SingleCellExperiment,
     singleCellTK,
     splatter,
-    SummarizedExperiment
+    SummarizedExperiment,
+    zellkonverter
 Depends: 
     R (>= 2.10)
 LazyData: true
