@@ -8,7 +8,7 @@
 #' @importFrom scuttle logNormCounts
 #' @importFrom scater runPCA
 #'
-fake_data <- function(nGenes, batchCells, group.prob) {
+simulated_data <- function(nGenes, batchCells, group.prob) {
   params <- newSplatParams(nGenes = nGenes, batchCells = batchCells,
                            group.prob = group.prob, seed = 33)
   sim <- splatSimulateGroups(params, verbose = FALSE)
