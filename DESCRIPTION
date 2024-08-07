@@ -19,6 +19,7 @@ Imports:
     batchelor,
     harmony,
     limma,
+    lisi,
     methods,
     reticulate,
     Rtsne,
@@ -31,6 +32,7 @@ Imports:
     singleCellTK,
     splatter,
     SummarizedExperiment,
+    transport,
     zellkonverter
 Depends: 
     R (>= 2.10)
