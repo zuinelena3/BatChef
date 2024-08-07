@@ -24,7 +24,7 @@
 setMethod("scIntegration", "limmaMethod", function(obj, batch = NULL, assay = NULL, hvgs = NULL,
                                                     dims = NULL, reduction = NULL, anchor = NULL, k_anchor = NULL,
                                                     genelist = NULL, cell_type = NULL, METHOD, alt_out = FALSE) {
-  if(!("logcounts" %in% names(assays(data)))) {
+  if(!("logcounts" %in% names(assays(obj)))) {
     print("Error: the object has to contain log-expression values!")
   }
 

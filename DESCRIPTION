@@ -24,6 +24,7 @@ Imports:
     Rtsne,
     S4Vectors,
     scater,
+    scuttle,
     Seurat,
     SeuratObject,
     SingleCellExperiment,
