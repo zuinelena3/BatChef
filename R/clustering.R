@@ -7,7 +7,7 @@
 #' @param reduction a string specifying the dimension reduction name
 #'
 #' @import methods
-#'
+#' @importFrom basilisk basiliskStart basiliskStop basiliskRun
 #' @importFrom reticulate import
 #' @importFrom zellkonverter SCE2AnnData
 #' @importFrom SingleCellExperiment reducedDimNames reducedDimNames<-
