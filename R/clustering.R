@@ -1,6 +1,6 @@
 #' Clustering after integration reduction
 #'
-#' Compute Leiden clustering. The resolution was choosen using the NMI metric.
+#' Compute Leiden clustering. The resolution was chosen using the NMI metric.
 #'
 #' @param obj a SingleCellExperiment object
 #' @param cell_type a string specifying cell-type labels

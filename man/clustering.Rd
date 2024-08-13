@@ -14,5 +14,5 @@ clustering(obj, cell_type, reduction)
 \item{reduction}{a string specifying the dimension reduction name}
 }
 \description{
-Compute Leiden clustering. The resolution was choosen using the NMI metric.
+Compute Leiden clustering. The resolution was chosen using the NMI metric.
 }
