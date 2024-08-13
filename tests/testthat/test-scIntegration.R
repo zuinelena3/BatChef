@@ -1,5 +1,5 @@
 test_that("limma integration method works", {
-  data <- simulated_data(nGenes = 1000, batchCells = c(155, 150), group.prob = c(0.3, 0.5, 0.2))
+  data <- simulated_data(nGenes = 1000, batchCells = c(155, 150), group.prob = c(0.3, 0.5, 0.2), ncomp = 10)
 
   limma_out <- scIntegration(data, batch = "Batch", METHOD = limmaMethod())
   expect_type(limma_out, "double")
@@ -9,7 +9,7 @@ test_that("limma integration method works", {
 })
 
 test_that("ComBat integration method works", {
-  data <- simulated_data(nGenes = 1000, batchCells = c(155, 150), group.prob = c(0.3, 0.5, 0.2))
+  data <- simulated_data(nGenes = 1000, batchCells = c(155, 150), group.prob = c(0.3, 0.5, 0.2), ncomp = 10)
 
   combat_out <- scIntegration(obj = data, assay = "logcounts", batch = "Batch", cell_type = "Group", METHOD = combatMethod())
   expect_s4_class(combat_out, "SingleCellExperiment")
@@ -19,7 +19,7 @@ test_that("ComBat integration method works", {
 })
 
 test_that("seuratv3 integration method works", {
-  data <- simulated_data(nGenes = 1000, batchCells = c(155, 150), group.prob = c(0.3, 0.5, 0.2))
+  data <- simulated_data(nGenes = 1000, batchCells = c(155, 150), group.prob = c(0.3, 0.5, 0.2), ncomp = 10)
 
   seuratv3_out <- scIntegration(data, batch = "Batch", cell_type = "Group", anchor = "cca", k_anchor = 5, dims = 10,
                                 hvgs = rownames(data), reduction = "PCA", METHOD = seuratv3Method())
@@ -31,7 +31,7 @@ test_that("seuratv3 integration method works", {
 })
 
 test_that("SeuratV5 integration method works", {
-  data <- simulated_data(nGenes = 1000, batchCells = c(155, 150), group.prob = c(0.3, 0.5, 0.2))
+  data <- simulated_data(nGenes = 1000, batchCells = c(155, 150), group.prob = c(0.3, 0.5, 0.2), ncomp = 10)
 
   seuratv5_out <- scIntegration(data, anchor = "CCAIntegration", batch = "Batch", cell_type = "Group",
                                 k_anchor = 5, dims = 10, hvgs = rownames(data), reduction = "PCA", METHOD = seuratv5Method())
@@ -43,7 +43,7 @@ test_that("SeuratV5 integration method works", {
 })
 
 test_that("fastMNN integration method works", {
-  data <- simulated_data(nGenes = 1000, batchCells = c(155, 150), group.prob = c(0.3, 0.5, 0.2))
+  data <- simulated_data(nGenes = 1000, batchCells = c(155, 150), group.prob = c(0.3, 0.5, 0.2), ncomp = 10)
 
   mnn_out <- scIntegration(data, batch = "Batch", hvgs = rownames(data), dims = 10, METHOD = fastMNNMethod())
   expect_s4_class(mnn_out, "SingleCellExperiment")
@@ -53,7 +53,7 @@ test_that("fastMNN integration method works", {
 })
 
 test_that("harmony integration method works", {
-    data <- simulated_data(nGenes = 1000, batchCells = c(155, 150), group.prob = c(0.3, 0.5, 0.2))
+    data <- simulated_data(nGenes = 1000, batchCells = c(155, 150), group.prob = c(0.3, 0.5, 0.2), ncomp = 10)
 
   harmony_out <- scIntegration(data, batch = "Batch", METHOD = harmonyMethod())
   expect_s4_class(harmony_out, "SingleCellExperiment")
@@ -63,7 +63,7 @@ test_that("harmony integration method works", {
 })
 
 test_that("scanorama integration method works", {
-  data <- simulated_data(nGenes = 1000, batchCells = c(155, 150), group.prob = c(0.3, 0.5, 0.2))
+  data <- simulated_data(nGenes = 1000, batchCells = c(155, 150), group.prob = c(0.3, 0.5, 0.2), ncomp = 10)
 
   ll <- lapply(unique(data$Batch), function(i) data[, data$Batch == i])
 
@@ -85,7 +85,7 @@ test_that("scanorama integration method works", {
 })
 
 test_that("BBKNN integration method works", {
-  data <- simulated_data(nGenes = 1000, batchCells = c(155, 150), group.prob = c(0.3, 0.5, 0.2))
+  data <- simulated_data(nGenes = 1000, batchCells = c(155, 150), group.prob = c(0.3, 0.5, 0.2), ncomp = 10)
 
   bbknn_out <- scIntegration(data, batch = "Batch", reduction = "PCA", METHOD = bbknnMethod())
   expect_s4_class(bbknn_out, "SingleCellExperiment")
@@ -95,7 +95,7 @@ test_that("BBKNN integration method works", {
 })
 
 test_that("scVI integration method works", {
-  data <- simulated_data(nGenes = 1000, batchCells = c(155, 150), group.prob = c(0.3, 0.5, 0.2))
+  data <- simulated_data(nGenes = 1000, batchCells = c(155, 150), group.prob = c(0.3, 0.5, 0.2), ncomp = 10)
 
   scvi_out <- scIntegration(data, batch = "Batch", METHOD = scVIMethod(), assay = "counts", alt_out = TRUE, cell_type = "Group")
   expect_s4_class(scvi_out, "AltOutput")
