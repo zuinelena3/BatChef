@@ -20,6 +20,7 @@
   - `scanoramaMethod` 
   - `bbknnMethod` 
   - `scVIMethod` 
+  - `scMergeMethod` 
   
   The output can be a `SingleCellExperiment` or `AltOutput` object, containing three slots: corrected expression matrix, embedding, and metadata;
   
