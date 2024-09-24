@@ -22,6 +22,6 @@ wasserstein_metric <- function(obj, batch, reduction, n, rep) {
 
   wass <- as.data.frame(do.call(rbind, wass))
   colnames(wass)[1] <- "wasserstein"
-  wass$reduction <- reduction
+  wass$method <- reduction
   return(wass)
 }
