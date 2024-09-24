@@ -11,6 +11,7 @@
 \alias{scIntegration,scanoramaMethod-method}
 \alias{scIntegration,bbknnMethod-method}
 \alias{scIntegration,scVIMethod-method}
+\alias{scIntegration,scMergeMethod-method}
 \title{scIntegration}
 \usage{
 scIntegration(
@@ -162,6 +163,21 @@ scIntegration(
   METHOD,
   alt_out = FALSE
 )
+
+\S4method{scIntegration}{scMergeMethod}(
+  obj,
+  batch = NULL,
+  assay = NULL,
+  hvgs = NULL,
+  dims = NULL,
+  reduction = NULL,
+  anchor = NULL,
+  k_anchor = NULL,
+  genelist = NULL,
+  cell_type = NULL,
+  METHOD,
+  alt_out = FALSE
+)
 }
 \arguments{
 \item{obj}{A SingleCellExperiment}
@@ -180,7 +196,7 @@ scIntegration(
 
 \item{k_anchor}{number of anchors (default: k_anchor = 5)}
 
-\item{genelist}{a list of genes}
+\item{genelist}{negative controls}
 
 \item{cell_type}{string specifying the cell-type labels}
 

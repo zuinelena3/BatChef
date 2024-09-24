@@ -25,6 +25,7 @@ Imports:
     Rtsne,
     S4Vectors,
     scater,
+    scMerge,
     scuttle,
     Seurat,
     SeuratObject,

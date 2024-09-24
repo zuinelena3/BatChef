@@ -354,3 +354,32 @@ setMethod("scIntegration", "scVIMethod", function(obj, batch = NULL, assay = NUL
   }
   else return(out)
 })
+
+#' @rdname scIntegration
+#' @param genelist negative controls
+#'
+#' @importFrom scMerge scMerge2
+#' @importFrom SingleCellExperiment logcounts colData
+#'
+setMethod("scIntegration", "scMergeMethod", function(obj, batch = NULL, assay = NULL, hvgs = NULL,
+                                                     dims = NULL, reduction = NULL, anchor = NULL, k_anchor = NULL,
+                                                     genelist = NULL, cell_type = NULL, METHOD, alt_out = FALSE) {
+  if(is.null(cell_type)){
+    out <- scMerge2(exprsMat = logcounts(obj), batch = colData(obj)[, batch], ctl = genelist,
+                    verbose = FALSE)
+  }
+  else {
+    out <- scMerge2(exprsMat = logcounts(obj), batch = colData(obj)[, batch], ctl = genelist,
+                    cellTypes = colData(obj)[, cell_type], verbose = FALSE)
+  }
+
+  if (alt_out == TRUE) {
+    res <- new("AltOutput", corrected = out$newY,
+               embedding = NULL,
+               meta = data.frame(cbind(cell_id = colnames(obj),
+                                       batch = colData(obj)[, batch],
+                                       cell_type = colData(obj)[, cell_type])))
+    return(res)
+  }
+  else return(out)
+})

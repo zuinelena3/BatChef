@@ -100,3 +100,10 @@ test_that("scVI integration method works", {
   scvi_out <- scIntegration(data, batch = "Batch", METHOD = scVIMethod(), assay = "counts", alt_out = TRUE, cell_type = "Group")
   expect_s4_class(scvi_out, "AltOutput")
 })
+
+test_that("scMerge integration method works", {
+  data <- simulated_data(nGenes = 1000, batchCells = c(155, 150), group.prob = c(0.3, 0.5, 0.2), ncomp = 10)
+
+  scmerge_out <- scIntegration(data, batch = "Batch", METHOD = scMergeMethod(), genelist = rownames(data), alt_out = TRUE, cell_type = "Group")
+  expect_s4_class(scmerge_out, "AltOutput")
+})

@@ -84,3 +84,12 @@ bbknnMethod <- function(...) {
 scVIMethod <- function(...) {
   new("scVIMethod", SimpleList(list(...)))
 }
+
+#' @rdname MethodParam
+#' @export
+#' @importFrom S4Vectors SimpleList
+#' @importFrom methods new
+#'
+scMergeMethod <- function(...) {
+  new("scMergeMethod", SimpleList(list(...)))
+}

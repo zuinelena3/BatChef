@@ -42,3 +42,7 @@ setClass("bbknnMethod", contains = "MethodParam")
 #' @export
 #' @rdname MethodParam
 setClass("scVIMethod", contains = "MethodParam")
+
+#' @export
+#' @rdname MethodParam
+setClass("scMergeMethod", contains = "MethodParam")
