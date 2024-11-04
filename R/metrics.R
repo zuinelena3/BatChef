@@ -21,12 +21,12 @@ metrics <- function(anndata, cell_type, batch, reduction) {
 
     nmi <- sklearn$metrics$normalized_mutual_info_score(labels_true = anndata$obs[, cell_type], labels_pred = anndata$obs$cluster)
     ari <- sklearn$metrics$adjusted_rand_score(labels_true = anndata$obs[, cell_type], labels_pred = anndata$obs$cluster)
-    casw <- sklearn$metrics$silhouette_score(anndata$obsm[paste0("X_", reduction)], anndata$obs[, cell_type])
-    clisi <- median(compute_lisi(anndata$obsm[paste0("X_", reduction)], data.frame(ct = anndata$obs[, cell_type]), "ct")$ct)
+    casw <- sklearn$metrics$silhouette_score(anndata$obsm[[paste0("X_", reduction)]], anndata$obs[, cell_type])
+    clisi <- median(compute_lisi(anndata$obsm[[paste0("X_", reduction)]], data.frame(ct = anndata$obs[, cell_type]), "ct")$ct)
     homogeneity <- sklearn$metrics$homogeneity_score(anndata$obs[, cell_type], anndata$obs$cluster)
 
-    iasw <- sklearn$metrics$silhouette_score(anndata$obsm[paste0("X_", reduction)], anndata$obs[, batch])
-    ilisi <- median(compute_lisi(anndata$obsm[paste0("X_", reduction)], data.frame(batch = anndata$obs[, batch]), "batch")$batch)
+    iasw <- sklearn$metrics$silhouette_score(anndata$obsm[[paste0("X_", reduction)]], anndata$obs[, batch])
+    ilisi <- median(compute_lisi(anndata$obsm[[paste0("X_", reduction)]], data.frame(batch = anndata$obs[, batch]), "batch")$batch)
 
     df <- data.frame(nmi, ari, casw, clisi, homogeneity, iasw, ilisi)
     return(df)
