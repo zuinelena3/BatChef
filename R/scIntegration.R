@@ -42,15 +42,15 @@ setMethod("scIntegration", "limmaMethod", function(obj, batch = NULL, assay = NU
 
 #' @rdname scIntegration
 #' @importFrom SummarizedExperiment assays colData
-#' @importFrom singleCellTK runComBatSeq
+#' @importFrom sva ComBat_seq
 #'
 setMethod("scIntegration", "combatMethod", function(obj, batch = NULL, assay = NULL, hvgs = NULL,
                                                     dims = NULL, reduction = NULL, anchor = NULL, k_anchor = NULL,
                                                     genelist = NULL, cell_type = NULL, METHOD, alt_out = FALSE) {
-  out <- runComBatSeq(inSCE = obj, useAssay = assay, batch = batch, covariates = cell_type)
+  out <- ComBat_seq(counts = as.matrix(counts(obj)), batch =  colData(obj)[, batch])
 
   if (alt_out == TRUE) {
-    res <- new("AltOutput", corrected = assays(out)$ComBatSeq,
+    res <- new("AltOutput", corrected = out,
                embedding = NULL,
                meta = data.frame(cbind(cell_id = colnames(obj),
                                        batch = colData(obj)[, batch],
@@ -74,7 +74,7 @@ setMethod("scIntegration", "combatMethod", function(obj, batch = NULL, assay = N
 setMethod("scIntegration", "seuratv3Method", function(obj, batch = NULL, assay = NULL, hvgs = NULL,
                                                       dims = NULL, reduction = NULL, anchor = NULL, k_anchor = NULL,
                                                       genelist = NULL, cell_type = NULL, METHOD, alt_out = FALSE) {
-  options(Seurat.object.assay.version = "v3", future.globals.maxSize = 1000 * 1024^2)
+  options(Seurat.object.assay.version = "v5", future.globals.maxSize = 8000 * 1024^2)
 
   so <- CreateSeuratObject(counts = counts(obj))
   so@assays$RNA$data <- logcounts(obj)
@@ -123,7 +123,7 @@ setMethod("scIntegration", "seuratv3Method", function(obj, batch = NULL, assay =
 setMethod("scIntegration", "seuratv5Method", function(obj, batch = NULL, assay = NULL, hvgs = NULL,
                                                       dims = NULL, reduction = NULL, anchor = NULL, k_anchor = NULL,
                                                       genelist = NULL, cell_type = NULL, METHOD, alt_out = FALSE) {
-  options(Seurat.object.assay.version = "v5", future.globals.maxSize = 1000 * 1024^2)
+  options(Seurat.object.assay.version = "v5", future.globals.maxSize = 8000 * 1024^2)
 
   out <- CreateAssay5Object(counts = counts(obj), data = logcounts(obj))
   out <- CreateSeuratObject(out)
@@ -311,42 +311,6 @@ setMethod("scIntegration", "bbknnMethod", function(obj, batch = NULL, assay = NU
   if (alt_out == TRUE) {
     res <- new("AltOutput", corrected = NULL,
                embedding = list(tSNE = reducedDim(out, "TSNE_bbknn"), UMAP = reducedDim(out, "UMAP_bbknn")),
-               meta = data.frame(cbind(cell_id = colnames(obj),
-                                       batch = colData(obj)[, batch],
-                                       cell_type = colData(obj)[, cell_type])))
-    return(res)
-  }
-  else return(out)
-})
-
-#' @rdname scIntegration
-#'
-#' @importFrom basilisk basiliskStart basiliskStop basiliskRun
-#' @importFrom zellkonverter SCE2AnnData
-#' @importFrom reticulate import
-#'
-setMethod("scIntegration", "scVIMethod", function(obj, batch = NULL, assay = NULL, hvgs = NULL,
-                                                  dims = NULL, reduction = NULL, anchor = NULL, k_anchor = NULL,
-                                                  genelist = NULL, cell_type = NULL, METHOD, alt_out = FALSE) {
-  proc <- basiliskStart(py_env)
-  on.exit(basiliskStop(proc))
-
-  out <- basiliskRun(proc = proc, fun = function(obj, batch, assay) {
-    scvi <- import("scvi")
-
-    andata <- SCE2AnnData(obj)
-    andata$layers["counts"] <- andata$X
-    scvi$model$SCVI$setup_anndata(andata, layer = assay, batch_key = batch)
-    model_scvi <- scvi$model$SCVI(andata)
-    model_scvi$train()
-
-    andata$obsm["X_scVI"] <- model_scvi$get_latent_representation()
-    return(andata)
-  }, obj = obj, batch = batch, assay = assay)
-
-  if (alt_out == TRUE) {
-    res <- new("AltOutput", corrected = NULL,
-               embedding = out$obsm["X_scVI"],
                meta = data.frame(cbind(cell_id = colnames(obj),
                                        batch = colData(obj)[, batch],
                                        cell_type = colData(obj)[, cell_type])))

@@ -12,7 +12,7 @@ test_that("ComBat integration method works", {
   data <- simulated_data(nGenes = 1000, batchCells = c(155, 150), group.prob = c(0.3, 0.5, 0.2), ncomp = 10)
 
   combat_out <- scIntegration(obj = data, assay = "logcounts", batch = "Batch", cell_type = "Group", METHOD = combatMethod())
-  expect_s4_class(combat_out, "SingleCellExperiment")
+  expect_type(combat_out, "double")
 
   combat_out <- scIntegration(obj = data, assay = "logcounts", batch = "Batch", cell_type = "Group", METHOD = combatMethod(), alt_out = TRUE)
   expect_s4_class(combat_out, "AltOutput")
@@ -94,12 +94,12 @@ test_that("BBKNN integration method works", {
   expect_s4_class(bbknn_out, "AltOutput")
 })
 
-test_that("scVI integration method works", {
-  data <- simulated_data(nGenes = 1000, batchCells = c(155, 150), group.prob = c(0.3, 0.5, 0.2), ncomp = 10)
-
-  scvi_out <- scIntegration(data, batch = "Batch", METHOD = scVIMethod(), assay = "counts", alt_out = TRUE, cell_type = "Group")
-  expect_s4_class(scvi_out, "AltOutput")
-})
+# test_that("scVI integration method works", {
+#   data <- simulated_data(nGenes = 1000, batchCells = c(155, 150), group.prob = c(0.3, 0.5, 0.2), ncomp = 10)
+#
+#   scvi_out <- scIntegration(data, batch = "Batch", METHOD = scVIMethod(), assay = "counts", alt_out = TRUE, cell_type = "Group")
+#   expect_s4_class(scvi_out, "AltOutput")
+# })
 
 test_that("scMerge integration method works", {
   data <- simulated_data(nGenes = 1000, batchCells = c(155, 150), group.prob = c(0.3, 0.5, 0.2), ncomp = 10)

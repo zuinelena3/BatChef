@@ -3,7 +3,6 @@ Title: Single-cell batch effects correction methods
 Version: 0.99.0
 Authors@R: 
      c(person("Elena", "Zuin", , "elena.zuin.3@phd.unipd.it", role = c("aut", "cre")),
-     person("Chiara", "Romualdi", , "chiara.romualdi@unipd.it", role = "ctb"), 
      person("Davide", "Risso", , "davide.risso@unipd.it", role = "ctb"),
      person("Gabriele", "Sales", , "gabriele.sales@unipd.it", role = "ctb"))
 Description: Contains a common interface for single-cell batch correction methods in R and Python environments. 
@@ -30,9 +29,9 @@ Imports:
     Seurat,
     SeuratObject,
     SingleCellExperiment,
-    singleCellTK,
     splatter,
     SummarizedExperiment,
+    sva,
     transport,
     zellkonverter
 Depends: 
