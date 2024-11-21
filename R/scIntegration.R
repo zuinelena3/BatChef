@@ -320,6 +320,42 @@ setMethod("scIntegration", "bbknnMethod", function(obj, batch = NULL, assay = NU
 })
 
 #' @rdname scIntegration
+#'
+#' @importFrom basilisk basiliskStart basiliskStop basiliskRun
+#' @importFrom zellkonverter SCE2AnnData
+#' @importFrom reticulate import
+#'
+setMethod("scIntegration", "scVIMethod", function(obj, batch = NULL, assay = NULL, hvgs = NULL,
+                                                  dims = NULL, reduction = NULL, anchor = NULL, k_anchor = NULL,
+                                                  genelist = NULL, cell_type = NULL, METHOD, alt_out = FALSE) {
+  proc <- basiliskStart(scvi_env)
+  on.exit(basiliskStop(proc))
+
+  out <- basiliskRun(proc = proc, fun = function(obj, batch, assay, dims) {
+    scvi <- import("scvi")
+
+    andata <- SCE2AnnData(obj)
+    andata$layers["counts"] <- andata$X
+    scvi$model$SCVI$setup_anndata(andata, layer = assay, batch_key = batch)
+    model_scvi <- scvi$model$SCVI(andata, n_latent = as.integer(dims))
+    model_scvi$train()
+
+    andata$obsm["X_scVI"] <- model_scvi$get_latent_representation()
+    return(andata)
+  }, obj = obj, batch = batch, assay = assay, dims = dims)
+
+  if (alt_out == TRUE) {
+    res <- new("AltOutput", corrected = NULL,
+               embedding = out$obsm["X_scVI"],
+               meta = data.frame(cbind(cell_id = colnames(obj),
+                                       batch = colData(obj)[, batch],
+                                       cell_type = colData(obj)[, cell_type])))
+    return(res)
+  }
+  else return(out)
+})
+
+#' @rdname scIntegration
 #' @param genelist negative controls
 #'
 #' @importFrom scMerge scMerge2

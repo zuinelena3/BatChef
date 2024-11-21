@@ -10,6 +10,7 @@
 \alias{scIntegration,harmonyMethod-method}
 \alias{scIntegration,scanoramaMethod-method}
 \alias{scIntegration,bbknnMethod-method}
+\alias{scIntegration,scVIMethod-method}
 \alias{scIntegration,scMergeMethod-method}
 \title{scIntegration}
 \usage{
@@ -134,6 +135,21 @@ scIntegration(
 )
 
 \S4method{scIntegration}{bbknnMethod}(
+  obj,
+  batch = NULL,
+  assay = NULL,
+  hvgs = NULL,
+  dims = NULL,
+  reduction = NULL,
+  anchor = NULL,
+  k_anchor = NULL,
+  genelist = NULL,
+  cell_type = NULL,
+  METHOD,
+  alt_out = FALSE
+)
+
+\S4method{scIntegration}{scVIMethod}(
   obj,
   batch = NULL,
   assay = NULL,
