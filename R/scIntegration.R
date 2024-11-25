@@ -74,7 +74,7 @@ setMethod("scIntegration", "combatMethod", function(obj, batch = NULL, assay = N
 setMethod("scIntegration", "seuratv3Method", function(obj, batch = NULL, assay = NULL, hvgs = NULL,
                                                       dims = NULL, reduction = NULL, anchor = NULL, k_anchor = NULL,
                                                       genelist = NULL, cell_type = NULL, METHOD, alt_out = FALSE) {
-  options(Seurat.object.assay.version = "v5", future.globals.maxSize = 8000 * 1024^2)
+  options(Seurat.object.assay.version = "v3")
 
   so <- CreateSeuratObject(counts = counts(obj))
   so@assays$RNA$data <- logcounts(obj)
@@ -123,7 +123,7 @@ setMethod("scIntegration", "seuratv3Method", function(obj, batch = NULL, assay =
 setMethod("scIntegration", "seuratv5Method", function(obj, batch = NULL, assay = NULL, hvgs = NULL,
                                                       dims = NULL, reduction = NULL, anchor = NULL, k_anchor = NULL,
                                                       genelist = NULL, cell_type = NULL, METHOD, alt_out = FALSE) {
-  options(Seurat.object.assay.version = "v5", future.globals.maxSize = 8000 * 1024^2)
+  options(Seurat.object.assay.version = "v5")
 
   out <- CreateAssay5Object(counts = counts(obj), data = logcounts(obj))
   out <- CreateSeuratObject(out)
