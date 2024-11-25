@@ -4,7 +4,7 @@
 \alias{metrics}
 \title{Common quantitative metrics}
 \usage{
-metrics(anndata, cell_type, batch, reduction)
+metrics(anndata, cell_type, batch, reduction, only_ARI = FALSE)
 }
 \arguments{
 \item{anndata}{anndata object, computed by clustering function}
@@ -14,6 +14,8 @@ metrics(anndata, cell_type, batch, reduction)
 \item{batch}{string specifying batch}
 
 \item{reduction}{string specifying the integration reduction}
+
+\item{only_ARI}{compute only ARI metrics}
 }
 \description{
 Common quantitative metrics
