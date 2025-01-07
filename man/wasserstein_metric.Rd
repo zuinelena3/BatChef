@@ -2,9 +2,9 @@
 % Please edit documentation in R/wasserstein.R
 \name{wasserstein_metric}
 \alias{wasserstein_metric}
-\title{Title}
+\title{Wasserstein distance}
 \usage{
-wasserstein_metric(obj, batch, reduction, n, rep)
+wasserstein_metric(obj, batch, reduction, rep)
 }
 \arguments{
 \item{obj}{a SingleCellExperiment object}
@@ -13,10 +13,8 @@ wasserstein_metric(obj, batch, reduction, n, rep)
 
 \item{reduction}{a string specifying the dimension reduction name}
 
-\item{n}{number of random selection cells}
-
 \item{rep}{number of random selection replicates}
 }
 \description{
-Title
+Wasserstein distance
 }
