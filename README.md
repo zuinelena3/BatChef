@@ -60,6 +60,5 @@ metrics_harmony <- metrics(anndata = clust_harmony, cell_type = "Group", batch =
                            reduction = "harmony")
 
 # Compute the Wasserstein metric by selecting 10 cells randomly twice
-wass_harmony <- wasserstein_metric(harmony_out, batch = "Batch", reduction = "HARMONY",
-                                   n = 10, rep = 2)
+wass_harmony <- wasserstein_metric(harmony_out, batch = "Batch", reduction = "HARMONY", rep = 2)
 ```
