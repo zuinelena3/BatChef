@@ -15,6 +15,10 @@ wasserstein_metric <- function(obj, batch, reduction, rep) {
 
   n <- min(table(colData(obj)[, batch]))
 
+  if(n < 100){
+    print("Error: N. of cells for a batch too small")
+  }
+
   wass <- lapply(1:rep, function(i) {
     random <- lapply(emb, function(x) x[sample(nrow(x), n), ])
     obj_pp <- lapply(random, function(x) pp(as.matrix(x)))
