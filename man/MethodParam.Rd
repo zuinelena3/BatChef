@@ -12,6 +12,7 @@
 \alias{bbknnMethod}
 \alias{scVIMethod}
 \alias{scMergeMethod}
+\alias{ligerMethod}
 \alias{MethodParam-class}
 \alias{limmaMethod-class}
 \alias{combatMethod-class}
@@ -23,6 +24,7 @@
 \alias{bbknnMethod-class}
 \alias{scVIMethod-class}
 \alias{scMergeMethod-class}
+\alias{ligerMethod-class}
 \title{MethodParam methods}
 \usage{
 limmaMethod(...)
@@ -44,6 +46,8 @@ bbknnMethod(...)
 scVIMethod(...)
 
 scMergeMethod(...)
+
+ligerMethod(...)
 }
 \arguments{
 \item{...}{Named arguments to pass to individual methods upon dispatch}

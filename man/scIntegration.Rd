@@ -12,6 +12,7 @@
 \alias{scIntegration,bbknnMethod-method}
 \alias{scIntegration,scVIMethod-method}
 \alias{scIntegration,scMergeMethod-method}
+\alias{scIntegration,ligerMethod-method}
 \title{scIntegration}
 \usage{
 scIntegration(
@@ -178,9 +179,24 @@ scIntegration(
   METHOD,
   alt_out = FALSE
 )
+
+\S4method{scIntegration}{ligerMethod}(
+  obj,
+  batch = NULL,
+  assay = NULL,
+  hvgs = NULL,
+  dims = NULL,
+  reduction = NULL,
+  anchor = NULL,
+  k_anchor = NULL,
+  genelist = NULL,
+  cell_type = NULL,
+  METHOD,
+  alt_out = FALSE
+)
 }
 \arguments{
-\item{obj}{A SingleCellExperiment}
+\item{obj}{a list of SingleCellExperiment object}
 
 \item{batch}{a string specifying the batch. batch = NULL when obj is a list}
 

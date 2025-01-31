@@ -21,6 +21,7 @@ Imports:
     lisi,
     methods,
     reticulate,
+    rliger,
     Rtsne,
     S4Vectors,
     scater,
@@ -39,5 +40,6 @@ Depends:
     R (>= 2.10)
 LazyData: true
 Suggests: 
+    RcppPlanc,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3

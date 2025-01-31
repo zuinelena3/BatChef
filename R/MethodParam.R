@@ -93,3 +93,13 @@ scVIMethod <- function(...) {
 scMergeMethod <- function(...) {
   new("scMergeMethod", SimpleList(list(...)))
 }
+
+#' @rdname MethodParam
+#' @export
+#' @importFrom S4Vectors SimpleList
+#' @importFrom methods new
+#'
+ligerMethod <- function(...) {
+  new("ligerMethod", SimpleList(list(...)))
+}
+

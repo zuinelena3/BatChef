@@ -383,3 +383,43 @@ setMethod("scIntegration", "scMergeMethod", function(obj, batch = NULL, assay = 
   }
   else return(out)
 })
+
+#' @rdname scIntegration
+#' @param obj a list of SingleCellExperiment object
+#'
+#' @importFrom rliger createLiger normalize scaleNotCenter runIntegration quantileNorm
+#' @importFrom SingleCellExperiment reducedDim<- colData
+#'
+setMethod("scIntegration", "ligerMethod", function(obj, batch = NULL, assay = NULL, hvgs = NULL,
+                                                     dims = NULL, reduction = NULL, anchor = NULL, k_anchor = NULL,
+                                                     genelist = NULL, cell_type = NULL, METHOD, alt_out = FALSE) {
+  ll <- lapply(unique(colData(obj)[, batch]), function(i) obj[, colData(obj)[, batch] == i])
+  names(ll) <- unique(colData(obj)[, batch])
+  out <- createLiger(ll)
+  out <- normalize(out)
+  out@varFeatures <- hvgs
+  out <- scaleNotCenter(out)
+  out <- runIntegration(out, k = dims, lambda = 5, method = "iNMF")
+  out <- quantileNorm(out)
+
+  embedding <- as.data.frame(out@H.norm)
+  rownames(embedding) <- colnames(obj)
+  reducedDim(obj, "LIGER") <- embedding
+
+  if (alt_out == TRUE) {
+    res <- new("AltOutput", corrected = NULL,
+               embedding = embedding,
+               meta = data.frame(cbind(cell_id = colnames(obj),
+                                       batch = colData(obj)[, batch],
+                                       cell_type = colData(obj)[, cell_type])))
+    return(res)
+  }
+  else return(obj)
+})
+
+
+
+
+
+
+

@@ -30,10 +30,14 @@ metrics <- function(anndata, cell_type, batch, reduction, only_ARI = FALSE) {
       iasw <- sklearn$metrics$silhouette_score(anndata$obsm[[paste0("X_", tolower(reduction))]], anndata$obs[, batch])
       ilisi <- median(compute_lisi(anndata$obsm[[paste0("X_", tolower(reduction))]], data.frame(batch = anndata$obs[, batch]), "batch")$batch)
 
-      df <- data.frame(nmi, ari, casw, clisi, homogeneity, iasw, ilisi)
+      df <- data.frame(nmi, ari, casw, clisi, homogeneity, iasw, ilisi, method = reduction)
       return(df)
     }
-    else ari <- sklearn$metrics$adjusted_rand_score(labels_true = anndata$obs[, cell_type], labels_pred = anndata$obs$cluster)
+    else {
+      ari <- sklearn$metrics$adjusted_rand_score(labels_true = anndata$obs[, cell_type], labels_pred = anndata$obs$cluster)
+      df <- data.frame(ari, method = reduction)
+      return(df)
+    }
 
   }, anndata = anndata, cell_type = cell_type, batch = batch, reduction = reduction)
 }
