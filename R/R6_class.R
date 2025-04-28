@@ -1,0 +1,1 @@
+setOldClass("AnnDataR6")
