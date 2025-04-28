@@ -4,19 +4,145 @@
 \name{LimmaParams}
 \alias{LimmaParams}
 \alias{CombatParams}
+\alias{SeuratV3Params}
+\alias{SeuratV5Params}
 \alias{BatChefParams-class}
 \alias{LimmaParams-class}
 \alias{CombatParams-class}
+\alias{SeuratV3Params-class}
+\alias{SeuratV5Params-class}
 \title{BatChefParams methods}
 \usage{
 LimmaParams(assay_type = "logcounts", ...)
 
 CombatParams(assay_type = "counts", ...)
+
+SeuratV3Params(
+  features,
+  pca_name = NULL,
+  assay = NULL,
+  reference = NULL,
+  anchor.features = 2000,
+  scale = TRUE,
+  normalization.method = "LogNormalize",
+  sct.clip.range = NULL,
+  reduction = "cca",
+  l2.norm = TRUE,
+  dims = 1:30,
+  k.anchor = 5,
+  k.filter = 200,
+  k.score = 30,
+  max.features = 200,
+  nn.method = "annoy",
+  n.trees = 50,
+  eps = 0,
+  verbose = TRUE,
+  new.assay.name = "integrated",
+  features.to.integrate = NULL,
+  k.weight = 100,
+  weight.reduction = NULL,
+  sd.weight = 1,
+  sample.tree = NULL,
+  preserve.order = FALSE
+)
+
+SeuratV5Params(
+  pca_name = NULL,
+  method = "CCAIntegration",
+  orig.reduction = "pca",
+  assay = NULL,
+  features = NULL,
+  layers = NULL,
+  scale.layer = "scale.data",
+  new.reduction = "integrated.dr",
+  reference = NULL,
+  normalization.method = "LogNormalize",
+  dims = 1:30,
+  k.filter = NA,
+  dims.to.integrate = NULL,
+  k.weight = 100,
+  weight.reduction = NULL,
+  sd.weight = 1,
+  sample.tree = NULL,
+  preserve.order = FALSE,
+  verbose = TRUE,
+  l2.norm = TRUE,
+  k.anchor = 5,
+  k.score = 30,
+  max.features = 200,
+  nn.method = "annoy",
+  n.trees = 50,
+  eps = 0
+)
 }
 \arguments{
 \item{assay_type}{A string specifying the assay.}
 
 \item{...}{Named arguments to pass to individual methods upon dispatch.}
+
+\item{features}{features}
+
+\item{pca_name}{pca_name}
+
+\item{assay}{assay}
+
+\item{reference}{reference}
+
+\item{anchor.features}{anchor.features}
+
+\item{scale}{scale}
+
+\item{normalization.method}{normalization.method}
+
+\item{sct.clip.range}{sct.clip.range}
+
+\item{reduction}{reduction}
+
+\item{l2.norm}{l2.norm}
+
+\item{dims}{dims}
+
+\item{k.anchor}{k.anchor}
+
+\item{k.filter}{k.filter}
+
+\item{k.score}{k.score}
+
+\item{max.features}{max.features}
+
+\item{nn.method}{nn.method}
+
+\item{n.trees}{n.trees}
+
+\item{eps}{eps}
+
+\item{verbose}{verbose}
+
+\item{new.assay.name}{new.assay.name}
+
+\item{features.to.integrate}{features.to.integrate}
+
+\item{k.weight}{k.weight}
+
+\item{weight.reduction}{weight.reduction}
+
+\item{sd.weight}{sd.weight}
+
+\item{sample.tree}{sample.tree}
+
+\item{preserve.order}{preserve.order}
+
+\item{method}{method}
+
+\item{orig.reduction}{orig.reduction}
+
+\item{layers}{layers}
+
+\item{scale.layer}{scale.layer}
+
+\item{new.reduction}{new.reduction}
+
+\item{dims.to.integrate}{dims.to.integrate}
 }
 \description{
 Constructors and methods for the params parameter classes.
