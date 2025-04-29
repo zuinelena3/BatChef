@@ -10,18 +10,22 @@
 \alias{seuratv5Post,AnnDataR6,AnnDataR6-method}
 \title{Title}
 \usage{
-seuratv5Post(input, output)
+seuratv5Post(input, output, method, name)
 
-\S4method{seuratv5Post}{Seurat}(input, output)
+\S4method{seuratv5Post}{Seurat}(input, output, method, name)
 
-\S4method{seuratv5Post}{SingleCellExperiment}(input, output)
+\S4method{seuratv5Post}{SingleCellExperiment}(input, output, method, name)
 
-\S4method{seuratv5Post}{AnnDataR6}(input, output)
+\S4method{seuratv5Post}{AnnDataR6}(input, output, method, name)
 }
 \arguments{
 \item{input}{input}
 
 \item{output}{output}
+
+\item{method}{method}
+
+\item{name}{reduction}
 }
 \description{
 Title

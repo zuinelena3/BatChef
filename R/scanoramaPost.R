@@ -20,7 +20,7 @@ setGeneric("scanoramaPost", function(input, output, batch, return_dimred, method
 setMethod("scanoramaPost", "Seurat",  function(input, output, batch, return_dimred, method) {
   ll <- SplitObject(input, split.by = batch)
   if (return_dimred == TRUE) {
-    corrected_mat <- t(do.call(rbind, output[[2]]))
+    corrected_mat <- t(as.matrix(do.call(rbind, output[[2]])))
     colnames(corrected_mat) <- unlist(lapply(ll, function(x) colnames(x)))
     rownames(corrected_mat) <- output[[3]]
     corrected_mat <- corrected_mat[, order(match(colnames(corrected_mat), colnames(input)))]
@@ -37,7 +37,7 @@ setMethod("scanoramaPost", "Seurat",  function(input, output, batch, return_dimr
     return(input)
   }
   else {
-    corrected_mat <- t(do.call(rbind, output[[1]]))
+    corrected_mat <- t(as.matrix(do.call(rbind, output[[1]])))
     colnames(corrected_mat) <- unlist(lapply(ll, function(x) colnames(x)))
     rownames(corrected_mat) <- output[[2]]
     corrected_mat <- corrected_mat[, order(match(colnames(corrected_mat), colnames(input)))]
@@ -57,7 +57,7 @@ setMethod("scanoramaPost", "Seurat",  function(input, output, batch, return_dimr
 setMethod("scanoramaPost", "SingleCellExperiment",  function(input, output, batch, return_dimred, method) {
   ll <- lapply(unique(colData(input)[, batch]), function(x) input[, colData(input)[, batch] == x])
   if (return_dimred == TRUE) {
-    corrected_mat <- t(do.call(rbind, output[[2]]))
+    corrected_mat <- t(as.matrix(do.call(rbind, output[[2]])))
     colnames(corrected_mat) <- unlist(lapply(ll, function(x) colnames(x)))
     rownames(corrected_mat) <- output[[3]]
     corrected_mat <- corrected_mat[, order(match(colnames(corrected_mat), colnames(input)))]
@@ -73,7 +73,7 @@ setMethod("scanoramaPost", "SingleCellExperiment",  function(input, output, batc
     return(input)
   }
   else {
-    corrected_mat <- t(do.call(rbind, output[[1]]))
+    corrected_mat <- t(as.matrix(do.call(rbind, output[[1]])))
     colnames(corrected_mat) <- unlist(lapply(ll, function(x) colnames(x)))
     rownames(corrected_mat) <- output[[2]]
     corrected_mat <- corrected_mat[, order(match(colnames(corrected_mat), colnames(input)))]

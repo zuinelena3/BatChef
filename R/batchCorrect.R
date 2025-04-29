@@ -29,6 +29,7 @@ setMethod("batchCorrect", "CombatParams", function(input, batch, params) {
 
 #' @rdname batchCorrect
 setMethod("batchCorrect", "SeuratV3Params", function(input, batch, params) {
+  options(Seurat.object.assay.version = "v3")
   ll <- seuratv3Input(input = input, batch = batch, features = params@features, pca_name = params@pca_name)
 
   out <- seuratV3Run(input = ll, assay = params@assay, reference = params@reference, anchor.features = params@anchor.features,
@@ -41,7 +42,7 @@ setMethod("batchCorrect", "SeuratV3Params", function(input, batch, params) {
                      weight.reduction = params@weight.reduction, sd.weight = params@sd.weight, sample.tree = params@sample.tree,
                      preserve.order = params@preserve.order)
 
-  res <- seuratv3Post(input = input, output = out, method = "seuratv3")
+  res <- seuratv3Post(input = input, output = out, method = paste0("seuratv3_", params@reduction))
 })
 
 #' @rdname batchCorrect
@@ -58,7 +59,7 @@ setMethod("batchCorrect", "SeuratV5Params", function(input, batch, params) {
                      k.score = params@k.score, max.features = params@max.features, nn.method = params@nn.method, n.trees = params@n.trees,
                      eps = params@eps)
 
-  res <- seuratv5Post(input = input, output = out)
+  res <- seuratv5Post(input = input, output = out, method = paste0("seuratv5_", tolower(sub("\\I.*", "", params@method))), name = params@new.reduction)
 })
 
 #' @rdname batchCorrect
