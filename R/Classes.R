@@ -66,3 +66,11 @@ setClass("SCVIParams", contains = "BatChefParams", slots = c(layer = "ANY", labe
                                                              load_sparse_tensor = "logical", batch_size = "numeric", early_stopping = "logical", datasplitter_kwargs = "ANY", plan_kwargs = "ANY", datamodule = "ANY",
                                                              indices = "ANY", give_mean = "logical", mc_samples = "numeric", return_dist = "logical", dataloader = "ANY"))
 
+#' @export
+#' @rdname BatChefParams
+setClass("ScMerge2Params", contains = "BatChefParams", slots = c(assay_type = "character", extra = "list"))
+
+#' @export
+#' @rdname BatChefParams
+setClass("BBKNNParams", contains = "BatChefParams", slots = c(reduction = "character", extra = "list"))
+

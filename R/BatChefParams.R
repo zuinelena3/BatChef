@@ -183,3 +183,22 @@ ScVIParams <- function(layer = NULL, labels_key = NULL, size_factor_key = NULL, 
       indices = indices, give_mean = give_mean, mc_samples = mc_samples, return_dist = return_dist, dataloader = dataloader)
 }
 
+#' @param assay_type assay_type
+#' @param ... Named arguments to pass to individual methods upon dispatch
+#'
+#' @export
+#' @rdname BatChefParams
+#' @importFrom methods new
+ScMerge2Params <- function(assay_type = "logcounts", ...) {
+  new("ScMerge2Params", assay_type = assay_type, extra = list(...))
+}
+
+#' @param reduction reduction
+#' @param ... Named arguments to pass to individual methods upon dispatch
+
+#' @export
+#' @rdname BatChefParams
+#' @importFrom methods new
+BBKNNParams <- function(reduction, ...) {
+  new("BBKNNParams", reduction = reduction, extra = list(...))
+}

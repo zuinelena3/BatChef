@@ -106,3 +106,25 @@ setMethod("batchCorrect", "SCVIParams", function(input, batch, params) {
 
   res <- scVIPost(input = input, output = out, method = "scvi")
 })
+
+#' @rdname batchCorrect
+setMethod("batchCorrect", "ScMerge2Params", function(input, batch, params) {
+  sce <- sceInput(input = input, batch = batch)
+
+  args <- merge_params(list(input = sce, batch = batch, assay_type = params@assay_type), params@extra, "ScMerge2Params")
+  out <- do.call(scMerge2Run, args)
+
+  res <- scMerge2Post(input = input, output = out, method = "scmerge2")
+})
+
+
+#' @rdname batchCorrect
+setMethod("batchCorrect", "BBKNNParams", function(input, batch, params) {
+  ll <- bbknnInput(input = input, batch = batch, reduction = params@reduction)
+
+  args <- merge_params(list(input = ll$red, batch = ll$batch), params@extra, "BBKNNParams")
+  out <- do.call(bbknnRun, args)
+
+  res <- bbknnPost(input = input, output = out, method = "bbknn")
+})
+
