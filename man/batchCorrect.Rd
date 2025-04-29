@@ -6,6 +6,9 @@
 \alias{batchCorrect,CombatParams-method}
 \alias{batchCorrect,SeuratV3Params-method}
 \alias{batchCorrect,SeuratV5Params-method}
+\alias{batchCorrect,FastMNNParams-method}
+\alias{batchCorrect,HarmonyParams-method}
+\alias{batchCorrect,ScanoramaParams-method}
 \title{batchCorrect}
 \usage{
 batchCorrect(input, batch, params)
@@ -17,6 +20,12 @@ batchCorrect(input, batch, params)
 \S4method{batchCorrect}{SeuratV3Params}(input, batch, params)
 
 \S4method{batchCorrect}{SeuratV5Params}(input, batch, params)
+
+\S4method{batchCorrect}{FastMNNParams}(input, batch, params)
+
+\S4method{batchCorrect}{HarmonyParams}(input, batch, params)
+
+\S4method{batchCorrect}{ScanoramaParams}(input, batch, params)
 }
 \arguments{
 \item{input}{A SingleCellExperiment, Seurat or AnnData objects can be supplied.}

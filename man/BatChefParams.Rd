@@ -6,11 +6,17 @@
 \alias{CombatParams}
 \alias{SeuratV3Params}
 \alias{SeuratV5Params}
+\alias{FastMNNParams}
+\alias{HarmonyParams}
+\alias{ScanoramaParams}
 \alias{BatChefParams-class}
 \alias{LimmaParams-class}
 \alias{CombatParams-class}
 \alias{SeuratV3Params-class}
 \alias{SeuratV5Params-class}
+\alias{FastMNNParams-class}
+\alias{HarmonyParams-class}
+\alias{ScanoramaParams-class}
 \title{BatChefParams methods}
 \usage{
 LimmaParams(assay_type = "logcounts", ...)
@@ -74,11 +80,17 @@ SeuratV5Params(
   n.trees = 50,
   eps = 0
 )
+
+FastMNNParams(...)
+
+HarmonyParams(...)
+
+ScanoramaParams(assay_type = NULL, return_dimred = FALSE, ...)
 }
 \arguments{
-\item{assay_type}{A string specifying the assay.}
+\item{assay_type}{assay_type}
 
-\item{...}{Named arguments to pass to individual methods upon dispatch.}
+\item{...}{Named arguments to pass to individual methods upon dispatch}
 
 \item{features}{features}
 
@@ -143,6 +155,8 @@ SeuratV5Params(
 \item{new.reduction}{new.reduction}
 
 \item{dims.to.integrate}{dims.to.integrate}
+
+\item{return_dimred}{return_dimred}
 }
 \description{
 Constructors and methods for the params parameter classes.

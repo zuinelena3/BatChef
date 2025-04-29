@@ -42,3 +42,16 @@ setClass("SeuratV5Params", contains = "BatChefParams", slots = c(pca_name = "ANY
                                                                  l2.norm = "logical", k.anchor = "numeric", k.score = "numeric",
                                                                  max.features = "numeric", nn.method = "character",
                                                                  n.trees = "numeric", eps = "numeric"))
+
+#' @export
+#' @rdname BatChefParams
+setClass("FastMNNParams", contains = "BatChefParams", slots = c(extra = "list"))
+
+#' @export
+#' @rdname BatChefParams
+setClass("HarmonyParams", contains = "BatChefParams", slots = c(extra = "list"))
+
+#' @export
+#' @rdname BatChefParams
+setClass("ScanoramaParams", contains = "BatChefParams", slots = c(assay_type = "ANY",
+                                                                  return_dimred = "logical", extra = "list"))

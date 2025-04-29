@@ -60,3 +60,33 @@ setMethod("batchCorrect", "SeuratV5Params", function(input, batch, params) {
 
   res <- seuratv5Post(input = input, output = out)
 })
+
+#' @rdname batchCorrect
+setMethod("batchCorrect", "FastMNNParams", function(input, batch, params) {
+  sce <- sceInput(input = input, batch = batch)
+
+  args <- merge_params(list(input = sce, batch = batch), params@extra, "FastMNNParams")
+  out <- do.call(fastMNNRun, args)
+
+  res <- fastMNNPost(input = input, output = out, method = "fastmnn")
+})
+
+#' @rdname batchCorrect
+setMethod("batchCorrect", "HarmonyParams", function(input, batch, params) {
+  sce <- sceInput(input = input, batch = batch)
+
+  args <- merge_params(list(input = sce, batch = batch), params@extra, "HarmonyParams")
+  out <- do.call(harmonyRun, args)
+
+  res <- harmonyPost(input = input, output = out, method = "harmony")
+})
+
+#' @rdname batchCorrect
+setMethod("batchCorrect", "ScanoramaParams", function(input, batch, params) {
+  ll <- scanoramaInput(input = input, batch = batch, assay.type = params@assay_type)
+
+  args <- merge_params(list(input = ll, return_dimred = params@return_dimred), params@extra, "ScanoramaParams")
+  out <- do.call(scanoramaRun, args)
+
+  res <- scanoramaPost(input = input, output = out, batch = batch, return_dimred = params@return_dimred, method = "scanorama")
+})

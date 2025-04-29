@@ -106,3 +106,32 @@ SeuratV5Params <- function(pca_name = NULL, method = "CCAIntegration", orig.redu
       sd.weight = sd.weight, sample.tree = sample.tree, preserve.order = preserve.order, verbose = verbose, l2.norm = l2.norm, k.anchor = k.anchor,
       k.score = k.score, max.features = max.features, nn.method = nn.method, n.trees = n.trees, eps = eps)
 }
+
+#' @param ... Named arguments to pass to individual methods upon dispatch
+#'
+#' @export
+#' @rdname BatChefParams
+#' @importFrom methods new
+FastMNNParams <- function(...) {
+  new("FastMNNParams", extra = list(...))
+}
+
+#' @param ... Named arguments to pass to individual methods upon dispatch
+#'
+#' @export
+#' @rdname BatChefParams
+#' @importFrom methods new
+HarmonyParams <- function(...) {
+  new("HarmonyParams", extra = list(...))
+}
+
+#' @param assay_type assay_type
+#' @param return_dimred return_dimred
+#' @param ... Named arguments to pass to individual methods upon dispatch
+#'
+#' @export
+#' @rdname BatChefParams
+#' @importFrom methods new
+ScanoramaParams <- function(assay_type = NULL, return_dimred = FALSE, ...) {
+  new("ScanoramaParams", assay_type = assay_type, return_dimred = return_dimred, extra = list(...))
+}
