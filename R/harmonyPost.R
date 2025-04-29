@@ -37,6 +37,6 @@ setMethod("harmonyPost", "SingleCellExperiment",  function(input, output, method
 #' @importFrom SingleCellExperiment reducedDim
 #'
 setMethod("harmonyPost", "AnnDataR6",  function(input, output, method) {
-  input$obsm[[method]] <- as.matrix(reducedDim(output, "corrected"))
+  input$obsm[[method]] <- as.matrix(reducedDim(output, "HARMONY"))
   return(input)
 })
