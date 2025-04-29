@@ -9,6 +9,7 @@
 \alias{FastMNNParams}
 \alias{HarmonyParams}
 \alias{ScanoramaParams}
+\alias{ScVIParams}
 \alias{BatChefParams-class}
 \alias{LimmaParams-class}
 \alias{CombatParams-class}
@@ -17,6 +18,7 @@
 \alias{FastMNNParams-class}
 \alias{HarmonyParams-class}
 \alias{ScanoramaParams-class}
+\alias{SCVIParams-class}
 \title{BatChefParams methods}
 \usage{
 LimmaParams(assay_type = "logcounts", ...)
@@ -86,6 +88,38 @@ FastMNNParams(...)
 HarmonyParams(...)
 
 ScanoramaParams(assay_type = NULL, return_dimred = FALSE, ...)
+
+ScVIParams(
+  layer = NULL,
+  labels_key = NULL,
+  size_factor_key = NULL,
+  categorical_covariate_keys = NULL,
+  continuous_covariate_keys = NULL,
+  n_hidden = 128,
+  n_latent = 10,
+  n_layers = 1,
+  dropout_rate = 0.1,
+  dispersion = "gene",
+  gene_likelihood = "zinb",
+  latent_distribution = "normal",
+  max_epochs = 400,
+  accelerator = "auto",
+  devices = 1,
+  train_size = 0.25,
+  validation_size = NULL,
+  shuffle_set_split = TRUE,
+  load_sparse_tensor = FALSE,
+  batch_size = 128,
+  early_stopping = FALSE,
+  datasplitter_kwargs = NULL,
+  plan_kwargs = NULL,
+  datamodule = NULL,
+  indices = NULL,
+  give_mean = TRUE,
+  mc_samples = 5000,
+  return_dist = FALSE,
+  dataloader = NULL
+)
 }
 \arguments{
 \item{assay_type}{assay_type}
@@ -157,6 +191,64 @@ ScanoramaParams(assay_type = NULL, return_dimred = FALSE, ...)
 \item{dims.to.integrate}{dims.to.integrate}
 
 \item{return_dimred}{return_dimred}
+
+\item{layer}{layer}
+
+\item{labels_key}{labels_key}
+
+\item{size_factor_key}{size_factor_key}
+
+\item{categorical_covariate_keys}{categorical_covariate_keys}
+
+\item{continuous_covariate_keys}{continuous_covariate_keys}
+
+\item{n_hidden}{n_hidden}
+
+\item{n_latent}{n_latent}
+
+\item{n_layers}{n_layers}
+
+\item{dropout_rate}{dropout_rate}
+
+\item{dispersion}{dispersion}
+
+\item{gene_likelihood}{gene_likelihood}
+
+\item{latent_distribution}{latent_distribution}
+
+\item{max_epochs}{max_epochs}
+
+\item{accelerator}{accelerator}
+
+\item{devices}{devices}
+
+\item{train_size}{train_size}
+
+\item{validation_size}{validation_size}
+
+\item{shuffle_set_split}{shuffle_set_split}
+
+\item{load_sparse_tensor}{load_sparse_tensor}
+
+\item{batch_size}{batch_size}
+
+\item{early_stopping}{early_stopping}
+
+\item{datasplitter_kwargs}{datasplitter_kwargs}
+
+\item{plan_kwargs}{plan_kwargs}
+
+\item{datamodule}{datamodule}
+
+\item{indices}{indices}
+
+\item{give_mean}{give_mean}
+
+\item{mc_samples}{mc_samples}
+
+\item{return_dist}{return_dist}
+
+\item{dataloader}{dataloader}
 }
 \description{
 Constructors and methods for the params parameter classes.

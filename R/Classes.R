@@ -55,3 +55,14 @@ setClass("HarmonyParams", contains = "BatChefParams", slots = c(extra = "list"))
 #' @rdname BatChefParams
 setClass("ScanoramaParams", contains = "BatChefParams", slots = c(assay_type = "ANY",
                                                                   return_dimred = "logical", extra = "list"))
+
+#' @export
+#' @rdname BatChefParams
+setClass("SCVIParams", contains = "BatChefParams", slots = c(layer = "ANY", labels_key = "ANY", size_factor_key = "ANY", categorical_covariate_keys = "ANY",
+                                                             continuous_covariate_keys = "ANY",
+                                                             n_hidden = "numeric", n_latent = "numeric", n_layers = "numeric", dropout_rate = "numeric",
+                                                             dispersion = "character", gene_likelihood = "character", latent_distribution = "character",
+                                                             max_epochs = "numeric", accelerator = "character", devices = "numeric", train_size = "numeric", validation_size = "ANY", shuffle_set_split = "logical",
+                                                             load_sparse_tensor = "logical", batch_size = "numeric", early_stopping = "logical", datasplitter_kwargs = "ANY", plan_kwargs = "ANY", datamodule = "ANY",
+                                                             indices = "ANY", give_mean = "logical", mc_samples = "numeric", return_dist = "logical", dataloader = "ANY"))
+

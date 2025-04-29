@@ -90,3 +90,19 @@ setMethod("batchCorrect", "ScanoramaParams", function(input, batch, params) {
 
   res <- scanoramaPost(input = input, output = out, batch = batch, return_dimred = params@return_dimred, method = "scanorama")
 })
+
+#' @rdname batchCorrect
+setMethod("batchCorrect", "SCVIParams", function(input, batch, params) {
+  out <- scVIRun(input = input, batch = batch, layer = params@layer, labels_key = params@labels_key, size_factor_key = params@size_factor_key,
+                 categorical_covariate_keys = params@categorical_covariate_keys, continuous_covariate_keys = params@continuous_covariate_keys,
+                 n_hidden = params@n_hidden, n_latent = params@n_latent, n_layers = params@n_layers, dropout_rate = params@dropout_rate,
+                 dispersion = params@dispersion, gene_likelihood = params@gene_likelihood, latent_distribution = params@latent_distribution,
+                 max_epochs = params@max_epochs, accelerator = params@accelerator, devices = params@devices, train_size = params@train_size,
+                 validation_size = params@validation_size, shuffle_set_split = params@shuffle_set_split,
+                 load_sparse_tensor = params@load_sparse_tensor, batch_size = params@batch_size, early_stopping = params@early_stopping,
+                 datasplitter_kwargs = params@datasplitter_kwargs, plan_kwargs = params@plan_kwargs, datamodule = params@datamodule,
+                 indices = params@indices, give_mean = params@give_mean, mc_samples = params@mc_samples, return_dist = params@return_dist,
+                 dataloader = params@dataloader)
+
+  res <- scVIPost(input = input, output = out, method = "scvi")
+})
