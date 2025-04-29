@@ -128,3 +128,13 @@ setMethod("batchCorrect", "BBKNNParams", function(input, batch, params) {
   res <- bbknnPost(input = input, output = out, method = "bbknn")
 })
 
+#' @rdname batchCorrect
+setMethod("batchCorrect", "LigerParams", function(input, batch, params) {
+  lo <- ligerInput(input = input, batch = batch, features = params@features, useDatasets = params@useDatasets,
+                   format.type = params@format.type, verbose = params@verbose, remove.missing = params@remove.missing, params@extra_input)
+
+  args <- merge_params(list(input = lo, method = params@method), params@extra, "LigerParams")
+  out <- do.call(ligerRun, args)
+
+  res <- ligerPost(input = input, output = out, method = "liger")
+})

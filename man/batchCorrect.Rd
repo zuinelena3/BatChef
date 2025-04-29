@@ -10,6 +10,9 @@
 \alias{batchCorrect,HarmonyParams-method}
 \alias{batchCorrect,ScanoramaParams-method}
 \alias{batchCorrect,SCVIParams-method}
+\alias{batchCorrect,ScMerge2Params-method}
+\alias{batchCorrect,BBKNNParams-method}
+\alias{batchCorrect,LigerParams-method}
 \title{batchCorrect}
 \usage{
 batchCorrect(input, batch, params)
@@ -29,6 +32,12 @@ batchCorrect(input, batch, params)
 \S4method{batchCorrect}{ScanoramaParams}(input, batch, params)
 
 \S4method{batchCorrect}{SCVIParams}(input, batch, params)
+
+\S4method{batchCorrect}{ScMerge2Params}(input, batch, params)
+
+\S4method{batchCorrect}{BBKNNParams}(input, batch, params)
+
+\S4method{batchCorrect}{LigerParams}(input, batch, params)
 }
 \arguments{
 \item{input}{A SingleCellExperiment, Seurat or AnnData objects can be supplied.}

@@ -202,3 +202,20 @@ ScMerge2Params <- function(assay_type = "logcounts", ...) {
 BBKNNParams <- function(reduction, ...) {
   new("BBKNNParams", reduction = reduction, extra = list(...))
 }
+
+#' @param dataloader dataloader
+#' @param useDatasets useDatasets
+#' @param verbose verbose
+#' @param format.type format.type
+#' @param remove.missing remove.missing
+#' @param method method
+#' @param ... Named arguments to pass to individual methods upon dispatch
+#'
+#' @export
+#' @rdname BatChefParams
+#' @importFrom methods new
+LigerParams <- function(features, useDatasets = NULL,
+                        verbose = TRUE, format.type = NULL, remove.missing = NULL, method = "iNMF", ...) {
+  new("LigerParams", features = features, useDatasets = useDatasets,
+      verbose = verbose, format.type = format.type, remove.missing = remove.missing, extra_input = list(...), method = method, extra = list(...))
+}

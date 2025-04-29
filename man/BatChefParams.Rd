@@ -10,6 +10,9 @@
 \alias{HarmonyParams}
 \alias{ScanoramaParams}
 \alias{ScVIParams}
+\alias{ScMerge2Params}
+\alias{BBKNNParams}
+\alias{LigerParams}
 \alias{BatChefParams-class}
 \alias{LimmaParams-class}
 \alias{CombatParams-class}
@@ -19,6 +22,9 @@
 \alias{HarmonyParams-class}
 \alias{ScanoramaParams-class}
 \alias{SCVIParams-class}
+\alias{ScMerge2Params-class}
+\alias{BBKNNParams-class}
+\alias{LigerParams-class}
 \title{BatChefParams methods}
 \usage{
 LimmaParams(assay_type = "logcounts", ...)
@@ -119,6 +125,20 @@ ScVIParams(
   mc_samples = 5000,
   return_dist = FALSE,
   dataloader = NULL
+)
+
+ScMerge2Params(assay_type = "logcounts", ...)
+
+BBKNNParams(reduction, ...)
+
+LigerParams(
+  features,
+  useDatasets = NULL,
+  verbose = TRUE,
+  format.type = NULL,
+  remove.missing = NULL,
+  method = "iNMF",
+  ...
 )
 }
 \arguments{
@@ -249,6 +269,12 @@ ScVIParams(
 \item{return_dist}{return_dist}
 
 \item{dataloader}{dataloader}
+
+\item{useDatasets}{useDatasets}
+
+\item{format.type}{format.type}
+
+\item{remove.missing}{remove.missing}
 }
 \description{
 Constructors and methods for the params parameter classes.

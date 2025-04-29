@@ -74,3 +74,8 @@ setClass("ScMerge2Params", contains = "BatChefParams", slots = c(assay_type = "c
 #' @rdname BatChefParams
 setClass("BBKNNParams", contains = "BatChefParams", slots = c(reduction = "character", extra = "list"))
 
+#' @export
+#' @rdname BatChefParams
+setClass("LigerParams", contains = "BatChefParams", slots = c(features = "character", useDatasets = "ANY",
+                                                              verbose = "logical", format.type = "ANY", remove.missing = "ANY", extra_input = "list",
+                                                              method = "character", extra = "list"))
