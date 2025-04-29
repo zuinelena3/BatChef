@@ -13,7 +13,7 @@ setGeneric("linearPost", function(input, output, method)
 #' @rdname linearPost
 #' @aliases linearPost,Seurat,Seurat-method
 #' @import methods
-#' @importFrom Seurat CreateAssayObject
+#' @importFrom SeuratObject CreateAssay5Object
 #'
 setMethod("linearPost", "Seurat",  function(input, output, method) {
   input[[method]] <- CreateAssay5Object(data = output)

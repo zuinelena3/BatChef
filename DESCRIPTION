@@ -17,30 +17,26 @@ Imports:
     anndata,
     basilisk,
     batchelor,
+    DelayedArray,
     harmony,
     limma,
     lisi,
     methods,
+    parallel,
+    purrr,
     reticulate,
     rliger,
-    Rtsne,
     S4Vectors,
     scater,
     scMerge,
-    scuttle,
+    scrapper,
     Seurat,
     SeuratObject,
     SingleCellExperiment,
     splatter,
+    stats,
     SummarizedExperiment,
     sva,
     transport,
     yaml,
     zellkonverter
-Depends: 
-    R (>= 2.10)
-LazyData: true
-Suggests: 
-    RcppPlanc,
-    testthat (>= 3.0.0)
-Config/testthat/edition: 3
