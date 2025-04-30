@@ -64,7 +64,8 @@ setClass("SCVIParams", contains = "BatChefParams", slots = c(layer = "ANY", labe
                                                              dispersion = "character", gene_likelihood = "character", latent_distribution = "character",
                                                              max_epochs = "numeric", accelerator = "character", devices = "numeric", train_size = "numeric", validation_size = "ANY", shuffle_set_split = "logical",
                                                              load_sparse_tensor = "logical", batch_size = "numeric", early_stopping = "logical", datasplitter_kwargs = "ANY", plan_kwargs = "ANY", datamodule = "ANY",
-                                                             indices = "ANY", give_mean = "logical", mc_samples = "numeric", return_dist = "logical", dataloader = "ANY"))
+                                                             indices = "ANY", give_mean = "logical", mc_samples = "numeric", return_dist = "logical", dataloader = "ANY",
+                                                             transform_batch = "ANY", gene_list = "ANY", library_size = "numeric", n_samples = "numeric", n_samples_overall = "ANY", weights = "ANY", return_mean = "logical", return_numpy = "ANY"))
 
 #' @export
 #' @rdname BatChefParams

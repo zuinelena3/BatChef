@@ -165,6 +165,14 @@ ScanoramaParams <- function(assay_type = NULL, return_dimred = FALSE, ...) {
 #' @param mc_samples mc_samples
 #' @param return_dist return_dist
 #' @param dataloader dataloader
+#' @param transform_batch transform_batch
+#' @param gene_list gene_list
+#' @param library_size library_size
+#' @param n_samples n_samples
+#' @param n_samples_overall n_samples_overall
+#' @param weights weights
+#' @param return_mean return_mean
+#' @param return_numpy return_numpy
 #'
 #' @export
 #' @rdname BatChefParams
@@ -174,13 +182,16 @@ ScVIParams <- function(layer = NULL, labels_key = NULL, size_factor_key = NULL, 
                        dispersion = "gene", gene_likelihood = "zinb", latent_distribution = "normal",
                        max_epochs = 400, accelerator = "auto", devices = 1, train_size = 0.25, validation_size = NULL, shuffle_set_split = TRUE,
                        load_sparse_tensor = FALSE, batch_size = 128, early_stopping = FALSE, datasplitter_kwargs = NULL, plan_kwargs = NULL, datamodule = NULL,
-                       indices = NULL, give_mean = TRUE, mc_samples = 5000, return_dist = FALSE, dataloader = NULL) {
+                       indices = NULL, give_mean = TRUE, mc_samples = 5000, return_dist = FALSE, dataloader = NULL,
+                       transform_batch = NULL, gene_list = NULL, library_size = 1, n_samples = 1, n_samples_overall = NULL, weights = NULL, return_mean = TRUE, return_numpy = NULL) {
   new("SCVIParams", layer = layer, labels_key = labels_key, size_factor_key = size_factor_key, categorical_covariate_keys = categorical_covariate_keys, continuous_covariate_keys = continuous_covariate_keys,
       n_hidden = n_hidden, n_latent = n_latent, n_layers = n_layers, dropout_rate = dropout_rate,
       dispersion = dispersion, gene_likelihood = gene_likelihood, latent_distribution = latent_distribution,
       max_epochs = max_epochs, accelerator = accelerator, devices = devices, train_size = train_size, validation_size = validation_size, shuffle_set_split = shuffle_set_split,
       load_sparse_tensor = load_sparse_tensor, batch_size = batch_size, early_stopping = early_stopping, datasplitter_kwargs = datasplitter_kwargs, plan_kwargs = plan_kwargs, datamodule = datamodule,
-      indices = indices, give_mean = give_mean, mc_samples = mc_samples, return_dist = return_dist, dataloader = dataloader)
+      indices = indices, give_mean = give_mean, mc_samples = mc_samples, return_dist = return_dist, dataloader = dataloader,
+      transform_batch = transform_batch, gene_list = gene_list, library_size = library_size, n_samples = n_samples, n_samples_overall = n_samples_overall, weights = weights,
+      return_mean = return_mean, return_numpy = return_numpy)
 }
 
 #' @param assay_type assay_type

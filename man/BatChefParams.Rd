@@ -124,7 +124,15 @@ ScVIParams(
   give_mean = TRUE,
   mc_samples = 5000,
   return_dist = FALSE,
-  dataloader = NULL
+  dataloader = NULL,
+  transform_batch = NULL,
+  gene_list = NULL,
+  library_size = 1,
+  n_samples = 1,
+  n_samples_overall = NULL,
+  weights = NULL,
+  return_mean = TRUE,
+  return_numpy = NULL
 )
 
 ScMerge2Params(assay_type = "logcounts", ...)
@@ -269,6 +277,22 @@ LigerParams(
 \item{return_dist}{return_dist}
 
 \item{dataloader}{dataloader}
+
+\item{transform_batch}{transform_batch}
+
+\item{gene_list}{gene_list}
+
+\item{library_size}{library_size}
+
+\item{n_samples}{n_samples}
+
+\item{n_samples_overall}{n_samples_overall}
+
+\item{weights}{weights}
+
+\item{return_mean}{return_mean}
+
+\item{return_numpy}{return_numpy}
 
 \item{useDatasets}{useDatasets}
 
