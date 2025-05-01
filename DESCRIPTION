@@ -33,6 +33,7 @@ Imports:
     Seurat,
     SeuratObject,
     SingleCellExperiment,
+    SparseArray,
     splatter,
     stats,
     SummarizedExperiment,

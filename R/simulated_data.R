@@ -40,6 +40,7 @@
 #' @importFrom SingleCellExperiment counts
 #' @importFrom DelayedArray DelayedArray
 #' @importFrom scater runPCA
+#' @importFrom SparseArray colSums
 #'
 simulated_data <- function(nGenes = 10000, batchCells = 100, batch.facLoc = 0.1, batch.facScale = 0.1, batch.rmEffect = FALSE,
                            mean.rate = 0.3, mean.shape = 0.6, lib.loc = 11, lib.scale = 0.2, lib.norm = FALSE,
