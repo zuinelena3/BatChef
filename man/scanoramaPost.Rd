@@ -10,20 +10,20 @@
 \alias{scanoramaPost,AnnDataR6,AnnDataR6-method}
 \title{Title}
 \usage{
-scanoramaPost(input, output, batch, return_dimred, method)
+scanoramaPost(input, list, output, return_dimred, method)
 
-\S4method{scanoramaPost}{Seurat}(input, output, batch, return_dimred, method)
+\S4method{scanoramaPost}{Seurat}(input, list, output, return_dimred, method)
 
-\S4method{scanoramaPost}{SingleCellExperiment}(input, output, batch, return_dimred, method)
+\S4method{scanoramaPost}{SingleCellExperiment}(input, list, output, return_dimred, method)
 
-\S4method{scanoramaPost}{AnnDataR6}(input, output, batch, return_dimred, method)
+\S4method{scanoramaPost}{AnnDataR6}(input, list, output, return_dimred, method)
 }
 \arguments{
 \item{input}{input}
 
-\item{output}{output}
+\item{list}{list}
 
-\item{batch}{batch}
+\item{output}{output}
 
 \item{return_dimred}{return_dimred}
 

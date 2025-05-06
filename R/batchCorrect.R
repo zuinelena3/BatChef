@@ -89,7 +89,7 @@ setMethod("batchCorrect", "ScanoramaParams", function(input, batch, params) {
   args <- merge_params(list(input = ll, return_dimred = params@return_dimred), params@extra, "ScanoramaParams")
   out <- do.call(scanoramaRun, args)
 
-  res <- scanoramaPost(input = input, output = out, batch = batch, return_dimred = params@return_dimred, method = "scanorama")
+  res <- scanoramaPost(input = input, list = ll, output = out, return_dimred = params@return_dimred, method = "scanorama")
 })
 
 #' @rdname batchCorrect
