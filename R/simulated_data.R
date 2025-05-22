@@ -36,7 +36,7 @@
 #'
 #' @importFrom splatter newSplatParams splatSimulateGroups
 #' @importFrom SummarizedExperiment assays assays<-
-#' @importFrom scrapper centerSizeFactors normalizeCounts
+#' @importFrom scrapper centerSizeFactors normalizeCounts modelGeneVariances chooseHighlyVariableGenes
 #' @importFrom SingleCellExperiment counts
 #' @importFrom DelayedArray DelayedArray
 #' @importFrom scater runPCA
@@ -59,6 +59,11 @@ simulated_data <- function(nGenes = 10000, batchCells = 100, batch.facLoc = 0.1,
   size_factors <- centerSizeFactors(colSums(counts(sim)))
   normalized <- normalizeCounts(DelayedArray(assay(sim)), size_factors)
   assay(sim, "logcounts") <- as(normalized, "dgCMatrix")
+
+  gene_var <- modelGeneVariances(normalized, num.threads = 2)
+  top_hvgs <- chooseHighlyVariableGenes(gene_var$statistics$residuals, top = n_hvgs)
+
+  sim <- sim[top_hvgs, ]
   sim <- runPCA(sim, ntop = n_hvgs, ncomponent = ncomp)
   return(sim)
 }
