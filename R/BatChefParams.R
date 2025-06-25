@@ -194,7 +194,7 @@ ScVIParams <- function(layer = NULL, labels_key = NULL, size_factor_key = NULL, 
       return_mean = return_mean, return_numpy = return_numpy)
 }
 
-#' @param assay_type assay_type
+#' @param assay_type A string specifying the assay to use for correction.
 #' @param ... Named arguments to pass to individual methods upon dispatch
 #'
 #' @export

@@ -1,7 +1,7 @@
-#' Title
+#' Parameters merging
 #'
-#' @param base base
-#' @param extra extra
+#' @param base base params
+#' @param extra extra params
 #' @param class class
 #'
 merge_params <- function(base, extra, class) {

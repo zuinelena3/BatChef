@@ -1,8 +1,10 @@
-#' Title
+#' Convert the output of linear models
 #'
-#' @param input input
-#' @param output output
-#' @param method method
+#' Convert the output of linear models (limma and ComBat) into a SingleCellExperiment, Seurat or Anndata objects.
+#'
+#' @param input A `SingleCellExperiment`, `Seurat` or `AnnData` objects can be supplied.
+#' @param output Linear models output
+#' @param method A string specifying the correction method.
 #'
 #' @import methods
 #' @rdname linearPost

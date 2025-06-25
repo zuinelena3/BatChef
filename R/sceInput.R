@@ -1,7 +1,7 @@
-#' Title
+#' Convert into a SingleCellExperiment object
 #'
-#' @param input input
-#' @param batch batch
+#' @param input A `SingleCellExperiment`, `Seurat` or `AnnData` objects can be supplied.
+#' @param batch A string specifying the batch for each cell.
 #'
 #' @import methods
 #' @rdname sceInput

@@ -1,4 +1,4 @@
-#' Title
+#' Capture parameters of the correction methods
 #'
 #' @param target target
 #' @param params params
