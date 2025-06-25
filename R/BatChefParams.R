@@ -23,36 +23,37 @@ CombatParams <- function(assay_type = "counts", ...) {
   new("CombatParams", assay_type = assay_type, extra = list(...))
 }
 
-#' @param pca_name pca_name
-#' @param assay assay
-#' @param reference reference
-#' @param anchor.features anchor.features
-#' @param scale scale
-#' @param normalization.method normalization.method
-#' @param sct.clip.range sct.clip.range
-#' @param reduction reduction
-#' @param l2.norm l2.norm
-#' @param dims dims
-#' @param k.anchor k.anchor
-#' @param k.filter k.filter
-#' @param k.score k.score
-#' @param max.features max.features
-#' @param nn.method nn.method
-#' @param n.trees n.trees
-#' @param eps eps
-#' @param verbose verbose
-#' @param new.assay.name new.assay.name
-#' @param features features
-#' @param features.to.integrate features.to.integrate
-#' @param k.weight k.weight
-#' @param weight.reduction weight.reduction
-#' @param sd.weight sd.weight
-#' @param sample.tree sample.tree
-#' @param preserve.order preserve.order
+#' @param features Vector of features to use.
+#' @param pca_name A string specifying the PCA name.
+#' @param assay A vector of assay names specifying which assay to use when constructing anchors.
+#' @param reference A vector specifying the object/s to be used as a reference during integration.
+#' @param anchor.features Number of features to be used in anchor finding.
+#' @param scale A logical to scale the features provided.
+#' @param normalization.method Name of normalization method used: LogNormalize (default) or SCT.
+#' @param sct.clip.range Numeric of length two specifying the min and max values the Pearson residual will be clipped to.
+#' @param reduction Dimensional reduction to perform when finding anchors.
+#' @param l2.norm Perform L2 normalization on the CCA cell embeddings after dimensional reduction.
+#' @param dims Number of dimensions.
+#' @param k.anchor Number of neighbors (k) to use when picking anchors.
+#' @param k.filter Number of neighbors (k) to use when filtering anchors.
+#' @param k.score Number of neighbors (k) to use when scoring anchors.
+#' @param max.features The maximum number of features to use when specifying the neighborhood search space in the anchor filtering.
+#' @param nn.method Method for nearest neighbor finding.
+#' @param n.trees More trees gives higher precision when using annoy approximate nearest neighbor search.
+#' @param eps Error bound on the neighbor finding algorithm.
+#' @param verbose Print progress bars and output.
+#' @param new.assay.name Name for the new assay containing the integrated data.
+#' @param features.to.integrate Vector of features to integrate.
+#' @param k.weight Number of neighbors to consider when weighting anchors.
+#' @param weight.reduction Dimension reduction to use when calculating anchor weights.
+#' @param sd.weight Controls the bandwidth of the Gaussian kernel for weighting.
+#' @param sample.tree Specify the order of integration.
+#' @param preserve.order Do not reorder objects based on size for each pairwise integration.
 #'
 #' @export
 #' @rdname BatChefParams
 #' @importFrom methods new
+#'
 SeuratV3Params <- function(features, pca_name = NULL, assay = NULL, reference = NULL, anchor.features = 2000, scale = TRUE, normalization.method = "LogNormalize",
                            sct.clip.range = NULL, reduction = "cca", l2.norm = TRUE, dims = 1:30, k.anchor = 5, k.filter = 200, k.score = 30,
                            max.features = 200, nn.method = "annoy", n.trees = 50, eps = 0, verbose = TRUE, new.assay.name = "integrated",
@@ -65,36 +66,37 @@ SeuratV3Params <- function(features, pca_name = NULL, assay = NULL, reference = 
       preserve.order = preserve.order)
 }
 
-
-#' @param pca_name pca_name
-#' @param method method
-#' @param orig.reduction orig.reduction
-#' @param layers layers
-#' @param scale.layer scale.layer
-#' @param normalization.method normalization.method
-#' @param new.reduction new.reduction
-#' @param reference reference
-#' @param dims dims
-#' @param dims.to.integrate dims.to.integrate
-#' @param k.anchor k.anchor
-#' @param k.filter k.filter
-#' @param k.score k.score
-#' @param max.features max.features
-#' @param nn.method nn.method
-#' @param n.trees n.trees
-#' @param eps eps
-#' @param verbose verbose
-#' @param l2.norm l2.norm
-#' @param features features
-#' @param k.weight k.weight
-#' @param weight.reduction weight.reduction
-#' @param sd.weight sd.weight
-#' @param sample.tree sample.tree
-#' @param preserve.order preserve.order
+#' @param pca_name  A string specifying the PCA name.
+#' @param method Integration method function.
+#' @param orig.reduction Name of dimensional reduction for correction.
+#' @param assay Name of assay for integration.
+#' @param features A vector of features to use for integration.
+#' @param layers Names of normalized layers in assay.
+#' @param scale.layer Name(s) of scaled layer(s) in assay.
+#' @param new.reduction Name of new integrated dimensional reduction.
+#' @param reference A reference Seurat object.
+#' @param normalization.method Name of normalization method used: LogNormalize or SCT.
+#' @param dims Number of dimensions of dimensional reduction.
+#' @param k.filter Number of anchors to filter.
+#' @param dims.to.integrate Number of dimensions to return integrated values for.
+#' @param k.weight Number of neighbors to consider when weighting anchors.
+#' @param weight.reduction Dimension reduction to use when calculating anchor weights.
+#' @param sd.weight Controls the bandwidth of the Gaussian kernel for weighting.
+#' @param sample.tree Specify the order of integration.
+#' @param preserve.order Do not reorder objects based on size for each pairwise integration.
+#' @param verbose Print progress bars and output.
+#' @param l2.norm Perform L2 normalization on the CCA cell embeddings after dimensional reduction.
+#' @param k.anchor Number of neighbors (k) to use when picking anchors.
+#' @param k.score Number of neighbors (k) to use when scoring anchors.
+#' @param max.features The maximum number of features to use when specifying the neighborhood search space in the anchor filtering.
+#' @param nn.method Method for nearest neighbor finding.
+#' @param n.trees More trees gives higher precision when using annoy approximate nearest neighbor search.
+#' @param eps Error bound on the neighbor finding algorithm.
 #'
 #' @export
 #' @rdname BatChefParams
 #' @importFrom methods new
+#'
 SeuratV5Params <- function(pca_name = NULL, method = "CCAIntegration", orig.reduction = "pca", assay = NULL, features = NULL, layers = NULL, scale.layer = "scale.data",
                            new.reduction = "integrated.dr", reference = NULL, normalization.method = "LogNormalize",
                            dims = 1:30, k.filter = NA, dims.to.integrate = NULL, k.weight = 100, weight.reduction = NULL,

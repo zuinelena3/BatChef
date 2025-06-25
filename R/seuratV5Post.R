@@ -1,9 +1,11 @@
-#' Title
+#' Convert the Seurat V5 output
 #'
-#' @param input input
-#' @param output output
-#' @param method method
-#' @param name reduction
+#' Convert the Seurat V5 output into a SingleCellExperiment, Seurat or Anndata objects
+#'
+#' @param input A `SingleCellExperiment`, `Seurat` or `AnnData` objects can be supplied.
+#' @param output Seurat V5 output.
+#' @param method A string specifying the correction method.
+#' @param name A string specifying the corrected reduce space name.
 #'
 #' @import methods
 #' @rdname seuratv5Post

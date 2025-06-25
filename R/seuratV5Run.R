@@ -1,34 +1,34 @@
 #' Seurat V5 method
 #'
-#' @param input input
-#' @param method method
-#' @param orig.reduction orig.reduction
-#' @param assay assay
-#' @param features features
-#' @param layers layers
-#' @param scale.layer scale.layer
-#' @param new.reduction new.reduction
-#' @param reference reference
-#' @param normalization.method normalization.method
-#' @param dims dims
-#' @param k.filter k.filter
-#' @param dims.to.integrate dims.to.integrate
-#' @param k.weight k.weight
-#' @param weight.reduction weight.reduction
-#' @param sd.weight sd.weight
-#' @param sample.tree sample.tree
-#' @param preserve.order preserve.order
-#' @param verbose verbose
-#' @param l2.norm l2.norm
-#' @param k.anchor k.anchor
-#' @param k.score k.score
-#' @param max.features max.features
-#' @param nn.method nn.method
-#' @param n.trees n.trees
-#' @param eps eps
-#'
+#' @param input A `Seurat` object.
+#' @param method Integration method function.
+#' @param orig.reduction Name of dimensional reduction for correction.
+#' @param assay Name of assay for integration.
+#' @param features A vector of features to use for integration.
+#' @param layers Names of normalized layers in assay.
+#' @param scale.layer Name(s) of scaled layer(s) in assay.
+#' @param new.reduction Name of new integrated dimensional reduction.
+#' @param reference A reference Seurat object.
+#' @param normalization.method Name of normalization method used: LogNormalize or SCT.
+#' @param dims Number of dimensions of dimensional reduction.
+#' @param k.filter Number of anchors to filter.
+#' @param dims.to.integrate Number of dimensions to return integrated values for.
+#' @param k.weight Number of neighbors to consider when weighting anchors.
+#' @param weight.reduction Dimension reduction to use when calculating anchor weights.
+#' @param sd.weight Controls the bandwidth of the Gaussian kernel for weighting.
+#' @param sample.tree Specify the order of integration.
+#' @param preserve.order Do not reorder objects based on size for each pairwise integration.
+#' @param verbose Print progress bars and output.
+#' @param l2.norm Perform L2 normalization on the CCA cell embeddings after dimensional reduction.
+#' @param k.anchor Number of neighbors (k) to use when picking anchors.
+#' @param k.score Number of neighbors (k) to use when scoring anchors.
+#' @param max.features The maximum number of features to use when specifying the neighborhood search space in the anchor filtering.
+#' @param nn.method Method for nearest neighbor finding.
+#' @param n.trees More trees gives higher precision when using annoy approximate nearest neighbor search.
+#' @param eps Error bound on the neighbor finding algorithm.
 #' @export
 #' @importFrom Seurat IntegrateLayers
+#'
 seuratV5Run <- function(input, method = "CCAIntegration", orig.reduction = "pca", assay = NULL, features = NULL, layers = NULL, scale.layer = "scale.data",
                         new.reduction = "integrated.dr", reference = NULL, normalization.method = "LogNormalize",
                         dims = 1:30, k.filter = NA, dims.to.integrate = NULL, k.weight = 100, weight.reduction = NULL,

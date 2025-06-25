@@ -1,8 +1,8 @@
-#' Title
+#' Convert into a Seurat V3 object
 #'
-#' @param input input
-#' @param batch batch
-#' @param pca_name pca_name
+#' @param input input A `SingleCellExperiment`, `Seurat` or `AnnData` objects can be supplied.
+#' @param batch batch A string specifying the batch variable.
+#' @param pca_name A string specifying the PCA.
 #'
 #' @import methods
 #' @rdname seuratv5Input

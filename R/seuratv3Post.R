@@ -1,8 +1,10 @@
-#' Title
+#' Convert the Seurat V3 output
 #'
-#' @param input input
-#' @param output output
-#' @param method method
+#' Convert the Seurat V3 output into a SingleCellExperiment, Seurat or Anndata objects
+#'
+#' @param input A `SingleCellExperiment`, `Seurat` or `AnnData` objects can be supplied.
+#' @param output Seurat V3 output
+#' @param method A string specifying the correction method
 #'
 #' @import methods
 #' @rdname seuratv3Post

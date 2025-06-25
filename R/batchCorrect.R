@@ -3,7 +3,7 @@
 #' A common interface for single-cell batch correction methods.
 #'
 #' @param input A `SingleCellExperiment`, `Seurat` or `AnnData` objects can be supplied.
-#' @param batch A string specifying the batch for each cell.
+#' @param batch A string specifying the batch variable.
 #' @param params A \linkS4class{BatChefParams} object specifying the batch correction method.
 #'
 #' @import methods
