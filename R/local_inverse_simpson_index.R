@@ -1,11 +1,11 @@
 #' Local Inverse Simposon Index
 #'
-#' @param input input
-#' @param label_true label_true
-#' @param reduction reduction
-#' @param meta_data meta_data
-#' @param perplexity perplexity
-#' @param nn_eps nn_eps
+#' @param input A `SingleCellExperiment` object.
+#' @param label_true A string specifying cell types.
+#' @param reduction A string specifying the dimensional reduction.
+#' @param meta_data A data frame with one row per cell.
+#' @param perplexity The effective number of each cell's neighbors.
+#' @param nn_eps Error bound for nearest neighbor search with `RANN:nn2()`.
 #'
 #' @export
 #' @importFrom lisi compute_lisi

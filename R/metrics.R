@@ -1,24 +1,30 @@
-#' Evaluation metrics function
+#' Performance evaluation metrics.
 #'
-#' @param input input
-#' @param batch batch
-#' @param group group
-#' @param reduction reduction
-#' @param rep rep
-#' @param mc.cores mc.cores
-#' @param average_method average_method
-#' @param metric metric
-#' @param sample_size sample_size
-#' @param random_state random_state
-#' @param meta_data meta_data
-#' @param perplexity perplexity
-#' @param nn_eps nn_eps
+#' Wasserstein distance, Local Inverse Simpson's Index, Average Silhouette Width,
+#' Adjusted Rand Index, and Normalized Mutual Information were computed
+#'
+#' @param input A `SingleCellExperiment` object can be supplied.
+#' @param batch A string specifying batch variable.
+#' @param group A string specifying cell types.
+#' @param reduction A string specifying the dimensional reduction.
+#' @param rep Number of times the Wasserstein distance is calculated.
+#' @param mc.cores The number of cores to use.
+#' @param average_method How to compute the normalizer in the denominator.
+#' @param metric The metric to use when calculating distance between instances.
+#' @param sample_size The size of the sample to use when computing the Silhouette Coefficient on a random subset of the data.
+#' @param random_state Determines random number generation for selecting a subset of samples.
+#' @param meta_data A data frame with one row per cell.
+#' @param perplexity The effective number of each cell's neighbors.
+#' @param nn_eps Error bound for nearest neighbor search with `RANN:nn2()`.
 #'
 #' @export
 #' @importFrom basilisk basiliskStart basiliskStop basiliskRun
 #' @importFrom reticulate import
-metrics <- function(input, batch, group, reduction, rep = 10, mc.cores = 2, average_method = "arithmetic",
-                    metric = "euclidean", sample_size = NULL, random_state = NULL, meta_data = colData(input), perplexity = 30, nn_eps = 0) {
+#'
+metrics <- function(input, batch, group, reduction, rep = 10, mc.cores = 2,
+                    average_method = "arithmetic", metric = "euclidean",
+                    sample_size = NULL, random_state = NULL, meta_data = colData(input),
+                    perplexity = 30, nn_eps = 0) {
   adata <- clustering(input = input, label_true = group, reduction = reduction)
 
   proc <- basiliskStart(py_env)

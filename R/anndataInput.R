@@ -1,6 +1,6 @@
-#' Title
+#' Convert into an AnnData object
 #'
-#' @param input input
+#' @param input A `SingleCellExperiment`, `Seurat` or `AnnData` objects can be supplied.
 #'
 #' @export
 #' @import methods

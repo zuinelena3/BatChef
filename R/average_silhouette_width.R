@@ -1,16 +1,17 @@
 #' Average Silhouette Width
 #'
-#' @param input input
-#' @param label_true label_true
-#' @param reduction reduction
-#' @param metric metric
-#' @param sample_size sample_size
-#' @param random_state random_state
+#' @param input A `SingleCellExperiment` object.
+#' @param label_true A string specifying cell types.
+#' @param reduction A string specifying the dimensional reduction.
+#' @param metric The metric to use when calculating distance between instances.
+#' @param sample_size The size of the sample to use when computing the Silhouette Coefficient on a random subset of the data.
+#' @param random_state Determines random number generation for selecting a subset of samples.
 #'
 #' @export
 #' @importFrom reticulate import
 #' @importFrom basilisk basiliskStart basiliskStop basiliskRun
 #' @importFrom SingleCellExperiment reducedDim colData
+#'
 average_silhouette_width <- function(input, label_true, reduction, metric = "euclidean", sample_size = NULL, random_state = NULL) {
 
   proc <- basiliskStart(py_env)

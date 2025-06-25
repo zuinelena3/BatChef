@@ -2,9 +2,9 @@
 #'
 #' Compute Leiden clustering. The resolution was chosen using the NMI metric.
 #'
-#' @param input input
-#' @param label_true label_true
-#' @param reduction reduction
+#' @param input A `SingleCellExperiment`, `Seurat` or `AnnData` objects can be supplied.
+#' @param label_true A string specifying cell types.
+#' @param reduction A string specifying the dimensional reduction.
 #'
 #' @import methods
 #' @importFrom basilisk basiliskStart basiliskStop basiliskRun
@@ -25,8 +25,10 @@ clustering <- function(input, label_true, reduction) {
     MAX <- 0
 
     for (i in seq_along(res)) {
-      scanpy$tl$leiden(adata, resolution = res[i], key_added = "cluster", flavor = "leidenalg")
-      nmi <- sklearn$metrics$normalized_mutual_info_score(labels_true = adata$obs[, label_true], labels_pred = adata$obs$cluster)
+      scanpy$tl$leiden(adata, resolution = res[i], key_added = "cluster",
+                       flavor = "leidenalg")
+      nmi <- sklearn$metrics$normalized_mutual_info_score(labels_true = adata$obs[, label_true],
+                                                          labels_pred = adata$obs$cluster)
 
       if (nmi > MAX) {
         MAX <- nmi
@@ -34,7 +36,8 @@ clustering <- function(input, label_true, reduction) {
       }
     }
 
-    scanpy$tl$leiden(adata, resolution = as.numeric(names(MAX)), key_added = "cluster", flavor = "leidenalg")
+    scanpy$tl$leiden(adata, resolution = as.numeric(names(MAX)),
+                     key_added = "cluster", flavor = "leidenalg")
 
     return(adata)
   }, input = input, label_true = label_true, reduction = reduction)

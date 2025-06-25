@@ -1,16 +1,17 @@
 #' Wasserstein distance
 #'
-#' @param input input
-#' @param batch batch
-#' @param reduction reduction
-#' @param rep rep
-#' @param mc.cores mc.cores
+#' @param input A `SingleCellExperiment` object.
+#' @param batch A string specifying batch variable.
+#' @param reduction A string specifying the dimensional reduction.
+#' @param rep Number of times the Wasserstein distance is calculated.
+#' @param mc.cores The number of cores to use.
 #'
 #' @export
 #' @importFrom SummarizedExperiment colData
 #' @importFrom SingleCellExperiment reducedDim
 #' @importFrom parallel mclapply
 #' @importFrom transport pp wasserstein
+#'
 wasserstein_distance <- function(input, batch, reduction, rep, mc.cores) {
   stopifnot(batch %in% colnames(colData(input)))
 

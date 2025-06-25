@@ -1,9 +1,11 @@
-#' Normalized Mutual Information
+#' Normalized Mutual Information (NMI)
 #'
-#' @param input input
-#' @param label_true label_true
-#' @param average_method average_method
-#' @param reduction reduction
+#' Before NMI, the Leiden clustering is computed.
+#'
+#' @param input A `SingleCellExperiment`, `Seurat` or `AnnData` objects can be supplied.
+#' @param label_true A string specifying cell types.
+#' @param average_method How to compute the normalizer in the denominator.
+#' @param reduction A string specifying the dimensional reduction.
 #'
 #' @importFrom basilisk basiliskStart basiliskStop basiliskRun
 #' @importFrom reticulate import
