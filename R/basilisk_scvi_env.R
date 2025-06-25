@@ -1,6 +1,6 @@
 #' Yaml file convertion
 #'
-#' @param path yml name file
+#' @param path path of yml file
 #'
 #' @importFrom yaml read_yaml
 #'
