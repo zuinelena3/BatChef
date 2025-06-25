@@ -1,17 +1,20 @@
 Package: BatChef
-Title: Single-cell batch effects correction methods
+Type: Package
+Title: Single-cell RNA-seq batch effects correction methods interface
 Version: 0.99.0
-Authors@R: 
-     c(person("Elena", "Zuin", , "elena.zuin.3@phd.unipd.it", role = c("aut", "cre")),
-     person("Davide", "Risso", , "davide.risso@unipd.it", role = "ctb"),
-     person("Gabriele", "Sales", , "gabriele.sales@unipd.it", role = "ctb"))
-Description: Contains a common interface for single-cell batch correction methods in R and Python environments. 
-  This includes methods based on different strategies, such as mutually nearest neighbors, graph-based, and deep learning. 
-  Also, it provides some metrics to evaluate the performance.
-NeedsCompilation: yes
+Authors@R: c(
+    person("Elena", "Zuin", email = "elena.zuin.3@phd.unipd.it", 
+            role = c("aut", "cre"),
+            comment = c(affiliation = "Department of Biology, University of Padova")),
+    person("Davide", "Risso", role = "ctb",
+            comment = c(affiliation = "Department of Statistical Sciences, University of Padova")),
+    person("Gabriele", "Sales", role = "ctb", 
+            comment = c(affiliation = "Department of Biology, University of Padova")))
+Description: A common interface for single-cell RNA_seq batch effects correction methods in 
+            R and Python environments. The package contains the performance evaluation metrics.
 License: Artistic-2.0
 Encoding: UTF-8
-Roxygen: list(markdown = TRUE)
+LazyData: false
 RoxygenNote: 7.3.2
 Imports: 
     anndata,
@@ -41,3 +44,6 @@ Imports:
     transport,
     yaml,
     zellkonverter
+BugReports: https://github.com/zuinelena3/BatChef/issues
+URL: https://github.com/zuinelena3/BatChef
+VignetteBuilder: knitr
