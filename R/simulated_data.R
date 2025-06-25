@@ -1,36 +1,39 @@
 #' Function to simulate data
 #'
-#' @param nGenes nGenes
-#' @param batchCells batchCells
-#' @param batch.facLoc batch.facLoc
-#' @param batch.facScale batch.facScale
-#' @param batch.rmEffect batch.rmEffect
-#' @param mean.rate mean.rate
-#' @param mean.shape mean.shape
-#' @param lib.loc lib.loc
-#' @param lib.scale lib.scale
-#' @param lib.norm lib.norm
-#' @param out.prob out.prob
-#' @param out.facLoc out.facLoc
-#' @param out.facScale out.facScale
-#' @param group.prob group.prob
-#' @param de.prob de.prob
-#' @param de.downProb de.downProb
-#' @param de.facLoc de.facLoc
-#' @param de.facScale de.facScale
-#' @param bcv.common bcv.common
-#' @param bcv.df bcv.df
-#' @param dropout.type dropout.type
-#' @param dropout.mid dropout.mid
-#' @param dropout.shape dropout.shape
-#' @param path.from path.from
-#' @param path.nSteps path.nSteps
-#' @param path.skew path.skew
-#' @param path.nonlinearProb path.nonlinearProb
-#' @param path.sigmaFac path.sigmaFac
-#' @param seed seed
-#' @param ncomp ncomp
-#' @param n_hvgs n_hvgs
+#' The function allows to simulated single-cell RNA-seq data using Splatter package,
+#' normalize data, select highly variable genes and compute Principal Component Analysis.
+#'
+#' @param nGenes Number of genes.
+#' @param batchCells Number of cells per batch.
+#' @param batch.facLoc Batch factor location parameter.
+#' @param batch.facScale Batch factor scale parameter.
+#' @param batch.rmEffect Remove batch effect.
+#' @param mean.rate Mean rate.
+#' @param mean.shape Mean shape.
+#' @param lib.loc Library size location parameter.
+#' @param lib.scale Library size scale parameter.
+#' @param lib.norm Library size distribution.
+#' @param out.prob Expression outlier probability
+#' @param out.facLoc Expression outlier factor location
+#' @param out.facScale Expression outlier factor scale
+#' @param group.prob Group probabilities
+#' @param de.prob Differential expression probability
+#' @param de.downProb Down-regulation probability
+#' @param de.facLoc DE factor location
+#' @param de.facScale DE factor scale
+#' @param bcv.common Common Biological Coefficient of Variation
+#' @param bcv.df BCV Degrees of Freedom
+#' @param dropout.type Dropout type
+#' @param dropout.mid Dropout mid point
+#' @param dropout.shape Dropout shape
+#' @param path.from Path origin
+#' @param path.nSteps Number of steps
+#' @param path.skew Path skew
+#' @param path.nonlinearProb Non-linear probability
+#' @param path.sigmaFac Path skew
+#' @param seed Random seed
+#' @param ncomp Number of principal component
+#' @param n_hvgs Number of higly variable genes.
 #'
 #' @export
 #'
@@ -67,4 +70,3 @@ simulated_data <- function(nGenes = 10000, batchCells = 100, batch.facLoc = 0.1,
   sim <- runPCA(sim, ntop = n_hvgs, ncomponent = ncomp)
   return(sim)
 }
-
