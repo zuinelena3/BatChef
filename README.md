@@ -1,7 +1,7 @@
 # BatChef
 
-<img align="left" width="200" src="https://drive.google.com/uc?export=view&id=1GYlIpgOopyva1zj3CTAYJ-9V6ts7qZwr">
-  
+<img align="left" width="200" src="https://drive.google.com/uc?export=view&id=1_XyW_NBxIw2el05dzVzXCapwr2ktgL4k">
+
   `BatChef` is an R package that provides a common interface for batch effect 
 correction methods in single-cell RNA-seq data.
 
