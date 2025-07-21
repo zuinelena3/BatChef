@@ -127,8 +127,8 @@ HarmonyParams <- function(...) {
   new("HarmonyParams", extra = list(...))
 }
 
-#' @param assay_type assay_type
-#' @param return_dimred return_dimred
+#' @param assay_type A string specifying the assay.
+#' @param return_dimred A logical to returning integrated low-dimesional embeddings.
 #' @param ... Named arguments to pass to individual methods upon dispatch
 #'
 #' @export
@@ -206,7 +206,7 @@ ScMerge2Params <- function(assay_type = "logcounts", ...) {
   new("ScMerge2Params", assay_type = assay_type, extra = list(...))
 }
 
-#' @param reduction reduction
+#' @param reduction A string specifying the name of PCA.
 #' @param ... Named arguments to pass to individual methods upon dispatch
 
 #' @export
@@ -216,13 +216,13 @@ BBKNNParams <- function(reduction, ...) {
   new("BBKNNParams", reduction = reduction, extra = list(...))
 }
 
-#' @param dataloader dataloader
-#' @param useDatasets useDatasets
-#' @param verbose verbose
-#' @param format.type format.type
-#' @param remove.missing remove.missing
-#' @param method method
-#' @param ... Named arguments to pass to individual methods upon dispatch
+#' @param features Vector of features to use.
+#' @param useDatasets A character vector of the names, a numeric or logical vector of the index of the datasets to be normalized.
+#' @param verbose Print progress bar/messages
+#' @param format.type Deprecated. The functionality of these is covered through other parts of the whole workflow and is no long needed
+#' @param remove.missing Deprecated. The functionality of these is covered through other parts of the whole workflow and is no long needed
+#' @param method iNMF variant algorithm to use for integration.
+#' @param ... Named arguments to pass to individual methods upon dispatch.
 #'
 #' @export
 #' @rdname BatChefParams

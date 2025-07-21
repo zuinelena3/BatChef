@@ -1,10 +1,12 @@
-#' Title
+#' Convert the Scanorama output
 #'
-#' @param input input
-#' @param list list
-#' @param output output
-#' @param return_dimred return_dimred
-#' @param method method
+#' Convert the Scanorama output into a SingleCellExperiment, Seurat or Anndata objects
+#'
+#' @param input A `SingleCellExperiment`, `Seurat` or `AnnData` objects can be supplied.
+#' @param list List of matrices
+#' @param output Scanorama output
+#' @param return_dimred A logical to returning integrated low-dimesional embeddings.
+#' @param method A string specifying the correction method
 #'
 #' @import methods
 #' @rdname scanoramaPost

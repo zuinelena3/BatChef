@@ -1,23 +1,24 @@
-#' scanorama method
+#' Scanorama method
 #'
-#' @param input input
-#' @param return_dimred return_dimred
-#' @param batch_size batch_size
-#' @param verbose verbose
-#' @param ds_names ds_names
-#' @param dimred dimred
-#' @param approx approx
-#' @param sigma sigma
-#' @param alpha alpha
-#' @param knn knn
-#' @param return_dense return_dense
-#' @param hvg hvg
-#' @param union union
-#' @param seed seed
+#' @param input List of expression matrices for each bacthes and the genes.
+#' @param return_dimred A logical to returning integrated low-dimesional embeddings.
+#' @param batch_size The batch size used in the alignment vector computation.
+#' @param verbose Print progress bars and output.
+#' @param ds_names Reports data set names in logging output
+#' @param dimred Number of dimensions of corrected embedding.
+#' @param approx A logical to use approximate nearest neighbors
+#' @param sigma Correction smoothing parameter on Gaussian kernel.
+#' @param alpha Alignment score minimum cutoff.
+#' @param knn Number of nearest neighbors to use for matching.
+#' @param return_dense A logical to return dense matrices.
+#' @param hvg Use this number of top highly variable genes based on dispersion.
+#' @param union A logical to consider the union of the genes. In alternative, the intersection is considered.
+#' @param seed Random seed to use.
 #'
 #' @export
 #' @importFrom basilisk basiliskRun basiliskStart basiliskStop
 #' @importFrom reticulate import
+#'
 scanoramaRun <- function(input, return_dimred = FALSE,
                          batch_size = 5000, verbose = TRUE, ds_names = NULL,
                          dimred = 100, approx = TRUE, sigma = 15, alpha = 0.10, knn = 20,

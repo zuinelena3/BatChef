@@ -1,21 +1,21 @@
 #' BBKNN method
 #'
-#' @param input input
-#' @param batch batch
-#' @param neighbors_within_batch neighbors_within_batch
-#' @param n_pcs n_pcs
-#' @param trim trim
-#' @param computation computation
-#' @param annoy_n_trees annoy_n_trees
-#' @param pynndescent_n_neighbors pynndescent_n_neighbors
-#' @param pynndescent_random_state pynndescent_random_state
-#' @param metric metric
-#' @param set_op_mix_ratio set_op_mix_ratio
-#' @param local_connectivity local_connectivity
-#' @param approx approx
-#' @param use_annoy use_annoy
-#' @param use_faiss use_faiss
-#' @param scanpy_logging scanpy_logging
+#' @param input PCA (or other dimensionality reduction) coordinates for each cell, with cells as rows.
+#' @param batch Vector of batch assignments for each cell.
+#' @param neighbors_within_batch Number of many top neighbours to report for each batch.
+#' @param n_pcs Number of dimensions.
+#' @param trim Trim the neighbours of each cell to these many top connectivities.
+#' @param computation A string specifying the KNN algorithm to use.
+#' @param annoy_n_trees The number of trees to construct in the annoy forest.
+#' @param pynndescent_n_neighbors The number of neighbours to include in the approximate neighbour graph.
+#' @param pynndescent_random_state The RNG seed to use when creating the graph.
+#' @param metric A string specifying the distance metric to use.
+#' @param set_op_mix_ratio UMAP connectivity computation parameter
+#' @param local_connectivity UMAP connectivity computation parameter,
+#' @param approx A logical to approximate nearest neighbor method selection.
+#' @param use_annoy Flag to explicitly enable or disable Annoy for neighbor search.
+#' @param use_faiss Flag to explicitly enable or disable FAISS (Facebook AI Similarity Search) for neighbor search.
+#' @param scanpy_logging If True, enables logging compatible with Scanpy’s logging system for better integration.
 #'
 #' @export
 #' @importFrom stats cmdscale

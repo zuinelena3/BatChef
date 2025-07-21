@@ -1,8 +1,8 @@
-#' Title
+#' Convert into a list of matrices
 #'
-#' @param input input
-#' @param batch batch
-#' @param assay.type assay.type
+#' @param input A `SingleCellExperiment`, `Seurat` or `AnnData` objects can be supplied.
+#' @param batch A string specifying the batch for each cell.
+#' @param assay.type A string specifying the assay.
 #'
 #' @import methods
 #' @rdname scanoramaInput

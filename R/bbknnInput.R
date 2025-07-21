@@ -1,8 +1,8 @@
-#' Title
+#' Convert into a BBKNN compatible object
 #'
-#' @param input input
-#' @param batch batch
-#' @param reduction reduction
+#' @param input A `SingleCellExperiment`, `Seurat` or `AnnData` objects can be supplied.
+#' @param batch A string specifying the batch variable.
+#' @param reduction A string specifying the name of PCA.
 #'
 #' @import methods
 #' @rdname bbknnInput

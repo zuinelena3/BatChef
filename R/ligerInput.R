@@ -1,13 +1,13 @@
-#' Title
+#' Convert into a LIGER object
 #'
-#' @param input input
-#' @param batch batch
-#' @param features features
-#' @param useDatasets useDatasets
-#' @param verbose verbose
-#' @param format.type format.type
-#' @param remove.missing remove.missing
-#' @param ... ...
+#' @param input A `SingleCellExperiment`, `Seurat` or `AnnData` objects can be supplied.
+#' @param batch A string specifying the batch variable.
+#' @param features Vector of features to use.
+#' @param useDatasets A character vector of the names, a numeric or logical vector of the index of the datasets to be normalized.
+#' @param verbose Print progress bar/messages
+#' @param format.type Deprecated. The functionality of these is covered through other parts of the whole workflow and is no long needed
+#' @param remove.missing Deprecated. The functionality of these is covered through other parts of the whole workflow and is no long needed
+#' @param ... Named arguments to pass to individual methods upon dispatch.
 #'
 #' @import methods
 #' @rdname ligerInput

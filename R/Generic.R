@@ -2,9 +2,9 @@
 #'
 #' Generic function for defining batch effect correction methods.
 #'
-#' @param input input
-#' @param batch batch
-#' @param params params
+#' @param input A `SingleCellExperiment`, `Seurat` or `AnnData` objects can be supplied.
+#' @param batch A string specifying the batch variable.
+#' @param params A \linkS4class{BatChefParams} object specifying the batch correction method.
 #'
 #' @export
 #' @import methods
