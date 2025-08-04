@@ -21,7 +21,9 @@ wasserstein_distance <- function(input, batch, reduction, rep, mc.cores) {
   embed <- lapply(ll, function(x) reducedDim(x, reduction))
 
   n <- min(sapply(embed, function(x) length(rownames(x))))
-  stopifnot("Error: N. of cells for a batch too small" = n >= 100)
+  # stopifnot("Error: N. of cells for a batch too small" = n >= 100)
+
+  warning("Warning: The smallest number of cells per batch is less than 100")
 
   wass <- mclapply(1:rep, function(i) {
     random <- lapply(embed, function(x) x[sample(nrow(x), n), ])

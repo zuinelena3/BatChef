@@ -7,15 +7,15 @@
 wasserstein_distance(input, batch, reduction, rep, mc.cores)
 }
 \arguments{
-\item{input}{input}
+\item{input}{A `SingleCellExperiment` object.}
 
-\item{batch}{batch}
+\item{batch}{A string specifying batch variable.}
 
-\item{reduction}{reduction}
+\item{reduction}{A string specifying the dimensional reduction.}
 
-\item{rep}{rep}
+\item{rep}{Number of times the Wasserstein distance is calculated.}
 
-\item{mc.cores}{mc.cores}
+\item{mc.cores}{The number of cores to use.}
 }
 \description{
 Wasserstein distance
