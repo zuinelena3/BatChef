@@ -7,13 +7,13 @@
 scMerge2Run(input, batch, assay_type = "logcounts", ...)
 }
 \arguments{
-\item{input}{input}
+\item{input}{A `SingleCellExperiment` object can be supplied.}
 
-\item{batch}{batch}
+\item{batch}{A string specifying the batch variable.}
 
-\item{assay_type}{assay_type}
+\item{assay_type}{A string specifying the assay to use for correction.}
 
-\item{...}{Named arguments to pass to individual methods upon dispatch}
+\item{...}{Named arguments to pass to individual methods upon dispatch.}
 }
 \description{
 scMerge2 method

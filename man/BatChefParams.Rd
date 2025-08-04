@@ -150,75 +150,75 @@ LigerParams(
 )
 }
 \arguments{
-\item{assay_type}{assay_type}
+\item{assay_type}{A string specifying the assay to use for correction.}
 
-\item{...}{Named arguments to pass to individual methods upon dispatch}
+\item{...}{Named arguments to pass to individual methods upon dispatch.}
 
-\item{features}{features}
+\item{features}{Vector of features to use.}
 
-\item{pca_name}{pca_name}
+\item{pca_name}{A string specifying the PCA name.}
 
-\item{assay}{assay}
+\item{assay}{Name of assay for integration.}
 
-\item{reference}{reference}
+\item{reference}{A reference Seurat object.}
 
-\item{anchor.features}{anchor.features}
+\item{anchor.features}{Number of features to be used in anchor finding.}
 
-\item{scale}{scale}
+\item{scale}{A logical to scale the features provided.}
 
-\item{normalization.method}{normalization.method}
+\item{normalization.method}{Name of normalization method used: LogNormalize or SCT.}
 
-\item{sct.clip.range}{sct.clip.range}
+\item{sct.clip.range}{Numeric of length two specifying the min and max values the Pearson residual will be clipped to.}
 
-\item{reduction}{reduction}
+\item{reduction}{A string specifying the name of PCA.}
 
-\item{l2.norm}{l2.norm}
+\item{l2.norm}{Perform L2 normalization on the CCA cell embeddings after dimensional reduction.}
 
-\item{dims}{dims}
+\item{dims}{Number of dimensions of dimensional reduction.}
 
-\item{k.anchor}{k.anchor}
+\item{k.anchor}{Number of neighbors (k) to use when picking anchors.}
 
-\item{k.filter}{k.filter}
+\item{k.filter}{Number of anchors to filter.}
 
-\item{k.score}{k.score}
+\item{k.score}{Number of neighbors (k) to use when scoring anchors.}
 
-\item{max.features}{max.features}
+\item{max.features}{The maximum number of features to use when specifying the neighborhood search space in the anchor filtering.}
 
-\item{nn.method}{nn.method}
+\item{nn.method}{Method for nearest neighbor finding.}
 
-\item{n.trees}{n.trees}
+\item{n.trees}{More trees gives higher precision when using annoy approximate nearest neighbor search.}
 
-\item{eps}{eps}
+\item{eps}{Error bound on the neighbor finding algorithm.}
 
-\item{verbose}{verbose}
+\item{verbose}{Print progress bar/messages}
 
-\item{new.assay.name}{new.assay.name}
+\item{new.assay.name}{Name for the new assay containing the integrated data.}
 
-\item{features.to.integrate}{features.to.integrate}
+\item{features.to.integrate}{Vector of features to integrate.}
 
-\item{k.weight}{k.weight}
+\item{k.weight}{Number of neighbors to consider when weighting anchors.}
 
-\item{weight.reduction}{weight.reduction}
+\item{weight.reduction}{Dimension reduction to use when calculating anchor weights.}
 
-\item{sd.weight}{sd.weight}
+\item{sd.weight}{Controls the bandwidth of the Gaussian kernel for weighting.}
 
-\item{sample.tree}{sample.tree}
+\item{sample.tree}{Specify the order of integration.}
 
-\item{preserve.order}{preserve.order}
+\item{preserve.order}{Do not reorder objects based on size for each pairwise integration.}
 
-\item{method}{method}
+\item{method}{iNMF variant algorithm to use for integration.}
 
-\item{orig.reduction}{orig.reduction}
+\item{orig.reduction}{Name of dimensional reduction for correction.}
 
-\item{layers}{layers}
+\item{layers}{Names of normalized layers in assay.}
 
-\item{scale.layer}{scale.layer}
+\item{scale.layer}{Name(s) of scaled layer(s) in assay.}
 
-\item{new.reduction}{new.reduction}
+\item{new.reduction}{Name of new integrated dimensional reduction.}
 
-\item{dims.to.integrate}{dims.to.integrate}
+\item{dims.to.integrate}{Number of dimensions to return integrated values for.}
 
-\item{return_dimred}{return_dimred}
+\item{return_dimred}{A logical to returning integrated low-dimesional embeddings.}
 
 \item{layer}{layer}
 
@@ -294,11 +294,11 @@ LigerParams(
 
 \item{return_numpy}{return_numpy}
 
-\item{useDatasets}{useDatasets}
+\item{useDatasets}{A character vector of the names, a numeric or logical vector of the index of the datasets to be normalized.}
 
-\item{format.type}{format.type}
+\item{format.type}{Deprecated. The functionality of these is covered through other parts of the whole workflow and is no long needed}
 
-\item{remove.missing}{remove.missing}
+\item{remove.missing}{Deprecated. The functionality of these is covered through other parts of the whole workflow and is no long needed}
 }
 \description{
 Constructors and methods for the params parameter classes.

@@ -8,7 +8,7 @@
 \alias{sceInput,SingleCellExperiment,SingleCellExperiment-method}
 \alias{sceInput,AnnDataR6-method}
 \alias{sceInput,AnnDataR6,AnnDataR6-method}
-\title{Title}
+\title{Convert into a SingleCellExperiment object}
 \usage{
 sceInput(input, batch)
 
@@ -19,10 +19,10 @@ sceInput(input, batch)
 \S4method{sceInput}{AnnDataR6}(input, batch)
 }
 \arguments{
-\item{input}{input}
+\item{input}{A `SingleCellExperiment`, `Seurat` or `AnnData` objects can be supplied.}
 
-\item{batch}{batch}
+\item{batch}{A string specifying the batch for each cell.}
 }
 \description{
-Title
+Convert into a SingleCellExperiment object
 }

@@ -8,7 +8,7 @@
 \alias{bbknnPost,SingleCellExperiment,SingleCellExperiment-method}
 \alias{bbknnPost,AnnDataR6-method}
 \alias{bbknnPost,AnnDataR6,AnnDataR6-method}
-\title{Title}
+\title{Convert BBKNN output}
 \usage{
 bbknnPost(input, output, method)
 
@@ -19,12 +19,12 @@ bbknnPost(input, output, method)
 \S4method{bbknnPost}{AnnDataR6}(input, output, method)
 }
 \arguments{
-\item{input}{input}
+\item{input}{A `SingleCellExperiment`, `Seurat` or `AnnData` objects can be supplied.}
 
-\item{output}{output}
+\item{output}{BBKNN output.}
 
-\item{method}{method}
+\item{method}{A string specifying the correction method}
 }
 \description{
-Title
+Convert BBKNN output into a SingleCellExperiment, Seurat or Anndata objects.
 }

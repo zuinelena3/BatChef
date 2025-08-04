@@ -8,7 +8,7 @@
 \alias{bbknnInput,SingleCellExperiment,SingleCellExperiment-method}
 \alias{bbknnInput,AnnDataR6-method}
 \alias{bbknnInput,AnnDataR6,AnnDataR6-method}
-\title{Title}
+\title{Convert into a BBKNN compatible object}
 \usage{
 bbknnInput(input, batch, reduction)
 
@@ -19,12 +19,12 @@ bbknnInput(input, batch, reduction)
 \S4method{bbknnInput}{AnnDataR6}(input, batch, reduction)
 }
 \arguments{
-\item{input}{input}
+\item{input}{A `SingleCellExperiment`, `Seurat` or `AnnData` objects can be supplied.}
 
-\item{batch}{batch}
+\item{batch}{A string specifying the batch variable.}
 
-\item{reduction}{reduction}
+\item{reduction}{A string specifying the name of PCA.}
 }
 \description{
-Title
+Convert into a BBKNN compatible object
 }

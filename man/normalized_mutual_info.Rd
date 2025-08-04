@@ -2,7 +2,7 @@
 % Please edit documentation in R/normalized_mutual_info.R
 \name{normalized_mutual_info}
 \alias{normalized_mutual_info}
-\title{Normalized Mutual Information}
+\title{Normalized Mutual Information (NMI)}
 \usage{
 normalized_mutual_info(
   input,
@@ -12,14 +12,14 @@ normalized_mutual_info(
 )
 }
 \arguments{
-\item{input}{input}
+\item{input}{A `SingleCellExperiment`, `Seurat` or `AnnData` objects can be supplied.}
 
-\item{label_true}{label_true}
+\item{label_true}{A string specifying cell types.}
 
-\item{average_method}{average_method}
+\item{average_method}{How to compute the normalizer in the denominator.}
 
-\item{reduction}{reduction}
+\item{reduction}{A string specifying the dimensional reduction.}
 }
 \description{
-Normalized Mutual Information
+Before NMI, the Leiden clustering is computed.
 }

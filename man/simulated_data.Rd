@@ -39,68 +39,69 @@ simulated_data(
 )
 }
 \arguments{
-\item{nGenes}{nGenes}
+\item{nGenes}{Number of genes.}
 
-\item{batchCells}{batchCells}
+\item{batchCells}{Number of cells per batch.}
 
-\item{batch.facLoc}{batch.facLoc}
+\item{batch.facLoc}{Batch factor location parameter.}
 
-\item{batch.facScale}{batch.facScale}
+\item{batch.facScale}{Batch factor scale parameter.}
 
-\item{batch.rmEffect}{batch.rmEffect}
+\item{batch.rmEffect}{Remove batch effect.}
 
-\item{mean.rate}{mean.rate}
+\item{mean.rate}{Mean rate.}
 
-\item{mean.shape}{mean.shape}
+\item{mean.shape}{Mean shape.}
 
-\item{lib.loc}{lib.loc}
+\item{lib.loc}{Library size location parameter.}
 
-\item{lib.scale}{lib.scale}
+\item{lib.scale}{Library size scale parameter.}
 
-\item{lib.norm}{lib.norm}
+\item{lib.norm}{Library size distribution.}
 
-\item{out.prob}{out.prob}
+\item{out.prob}{Expression outlier probability}
 
-\item{out.facLoc}{out.facLoc}
+\item{out.facLoc}{Expression outlier factor location}
 
-\item{out.facScale}{out.facScale}
+\item{out.facScale}{Expression outlier factor scale}
 
-\item{group.prob}{group.prob}
+\item{group.prob}{Group probabilities}
 
-\item{de.prob}{de.prob}
+\item{de.prob}{Differential expression probability}
 
-\item{de.downProb}{de.downProb}
+\item{de.downProb}{Down-regulation probability}
 
-\item{de.facLoc}{de.facLoc}
+\item{de.facLoc}{DE factor location}
 
-\item{de.facScale}{de.facScale}
+\item{de.facScale}{DE factor scale}
 
-\item{bcv.common}{bcv.common}
+\item{bcv.common}{Common Biological Coefficient of Variation}
 
-\item{bcv.df}{bcv.df}
+\item{bcv.df}{BCV Degrees of Freedom}
 
-\item{dropout.type}{dropout.type}
+\item{dropout.type}{Dropout type}
 
-\item{dropout.mid}{dropout.mid}
+\item{dropout.mid}{Dropout mid point}
 
-\item{dropout.shape}{dropout.shape}
+\item{dropout.shape}{Dropout shape}
 
-\item{path.from}{path.from}
+\item{path.from}{Path origin}
 
-\item{path.nSteps}{path.nSteps}
+\item{path.nSteps}{Number of steps}
 
-\item{path.skew}{path.skew}
+\item{path.skew}{Path skew}
 
-\item{path.nonlinearProb}{path.nonlinearProb}
+\item{path.nonlinearProb}{Non-linear probability}
 
-\item{path.sigmaFac}{path.sigmaFac}
+\item{path.sigmaFac}{Path skew}
 
-\item{seed}{seed}
+\item{seed}{Random seed}
 
-\item{ncomp}{ncomp}
+\item{ncomp}{Number of principal component}
 
-\item{n_hvgs}{n_hvgs}
+\item{n_hvgs}{Number of higly variable genes.}
 }
 \description{
-Function to simulate data
+The function allows to simulated single-cell RNA-seq data using Splatter package,
+normalize data, select highly variable genes and compute Principal Component Analysis.
 }

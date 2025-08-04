@@ -23,35 +23,35 @@ ligerRun(
 )
 }
 \arguments{
-\item{input}{input}
+\item{input}{A `liger` object.}
 
-\item{method}{method}
+\item{method}{iNMF variant algorithm to use for integration.}
 
-\item{quantiles}{quantiles}
+\item{quantiles}{Number of quantiles to use for quantile normalization.}
 
-\item{reference}{reference}
+\item{reference}{Character, numeric or logical selection of one dataset, out of all available datasets in object, to use as a "reference" for quantile normalization.}
 
-\item{minCells}{minCells}
+\item{minCells}{Minimum number of cells to consider a cluster shared across datasets}
 
-\item{nNeighbors}{nNeighbors}
+\item{nNeighbors}{Number of nearest neighbors for within-dataset knn graph.}
 
-\item{useDims}{useDims}
+\item{useDims}{Indices of factors to use for shared nearest factor determination.}
 
-\item{center}{center}
+\item{center}{A logical to center data.}
 
-\item{maxSample}{maxSample}
+\item{maxSample}{Maximum number of cells used for quantile normalization of each cluster and factor}
 
-\item{eps}{eps}
+\item{eps}{The error bound of the nearest neighbor search.}
 
-\item{refineKNN}{refineKNN}
+\item{refineKNN}{A logical to increase robustness of cluster assignments using KNN graph.}
 
-\item{clusterName}{clusterName}
+\item{clusterName}{Variable name that will store the clustering result in metadata of a liger object or a Seurat object.}
 
-\item{seed}{seed}
+\item{seed}{Random seed}
 
-\item{verbose}{verbose}
+\item{verbose}{Print progress bar/messages}
 
-\item{...}{...}
+\item{...}{Named arguments to pass to individual methods upon dispatch.}
 }
 \description{
 LIGER method

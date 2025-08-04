@@ -10,7 +10,7 @@
 \alias{seuratv3Input,AnnDataR6,AnnDataR6-method}
 \alias{seuratv3Input,list-method}
 \alias{seuratv3Input,list,list-method}
-\title{Title}
+\title{Convert into a Seurat V3 object}
 \usage{
 seuratv3Input(input, batch, features, pca_name = NULL)
 
@@ -23,14 +23,14 @@ seuratv3Input(input, batch, features, pca_name = NULL)
 \S4method{seuratv3Input}{list}(input, batch, features, pca_name = NULL)
 }
 \arguments{
-\item{input}{input}
+\item{input}{A `SingleCellExperiment`, `Seurat` or `AnnData` objects can be supplied.}
 
-\item{batch}{batch}
+\item{batch}{A string specifying the batch variable.}
 
-\item{features}{features}
+\item{features}{Vector of features to use.}
 
-\item{pca_name}{pca}
+\item{pca_name}{A string specifying the PCA.}
 }
 \description{
-Title
+Convert into a Seurat V3 object
 }

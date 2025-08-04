@@ -15,6 +15,7 @@ Description: A common interface for single-cell RNA_seq batch effects correction
 License: Artistic-2.0
 Encoding: UTF-8
 LazyData: false
+biocViews: BatchEffect
 RoxygenNote: 7.3.2
 Imports: 
     anndata,
@@ -22,6 +23,7 @@ Imports:
     batchelor,
     DelayedArray,
     harmony,
+    knitr,
     limma,
     lisi,
     methods,

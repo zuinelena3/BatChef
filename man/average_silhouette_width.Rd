@@ -14,17 +14,17 @@ average_silhouette_width(
 )
 }
 \arguments{
-\item{input}{input}
+\item{input}{A `SingleCellExperiment` object.}
 
-\item{label_true}{label_true}
+\item{label_true}{A string specifying cell types.}
 
-\item{reduction}{reduction}
+\item{reduction}{A string specifying the dimensional reduction.}
 
-\item{metric}{metric}
+\item{metric}{The metric to use when calculating distance between instances.}
 
-\item{sample_size}{sample_size}
+\item{sample_size}{The size of the sample to use when computing the Silhouette Coefficient on a random subset of the data.}
 
-\item{random_state}{random_state}
+\item{random_state}{Determines random number generation for selecting a subset of samples.}
 }
 \description{
 Average Silhouette Width

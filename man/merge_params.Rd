@@ -2,17 +2,17 @@
 % Please edit documentation in R/merge_params.R
 \name{merge_params}
 \alias{merge_params}
-\title{Title}
+\title{Parameters merging}
 \usage{
 merge_params(base, extra, class)
 }
 \arguments{
-\item{base}{base}
+\item{base}{base params}
 
-\item{extra}{extra}
+\item{extra}{extra params}
 
 \item{class}{class}
 }
 \description{
-Title
+Parameters merging
 }

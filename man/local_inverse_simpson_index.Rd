@@ -14,17 +14,17 @@ local_inverse_simpson_index(
 )
 }
 \arguments{
-\item{input}{input}
+\item{input}{A `SingleCellExperiment` object.}
 
-\item{label_true}{label_true}
+\item{label_true}{A string specifying cell types.}
 
-\item{reduction}{reduction}
+\item{reduction}{A string specifying the dimensional reduction.}
 
-\item{meta_data}{meta_data}
+\item{meta_data}{A data frame with one row per cell.}
 
-\item{perplexity}{perplexity}
+\item{perplexity}{The effective number of each cell's neighbors.}
 
-\item{nn_eps}{nn_eps}
+\item{nn_eps}{Error bound for nearest neighbor search with `RANN:nn2()`.}
 }
 \description{
 Local Inverse Simposon Index

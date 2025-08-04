@@ -8,7 +8,7 @@
 \alias{seuratv3Post,SingleCellExperiment,SingleCellExperiment-method}
 \alias{seuratv3Post,list-method}
 \alias{seuratv3Post,AnnDataR6,AnnDataR6-method}
-\title{Title}
+\title{Convert the Seurat V3 output}
 \usage{
 seuratv3Post(input, output, method)
 
@@ -19,12 +19,12 @@ seuratv3Post(input, output, method)
 \S4method{seuratv3Post}{list}(input, output, method)
 }
 \arguments{
-\item{input}{input}
+\item{input}{A `SingleCellExperiment`, `Seurat` or `AnnData` objects can be supplied.}
 
-\item{output}{output}
+\item{output}{Seurat V3 output}
 
-\item{method}{method}
+\item{method}{A string specifying the correction method}
 }
 \description{
-Title
+Convert the Seurat V3 output into a SingleCellExperiment, Seurat or Anndata objects
 }

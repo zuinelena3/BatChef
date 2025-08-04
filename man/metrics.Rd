@@ -2,7 +2,7 @@
 % Please edit documentation in R/metrics.R
 \name{metrics}
 \alias{metrics}
-\title{Evaluation metrics function}
+\title{Performance evaluation metrics.}
 \usage{
 metrics(
   input,
@@ -21,32 +21,33 @@ metrics(
 )
 }
 \arguments{
-\item{input}{input}
+\item{input}{A `SingleCellExperiment` object can be supplied.}
 
-\item{batch}{batch}
+\item{batch}{A string specifying batch variable.}
 
-\item{group}{group}
+\item{group}{A string specifying cell types.}
 
-\item{reduction}{reduction}
+\item{reduction}{A string specifying the dimensional reduction.}
 
-\item{rep}{rep}
+\item{rep}{Number of times the Wasserstein distance is calculated.}
 
-\item{mc.cores}{mc.cores}
+\item{mc.cores}{The number of cores to use.}
 
-\item{average_method}{average_method}
+\item{average_method}{How to compute the normalizer in the denominator.}
 
-\item{metric}{metric}
+\item{metric}{The metric to use when calculating distance between instances.}
 
-\item{sample_size}{sample_size}
+\item{sample_size}{The size of the sample to use when computing the Silhouette Coefficient on a random subset of the data.}
 
-\item{random_state}{random_state}
+\item{random_state}{Determines random number generation for selecting a subset of samples.}
 
-\item{meta_data}{meta_data}
+\item{meta_data}{A data frame with one row per cell.}
 
-\item{perplexity}{perplexity}
+\item{perplexity}{The effective number of each cell's neighbors.}
 
-\item{nn_eps}{nn_eps}
+\item{nn_eps}{Error bound for nearest neighbor search with `RANN:nn2()`.}
 }
 \description{
-Evaluation metrics function
+Wasserstein distance, Local Inverse Simpson's Index, Average Silhouette Width,
+Adjusted Rand Index, and Normalized Mutual Information were computed
 }

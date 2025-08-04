@@ -8,7 +8,7 @@
 \alias{anndataInput,SingleCellExperiment,SingleCellExperiment-method}
 \alias{anndataInput,AnnDataR6-method}
 \alias{anndataInput,anndata.AnnData,anndata.AnnData-method}
-\title{Title}
+\title{Convert into an AnnData object}
 \usage{
 anndataInput(input)
 
@@ -19,8 +19,8 @@ anndataInput(input)
 \S4method{anndataInput}{AnnDataR6}(input)
 }
 \arguments{
-\item{input}{input}
+\item{input}{A `SingleCellExperiment`, `Seurat` or `AnnData` objects can be supplied.}
 }
 \description{
-Title
+Convert into an AnnData object
 }

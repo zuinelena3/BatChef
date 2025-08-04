@@ -7,7 +7,7 @@
 yml_convert(path)
 }
 \arguments{
-\item{path}{yml name file}
+\item{path}{path of yml file}
 }
 \description{
 Yaml file convertion

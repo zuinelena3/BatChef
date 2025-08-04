@@ -2,7 +2,7 @@
 % Please edit documentation in R/scanoramaRun.R
 \name{scanoramaRun}
 \alias{scanoramaRun}
-\title{scanorama method}
+\title{Scanorama method}
 \usage{
 scanoramaRun(
   input,
@@ -22,34 +22,34 @@ scanoramaRun(
 )
 }
 \arguments{
-\item{input}{input}
+\item{input}{List of expression matrices for each bacthes and the genes.}
 
-\item{return_dimred}{return_dimred}
+\item{return_dimred}{A logical to returning integrated low-dimesional embeddings.}
 
-\item{batch_size}{batch_size}
+\item{batch_size}{The batch size used in the alignment vector computation.}
 
-\item{verbose}{verbose}
+\item{verbose}{Print progress bars and output.}
 
-\item{ds_names}{ds_names}
+\item{ds_names}{Reports data set names in logging output}
 
-\item{dimred}{dimred}
+\item{dimred}{Number of dimensions of corrected embedding.}
 
-\item{approx}{approx}
+\item{approx}{A logical to use approximate nearest neighbors}
 
-\item{sigma}{sigma}
+\item{sigma}{Correction smoothing parameter on Gaussian kernel.}
 
-\item{alpha}{alpha}
+\item{alpha}{Alignment score minimum cutoff.}
 
-\item{knn}{knn}
+\item{knn}{Number of nearest neighbors to use for matching.}
 
-\item{return_dense}{return_dense}
+\item{return_dense}{A logical to return dense matrices.}
 
-\item{hvg}{hvg}
+\item{hvg}{Use this number of top highly variable genes based on dispersion.}
 
-\item{union}{union}
+\item{union}{A logical to consider the union of the genes. In alternative, the intersection is considered.}
 
-\item{seed}{seed}
+\item{seed}{Random seed to use.}
 }
 \description{
-scanorama method
+Scanorama method
 }

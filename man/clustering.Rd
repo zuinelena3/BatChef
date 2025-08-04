@@ -7,11 +7,11 @@
 clustering(input, label_true, reduction)
 }
 \arguments{
-\item{input}{input}
+\item{input}{A `SingleCellExperiment`, `Seurat` or `AnnData` objects can be supplied.}
 
-\item{label_true}{label_true}
+\item{label_true}{A string specifying cell types.}
 
-\item{reduction}{reduction}
+\item{reduction}{A string specifying the dimensional reduction.}
 }
 \description{
 Compute Leiden clustering. The resolution was chosen using the NMI metric.

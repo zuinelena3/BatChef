@@ -24,37 +24,37 @@ bbknnRun(
 )
 }
 \arguments{
-\item{input}{input}
+\item{input}{PCA (or other dimensionality reduction) coordinates for each cell, with cells as rows.}
 
-\item{batch}{batch}
+\item{batch}{Vector of batch assignments for each cell.}
 
-\item{neighbors_within_batch}{neighbors_within_batch}
+\item{neighbors_within_batch}{Number of many top neighbours to report for each batch.}
 
-\item{n_pcs}{n_pcs}
+\item{n_pcs}{Number of dimensions.}
 
-\item{trim}{trim}
+\item{trim}{Trim the neighbours of each cell to these many top connectivities.}
 
-\item{computation}{computation}
+\item{computation}{A string specifying the KNN algorithm to use.}
 
-\item{annoy_n_trees}{annoy_n_trees}
+\item{annoy_n_trees}{The number of trees to construct in the annoy forest.}
 
-\item{pynndescent_n_neighbors}{pynndescent_n_neighbors}
+\item{pynndescent_n_neighbors}{The number of neighbours to include in the approximate neighbour graph.}
 
-\item{pynndescent_random_state}{pynndescent_random_state}
+\item{pynndescent_random_state}{The RNG seed to use when creating the graph.}
 
-\item{metric}{metric}
+\item{metric}{A string specifying the distance metric to use.}
 
-\item{set_op_mix_ratio}{set_op_mix_ratio}
+\item{set_op_mix_ratio}{UMAP connectivity computation parameter}
 
-\item{local_connectivity}{local_connectivity}
+\item{local_connectivity}{UMAP connectivity computation parameter,}
 
-\item{approx}{approx}
+\item{approx}{A logical to approximate nearest neighbor method selection.}
 
-\item{use_annoy}{use_annoy}
+\item{use_annoy}{Flag to explicitly enable or disable Annoy for neighbor search.}
 
-\item{use_faiss}{use_faiss}
+\item{use_faiss}{Flag to explicitly enable or disable FAISS (Facebook AI Similarity Search) for neighbor search.}
 
-\item{scanpy_logging}{scanpy_logging}
+\item{scanpy_logging}{If True, enables logging compatible with Scanpy’s logging system for better integration.}
 }
 \description{
 BBKNN method

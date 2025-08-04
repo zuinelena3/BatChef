@@ -34,57 +34,57 @@ seuratV3Run(
 )
 }
 \arguments{
-\item{input}{A list of Seurat objects.}
+\item{input}{A list of `Seurat` objects.}
 
-\item{assay}{A vector of assay names specifying which assay to use when constructing anchors. If NULL, the current default assay for each object is used.}
+\item{assay}{A vector of assay names specifying which assay to use when constructing anchors.}
 
 \item{reference}{A vector specifying the object/s to be used as a reference during integration.}
 
 \item{anchor.features}{Number of features to be used in anchor finding.}
 
-\item{scale}{A logical}
+\item{scale}{A logical to scale the features provided.}
 
 \item{normalization.method}{Name of normalization method used: LogNormalize (default) or SCT.}
 
-\item{sct.clip.range}{sct.clip.range}
+\item{sct.clip.range}{Numeric of length two specifying the min and max values the Pearson residual will be clipped to.}
 
-\item{reduction}{reduction}
+\item{reduction}{Dimensional reduction to perform when finding anchors.}
 
-\item{l2.norm}{l2.norm}
+\item{l2.norm}{Perform L2 normalization on the CCA cell embeddings after dimensional reduction.}
 
-\item{dims}{dims}
+\item{dims}{Number of dimensions.}
 
-\item{k.anchor}{k.anchor}
+\item{k.anchor}{Number of neighbors (k) to use when picking anchors.}
 
-\item{k.filter}{k.filter}
+\item{k.filter}{Number of neighbors (k) to use when filtering anchors.}
 
-\item{k.score}{k.score}
+\item{k.score}{Number of neighbors (k) to use when scoring anchors.}
 
-\item{max.features}{max.features}
+\item{max.features}{The maximum number of features to use when specifying the neighborhood search space in the anchor filtering.}
 
-\item{nn.method}{nn.method}
+\item{nn.method}{Method for nearest neighbor finding.}
 
-\item{n.trees}{n.trees}
+\item{n.trees}{More trees gives higher precision when using annoy approximate nearest neighbor search.}
 
-\item{eps}{eps}
+\item{eps}{Error bound on the neighbor finding algorithm.}
 
-\item{verbose}{verbose}
+\item{verbose}{Print progress bars and output.}
 
-\item{new.assay.name}{new.assay.name}
+\item{new.assay.name}{Name for the new assay containing the integrated data.}
 
-\item{features}{features}
+\item{features}{Vector of features to use.}
 
-\item{features.to.integrate}{features.to.integrate}
+\item{features.to.integrate}{Vector of features to integrate.}
 
-\item{k.weight}{k.weight}
+\item{k.weight}{Number of neighbors to consider when weighting anchors.}
 
-\item{weight.reduction}{weight.reduction}
+\item{weight.reduction}{Dimension reduction to use when calculating anchor weights.}
 
-\item{sd.weight}{sd.weight}
+\item{sd.weight}{Controls the bandwidth of the Gaussian kernel for weighting.}
 
-\item{sample.tree}{sample.tree}
+\item{sample.tree}{Specify the order of integration.}
 
-\item{preserve.order}{preserve.order}
+\item{preserve.order}{Do not reorder objects based on size for each pairwise integration.}
 }
 \description{
 Seurat V3 method

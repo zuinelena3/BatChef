@@ -8,7 +8,7 @@
 \alias{scMerge2Post,SingleCellExperiment,SingleCellExperiment-method}
 \alias{scMerge2Post,AnnDataR6-method}
 \alias{scMerge2Post,AnnDataR6,AnnDataR6-method}
-\title{Title}
+\title{Convert the scMerge2 output}
 \usage{
 scMerge2Post(input, output, method)
 
@@ -19,12 +19,12 @@ scMerge2Post(input, output, method)
 \S4method{scMerge2Post}{AnnDataR6}(input, output, method)
 }
 \arguments{
-\item{input}{input}
+\item{input}{A `SingleCellExperiment`, `Seurat` or `AnnData` objects can be supplied.}
 
-\item{output}{output}
+\item{output}{scMerge2 output.}
 
-\item{method}{method}
+\item{method}{A string specifying the correction method}
 }
 \description{
-Title
+Convert the scMerge2 output into a SingleCellExperiment, Seurat or Anndata objects
 }

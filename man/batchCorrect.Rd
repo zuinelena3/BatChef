@@ -40,9 +40,9 @@ batchCorrect(input, batch, params)
 \S4method{batchCorrect}{LigerParams}(input, batch, params)
 }
 \arguments{
-\item{input}{A SingleCellExperiment, Seurat or AnnData objects can be supplied.}
+\item{input}{A `SingleCellExperiment`, `Seurat` or `AnnData` objects can be supplied.}
 
-\item{batch}{A string specifying the batch for each cell.}
+\item{batch}{A string specifying the batch variable.}
 
 \item{params}{A \linkS4class{BatChefParams} object specifying the batch correction method.}
 }

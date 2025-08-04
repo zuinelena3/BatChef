@@ -8,7 +8,7 @@
 \alias{harmonyPost,SingleCellExperiment,SingleCellExperiment-method}
 \alias{harmonyPost,AnnDataR6-method}
 \alias{harmonyPost,AnnDataR6,AnnDataR6-method}
-\title{Title}
+\title{Convert Harmony output}
 \usage{
 harmonyPost(input, output, method)
 
@@ -19,12 +19,12 @@ harmonyPost(input, output, method)
 \S4method{harmonyPost}{AnnDataR6}(input, output, method)
 }
 \arguments{
-\item{input}{input}
+\item{input}{A `SingleCellExperiment`, `Seurat` or `AnnData` objects can be supplied.}
 
-\item{output}{output}
+\item{output}{Harmony output.}
 
-\item{method}{method}
+\item{method}{A string specifying the correction method.}
 }
 \description{
-Title
+Convert Harmony output into a SingleCellExperiment, Seurat or Anndata objects.
 }

@@ -8,7 +8,7 @@
 \alias{fastMNNPost,SingleCellExperiment,SingleCellExperiment-method}
 \alias{fastMNNPost,AnnDataR6-method}
 \alias{fastMNNPost,AnnDataR6,AnnDataR6-method}
-\title{Title}
+\title{Convert fastMNN output}
 \usage{
 fastMNNPost(input, output, method)
 
@@ -19,12 +19,12 @@ fastMNNPost(input, output, method)
 \S4method{fastMNNPost}{AnnDataR6}(input, output, method)
 }
 \arguments{
-\item{input}{input}
+\item{input}{A `SingleCellExperiment`, `Seurat` or `AnnData` objects can be supplied.}
 
-\item{output}{output}
+\item{output}{fastMNN output.}
 
-\item{method}{method}
+\item{method}{A string specifying the correction method.}
 }
 \description{
-Title
+Convert fastMNN output into a SingleCellExperiment, Seurat or Anndata objects.
 }

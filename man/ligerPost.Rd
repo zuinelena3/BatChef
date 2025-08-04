@@ -8,7 +8,7 @@
 \alias{ligerPost,SingleCellExperiment,SingleCellExperiment-method}
 \alias{ligerPost,AnnDataR6-method}
 \alias{ligerPost,AnnDataR6,AnnDataR6-method}
-\title{Title}
+\title{Convert the LIGER output}
 \usage{
 ligerPost(input, output, method)
 
@@ -19,12 +19,12 @@ ligerPost(input, output, method)
 \S4method{ligerPost}{AnnDataR6}(input, output, method)
 }
 \arguments{
-\item{input}{input}
+\item{input}{A `SingleCellExperiment`, `Seurat` or `AnnData` objects can be supplied.}
 
-\item{output}{output}
+\item{output}{LIGER output}
 
-\item{method}{method}
+\item{method}{A string specifying the correction method}
 }
 \description{
-Title
+Convert the LIGER output into a SingleCellExperiment, Seurat or Anndata objects
 }

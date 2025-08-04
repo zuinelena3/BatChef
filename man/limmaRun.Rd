@@ -7,9 +7,9 @@
 limmaRun(input, batch, assay_type = "logcounts", ...)
 }
 \arguments{
-\item{input}{A SingleCellExperiment object.}
+\item{input}{A `SingleCellExperiment` object.}
 
-\item{batch}{A string specifying the batch for each cell.}
+\item{batch}{A string specifying the batch variable.}
 
 \item{assay_type}{A string specifying the assay.}
 

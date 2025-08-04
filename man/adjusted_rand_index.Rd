@@ -2,17 +2,17 @@
 % Please edit documentation in R/adjusted_rand_index.R
 \name{adjusted_rand_index}
 \alias{adjusted_rand_index}
-\title{Adjusted Range Index}
+\title{Adjusted Rand Index (ARI)}
 \usage{
 adjusted_rand_index(input, label_true, reduction)
 }
 \arguments{
-\item{input}{input}
+\item{input}{A `SingleCellExperiment`, `Seurat` or `AnnData` objects can be supplied.}
 
-\item{label_true}{label_true}
+\item{label_true}{A string specifying cell types.}
 
-\item{reduction}{reduction}
+\item{reduction}{A string specifying the dimensional reduction.}
 }
 \description{
-Adjusted Range Index
+Before ARI, the Leiden clustering is computed.
 }

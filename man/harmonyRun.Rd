@@ -7,9 +7,9 @@
 harmonyRun(input, batch, ...)
 }
 \arguments{
-\item{input}{input}
+\item{input}{A `SingleCellExperiment` object.}
 
-\item{batch}{batch}
+\item{batch}{A string specifying the batch variable.}
 
 \item{...}{Named arguments to pass to individual methods upon dispatch}
 }

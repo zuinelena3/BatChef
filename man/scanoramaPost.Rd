@@ -8,7 +8,7 @@
 \alias{scanoramaPost,SingleCellExperiment,SingleCellExperiment-method}
 \alias{scanoramaPost,AnnDataR6-method}
 \alias{scanoramaPost,AnnDataR6,AnnDataR6-method}
-\title{Title}
+\title{Convert the Scanorama output}
 \usage{
 scanoramaPost(input, list, output, return_dimred, method)
 
@@ -19,16 +19,16 @@ scanoramaPost(input, list, output, return_dimred, method)
 \S4method{scanoramaPost}{AnnDataR6}(input, list, output, return_dimred, method)
 }
 \arguments{
-\item{input}{input}
+\item{input}{A `SingleCellExperiment`, `Seurat` or `AnnData` objects can be supplied.}
 
-\item{list}{list}
+\item{list}{List of matrices}
 
-\item{output}{output}
+\item{output}{Scanorama output}
 
-\item{return_dimred}{return_dimred}
+\item{return_dimred}{A logical to returning integrated low-dimesional embeddings.}
 
-\item{method}{method}
+\item{method}{A string specifying the correction method}
 }
 \description{
-Title
+Convert the Scanorama output into a SingleCellExperiment, Seurat or Anndata objects
 }

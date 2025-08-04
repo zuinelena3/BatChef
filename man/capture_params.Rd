@@ -2,7 +2,7 @@
 % Please edit documentation in R/capture_params.R
 \name{capture_params}
 \alias{capture_params}
-\title{Title}
+\title{Capture parameters of the correction methods}
 \usage{
 capture_params(target, params)
 }
@@ -12,5 +12,5 @@ capture_params(target, params)
 \item{params}{params}
 }
 \description{
-Title
+Capture parameters of the correction methods
 }
