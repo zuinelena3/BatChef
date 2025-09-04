@@ -1,0 +1,169 @@
+---
+title: "BatChef: A common interface for batch effect correction methods in single-cell RNA-seq data"
+author: 
+- name: Elena Zuin
+  affiliation: Department of Biology, University of Padova, Italy
+- name: Chiara Romualdi
+  affiliation: Department of Biology, University of Padova, Italy
+- name: Davide Risso
+  affiliation: Department of Statistical Sciences, University of Padova, Italy
+- name: Gabriele Sales
+  affiliation: Department of Biology, University of Padova, Italy
+output:
+  BiocStyle::html_document:
+    toc: true
+    number_sections: true
+    toc_float: true
+    toc_depth: 3
+package: BatChef
+vignette: >
+  %\VignetteIndexEntry{batch_correction}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, echo=FALSE, results="hide", message=FALSE}
+knitr::opts_chunk$set(
+    collapse = TRUE,
+    comment = "#>",
+    cache = TRUE,
+    out.width = "100%"
+)
+```
+
+# Introduction
+
+Combining single-cell RNA-sequencing (scRNA-seq) datasets from different sources 
+introduces technical variability known as batch effects, caused by factors like 
+operators, reagent batches, platforms, and timing. These batch effects distort 
+analyses and obscure true biological signals, making accurate data interpretation difficult.
+
+In the literature there are various batch correction methods, based on different
+mathematical approaches, using R and Python languages.
+
+`BatChef` is an R package that provides a common interface for batch effect 
+correction methods in single-cell RNA-seq data. It allows users to compute 
+various correction methods through a generic function by specifying the desired
+approach. The package contains multiple methods implemented in both R and Python,
+each based on different mathematical approach.
+
+Also, it provides metrics to evaluate the performance of the correction methods, 
+such as the Wasserstein distance, Local Inverse Simpson's Index (LISI), Average 
+Silhouette Width (ASW), and Adjusted Rand Index (ARI).
+
+# Installation
+
+```{r,eval=FALSE}
+# install.packages("devtools")
+devtools::install_github("zuinelena3/BatChef")
+```
+
+# Setting up
+
+```{r, include=TRUE, results="hide", message=FALSE, warning=FALSE}
+#Load the packages
+library(BatChef)
+library(Seurat)
+library(reticulate)
+library(zellkonverter)
+```
+
+To demonstrate, we simulate a dataset with 8,000 genes, 8,000 cells, 
+2 batches and 2 cell types, using the `simulated_data` function. This function 
+applies the same parameters as the Splatter package’s ones. 
+Additionally, it normalizes the data, identifies highly variable genes via 
+the `scrapper` package, and performs principal component analysis using 
+the `scater` package.
+
+```{r}
+sce <- simulated_data(nGenes = 8000, batchCells = c(4800, 3200), 
+                      group.prob = c(0.4, 0.6), n_hvgs = 2000, 
+                      ncomp = 10, seed = 3)
+sce
+```
+
+# Batch effects correction
+
+The `batchCorrect` function allows to specify the desired correction method and 
+performs the correction with three different input data: `SingleCellExperiment`,
+`Seurat` and `AnnData`. 
+So, we convert our data.
+
+```{r, message=FALSE, warning=FALSE}
+so <- as.Seurat(sce)
+# Error: C stack usage  7969796 is too close to the limit
+# andata <- zellkonverter::SCE2AnnData(sce)
+```
+
+The desired correction method can have these values:
+
+-   `LimmaParams`
+
+-   `CombatParams`
+
+-   `Seuratv3Params`
+
+-   `Seuratv5Params`
+
+-   `FastMNNParams`
+
+-   `HarmonyParams`
+
+-   `ScanoramaParams`
+
+-   `ScVIParams`
+
+-   `ScMerge2Params`
+
+-   `BBKNNParams`
+
+-   `LigerParams`
+
+## Examples 
+
+To illustrate, we correct the data using `Scanorama` and `Harmony`.
+
+### Harmony
+
+```{r, message=FALSE, warning=FALSE}
+sce <- batchCorrect(input = sce, batch = "Batch", params = HarmonyParams())
+sce
+```
+
+Also, the `Seurat` object can be used as an input data.
+
+```{r, message=FALSE, warning=FALSE}
+so <- batchCorrect(input = so, batch = "Batch", params = HarmonyParams())
+so
+```
+
+### Scanorama
+
+```{r, message=FALSE, warning=FALSE}
+sce <- batchCorrect(input = sce, batch = "Batch", params = ScanoramaParams(assay_type = "logcounts",
+                                                                           return_dimred = TRUE))
+sce
+so <- batchCorrect(input = so, batch = "Batch", params = ScanoramaParams(assay_type = "data", 
+                                                                         return_dimred = TRUE))
+so
+```
+
+# Performance evaluation
+
+Last, the `metrics`()` function computes the evaluation metrics, such as 
+Normalized Mutual Information (NMI), Adjusted Rand Index (ARI), 
+Local Inverse Simpson's Index (LISI), Average Silhouette Width (ASW), and 
+Wasserstein distance.
+
+The Wasserstein distance is computed on a resampled data due to the different 
+number of cells in each batch. The parameter `rep` indicates how many times 
+the calculation should be repeated (in this case 10).
+
+```{r, message=FALSE, warning=FALSE}
+red <- SingleCellExperiment::reducedDimNames(sce)
+metrics <- lapply(red, function(x) metrics(input = sce, batch = "Batch",
+                                           group = "Group", reduction = x, 
+                                           rep = 10))
+metrics <- do.call(rbind, metrics)
+metrics
+```
