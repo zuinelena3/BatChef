@@ -6,6 +6,8 @@ Authors@R: c(
     person("Elena", "Zuin", email = "elena.zuin.3@phd.unipd.it", 
             role = c("aut", "cre"),
             comment = c(affiliation = "Department of Biology, University of Padova")),
+    person("Chiara", "Romualdi", role = "ctb", 
+            comment = c(affiliation = "Department of Biology, University of Padova")))
     person("Davide", "Risso", role = "ctb",
             comment = c(affiliation = "Department of Statistical Sciences, University of Padova")),
     person("Gabriele", "Sales", role = "ctb", 
@@ -49,3 +51,5 @@ Imports:
 BugReports: https://github.com/zuinelena3/BatChef/issues
 URL: https://github.com/zuinelena3/BatChef
 VignetteBuilder: knitr
+Suggests: 
+    rmarkdown
