@@ -68,7 +68,7 @@ library(reticulate)
 library(zellkonverter)
 ```
 
-To demonstrate, we simulate a dataset with 8,000 genes, 8,000 cells, 
+To demonstrate, we simulate a dataset with 2,000 genes, 2,000 cells, 
 2 batches and 2 cell types, using the `simulated_data` function. This function 
 applies the same parameters as the Splatter package’s ones. 
 Additionally, it normalizes the data, identifies highly variable genes via 
@@ -76,8 +76,8 @@ the `scrapper` package, and performs principal component analysis using
 the `scater` package.
 
 ```{r}
-sce <- simulated_data(nGenes = 8000, batchCells = c(4800, 3200), 
-                      group.prob = c(0.4, 0.6), n_hvgs = 2000, 
+sce <- simulated_data(nGenes = 2000, batchCells = c(800, 1200), 
+                      group.prob = c(0.4, 0.6), n_hvgs = 1000, 
                       ncomp = 10, seed = 3)
 sce
 ```
@@ -91,9 +91,13 @@ So, we convert our data.
 
 ```{r, message=FALSE, warning=FALSE}
 so <- as.Seurat(sce)
+```
+
+```{r, eval=FALSE}
 # Error: C stack usage  7969796 is too close to the limit
 # andata <- zellkonverter::SCE2AnnData(sce)
 ```
+
 
 The desired correction method can have these values:
 
@@ -163,7 +167,12 @@ the calculation should be repeated (in this case 10).
 red <- SingleCellExperiment::reducedDimNames(sce)
 metrics <- lapply(red, function(x) metrics(input = sce, batch = "Batch",
                                            group = "Group", reduction = x, 
-                                           rep = 10))
+                                           rep = 5))
 metrics <- do.call(rbind, metrics)
 metrics
 ```
+
+```{r}
+sessionInfo()
+```
+
