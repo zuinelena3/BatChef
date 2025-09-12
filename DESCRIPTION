@@ -7,7 +7,7 @@ Authors@R: c(
             role = c("aut", "cre"),
             comment = c(affiliation = "Department of Biology, University of Padova")),
     person("Chiara", "Romualdi", role = "ctb", 
-            comment = c(affiliation = "Department of Biology, University of Padova")))
+            comment = c(affiliation = "Department of Biology, University of Padova")),
     person("Davide", "Risso", role = "ctb",
             comment = c(affiliation = "Department of Statistical Sciences, University of Padova")),
     person("Gabriele", "Sales", role = "ctb", 
@@ -18,14 +18,13 @@ License: Artistic-2.0
 Encoding: UTF-8
 LazyData: false
 biocViews: BatchEffect
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
 Imports: 
     anndata,
     basilisk,
     batchelor,
     DelayedArray,
     harmony,
-    knitr,
     limma,
     lisi,
     methods,
@@ -52,4 +51,8 @@ BugReports: https://github.com/zuinelena3/BatChef/issues
 URL: https://github.com/zuinelena3/BatChef
 VignetteBuilder: knitr
 Suggests: 
-    rmarkdown
+    BiocStyle,
+    knitr,
+    rmarkdown,
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
