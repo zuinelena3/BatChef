@@ -21,7 +21,7 @@ metrics(
 )
 }
 \arguments{
-\item{input}{A `SingleCellExperiment` object can be supplied.}
+\item{input}{A \linkS4class{SingleCellExperiment} object.}
 
 \item{batch}{A string specifying batch variable.}
 
@@ -37,9 +37,11 @@ metrics(
 
 \item{metric}{The metric to use when calculating distance between instances.}
 
-\item{sample_size}{The size of the sample to use when computing the Silhouette Coefficient on a random subset of the data.}
+\item{sample_size}{The size of the sample to use when computing the
+Silhouette Coefficient on a random subset of the data.}
 
-\item{random_state}{Determines random number generation for selecting a subset of samples.}
+\item{random_state}{Determines random number generation for selecting
+a subset of samples.}
 
 \item{meta_data}{A data frame with one row per cell.}
 
@@ -47,7 +49,18 @@ metrics(
 
 \item{nn_eps}{Error bound for nearest neighbor search with `RANN:nn2()`.}
 }
+\value{
+A data.frame object
+}
 \description{
-Wasserstein distance, Local Inverse Simpson's Index, Average Silhouette Width,
-Adjusted Rand Index, and Normalized Mutual Information were computed
+Performance evaluation metrics: Wasserstein distance, Local Inverse Simpson's
+Index, Average Silhouette Width, Adjusted Rand Index, and
+Normalized Mutual Information.
+}
+\examples{
+sim <- simulated_data(nGenes = 1000, batchCells = c(150, 200),
+                      group.prob = c(0.5, 0.5), n_hvgs = 1000, ncomp = 10)
+metrics <- metrics(input = sim, batch = "Batch", group = "Group",
+                   reduction = "PCA", rep = 5, mc.cores = 4)
+
 }

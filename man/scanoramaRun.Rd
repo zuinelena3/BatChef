@@ -22,9 +22,11 @@ scanoramaRun(
 )
 }
 \arguments{
-\item{input}{List of expression matrices for each bacthes and the genes.}
+\item{input}{List that contains the expression matrices for each batches and
+the genes.}
 
-\item{return_dimred}{A logical to returning integrated low-dimesional embeddings.}
+\item{return_dimred}{A logical to returning integrated low-dimesional
+embeddings.}
 
 \item{batch_size}{The batch size used in the alignment vector computation.}
 
@@ -46,10 +48,26 @@ scanoramaRun(
 
 \item{hvg}{Use this number of top highly variable genes based on dispersion.}
 
-\item{union}{A logical to consider the union of the genes. In alternative, the intersection is considered.}
+\item{union}{A logical to consider the union of the genes.
+In alternative, the intersection is considered.}
 
 \item{seed}{Random seed to use.}
 }
+\value{
+A list that contains the corrected gene expression matrix and
+the corrected low-dimensional reduction
+}
 \description{
-Scanorama method
+Scanorama is a Mutual Nearest Neighbors method. This an algorithm that
+identifies and merges the shared cell types among all pairs of datasets and
+accurately integrates heterogeneous collections of scRNA-seq data.
+}
+\examples{
+sim <- simulated_data(nGenes = 1000, batchCells = c(150, 200),
+                      group.prob = c(0.5, 0.5), n_hvgs = 1000, ncomp = 10)
+sim <- lapply(unique(colData(sim)[, "Batch"]), function(x) sim[, colData(sim)[, "Batch"] == x])
+ll <- c(lapply(sim, function(x) t(as.matrix(logcounts(x)))),
+        lapply(sim, function(x) rownames(x)))
+scanorama <- scanoramaRun(input = ll, return_dimred = TRUE)
+
 }

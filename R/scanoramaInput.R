@@ -1,6 +1,7 @@
-#' Convert into a list of matrices
+#' Convert to a Scanorama compatible object
 #'
-#' @param input A `SingleCellExperiment`, `Seurat` or `AnnData` objects can be supplied.
+#' @param input A \linkS4class{SingleCellExperiment}, \linkS4class{Seurat} or
+#' `AnnData` object can be supplied.
 #' @param batch A string specifying the batch for each cell.
 #' @param assay.type A string specifying the assay.
 #'
@@ -27,7 +28,9 @@ setMethod("scanoramaInput", "Seurat",  function(input, batch, assay.type) {
     assaylist <- list()
     genelist <- list()
     for(i in seq_along(ll)) {
-      assaylist[[i]] <- t(as.matrix(LayerData(object = ll[[i]], assay = DefaultAssay(ll[[i]]), layer = assay.type)))
+      assaylist[[i]] <- t(as.matrix(LayerData(object = ll[[i]],
+                                              assay = DefaultAssay(ll[[i]]),
+                                              layer = assay.type)))
       genelist[[i]] <- rownames(ll[[i]])
     }
     return(c(assaylist, genelist))
@@ -39,7 +42,8 @@ setMethod("scanoramaInput", "Seurat",  function(input, batch, assay.type) {
 #' @importFrom SummarizedExperiment colData assay
 #' @aliases anndatasInput,SingleCellExperiment,SingleCellExperiment-method
 #'
-setMethod("scanoramaInput", "SingleCellExperiment",  function(input, batch, assay.type) {
+setMethod("scanoramaInput", "SingleCellExperiment", function(input, batch,
+                                                             assay.type) {
   stopifnot(batch %in% colnames(colData(input)))
   if (is.null(assay.type)) {
     print("Error: assay.type has to be specified!")

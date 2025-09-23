@@ -1,8 +1,13 @@
-#' Title
+#' Convert the scVI output
 #'
-#' @param input input
-#' @param output output
-#' @param method method
+#' Convert the scVI output into a \linkS4class{SingleCellExperiment},
+#' \linkS4class{Seurat} or `AnnData` object
+#'
+#' @param input A \linkS4class{SingleCellExperiment}, \linkS4class{Seurat} or
+#' `AnnData` object can be supplied.
+#' @param output scVI output: a list that contains the corrected
+#' gene expression matrix and the corrected low-dimensional space.
+#' @param method A string specifying the correction method
 #'
 #' @import methods
 #' @rdname scVIPost
@@ -10,17 +15,17 @@
 setGeneric("scVIPost", function(input, output, method)
   standardGeneric("scVIPost"), signature = c("input"))
 
-# #' @rdname scVIPost
-# #' @aliases scVIPost,Seurat,Seurat-method
-# #' @import methods
-# #' @importFrom Seurat CreateDimReducObject DefaultAssay
-# #' @importFrom SingleCellExperiment reducedDim
-#
-# setMethod("scVIPost", "Seurat",  function(input, output, method) {
-#   input[[method]] <- CreateDimReducObject(embeddings = as.matrix(output[[2]]),
-#                                           key = "scvi_", assay = DefaultAssay(input))
-#   return(input)
-# })
+#' @rdname scVIPost
+#' @aliases scVIPost,Seurat,Seurat-method
+#' @import methods
+#' @importFrom Seurat CreateDimReducObject DefaultAssay
+#' @importFrom SingleCellExperiment reducedDim
+
+setMethod("scVIPost", "Seurat",  function(input, output, method) {
+  input[[method]] <- CreateDimReducObject(embeddings = as.matrix(output[[2]]),
+                                          key = "scvi_", assay = DefaultAssay(input))
+  return(input)
+})
 
 #' @rdname scVIPost
 #' @aliases scVIPost,SingleCellExperiment,SingleCellExperiment-method
@@ -33,11 +38,13 @@ setMethod("scVIPost", "SingleCellExperiment",  function(input, output, method) {
   return(input)
 })
 
-# #' @rdname scVIPost
-# #' @aliases scVIPost,AnnDataR6,AnnDataR6-method
-# #' @importFrom SingleCellExperiment reducedDim
-#
-# # setMethod("scVIPost", "AnnDataR6",  function(input, output, method) {
-# #   input$
-# #   return(input)
-# # })
+#' @rdname scVIPost
+#' @aliases scVIPost,AnnDataR6,AnnDataR6-method
+#' @import methods
+#'
+setMethod("scVIPost", "AnnDataR6",  function(input, output, method) {
+  input$layers["scvi"] <- output[[1]]
+  input$obsm[["scvi"]] <- output[[2]]
+
+  return(input)
+})

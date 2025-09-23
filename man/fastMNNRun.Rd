@@ -7,12 +7,24 @@
 fastMNNRun(input, batch, ...)
 }
 \arguments{
-\item{input}{A `SingleCellExperiment` object can be supplied.}
+\item{input}{A \linkS4class{SingleCellExperiment} object.}
 
 \item{batch}{A string specifying the batch variable.}
 
 \item{...}{Named arguments to pass to individual methods upon dispatch}
 }
+\value{
+A \linkS4class{SingleCellExperiment} object is returned where
+each row is a gene and each column is a cell. This contains a corrected
+low-dimensional coordinates and a reconstructed matrix in the assays slot.
+}
 \description{
-fastMNN method
+Correct for batch effects in single-cell expression data using a fast
+version of the mutual nearest neighbors (MNN) method.
+}
+\examples{
+sim <- simulated_data(nGenes = 1000, batchCells = c(150, 200),
+                      group.prob = c(0.5, 0.5), n_hvgs = 1000, ncomp = 10)
+fastmnn <- fastMNNRun(input = sim, batch = "Batch")
+
 }

@@ -1,9 +1,12 @@
 #' Convert the scMerge2 output
 #'
-#' Convert the scMerge2 output into a SingleCellExperiment, Seurat or Anndata objects
+#' Convert the scMerge2 output into a \linkS4class{SingleCellExperiment},
+#' \linkS4class{Seurat} or `AnnData` object
 #'
-#' @param input A `SingleCellExperiment`, `Seurat` or `AnnData` objects can be supplied.
-#' @param output scMerge2 output.
+#' @param input A \linkS4class{SingleCellExperiment}, \linkS4class{Seurat} or
+#' `AnnData` object can be supplied.
+#' @param output scMerge2 output: a list that contains the corrected
+#' gene expression matrix
 #' @param method A string specifying the correction method
 #'
 #' @import methods

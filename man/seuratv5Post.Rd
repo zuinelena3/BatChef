@@ -8,7 +8,7 @@
 \alias{seuratv5Post,SingleCellExperiment,SingleCellExperiment-method}
 \alias{seuratv5Post,AnnDataR6-method}
 \alias{seuratv5Post,AnnDataR6,AnnDataR6-method}
-\title{Convert the Seurat V5 output}
+\title{Convert the SeuratV5 output}
 \usage{
 seuratv5Post(input, output, method, name)
 
@@ -19,14 +19,16 @@ seuratv5Post(input, output, method, name)
 \S4method{seuratv5Post}{AnnDataR6}(input, output, method, name)
 }
 \arguments{
-\item{input}{A `SingleCellExperiment`, `Seurat` or `AnnData` objects can be supplied.}
+\item{input}{A \linkS4class{SingleCellExperiment}, \linkS4class{Seurat} or
+`AnnData` object can be supplied.}
 
-\item{output}{Seurat V5 output.}
+\item{output}{Seurat V5 output: a Seurat object}
 
 \item{method}{A string specifying the correction method.}
 
 \item{name}{A string specifying the corrected reduce space name.}
 }
 \description{
-Convert the Seurat V5 output into a SingleCellExperiment, Seurat or Anndata objects
+Convert the SeuratV5 output into a \linkS4class{SingleCellExperiment},
+\linkS4class{Seurat} or `AnnData` object
 }

@@ -7,12 +7,22 @@
 harmonyRun(input, batch, ...)
 }
 \arguments{
-\item{input}{A `SingleCellExperiment` object.}
+\item{input}{A \linkS4class{SingleCellExperiment} object.}
 
 \item{batch}{A string specifying the batch variable.}
 
 \item{...}{Named arguments to pass to individual methods upon dispatch}
 }
+\value{
+A \linkS4class{SingleCellExperiment} object which contains a
+corrected low-dimensional space.
+}
 \description{
-Harmony method
+Harmony is a mixture-model based method.
+}
+\examples{
+sim <- simulated_data(nGenes = 1000, batchCells = c(150, 200),
+                      group.prob = c(0.5, 0.5), n_hvgs = 1000, ncomp = 10)
+harmony <- harmonyRun(input = sim, batch = "Batch")
+
 }

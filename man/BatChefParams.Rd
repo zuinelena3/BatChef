@@ -139,15 +139,7 @@ ScMerge2Params(assay_type = "logcounts", ...)
 
 BBKNNParams(reduction, ...)
 
-LigerParams(
-  features,
-  useDatasets = NULL,
-  verbose = TRUE,
-  format.type = NULL,
-  remove.missing = NULL,
-  method = "iNMF",
-  ...
-)
+LigerParams(features, method = "iNMF", ...)
 }
 \arguments{
 \item{assay_type}{A string specifying the assay to use for correction.}
@@ -166,13 +158,16 @@ LigerParams(
 
 \item{scale}{A logical to scale the features provided.}
 
-\item{normalization.method}{Name of normalization method used: LogNormalize or SCT.}
+\item{normalization.method}{Name of normalization method used:
+LogNormalize or SCT.}
 
-\item{sct.clip.range}{Numeric of length two specifying the min and max values the Pearson residual will be clipped to.}
+\item{sct.clip.range}{Numeric of length two specifying the min and max values
+the Pearson residual will be clipped to.}
 
 \item{reduction}{A string specifying the name of PCA.}
 
-\item{l2.norm}{Perform L2 normalization on the CCA cell embeddings after dimensional reduction.}
+\item{l2.norm}{Perform L2 normalization on the CCA cell embeddings
+after dimensional reduction.}
 
 \item{dims}{Number of dimensions of dimensional reduction.}
 
@@ -182,15 +177,17 @@ LigerParams(
 
 \item{k.score}{Number of neighbors (k) to use when scoring anchors.}
 
-\item{max.features}{The maximum number of features to use when specifying the neighborhood search space in the anchor filtering.}
+\item{max.features}{The maximum number of features to use when specifying
+the neighborhood search space in the anchor filtering.}
 
 \item{nn.method}{Method for nearest neighbor finding.}
 
-\item{n.trees}{More trees gives higher precision when using annoy approximate nearest neighbor search.}
+\item{n.trees}{More trees gives higher precision when using annoy
+approximate nearest neighbor search.}
 
 \item{eps}{Error bound on the neighbor finding algorithm.}
 
-\item{verbose}{Print progress bar/messages}
+\item{verbose}{Print progress bars and output.}
 
 \item{new.assay.name}{Name for the new assay containing the integrated data.}
 
@@ -198,13 +195,15 @@ LigerParams(
 
 \item{k.weight}{Number of neighbors to consider when weighting anchors.}
 
-\item{weight.reduction}{Dimension reduction to use when calculating anchor weights.}
+\item{weight.reduction}{Dimension reduction to use when calculating
+anchor weights.}
 
 \item{sd.weight}{Controls the bandwidth of the Gaussian kernel for weighting.}
 
 \item{sample.tree}{Specify the order of integration.}
 
-\item{preserve.order}{Do not reorder objects based on size for each pairwise integration.}
+\item{preserve.order}{Do not reorder objects based on size for each pairwise
+integration.}
 
 \item{method}{iNMF variant algorithm to use for integration.}
 
@@ -218,89 +217,110 @@ LigerParams(
 
 \item{dims.to.integrate}{Number of dimensions to return integrated values for.}
 
-\item{return_dimred}{A logical to returning integrated low-dimesional embeddings.}
+\item{return_dimred}{A logical to returning integrated low-dimesional
+embeddings.}
 
-\item{layer}{layer}
+\item{layer}{A string specifying the counts data.}
 
-\item{labels_key}{labels_key}
+\item{labels_key}{A string specifying the label information.}
 
-\item{size_factor_key}{size_factor_key}
+\item{size_factor_key}{A string specifying the size factor information.}
 
-\item{categorical_covariate_keys}{categorical_covariate_keys}
+\item{categorical_covariate_keys}{A string specifying the categorical
+covariates.}
 
-\item{continuous_covariate_keys}{continuous_covariate_keys}
+\item{continuous_covariate_keys}{A string specifying the continuous
+covariates.}
 
-\item{n_hidden}{n_hidden}
+\item{n_hidden}{Number of nodes per hidden layer.}
 
-\item{n_latent}{n_latent}
+\item{n_latent}{Number of dimensions of the latent space.}
 
-\item{n_layers}{n_layers}
+\item{n_layers}{Number of hidden layers used for encoder and decoder NNs.}
 
-\item{dropout_rate}{dropout_rate}
+\item{dropout_rate}{Dropout rate for neural networks.}
 
-\item{dispersion}{dispersion}
+\item{dispersion}{The dispersion parameter can take one of four values:
+'gene' (default): the dispersion of the negative binomial (NB) distribution
+is constant for each gene across all cells.
+'gene-batch': dispersion varies between different batches for each gene.
+'gene-label': dispersion varies between different labels for each gene.
+'gene-cell': dispersion differs for each gene in every individual cell.}
 
-\item{gene_likelihood}{gene_likelihood}
+\item{gene_likelihood}{Gene likelihood. 'nb' - Negative binomial distribution.
+'zinb' (default) - Zero-inflated negative binomial distribution.
+'poisson' - Poisson distribution. 'normal' - EXPERIMENTAL Normal distribution}
 
-\item{latent_distribution}{latent_distribution}
+\item{latent_distribution}{Distribution of latent space. Values:
+'normal' (default) - Normal distribution
+'ln' - Logistic normal distribution (Normal(0, I) transformed by softmax)}
 
-\item{max_epochs}{max_epochs}
+\item{max_epochs}{The maximum number of epochs to train the model}
 
-\item{accelerator}{accelerator}
+\item{accelerator}{Supports passing different accelerator types
+(“cpu”, “gpu”, “tpu”, “ipu”, “hpu”, “mps, “auto”) as well as custom
+accelerator instances.}
 
-\item{devices}{devices}
+\item{devices}{The devices to use.}
 
-\item{train_size}{train_size}
+\item{train_size}{Size of training set in the range [0.0, 1.0]. Default is NULL.}
 
-\item{validation_size}{validation_size}
+\item{validation_size}{Size of the test set}
 
-\item{shuffle_set_split}{shuffle_set_split}
+\item{shuffle_set_split}{Boolean (default: TRUE).
+Whether to shuffle indices before splitting.}
 
-\item{load_sparse_tensor}{load_sparse_tensor}
+\item{load_sparse_tensor}{Boolean value (default: FALSE). If TRUE, loads data
+with sparse CSR or CSC layout as a Tensor with the same layout.}
 
-\item{batch_size}{batch_size}
+\item{batch_size}{Minibatch size to use during training.}
 
-\item{early_stopping}{early_stopping}
+\item{early_stopping}{Boolean value (default: FALSE). Perform early stopping.}
 
-\item{datasplitter_kwargs}{datasplitter_kwargs}
+\item{datasplitter_kwargs}{Additional keyword arguments passed into DataSplitter.}
 
-\item{plan_kwargs}{plan_kwargs}
+\item{plan_kwargs}{Additional keyword arguments passed into TrainingPlan.}
 
-\item{datamodule}{datamodule}
+\item{datamodule}{A LightningDataModule instance to use for training
+in place of the default DataSplitter.}
 
-\item{indices}{indices}
+\item{indices}{Indices of observations in adata to use (default: NULL)}
 
-\item{give_mean}{give_mean}
+\item{give_mean}{Boolean value (default: TRUE). If TRUE, returns
+the mean of the latent distribution. If FALSE, returns an estimate of
+the mean using mc_samples Monte Carlo samples.}
 
-\item{mc_samples}{mc_samples}
+\item{mc_samples}{Number of Monte Carlo samples}
 
-\item{return_dist}{return_dist}
+\item{return_dist}{Boolean value (default: FALSE). If TRUE, returns
+the mean and variance of the latent distribution.
+Otherwise, returns the mean of the latent distribution.}
 
-\item{dataloader}{dataloader}
+\item{dataloader}{An iterator over minibatches of data on which to
+compute the metric.}
 
-\item{transform_batch}{transform_batch}
+\item{transform_batch}{Batch to condition on.  If transform_batch is:
+- NULL, then real observed batch is used.
+- int, then batch transform_batch is used.
+- Otherwise based on string}
 
-\item{gene_list}{gene_list}
+\item{gene_list}{Return frequencies of expression for a subset of genes.}
 
-\item{library_size}{library_size}
+\item{library_size}{Scale the expression frequencies to a common library size.}
 
-\item{n_samples}{n_samples}
+\item{n_samples}{Number of posterior samples to use for estimation.}
 
-\item{n_samples_overall}{n_samples_overall}
+\item{n_samples_overall}{Number of posterior samples to use for estimation.
+Overrides n_samples.}
 
-\item{weights}{weights}
+\item{weights}{Weights to use for sampling. If None, defaults to “uniform”.}
 
-\item{return_mean}{return_mean}
+\item{return_mean}{Whether to return the mean of the samples}
 
-\item{return_numpy}{return_numpy}
-
-\item{useDatasets}{A character vector of the names, a numeric or logical vector of the index of the datasets to be normalized.}
-
-\item{format.type}{Deprecated. The functionality of these is covered through other parts of the whole workflow and is no long needed}
-
-\item{remove.missing}{Deprecated. The functionality of these is covered through other parts of the whole workflow and is no long needed}
+\item{return_numpy}{Return a ndarray instead of a DataFrame.}
 }
 \description{
 Constructors and methods for the params parameter classes.
-BatChefParams objects contain method specific parameters to pass to the batchCorrect generic.
+BatChefParams objects contain method specific parameters
+to pass to the batchCorrect generic.
 }

@@ -19,12 +19,15 @@ bbknnPost(input, output, method)
 \S4method{bbknnPost}{AnnDataR6}(input, output, method)
 }
 \arguments{
-\item{input}{A `SingleCellExperiment`, `Seurat` or `AnnData` objects can be supplied.}
+\item{input}{A \linkS4class{SingleCellExperiment}, \linkS4class{Seurat} or
+`AnnData` object can be supplied.}
 
-\item{output}{BBKNN output.}
+\item{output}{BBKNN output: a matrix of the coordinates of the points chosen
+to represent the dissimilarities.}
 
 \item{method}{A string specifying the correction method}
 }
 \description{
-Convert BBKNN output into a SingleCellExperiment, Seurat or Anndata objects.
+Convert BBKNN output into a \linkS4class{SingleCellExperiment},
+\linkS4class{Seurat} or `AnnData` object.
 }

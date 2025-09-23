@@ -2,21 +2,32 @@
 % Please edit documentation in R/scVIPost.R
 \name{scVIPost}
 \alias{scVIPost}
+\alias{scVIPost,Seurat-method}
+\alias{scVIPost,Seurat,Seurat-method}
 \alias{scVIPost,SingleCellExperiment-method}
 \alias{scVIPost,SingleCellExperiment,SingleCellExperiment-method}
-\title{Title}
+\alias{scVIPost,AnnDataR6-method}
+\alias{scVIPost,AnnDataR6,AnnDataR6-method}
+\title{Convert the scVI output}
 \usage{
 scVIPost(input, output, method)
 
+\S4method{scVIPost}{Seurat}(input, output, method)
+
 \S4method{scVIPost}{SingleCellExperiment}(input, output, method)
+
+\S4method{scVIPost}{AnnDataR6}(input, output, method)
 }
 \arguments{
-\item{input}{input}
+\item{input}{A \linkS4class{SingleCellExperiment}, \linkS4class{Seurat} or
+`AnnData` object can be supplied.}
 
-\item{output}{output}
+\item{output}{scVI output: a list that contains the corrected
+gene expression matrix and the corrected low-dimensional space.}
 
-\item{method}{method}
+\item{method}{A string specifying the correction method}
 }
 \description{
-Title
+Convert the scVI output into a \linkS4class{SingleCellExperiment},
+\linkS4class{Seurat} or `AnnData` object
 }

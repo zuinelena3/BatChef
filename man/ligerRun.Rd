@@ -23,29 +23,37 @@ ligerRun(
 )
 }
 \arguments{
-\item{input}{A `liger` object.}
+\item{input}{A \linkS4class{liger} object.}
 
-\item{method}{iNMF variant algorithm to use for integration.}
+\item{method}{A string specifyng the batch correction method. Choose from
+\code{"iNMF"}, \code{"onlineINMF"}, \code{"UINMF"}. Default \code{"iNMF"}.}
 
 \item{quantiles}{Number of quantiles to use for quantile normalization.}
 
-\item{reference}{Character, numeric or logical selection of one dataset, out of all available datasets in object, to use as a "reference" for quantile normalization.}
+\item{reference}{Character, numeric or logical selection of one dataset,
+out of all available datasets in object, to use as a "reference" for
+quantile normalization.}
 
-\item{minCells}{Minimum number of cells to consider a cluster shared across datasets}
+\item{minCells}{Minimum number of cells to consider a cluster shared across
+datasets}
 
 \item{nNeighbors}{Number of nearest neighbors for within-dataset knn graph.}
 
-\item{useDims}{Indices of factors to use for shared nearest factor determination.}
+\item{useDims}{Indices of factors to use for shared nearest factor
+determination.}
 
 \item{center}{A logical to center data.}
 
-\item{maxSample}{Maximum number of cells used for quantile normalization of each cluster and factor}
+\item{maxSample}{Maximum number of cells used for quantile normalization of
+each cluster and factor}
 
 \item{eps}{The error bound of the nearest neighbor search.}
 
-\item{refineKNN}{A logical to increase robustness of cluster assignments using KNN graph.}
+\item{refineKNN}{A logical to increase robustness of cluster assignments
+using KNN graph.}
 
-\item{clusterName}{Variable name that will store the clustering result in metadata of a liger object or a Seurat object.}
+\item{clusterName}{Variable name that will store the clustering result
+in metadata of a liger object or a Seurat object.}
 
 \item{seed}{Random seed}
 
@@ -53,6 +61,22 @@ ligerRun(
 
 \item{...}{Named arguments to pass to individual methods upon dispatch.}
 }
+\value{
+A \linkS4class{liger} object, which contains the quantile align
+factor loadings.
+}
 \description{
-LIGER method
+LIGER is a integrative non-negative matrix factorization method
+}
+\examples{
+sim <- simulated_data(nGenes = 1000, batchCells = c(150, 200),
+                      group.prob = c(0.5, 0.5), n_hvgs = 1000, ncomp = 10)
+ll <- lapply(unique(colData(sim)[, "Batch"]), function(i) sim[, colData(sim)[, "Batch"] == i])
+names(ll) <- unique(colData(sim)[, "Batch"])
+# Create a liger object
+lo <- createLiger(rawData = ll)
+lo <- normalize(object = lo)
+lo <- scaleNotCenter(object = lo, features = rownames(sim))
+liger <- ligerRun(input = lo)
+
 }

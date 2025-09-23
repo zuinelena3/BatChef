@@ -1,9 +1,11 @@
 #' Convert the output of linear models
 #'
-#' Convert the output of linear models (limma and ComBat) into a SingleCellExperiment, Seurat or Anndata objects.
+#' Convert a corrected matrix output into a \linkS4class{SingleCellExperiment},
+#' \linkS4class{Seurat} or `AnnData` object.
 #'
-#' @param input A `SingleCellExperiment`, `Seurat` or `AnnData` objects can be supplied.
-#' @param output Linear models output
+#' @param input A \linkS4class{SingleCellExperiment}, \linkS4class{Seurat} or
+#' `AnnData` object can be supplied.
+#' @param output A corrected matrix.
 #' @param method A string specifying the correction method.
 #'
 #' @import methods

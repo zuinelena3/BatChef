@@ -2,7 +2,7 @@
 % Please edit documentation in R/average_silhouette_width.R
 \name{average_silhouette_width}
 \alias{average_silhouette_width}
-\title{Average Silhouette Width}
+\title{Average Silhouette Width (ASW)}
 \usage{
 average_silhouette_width(
   input,
@@ -14,7 +14,7 @@ average_silhouette_width(
 )
 }
 \arguments{
-\item{input}{A `SingleCellExperiment` object.}
+\item{input}{A \linkS4class{SingleCellExperiment} object.}
 
 \item{label_true}{A string specifying cell types.}
 
@@ -22,10 +22,26 @@ average_silhouette_width(
 
 \item{metric}{The metric to use when calculating distance between instances.}
 
-\item{sample_size}{The size of the sample to use when computing the Silhouette Coefficient on a random subset of the data.}
+\item{sample_size}{The size of the sample to use when computing
+the Silhouette Coefficient on a random subset of the data.}
 
-\item{random_state}{Determines random number generation for selecting a subset of samples.}
+\item{random_state}{Determines random number generation for selecting
+a subset of samples.}
 }
 \description{
-Average Silhouette Width
+The average silhouette width for each cell is defined as the difference
+between the average of  within-cluster distances to all cells and the average
+between-cluster distances of that cell to the closest cluster divided
+by their maximum.
+}
+\details{
+The ASW metric is computed using the `silhouette_score` function from the
+Python sklearn package.
+}
+\examples{
+sim <- simulated_data(nGenes = 1000, batchCells = c(150, 200),
+                      group.prob = c(0.5, 0.5), n_hvgs = 1000, ncomp = 10)
+asw <- average_silhouette_width(input = sim, label_true = "Group",
+                                reduction = "PCA")
+
 }

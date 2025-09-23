@@ -34,23 +34,28 @@ seuratV3Run(
 )
 }
 \arguments{
-\item{input}{A list of `Seurat` objects.}
+\item{input}{A list of \linkS4class{Seurat} objects.}
 
-\item{assay}{A vector of assay names specifying which assay to use when constructing anchors.}
+\item{assay}{A vector of assay names specifying which assay to use when
+constructing anchors.}
 
-\item{reference}{A vector specifying the object/s to be used as a reference during integration.}
+\item{reference}{A vector specifying the object/s to be used as a reference
+during integration.}
 
 \item{anchor.features}{Number of features to be used in anchor finding.}
 
 \item{scale}{A logical to scale the features provided.}
 
-\item{normalization.method}{Name of normalization method used: LogNormalize (default) or SCT.}
+\item{normalization.method}{Name of normalization method used:
+LogNormalize (default) or SCT.}
 
-\item{sct.clip.range}{Numeric of length two specifying the min and max values the Pearson residual will be clipped to.}
+\item{sct.clip.range}{Numeric of length two specifying the min and max values
+the Pearson residual will be clipped to.}
 
 \item{reduction}{Dimensional reduction to perform when finding anchors.}
 
-\item{l2.norm}{Perform L2 normalization on the CCA cell embeddings after dimensional reduction.}
+\item{l2.norm}{Perform L2 normalization on the CCA cell embeddings
+after dimensional reduction.}
 
 \item{dims}{Number of dimensions.}
 
@@ -60,17 +65,20 @@ seuratV3Run(
 
 \item{k.score}{Number of neighbors (k) to use when scoring anchors.}
 
-\item{max.features}{The maximum number of features to use when specifying the neighborhood search space in the anchor filtering.}
+\item{max.features}{The maximum number of features to use when specifying
+the neighborhood search space in the anchor filtering.}
 
 \item{nn.method}{Method for nearest neighbor finding.}
 
-\item{n.trees}{More trees gives higher precision when using annoy approximate nearest neighbor search.}
+\item{n.trees}{More trees gives higher precision when using annoy
+approximate nearest neighbor search.}
 
 \item{eps}{Error bound on the neighbor finding algorithm.}
 
 \item{verbose}{Print progress bars and output.}
 
-\item{new.assay.name}{Name for the new assay containing the integrated data.}
+\item{new.assay.name}{Name for the new assay containing
+the integrated data.}
 
 \item{features}{Vector of features to use.}
 
@@ -78,14 +86,31 @@ seuratV3Run(
 
 \item{k.weight}{Number of neighbors to consider when weighting anchors.}
 
-\item{weight.reduction}{Dimension reduction to use when calculating anchor weights.}
+\item{weight.reduction}{Dimension reduction to use when calculating
+anchor weights.}
 
 \item{sd.weight}{Controls the bandwidth of the Gaussian kernel for weighting.}
 
 \item{sample.tree}{Specify the order of integration.}
 
-\item{preserve.order}{Do not reorder objects based on size for each pairwise integration.}
+\item{preserve.order}{Do not reorder objects based on size for each
+pairwise integration.}
+}
+\value{
+A \linkS4class{Seurat} object that contains the corrected matrix.#'
 }
 \description{
-Seurat V3 method
+SeuratV3 is an anchor-based method.
+}
+\examples{
+sim <- simulated_data(nGenes = 1000, batchCells = c(150, 200),
+                      group.prob = c(0.5, 0.5), n_hvgs = 1000, ncomp = 10)
+so <- as.Seurat(sim)
+VariableFeatures(so) <- rownames(so)
+so[["pca"]] <- CreateDimReducObject(embeddings = reducedDim(sim, "PCA"),
+                                    loadings = attr(reducedDim(sim, "PCA"), "rotation"),
+                                    key = "pca_", assay = DefaultAssay(so))
+ll <- SplitObject(so, split.by = "Batch")
+seuv3 <- seuratV3Run(input = ll, reduction = "cca")
+
 }

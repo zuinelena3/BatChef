@@ -1,15 +1,25 @@
-#' Clustering after integration reduction
+#' Leiden clustering
 #'
-#' Compute Leiden clustering. The resolution was chosen using the NMI metric.
+#' Leiden clustering was computed with different resolution parameters
+#' (from 0.1 to 2). The clustering output with the highest Normalized Mutual
+#' Information (NMI) was used to compute the other metrics.
 #'
-#' @param input A `SingleCellExperiment`, `Seurat` or `AnnData` objects can be supplied.
+#' @param input A \linkS4class{SingleCellExperiment}, \linkS4class{Seurat} or
+#' `AnnData` object can be supplied.
 #' @param label_true A string specifying cell types.
 #' @param reduction A string specifying the dimensional reduction.
+#'
+#' @export
+#' @examples
+#' sim <- simulated_data(nGenes = 1000, batchCells = c(150, 200),
+#'                       group.prob = c(0.5, 0.5), n_hvgs = 1000, ncomp = 10)
+#' clust <- clustering(input = sim, label_true = "Group", reduction = "PCA")
+#'
+#' @return A `AnnData` object .
 #'
 #' @import methods
 #' @importFrom basilisk basiliskStart basiliskStop basiliskRun
 #' @importFrom reticulate import
-#' @export
 #'
 clustering <- function(input, label_true, reduction) {
   proc <- basiliskStart(py_env)

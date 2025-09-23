@@ -34,7 +34,7 @@ seuratV5Run(
 )
 }
 \arguments{
-\item{input}{A `Seurat` object.}
+\item{input}{A \linkS4class{Seurat} object.}
 
 \item{method}{Integration method function.}
 
@@ -52,7 +52,8 @@ seuratV5Run(
 
 \item{reference}{A reference Seurat object.}
 
-\item{normalization.method}{Name of normalization method used: LogNormalize or SCT.}
+\item{normalization.method}{Name of normalization method used:
+LogNormalize or SCT.}
 
 \item{dims}{Number of dimensions of dimensional reduction.}
 
@@ -62,30 +63,53 @@ seuratV5Run(
 
 \item{k.weight}{Number of neighbors to consider when weighting anchors.}
 
-\item{weight.reduction}{Dimension reduction to use when calculating anchor weights.}
+\item{weight.reduction}{Dimension reduction to use when calculating
+anchor weights.}
 
 \item{sd.weight}{Controls the bandwidth of the Gaussian kernel for weighting.}
 
 \item{sample.tree}{Specify the order of integration.}
 
-\item{preserve.order}{Do not reorder objects based on size for each pairwise integration.}
+\item{preserve.order}{Do not reorder objects based on size for each
+pairwise integration.}
 
 \item{verbose}{Print progress bars and output.}
 
-\item{l2.norm}{Perform L2 normalization on the CCA cell embeddings after dimensional reduction.}
+\item{l2.norm}{Perform L2 normalization on the CCA cell embeddings after
+dimensional reduction.}
 
 \item{k.anchor}{Number of neighbors (k) to use when picking anchors.}
 
 \item{k.score}{Number of neighbors (k) to use when scoring anchors.}
 
-\item{max.features}{The maximum number of features to use when specifying the neighborhood search space in the anchor filtering.}
+\item{max.features}{The maximum number of features to use when specifying
+the neighborhood search space in the anchor filtering.}
 
 \item{nn.method}{Method for nearest neighbor finding.}
 
-\item{n.trees}{More trees gives higher precision when using annoy approximate nearest neighbor search.}
+\item{n.trees}{More trees gives higher precision when using annoy approximate
+nearest neighbor search.}
 
 \item{eps}{Error bound on the neighbor finding algorithm.}
 }
+\value{
+A \linkS4class{Seurat} object.
+}
 \description{
-Seurat V5 method
+SeuratV5 is an anchor-based method.
+}
+\examples{
+sim <- simulated_data(nGenes = 1000, batchCells = c(150, 200),
+                      group.prob = c(0.5, 0.5), n_hvgs = 1000, ncomp = 10)
+so <- as.Seurat(sim)
+
+so@reductions[["pca"]] <- CreateDimReducObject(embeddings = reducedDim(sim, "PCA"),
+                                               loadings = attr(reducedDim(sim, "PCA"), "rotation"),
+                                               key = "pca_", assay = DefaultAssay(so))
+
+so[[DefaultAssay(so)]] <- split(x = so[[DefaultAssay(so)]],
+                                f = so[["Batch"]][, 1])
+so <- ScaleData(so, verbose = FALSE)
+seuv5 <- seuratV5Run(input = so, method = "CCAIntegration", features = rownames(so))
+
 }

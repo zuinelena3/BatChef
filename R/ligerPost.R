@@ -1,9 +1,11 @@
 #' Convert the LIGER output
 #'
-#' Convert the LIGER output into a SingleCellExperiment, Seurat or Anndata objects
+#' Convert the LIGER output into a \linkS4class{SingleCellExperiment},
+#' \linkS4class{Seurat} or `AnnData` object.
 #'
-#' @param input A `SingleCellExperiment`, `Seurat` or `AnnData` objects can be supplied.
-#' @param output LIGER output
+#' @param input A \linkS4class{SingleCellExperiment}, \linkS4class{Seurat} or
+#' `AnnData` object can be supplied.
+#' @param output LIGER output: liger object
 #' @param method A string specifying the correction method
 #'
 #' @import methods
@@ -23,7 +25,8 @@ setMethod("ligerPost", "Seurat",  function(input, output, method) {
   rownames(embedding) <- colnames(input)
 
   input[[method]] <- CreateDimReducObject(embeddings = as.matrix(embedding),
-                                          key = "liger_", assay = DefaultAssay(input))
+                                          key = "liger_",
+                                          assay = DefaultAssay(input))
   return(input)
 })
 

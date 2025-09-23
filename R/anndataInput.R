@@ -1,8 +1,8 @@
 #' Convert into an AnnData object
 #'
-#' @param input A `SingleCellExperiment`, `Seurat` or `AnnData` objects can be supplied.
+#' @param input A \linkS4class{SingleCellExperiment}, \linkS4class{Seurat} or
+#' `AnnData` object can be supplied.
 #'
-#' @export
 #' @import methods
 #' @rdname anndataInput
 #'

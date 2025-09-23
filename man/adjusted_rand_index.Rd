@@ -7,12 +7,25 @@
 adjusted_rand_index(input, label_true, reduction)
 }
 \arguments{
-\item{input}{A `SingleCellExperiment`, `Seurat` or `AnnData` objects can be supplied.}
+\item{input}{A \linkS4class{SingleCellExperiment}, \linkS4class{Seurat} or
+`AnnData` object can be supplied.}
 
 \item{label_true}{A string specifying cell types.}
 
-\item{reduction}{A string specifying the dimensional reduction.}
+\item{reduction}{A string specifying the name of dimensional reduction.}
 }
 \description{
-Before ARI, the Leiden clustering is computed.
+The Adjusted Rand Index (ARI) is a metric used to measure the similarity
+between the clustering and ground truth labels.
+}
+\details{
+After computing clustering using Leiden algorithm, the ARI metric is computed
+using the `adjusted_rand_score` function from the Python sklearn package.
+}
+\examples{
+sim <- simulated_data(nGenes = 1000, batchCells = c(150, 200),
+                      group.prob = c(0.5, 0.5), n_hvgs = 1000, ncomp = 10)
+ari <- adjusted_rand_index(input = sim, label_true = "Group",
+                           reduction = "PCA")
+
 }

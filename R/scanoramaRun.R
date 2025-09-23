@@ -1,7 +1,13 @@
 #' Scanorama method
 #'
-#' @param input List of expression matrices for each bacthes and the genes.
-#' @param return_dimred A logical to returning integrated low-dimesional embeddings.
+#' Scanorama is a Mutual Nearest Neighbors method. This an algorithm that
+#' identifies and merges the shared cell types among all pairs of datasets and
+#' accurately integrates heterogeneous collections of scRNA-seq data.
+#'
+#' @param input List that contains the expression matrices for each batches and
+#'  the genes.
+#' @param return_dimred A logical to returning integrated low-dimesional
+#' embeddings.
 #' @param batch_size The batch size used in the alignment vector computation.
 #' @param verbose Print progress bars and output.
 #' @param ds_names Reports data set names in logging output
@@ -12,33 +18,54 @@
 #' @param knn Number of nearest neighbors to use for matching.
 #' @param return_dense A logical to return dense matrices.
 #' @param hvg Use this number of top highly variable genes based on dispersion.
-#' @param union A logical to consider the union of the genes. In alternative, the intersection is considered.
+#' @param union A logical to consider the union of the genes.
+#' In alternative, the intersection is considered.
 #' @param seed Random seed to use.
 #'
 #' @export
 #' @importFrom basilisk basiliskRun basiliskStart basiliskStop
 #' @importFrom reticulate import
 #'
+#' @return A list that contains the corrected gene expression matrix and
+#' the corrected low-dimensional reduction
+#'
+#' @examples
+#' sim <- simulated_data(nGenes = 1000, batchCells = c(150, 200),
+#'                       group.prob = c(0.5, 0.5), n_hvgs = 1000, ncomp = 10)
+#' sim <- lapply(unique(colData(sim)[, "Batch"]), function(x) sim[, colData(sim)[, "Batch"] == x])
+#' ll <- c(lapply(sim, function(x) t(as.matrix(logcounts(x)))),
+#'         lapply(sim, function(x) rownames(x)))
+#' scanorama <- scanoramaRun(input = ll, return_dimred = TRUE)
+#'
 scanoramaRun <- function(input, return_dimred = FALSE,
                          batch_size = 5000, verbose = TRUE, ds_names = NULL,
-                         dimred = 100, approx = TRUE, sigma = 15, alpha = 0.10, knn = 20,
-                         return_dense = FALSE, hvg = NULL, union = FALSE, seed = 0) {
+                         dimred = 100, approx = TRUE, sigma = 15, alpha = 0.10,
+                         knn = 20, return_dense = FALSE, hvg = NULL,
+                         union = FALSE, seed = 0) {
   proc <- basiliskStart(py_env)
   on.exit(basiliskStop(proc))
 
-  out <- basiliskRun(proc = proc, fun = function(input, return_dimred, batch_size, verbose, ds_names,
-                                                 dimred, approx, sigma, alpha, knn, return_dense, hvg, union, seed) {
+  out <- basiliskRun(proc = proc, fun = function(input, return_dimred,
+                                                 batch_size, verbose, ds_names,
+                                                 dimred, approx, sigma, alpha,
+                                                 knn, return_dense, hvg, union,
+                                                 seed) {
     scanorama <- import("scanorama")
 
     n <- length(input)
     n_batch <- n/2
 
-    arg <- c(list(datasets_full = input[1:n_batch], genes_list = input[(n_batch + 1):n], return_dimred = return_dimred,
-                  batch_size = as.integer(batch_size), verbose = verbose, ds_names = ds_names,
-                  dimred = as.integer(dimred), approx = approx, sigma = sigma, alpha = alpha, knn = as.integer(knn), return_dense = return_dense,
+    arg <- c(list(datasets_full = input[1:n_batch],
+                  genes_list = input[(n_batch + 1):n],
+                  return_dimred = return_dimred,
+                  batch_size = as.integer(batch_size), verbose = verbose,
+                  ds_names = ds_names, dimred = as.integer(dimred),
+                  approx = approx, sigma = sigma, alpha = alpha,
+                  knn = as.integer(knn), return_dense = return_dense,
                   hvg = hvg, union = union, seed = as.integer(seed)))
     do.call(scanorama$correct, arg)
-  }, input = input, return_dimred = return_dimred, batch_size = batch_size, verbose = verbose, ds_names = ds_names,
-  dimred = dimred, approx = approx, sigma = sigma, alpha = alpha, knn = knn, return_dense = return_dense,
+  }, input = input, return_dimred = return_dimred, batch_size = batch_size,
+  verbose = verbose, ds_names = ds_names, dimred = dimred, approx = approx,
+  sigma = sigma, alpha = alpha, knn = knn, return_dense = return_dense,
   hvg = hvg, union = union, seed = seed)
 }

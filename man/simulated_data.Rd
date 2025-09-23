@@ -101,7 +101,16 @@ simulated_data(
 
 \item{n_hvgs}{Number of higly variable genes.}
 }
+\value{
+A \linkS4class{SingleCellExperiment} object.
+}
 \description{
-The function allows to simulated single-cell RNA-seq data using Splatter package,
-normalize data, select highly variable genes and compute Principal Component Analysis.
+The function allows to simulated single-cell RNA-seq data using Splatter
+package, normalize data, select highly variable genes and
+compute Principal Component Analysis.
+}
+\examples{
+sim <- simulated_data(nGenes = 1000, batchCells = c(150, 200),
+                      group.prob = c(0.5, 0.5), n_hvgs = 1000, ncomp = 10)
+
 }

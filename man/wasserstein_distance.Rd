@@ -7,7 +7,7 @@
 wasserstein_distance(input, batch, reduction, rep, mc.cores)
 }
 \arguments{
-\item{input}{A `SingleCellExperiment` object.}
+\item{input}{A \linkS4class{SingleCellExperiment} object.}
 
 \item{batch}{A string specifying batch variable.}
 
@@ -18,5 +18,15 @@ wasserstein_distance(input, batch, reduction, rep, mc.cores)
 \item{mc.cores}{The number of cores to use.}
 }
 \description{
-Wasserstein distance
+The Wasserstein distance measures the minimal transport needed to shift one
+distribution to match another.
+}
+\examples{
+sim <- simulated_data(nGenes = 1000, batchCells = c(150, 200),
+                      group.prob = c(0.5, 0.5), n_hvgs = 1000, ncomp = 10)
+sim <- batchCorrect(input = sim, batch = "Batch",
+                    params = HarmonyParams())
+wass <- wasserstein_distance(input = sim, batch = "Batch",
+                             reduction = "harmony", rep = 2, mc.cores = 3)
+
 }

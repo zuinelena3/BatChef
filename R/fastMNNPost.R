@@ -1,9 +1,13 @@
 #' Convert fastMNN output
 #'
-#' Convert fastMNN output into a SingleCellExperiment, Seurat or Anndata objects.
+#' Convert fastMNN output into a \linkS4class{SingleCellExperiment},
+#' \linkS4class{Seurat} or `AnnData` object.
 #'
-#' @param input A `SingleCellExperiment`, `Seurat` or `AnnData` objects can be supplied.
-#' @param output fastMNN output.
+#' @param input A \linkS4class{SingleCellExperiment}, \linkS4class{Seurat} or
+#' `AnnData` object can be supplied.
+#' @param output fastMNN output: a \linkS4class{SingleCellExperiment} containing
+#' the reconstructed expression matrix and the corrected dimensionality
+#' reduction space.
 #' @param method A string specifying the correction method.
 #'
 #' @import methods

@@ -2,17 +2,29 @@
 % Please edit documentation in R/clustering.R
 \name{clustering}
 \alias{clustering}
-\title{Clustering after integration reduction}
+\title{Leiden clustering}
 \usage{
 clustering(input, label_true, reduction)
 }
 \arguments{
-\item{input}{A `SingleCellExperiment`, `Seurat` or `AnnData` objects can be supplied.}
+\item{input}{A \linkS4class{SingleCellExperiment}, \linkS4class{Seurat} or
+`AnnData` object can be supplied.}
 
 \item{label_true}{A string specifying cell types.}
 
 \item{reduction}{A string specifying the dimensional reduction.}
 }
+\value{
+A `AnnData` object .
+}
 \description{
-Compute Leiden clustering. The resolution was chosen using the NMI metric.
+Leiden clustering was computed with different resolution parameters
+(from 0.1 to 2). The clustering output with the highest Normalized Mutual
+Information (NMI) was used to compute the other metrics.
+}
+\examples{
+sim <- simulated_data(nGenes = 1000, batchCells = c(150, 200),
+                      group.prob = c(0.5, 0.5), n_hvgs = 1000, ncomp = 10)
+clust <- clustering(input = sim, label_true = "Group", reduction = "PCA")
+
 }

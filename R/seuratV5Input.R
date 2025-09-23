@@ -1,7 +1,8 @@
-#' Convert into a Seurat V3 object
+#' Convert to a SeuratV5 compatible object
 #'
-#' @param input input A `SingleCellExperiment`, `Seurat` or `AnnData` objects can be supplied.
-#' @param batch batch A string specifying the batch variable.
+#' @param input A \linkS4class{SingleCellExperiment}, \linkS4class{Seurat} or
+#' `AnnData` object can be supplied.
+#' @param batch A string specifying the batch variable.
 #' @param pca_name A string specifying the PCA.
 #'
 #' @import methods
@@ -19,12 +20,15 @@ setMethod("seuratv5Input", "Seurat", function(input, batch, pca_name) {
   stopifnot(batch %in% colnames(input[[]]))
   stopifnot("Error: 'pca' not found in this Seurat object" = "pca" %in% Reductions(input))
   if (is(input[[DefaultAssay(input)]], "Assay")) {
-    input[[DefaultAssay(input)]] <- as(object = input[[DefaultAssay(input)]], Class = "Assay5")
-    input[[DefaultAssay(input)]] <- split(x = input[[DefaultAssay(input)]], f = input[[batch]][, 1])
+    input[[DefaultAssay(input)]] <- as(object = input[[DefaultAssay(input)]],
+                                       Class = "Assay5")
+    input[[DefaultAssay(input)]] <- split(x = input[[DefaultAssay(input)]],
+                                          f = input[[batch]][, 1])
     input <- ScaleData(input, verbose = FALSE)
   }
   else {
-    input[[DefaultAssay(input)]] <- split(x = input[[DefaultAssay(input)]], f = input[[batch]][, 1])
+    input[[DefaultAssay(input)]] <- split(x = input[[DefaultAssay(input)]],
+                                          f = input[[batch]][, 1])
     input <- ScaleData(input, verbose = FALSE)
   }
 })
@@ -62,7 +66,9 @@ setMethod("seuratv5Input", "AnnDataR6",  function(input, batch, pca_name) {
                                                  loadings = as.matrix(input$varm$PCs),
                                                  key = "pca_", assay = DefaultAssay(so))
 
-  so[[DefaultAssay(so)]] <- as(object = so[[DefaultAssay(so)]], Class = "Assay5")
-  so[[DefaultAssay(so)]] <- split(x = so[[DefaultAssay(so)]], f = so[[batch]][, 1])
+  so[[DefaultAssay(so)]] <- as(object = so[[DefaultAssay(so)]],
+                               Class = "Assay5")
+  so[[DefaultAssay(so)]] <- split(x = so[[DefaultAssay(so)]],
+                                  f = so[[batch]][, 1])
   so <- ScaleData(so, verbose = FALSE)
 })

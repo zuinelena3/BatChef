@@ -40,14 +40,33 @@ batchCorrect(input, batch, params)
 \S4method{batchCorrect}{LigerParams}(input, batch, params)
 }
 \arguments{
-\item{input}{A `SingleCellExperiment`, `Seurat` or `AnnData` objects can be supplied.}
+\item{input}{A \linkS4class{SingleCellExperiment}, \linkS4class{Seurat} or
+`AnnData` object can be supplied.}
 
 \item{batch}{A string specifying the batch variable.}
 
-\item{params}{A \linkS4class{BatChefParams} object specifying the batch correction method.}
+\item{params}{A \linkS4class{BatChefParams} object specifying
+the batch correction method to use and the parameters for its execution.}
+}
+\value{
+A \linkS4class{SingleCellExperiment}, \linkS4class{Seurat}, or
+`AnnData` object, where the output of the method (such as the corrected
+gene expression matrix and/or the corrected dimensional reduction space) is
+stored within the original input object.
 }
 \description{
-Generic function for defining batch effect correction methods.
-
 A common interface for single-cell batch correction methods.
+}
+\details{
+Users can pass parameters to each method via the constructors for params.
+}
+\examples{
+sim <- simulated_data(nGenes = 1000, batchCells = c(150, 200),
+                      group.prob = c(0.5, 0.5), n_hvgs = 1000, ncomp = 10)
+out <- batchCorrect(input = sim, batch = "Batch", params = LimmaParams())
+out <- batchCorrect(input = sim, batch = "Batch",
+                    params = ScanoramaParams(assay_type = "logcounts",
+                                             return_dimred = TRUE))
+out <- batchCorrect(input = sim, batch = "Batch", params = ScMerge2Params())
+
 }

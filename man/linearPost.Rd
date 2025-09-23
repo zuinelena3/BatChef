@@ -19,12 +19,14 @@ linearPost(input, output, method)
 \S4method{linearPost}{AnnDataR6}(input, output, method)
 }
 \arguments{
-\item{input}{A `SingleCellExperiment`, `Seurat` or `AnnData` objects can be supplied.}
+\item{input}{A \linkS4class{SingleCellExperiment}, \linkS4class{Seurat} or
+`AnnData` object can be supplied.}
 
-\item{output}{Linear models output}
+\item{output}{A corrected matrix.}
 
 \item{method}{A string specifying the correction method.}
 }
 \description{
-Convert the output of linear models (limma and ComBat) into a SingleCellExperiment, Seurat or Anndata objects.
+Convert a corrected matrix output into a \linkS4class{SingleCellExperiment},
+\linkS4class{Seurat} or `AnnData` object.
 }

@@ -1,9 +1,11 @@
-#' Convert the Seurat V3 output
+#' Convert the SeuratV3 output
 #'
-#' Convert the Seurat V3 output into a SingleCellExperiment, Seurat or Anndata objects
+#' Convert the SeuratV3 output into a \linkS4class{SingleCellExperiment},
+#' \linkS4class{Seurat} or `AnnData` object
 #'
-#' @param input A `SingleCellExperiment`, `Seurat` or `AnnData` objects can be supplied.
-#' @param output Seurat V3 output
+#' @param input A \linkS4class{SingleCellExperiment}, \linkS4class{Seurat} or
+#' `AnnData` object can be supplied.
+#' @param output Seurat V3 output: a Seurat object
 #' @param method A string specifying the correction method
 #'
 #' @import methods
@@ -38,7 +40,8 @@ setMethod("seuratv3Post", "SingleCellExperiment",  function(input, output, metho
   mat <- mat[order(match(rownames(mat), rownames(input))), ]
 
   if (length(rownames(input)) != length(rownames(output))) {
-    print("Warning: when the length of rownames of output is not identical to input one, a subset SingleCellExperiment object is returned")
+    print("Warning: when the length of rownames of output is not identical
+          to input one, a subset SingleCellExperiment object is returned")
     input <- input[rownames(mat), ]
     assay(input, method) <- mat
     return(input)

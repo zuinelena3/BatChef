@@ -7,9 +7,9 @@
 capture_params(target, params)
 }
 \arguments{
-\item{target}{target}
+\item{target}{Target parameters}
 
-\item{params}{params}
+\item{params}{Parameters}
 }
 \description{
 Capture parameters of the correction methods

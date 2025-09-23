@@ -8,7 +8,7 @@
 \alias{ligerInput,SingleCellExperiment,SingleCellExperiment-method}
 \alias{ligerInput,AnnDataR6-method}
 \alias{ligerInput,AnnDataR6,AnnDataR6-method}
-\title{Convert into a LIGER object}
+\title{Convert to a LIGER compatible object}
 \usage{
 ligerInput(
   input,
@@ -55,22 +55,15 @@ ligerInput(
 )
 }
 \arguments{
-\item{input}{A `SingleCellExperiment`, `Seurat` or `AnnData` objects can be supplied.}
+\item{input}{A \linkS4class{SingleCellExperiment}, \linkS4class{Seurat} or
+`AnnData` object can be supplied.}
 
 \item{batch}{A string specifying the batch variable.}
 
 \item{features}{Vector of features to use.}
 
-\item{useDatasets}{A character vector of the names, a numeric or logical vector of the index of the datasets to be normalized.}
-
-\item{verbose}{Print progress bar/messages}
-
-\item{format.type}{Deprecated. The functionality of these is covered through other parts of the whole workflow and is no long needed}
-
-\item{remove.missing}{Deprecated. The functionality of these is covered through other parts of the whole workflow and is no long needed}
-
 \item{...}{Named arguments to pass to individual methods upon dispatch.}
 }
 \description{
-Convert into a LIGER object
+Convert to a LIGER compatible object
 }

@@ -1,9 +1,11 @@
-#' Convert the Seurat V5 output
+#' Convert the SeuratV5 output
 #'
-#' Convert the Seurat V5 output into a SingleCellExperiment, Seurat or Anndata objects
+#' Convert the SeuratV5 output into a \linkS4class{SingleCellExperiment},
+#' \linkS4class{Seurat} or `AnnData` object
 #'
-#' @param input A `SingleCellExperiment`, `Seurat` or `AnnData` objects can be supplied.
-#' @param output Seurat V5 output.
+#' @param input A \linkS4class{SingleCellExperiment}, \linkS4class{Seurat} or
+#' `AnnData` object can be supplied.
+#' @param output Seurat V5 output: a Seurat object
 #' @param method A string specifying the correction method.
 #' @param name A string specifying the corrected reduce space name.
 #'
@@ -22,7 +24,8 @@ setGeneric("seuratv5Post", function(input, output, method, name)
 setMethod("seuratv5Post", "Seurat",  function(input, output, method, name) {
   output[[DefaultAssay(output)]] <- JoinLayers(output[[DefaultAssay(output)]])
   input[[method]] <- CreateDimReducObject(embeddings = Embeddings(output, name),
-                                          key = "seuratv5_", assay = DefaultAssay(input))
+                                          key = "seuratv5_",
+                                          assay = DefaultAssay(input))
 
   return(input)
 })

@@ -1,28 +1,44 @@
 #' Normalized Mutual Information (NMI)
 #'
-#' Before NMI, the Leiden clustering is computed.
+#' The Normalized Mutual Information (NMI) metric is used to compare
+#' the overlap between the true cell-type and clustering labels computed after
+#' batch correction.
 #'
-#' @param input A `SingleCellExperiment`, `Seurat` or `AnnData` objects can be supplied.
+#' After computing clustering using Leiden algorithm, the ARI metric is computed
+#' using the `normalized_mutual_info_score` function from the Python sklearn package.
+#'
+#' @param input A \linkS4class{SingleCellExperiment}, \linkS4class{Seurat} or
+#' `AnnData` object can be supplied.
 #' @param label_true A string specifying cell types.
 #' @param average_method How to compute the normalizer in the denominator.
 #' @param reduction A string specifying the dimensional reduction.
 #'
+#' @export
 #' @importFrom basilisk basiliskStart basiliskStop basiliskRun
 #' @importFrom reticulate import
 #'
-#' @export
+#' @examples
+#' sim <- simulated_data(nGenes = 1000, batchCells = c(150, 200),
+#'                       group.prob = c(0.5, 0.5), n_hvgs = 1000, ncomp = 10)
+#' nmi <- normalized_mutual_info(input = sim, label_true = "Group",
+#'                               reduction = "PCA")
 #'
-normalized_mutual_info <- function(input, label_true, average_method = "arithmetic", reduction) {
+normalized_mutual_info <- function(input, label_true,
+                                   average_method = "arithmetic", reduction) {
   adata <- clustering(input = input, label_true = label_true, reduction = reduction)
 
   proc <- basiliskStart(py_env)
   on.exit(basiliskStop(proc))
 
-  out <- basiliskRun(proc = proc, fun = function(input, label_true, average_method, reduction) {
+  out <- basiliskRun(proc = proc, fun = function(input, label_true,
+                                                 average_method, reduction) {
     scanpy <- import("scanpy")
     sklearn <- import("sklearn")
 
-    nmi <- sklearn$metrics$normalized_mutual_info_score(labels_true = input$obs[, label_true], labels_pred = input$obs$cluster,
-                                                        average_method = average_method)
-  }, input = adata, label_true = label_true, average_method = average_method, reduction = reduction)
+    nmi <- sklearn$metrics$normalized_mutual_info_score(
+      labels_true = input$obs[, label_true],
+      labels_pred = input$obs$cluster,
+      average_method = average_method)
+  }, input = adata, label_true = label_true, average_method = average_method,
+  reduction = reduction)
 }

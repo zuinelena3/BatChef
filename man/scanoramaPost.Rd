@@ -19,16 +19,19 @@ scanoramaPost(input, list, output, return_dimred, method)
 \S4method{scanoramaPost}{AnnDataR6}(input, list, output, return_dimred, method)
 }
 \arguments{
-\item{input}{A `SingleCellExperiment`, `Seurat` or `AnnData` objects can be supplied.}
+\item{input}{A \linkS4class{SingleCellExperiment}, \linkS4class{Seurat} or
+`AnnData` object can be supplied.}
 
-\item{list}{List of matrices}
+\item{list}{List version of input.}
 
-\item{output}{Scanorama output}
+\item{output}{Scanorama output: a list which contains the transposed corrected
+gene expression matrix and the corrected low-dimensional space.}
 
 \item{return_dimred}{A logical to returning integrated low-dimesional embeddings.}
 
 \item{method}{A string specifying the correction method}
 }
 \description{
-Convert the Scanorama output into a SingleCellExperiment, Seurat or Anndata objects
+Convert the Scanorama output into a \linkS4class{SingleCellExperiment},
+\linkS4class{Seurat} or `AnnData` object.
 }

@@ -24,11 +24,13 @@ bbknnRun(
 )
 }
 \arguments{
-\item{input}{PCA (or other dimensionality reduction) coordinates for each cell, with cells as rows.}
+\item{input}{Dimensional reduction coordinates (such as Principal Component
+Analysis) for each cell, with cells as rows.}
 
 \item{batch}{Vector of batch assignments for each cell.}
 
-\item{neighbors_within_batch}{Number of many top neighbours to report for each batch.}
+\item{neighbors_within_batch}{Number of many top neighbours to
+report for each batch.}
 
 \item{n_pcs}{Number of dimensions.}
 
@@ -38,7 +40,8 @@ bbknnRun(
 
 \item{annoy_n_trees}{The number of trees to construct in the annoy forest.}
 
-\item{pynndescent_n_neighbors}{The number of neighbours to include in the approximate neighbour graph.}
+\item{pynndescent_n_neighbors}{The number of neighbours to include
+in the approximate neighbour graph.}
 
 \item{pynndescent_random_state}{The RNG seed to use when creating the graph.}
 
@@ -52,10 +55,22 @@ bbknnRun(
 
 \item{use_annoy}{Flag to explicitly enable or disable Annoy for neighbor search.}
 
-\item{use_faiss}{Flag to explicitly enable or disable FAISS (Facebook AI Similarity Search) for neighbor search.}
+\item{use_faiss}{Flag to explicitly enable or disable
+FAISS (Facebook AI Similarity Search) for neighbor search.}
 
-\item{scanpy_logging}{If True, enables logging compatible with Scanpy’s logging system for better integration.}
+\item{scanpy_logging}{If True, enables logging compatible with Scanpy’s
+logging system for better integration.}
+}
+\value{
+A matrix of the coordinates of the points chosen to represent
+the dissimilarities.
 }
 \description{
-BBKNN method
+BBKNN is a graph-based batch correction method.
+}
+\examples{
+sim <- simulated_data(nGenes = 1000, batchCells = c(150, 200),
+                      group.prob = c(0.5, 0.5), n_hvgs = 1000, ncomp = 10)
+bbknn <- bbknnRun(input = reducedDim(sim, "PCA"), batch = sim$Batch, n_pcs = 10)
+
 }

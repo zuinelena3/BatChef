@@ -2,7 +2,7 @@
 % Please edit documentation in R/local_inverse_simpson_index.R
 \name{local_inverse_simpson_index}
 \alias{local_inverse_simpson_index}
-\title{Local Inverse Simposon Index}
+\title{Local Inverse Simposon Index (LISI)}
 \usage{
 local_inverse_simpson_index(
   input,
@@ -14,7 +14,7 @@ local_inverse_simpson_index(
 )
 }
 \arguments{
-\item{input}{A `SingleCellExperiment` object.}
+\item{input}{A \linkS4class{SingleCellExperiment} object.}
 
 \item{label_true}{A string specifying cell types.}
 
@@ -27,5 +27,15 @@ local_inverse_simpson_index(
 \item{nn_eps}{Error bound for nearest neighbor search with `RANN:nn2()`.}
 }
 \description{
-Local Inverse Simposon Index
+Local Inverse Simpson’s Index (LISI) is a local level metric based on
+the kNN algorithm. This metric defines the effective number of datasets in
+a neighborhood. In other words, LISI determines the number of neighbor cells
+necessary before one batch is observed twice.
+}
+\examples{
+sim <- simulated_data(nGenes = 1000, batchCells = c(150, 200),
+                      group.prob = c(0.5, 0.5), n_hvgs = 1000, ncomp = 10)
+lisi <- local_inverse_simpson_index(input = sim, label_true = "Group",
+                                    reduction = "PCA")
+
 }

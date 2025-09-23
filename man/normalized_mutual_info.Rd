@@ -12,7 +12,8 @@ normalized_mutual_info(
 )
 }
 \arguments{
-\item{input}{A `SingleCellExperiment`, `Seurat` or `AnnData` objects can be supplied.}
+\item{input}{A \linkS4class{SingleCellExperiment}, \linkS4class{Seurat} or
+`AnnData` object can be supplied.}
 
 \item{label_true}{A string specifying cell types.}
 
@@ -21,5 +22,18 @@ normalized_mutual_info(
 \item{reduction}{A string specifying the dimensional reduction.}
 }
 \description{
-Before NMI, the Leiden clustering is computed.
+The Normalized Mutual Information (NMI) metric is used to compare
+the overlap between the true cell-type and clustering labels computed after
+batch correction.
+}
+\details{
+After computing clustering using Leiden algorithm, the ARI metric is computed
+using the `normalized_mutual_info_score` function from the Python sklearn package.
+}
+\examples{
+sim <- simulated_data(nGenes = 1000, batchCells = c(150, 200),
+                      group.prob = c(0.5, 0.5), n_hvgs = 1000, ncomp = 10)
+nmi <- normalized_mutual_info(input = sim, label_true = "Group",
+                              reduction = "PCA")
+
 }

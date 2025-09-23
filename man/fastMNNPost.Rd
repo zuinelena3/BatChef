@@ -19,12 +19,16 @@ fastMNNPost(input, output, method)
 \S4method{fastMNNPost}{AnnDataR6}(input, output, method)
 }
 \arguments{
-\item{input}{A `SingleCellExperiment`, `Seurat` or `AnnData` objects can be supplied.}
+\item{input}{A \linkS4class{SingleCellExperiment}, \linkS4class{Seurat} or
+`AnnData` object can be supplied.}
 
-\item{output}{fastMNN output.}
+\item{output}{fastMNN output: a \linkS4class{SingleCellExperiment} containing
+the reconstructed expression matrix and the corrected dimensionality
+reduction space.}
 
 \item{method}{A string specifying the correction method.}
 }
 \description{
-Convert fastMNN output into a SingleCellExperiment, Seurat or Anndata objects.
+Convert fastMNN output into a \linkS4class{SingleCellExperiment},
+\linkS4class{Seurat} or `AnnData` object.
 }

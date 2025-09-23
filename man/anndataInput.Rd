@@ -19,7 +19,8 @@ anndataInput(input)
 \S4method{anndataInput}{AnnDataR6}(input)
 }
 \arguments{
-\item{input}{A `SingleCellExperiment`, `Seurat` or `AnnData` objects can be supplied.}
+\item{input}{A \linkS4class{SingleCellExperiment}, \linkS4class{Seurat} or
+`AnnData` object can be supplied.}
 }
 \description{
 Convert into an AnnData object

@@ -1,9 +1,12 @@
 #' Convert BBKNN output
 #'
-#' Convert BBKNN output into a SingleCellExperiment, Seurat or Anndata objects.
+#' Convert BBKNN output into a \linkS4class{SingleCellExperiment},
+#' \linkS4class{Seurat} or `AnnData` object.
 #'
-#' @param input A `SingleCellExperiment`, `Seurat` or `AnnData` objects can be supplied.
-#' @param output BBKNN output.
+#' @param input A \linkS4class{SingleCellExperiment}, \linkS4class{Seurat} or
+#' `AnnData` object can be supplied.
+#' @param output BBKNN output: a matrix of the coordinates of the points chosen
+#' to represent the dissimilarities.
 #' @param method A string specifying the correction method
 #'
 #' @import methods
@@ -20,7 +23,8 @@ setGeneric("bbknnPost", function(input, output, method)
 #'
 setMethod("bbknnPost", "Seurat",  function(input, output, method) {
   input[[method]] <- CreateDimReducObject(embeddings = output,
-                                          key = "bbknn_", assay = DefaultAssay(input))
+                                          key = "bbknn_",
+                                          assay = DefaultAssay(input))
   return(input)
 })
 

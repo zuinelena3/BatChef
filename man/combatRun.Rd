@@ -7,7 +7,7 @@
 combatRun(input, batch, assay_type = "counts", ...)
 }
 \arguments{
-\item{input}{A SingleCellExperiment object.}
+\item{input}{A \linkS4class{SingleCellExperiment} object.}
 
 \item{batch}{A string specifying the batch for each cell.}
 
@@ -15,6 +15,16 @@ combatRun(input, batch, assay_type = "counts", ...)
 
 \item{...}{Named arguments to pass to individual methods upon dispatch.}
 }
+\value{
+A corrected matrix
+}
 \description{
-ComBat method
+ComBat allows users to adjust for batch effects in datasets using an
+empirical Bayes framework.
+}
+\examples{
+sim <- simulated_data(nGenes = 1000, batchCells = c(150, 200),
+                      group.prob = c(0.5, 0.5), n_hvgs = 1000, ncomp = 10)
+combat <- combatRun(input = sim, batch = "Batch")
+
 }

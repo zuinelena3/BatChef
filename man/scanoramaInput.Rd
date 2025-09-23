@@ -8,7 +8,7 @@
 \alias{anndatasInput,SingleCellExperiment,SingleCellExperiment-method}
 \alias{scanoramaInput,AnnDataR6-method}
 \alias{anndatasInput,AnnDataR6,AnnDataR6-method}
-\title{Convert into a list of matrices}
+\title{Convert to a Scanorama compatible object}
 \usage{
 scanoramaInput(input, batch, assay.type = NULL)
 
@@ -19,12 +19,13 @@ scanoramaInput(input, batch, assay.type = NULL)
 \S4method{scanoramaInput}{AnnDataR6}(input, batch, assay.type = NULL)
 }
 \arguments{
-\item{input}{A `SingleCellExperiment`, `Seurat` or `AnnData` objects can be supplied.}
+\item{input}{A \linkS4class{SingleCellExperiment}, \linkS4class{Seurat} or
+`AnnData` object can be supplied.}
 
 \item{batch}{A string specifying the batch for each cell.}
 
 \item{assay.type}{layers name}
 }
 \description{
-Convert into a list of matrices
+Convert to a Scanorama compatible object
 }

@@ -7,7 +7,7 @@
 scMerge2Run(input, batch, assay_type = "logcounts", ...)
 }
 \arguments{
-\item{input}{A `SingleCellExperiment` object can be supplied.}
+\item{input}{A \linkS4class{SingleCellExperiment} object.}
 
 \item{batch}{A string specifying the batch variable.}
 
@@ -15,6 +15,15 @@ scMerge2Run(input, batch, assay_type = "logcounts", ...)
 
 \item{...}{Named arguments to pass to individual methods upon dispatch.}
 }
+\value{
+A list that contains the corrected gene expression matrix
+}
 \description{
-scMerge2 method
+scMerge2 is based on pseudo-replicates to remove unwanted batch effects.
+}
+\examples{
+sim <- simulated_data(nGenes = 1000, batchCells = c(150, 200),
+                      group.prob = c(0.5, 0.5), n_hvgs = 1000, ncomp = 10)
+scmerge2 <- scMerge2Run(input = sim, batch = "Batch", assay_type = "logcounts")
+
 }

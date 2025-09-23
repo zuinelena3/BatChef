@@ -1,9 +1,12 @@
 #' Convert Harmony output
 #'
-#' Convert Harmony output into a SingleCellExperiment, Seurat or Anndata objects.
+#' Convert Harmony output into a \linkS4class{SingleCellExperiment},
+#' \linkS4class{Seurat} or `AnnData` object.
 #'
-#' @param input A `SingleCellExperiment`, `Seurat` or `AnnData` objects can be supplied.
-#' @param output Harmony output.
+#' @param input A \linkS4class{SingleCellExperiment}, \linkS4class{Seurat} or
+#' `AnnData` object can be supplied.
+#' @param output Harmony output: a \linkS4class{SingleCellExperiment} containing
+#' the corrected dimensionality reduction space.
 #' @param method A string specifying the correction method.
 #'
 #' @import methods
@@ -20,7 +23,8 @@ setGeneric("harmonyPost", function(input, output, method)
 #'
 setMethod("harmonyPost", "Seurat",  function(input, output, method) {
   input[[method]] <- CreateDimReducObject(embeddings = reducedDim(output, "HARMONY"),
-                                          key = "harmony_", assay = DefaultAssay(input))
+                                          key = "harmony_",
+                                          assay = DefaultAssay(input))
   return(input)
 })
 

@@ -1,6 +1,7 @@
-#' Convert into a Seurat V3 object
+#' Convert to a SeuratV3 compatible object
 #'
-#' @param input A `SingleCellExperiment`, `Seurat` or `AnnData` objects can be supplied.
+#' @param input A \linkS4class{SingleCellExperiment}, \linkS4class{Seurat} or
+#' `AnnData` object can be supplied.
 #' @param batch A string specifying the batch variable.
 #' @param features Vector of features to use.
 #' @param pca_name A string specifying the PCA.
@@ -29,7 +30,8 @@ setMethod("seuratv3Input", "Seurat", function(input, batch, features, pca_name) 
 #' @importFrom SingleCellExperiment reducedDim
 #' @aliases seuratv3Input,SingleCellExperiment,SingleCellExperiment-method
 #'
-setMethod("seuratv3Input", "SingleCellExperiment", function(input, batch, features, pca_name) {
+setMethod("seuratv3Input", "SingleCellExperiment", function(input, batch,
+                                                            features, pca_name) {
   stopifnot(batch %in% colnames(colData(input)))
   stopifnot("Error: specify 'pca_name'" = !is.null(pca_name))
   so <- as.Seurat(input)
