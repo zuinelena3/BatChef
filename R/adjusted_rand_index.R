@@ -12,14 +12,15 @@
 #' @param reduction A string specifying the name of dimensional reduction.
 #'
 #' @export
+#' @importFrom reticulate import
+#' @importFrom basilisk basiliskStart basiliskStop basiliskRun
+#'
+#' @return A numeric value
 #' @examples
 #' sim <- simulated_data(nGenes = 1000, batchCells = c(150, 200),
 #'                       group.prob = c(0.5, 0.5), n_hvgs = 1000, ncomp = 10)
 #' ari <- adjusted_rand_index(input = sim, label_true = "Group",
 #'                            reduction = "PCA")
-#'
-#' @importFrom reticulate import
-#' @importFrom basilisk basiliskStart basiliskStop basiliskRun
 #'
 adjusted_rand_index <- function(input, label_true, reduction) {
   adata <- clustering(input = input, label_true = label_true,

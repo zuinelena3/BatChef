@@ -35,12 +35,13 @@
 #' @examples
 #' sim <- simulated_data(nGenes = 1000, batchCells = c(150, 200),
 #'                       group.prob = c(0.5, 0.5), n_hvgs = 1000, ncomp = 10)
-#' ll <- lapply(unique(colData(sim)[, "Batch"]), function(i) sim[, colData(sim)[, "Batch"] == i])
-#' names(ll) <- unique(colData(sim)[, "Batch"])
+#' ll <- lapply(unique(SingleCellExperiment::colData(sim)[, "Batch"]),
+#'              function(i) sim[, SingleCellExperiment::colData(sim)[, "Batch"] == i])
+#' names(ll) <- unique(SingleCellExperiment::colData(sim)[, "Batch"])
 #' # Create a liger object
-#' lo <- createLiger(rawData = ll)
-#' lo <- normalize(object = lo)
-#' lo <- scaleNotCenter(object = lo, features = rownames(sim))
+#' lo <- rliger::createLiger(rawData = ll)
+#' lo <- rliger::normalize(object = lo)
+#' lo <- rliger::scaleNotCenter(object = lo, features = rownames(sim))
 #' liger <- ligerRun(input = lo)
 #'
 ligerRun <- function(input, method = "iNMF", quantiles = 50, reference = NULL,

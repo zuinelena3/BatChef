@@ -18,16 +18,16 @@
 #' a subset of samples.
 #'
 #' @export
+#' @importFrom reticulate import
+#' @importFrom basilisk basiliskStart basiliskStop basiliskRun
+#' @importFrom SingleCellExperiment reducedDim colData
+#'
+#' @return A numeric value
 #' @examples
 #' sim <- simulated_data(nGenes = 1000, batchCells = c(150, 200),
 #'                       group.prob = c(0.5, 0.5), n_hvgs = 1000, ncomp = 10)
 #' asw <- average_silhouette_width(input = sim, label_true = "Group",
 #'                                 reduction = "PCA")
-#'
-#' @importFrom reticulate import
-#' @importFrom basilisk basiliskStart basiliskStop basiliskRun
-#' @importFrom SingleCellExperiment reducedDim colData
-#'
 average_silhouette_width <- function(input, label_true, reduction,
                                      metric = "euclidean", sample_size = NULL,
                                      random_state = NULL) {

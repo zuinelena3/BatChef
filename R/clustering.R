@@ -10,16 +10,15 @@
 #' @param reduction A string specifying the dimensional reduction.
 #'
 #' @export
+#' @import methods
+#' @importFrom basilisk basiliskStart basiliskStop basiliskRun
+#' @importFrom reticulate import
+#'
+#' @return A `AnnData` object.
 #' @examples
 #' sim <- simulated_data(nGenes = 1000, batchCells = c(150, 200),
 #'                       group.prob = c(0.5, 0.5), n_hvgs = 1000, ncomp = 10)
 #' clust <- clustering(input = sim, label_true = "Group", reduction = "PCA")
-#'
-#' @return A `AnnData` object .
-#'
-#' @import methods
-#' @importFrom basilisk basiliskStart basiliskStop basiliskRun
-#' @importFrom reticulate import
 #'
 clustering <- function(input, label_true, reduction) {
   proc <- basiliskStart(py_env)

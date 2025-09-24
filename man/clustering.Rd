@@ -15,7 +15,7 @@ clustering(input, label_true, reduction)
 \item{reduction}{A string specifying the dimensional reduction.}
 }
 \value{
-A `AnnData` object .
+A `AnnData` object.
 }
 \description{
 Leiden clustering was computed with different resolution parameters

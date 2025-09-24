@@ -29,7 +29,7 @@
 #' sim <- simulated_data(nGenes = 1000, batchCells = c(150, 200),
 #'                       group.prob = c(0.5, 0.5), n_hvgs = 1000, ncomp = 10)
 #' metrics <- metrics(input = sim, batch = "Batch", group = "Group",
-#'                    reduction = "PCA", rep = 5, mc.cores = 4)
+#'                    reduction = "PCA", rep = 5, mc.cores = 1)
 #'
 metrics <- function(input, batch, group, reduction, rep = 10, mc.cores = 2,
                     average_method = "arithmetic", metric = "euclidean",

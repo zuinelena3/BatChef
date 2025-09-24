@@ -37,7 +37,6 @@
 #' @param n_hvgs Number of higly variable genes.
 #'
 #' @export
-#'
 #' @importFrom splatter newSplatParams splatSimulateGroups
 #' @importFrom SummarizedExperiment assays assays<-
 #' @importFrom scrapper centerSizeFactors normalizeCounts modelGeneVariances chooseHighlyVariableGenes

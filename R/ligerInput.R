@@ -9,9 +9,7 @@
 #' @import methods
 #' @rdname ligerInput
 #'
-setGeneric("ligerInput", function(input, batch, features, useDatasets = NULL,
-                                  verbose = TRUE, format.type = NULL,
-                                  remove.missing = NULL, ...)
+setGeneric("ligerInput", function(input, batch, features, ...)
   standardGeneric("ligerInput"), signature = c("input"))
 
 #' @rdname ligerInput

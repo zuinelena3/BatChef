@@ -16,7 +16,6 @@
 #' sim <- simulated_data(nGenes = 1000, batchCells = c(150, 200),
 #'                       group.prob = c(0.5, 0.5), n_hvgs = 1000, ncomp = 10)
 #' scmerge2 <- scMerge2Run(input = sim, batch = "Batch", assay_type = "logcounts")
-#'
 scMerge2Run <- function(input, batch, assay_type = "logcounts", ...) {
   args <- c(list(exprsMat = assay(input, assay_type), batch = colData(input)[, batch]),
             capture_params(scMerge2, list(...)))

@@ -17,6 +17,9 @@ wasserstein_distance(input, batch, reduction, rep, mc.cores)
 
 \item{mc.cores}{The number of cores to use.}
 }
+\value{
+A numeric value.
+}
 \description{
 The Wasserstein distance measures the minimal transport needed to shift one
 distribution to match another.
@@ -27,6 +30,6 @@ sim <- simulated_data(nGenes = 1000, batchCells = c(150, 200),
 sim <- batchCorrect(input = sim, batch = "Batch",
                     params = HarmonyParams())
 wass <- wasserstein_distance(input = sim, batch = "Batch",
-                             reduction = "harmony", rep = 2, mc.cores = 3)
+                             reduction = "harmony", rep = 2, mc.cores = 1)
 
 }

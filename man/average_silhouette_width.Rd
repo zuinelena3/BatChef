@@ -28,6 +28,9 @@ the Silhouette Coefficient on a random subset of the data.}
 \item{random_state}{Determines random number generation for selecting
 a subset of samples.}
 }
+\value{
+A numeric value
+}
 \description{
 The average silhouette width for each cell is defined as the difference
 between the average of  within-cluster distances to all cells and the average
@@ -43,5 +46,4 @@ sim <- simulated_data(nGenes = 1000, batchCells = c(150, 200),
                       group.prob = c(0.5, 0.5), n_hvgs = 1000, ncomp = 10)
 asw <- average_silhouette_width(input = sim, label_true = "Group",
                                 reduction = "PCA")
-
 }

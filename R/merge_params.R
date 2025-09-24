@@ -8,8 +8,11 @@ merge_params <- function(base, extra, class) {
   arg_base <- names(base)
   arg_extra <- names(extra)
 
-  if (length(intersect(arg_base, arg_extra)) > 0) {
-    print(paste(class, "argoments are duplicated!", sep = " "))
+  if (any(arg_base %in% arg_extra)) {
+    message(paste(class, "arguments are duplicated!"))
   }
   else return(c(base, extra))
 }
+
+
+

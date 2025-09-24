@@ -10,49 +10,13 @@
 \alias{ligerInput,AnnDataR6,AnnDataR6-method}
 \title{Convert to a LIGER compatible object}
 \usage{
-ligerInput(
-  input,
-  batch,
-  features,
-  useDatasets = NULL,
-  verbose = TRUE,
-  format.type = NULL,
-  remove.missing = NULL,
-  ...
-)
+ligerInput(input, batch, features, ...)
 
-\S4method{ligerInput}{Seurat}(
-  input,
-  batch,
-  features,
-  useDatasets = NULL,
-  verbose = TRUE,
-  format.type = NULL,
-  remove.missing = NULL,
-  ...
-)
+\S4method{ligerInput}{Seurat}(input, batch, features, ...)
 
-\S4method{ligerInput}{SingleCellExperiment}(
-  input,
-  batch,
-  features,
-  useDatasets = NULL,
-  verbose = TRUE,
-  format.type = NULL,
-  remove.missing = NULL,
-  ...
-)
+\S4method{ligerInput}{SingleCellExperiment}(input, batch, features, ...)
 
-\S4method{ligerInput}{AnnDataR6}(
-  input,
-  batch,
-  features,
-  useDatasets = NULL,
-  verbose = TRUE,
-  format.type = NULL,
-  remove.missing = NULL,
-  ...
-)
+\S4method{ligerInput}{AnnDataR6}(input, batch, features, ...)
 }
 \arguments{
 \item{input}{A \linkS4class{SingleCellExperiment}, \linkS4class{Seurat} or

@@ -25,5 +25,4 @@ scMerge2 is based on pseudo-replicates to remove unwanted batch effects.
 sim <- simulated_data(nGenes = 1000, batchCells = c(150, 200),
                       group.prob = c(0.5, 0.5), n_hvgs = 1000, ncomp = 10)
 scmerge2 <- scMerge2Run(input = sim, batch = "Batch", assay_type = "logcounts")
-
 }

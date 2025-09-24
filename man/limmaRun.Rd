@@ -25,5 +25,4 @@ limma method
 sim <- simulated_data(nGenes = 1000, batchCells = c(150, 200),
                       group.prob = c(0.5, 0.5), n_hvgs = 1000, ncomp = 10)
 limma <- limmaRun(input = sim, batch = "Batch")
-
 }

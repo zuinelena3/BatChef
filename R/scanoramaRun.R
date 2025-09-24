@@ -32,8 +32,9 @@
 #' @examples
 #' sim <- simulated_data(nGenes = 1000, batchCells = c(150, 200),
 #'                       group.prob = c(0.5, 0.5), n_hvgs = 1000, ncomp = 10)
-#' sim <- lapply(unique(colData(sim)[, "Batch"]), function(x) sim[, colData(sim)[, "Batch"] == x])
-#' ll <- c(lapply(sim, function(x) t(as.matrix(logcounts(x)))),
+#' sim <- lapply(unique(SingleCellExperiment::colData(sim)[, "Batch"]),
+#'               function(i) sim[, SingleCellExperiment::colData(sim)[, "Batch"] == i])
+#' ll <- c(lapply(sim, function(x) t(as.matrix(SingleCellExperiment::logcounts(x)))),
 #'         lapply(sim, function(x) rownames(x)))
 #' scanorama <- scanoramaRun(input = ll, return_dimred = TRUE)
 #'

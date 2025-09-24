@@ -43,16 +43,19 @@
 #' @examples
 #' sim <- simulated_data(nGenes = 1000, batchCells = c(150, 200),
 #'                       group.prob = c(0.5, 0.5), n_hvgs = 1000, ncomp = 10)
-#' so <- as.Seurat(sim)
+#' so <- Seurat::as.Seurat(sim)
+#' so@reductions[["pca"]] <- Seurat::CreateDimReducObject(
+#'   embeddings = SingleCellExperiment::reducedDim(sim, "PCA"),
+#'   loadings = attr(SingleCellExperiment::reducedDim(sim, "PCA"), "rotation"),
+#'   key = "pca_", assay = SeuratObject::DefaultAssay(so))
 #'
-#' so@reductions[["pca"]] <- CreateDimReducObject(embeddings = reducedDim(sim, "PCA"),
-#'                                                loadings = attr(reducedDim(sim, "PCA"), "rotation"),
-#'                                                key = "pca_", assay = DefaultAssay(so))
-#'
-#' so[[DefaultAssay(so)]] <- split(x = so[[DefaultAssay(so)]],
-#'                                 f = so[["Batch"]][, 1])
-#' so <- ScaleData(so, verbose = FALSE)
-#' seuv5 <- seuratV5Run(input = so, method = "CCAIntegration", features = rownames(so))
+#' so[[SeuratObject::DefaultAssay(so)]] <- as(object = so[[SeuratObject::DefaultAssay(so)]],
+#'                                            Class = "Assay5")
+#' so[[SeuratObject::DefaultAssay(so)]] <- split(x = so[[SeuratObject::DefaultAssay(so)]],
+#'                                               f = so[["Batch"]][, 1])
+#' so <- Seurat::ScaleData(so, verbose = FALSE)
+#' seuv5 <- seuratV5Run(input = so, method = "CCAIntegration",
+#'                      features = rownames(so), verbose = FALSE)
 #'
 seuratV5Run <- function(input, method = "CCAIntegration", orig.reduction = "pca",
                         assay = NULL, features = NULL, layers = NULL,

@@ -21,6 +21,9 @@ normalized_mutual_info(
 
 \item{reduction}{A string specifying the dimensional reduction.}
 }
+\value{
+A numeric value.
+}
 \description{
 The Normalized Mutual Information (NMI) metric is used to compare
 the overlap between the true cell-type and clustering labels computed after

@@ -14,6 +14,9 @@ adjusted_rand_index(input, label_true, reduction)
 
 \item{reduction}{A string specifying the name of dimensional reduction.}
 }
+\value{
+A numeric value
+}
 \description{
 The Adjusted Rand Index (ARI) is a metric used to measure the similarity
 between the clustering and ground truth labels.

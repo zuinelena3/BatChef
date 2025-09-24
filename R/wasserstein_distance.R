@@ -10,31 +10,31 @@
 #' @param mc.cores The number of cores to use.
 #'
 #' @export
-#'
 #' @importFrom SummarizedExperiment colData
 #' @importFrom SingleCellExperiment reducedDim
 #' @importFrom parallel mclapply
 #' @importFrom transport pp wasserstein
 #'
+#' @return A numeric value.
 #' @examples
 #' sim <- simulated_data(nGenes = 1000, batchCells = c(150, 200),
 #'                       group.prob = c(0.5, 0.5), n_hvgs = 1000, ncomp = 10)
 #' sim <- batchCorrect(input = sim, batch = "Batch",
 #'                     params = HarmonyParams())
 #' wass <- wasserstein_distance(input = sim, batch = "Batch",
-#'                              reduction = "harmony", rep = 2, mc.cores = 3)
+#'                              reduction = "harmony", rep = 2, mc.cores = 1)
 #'
 wasserstein_distance <- function(input, batch, reduction, rep, mc.cores) {
   stopifnot(batch %in% colnames(colData(input)))
 
-  stopifnot("Error: N. of batches has to be greater than 1" = length(unique(colData(input)[, batch])) > 1)
+  stopifnot("Error: N. of batches has to be greater than 1" =
+              length(unique(colData(input)[, batch])) > 1)
 
-  ll <- lapply(unique(colData(input)[, batch]), function(i) input[, colData(input)[, batch] == i])
+  ll <- lapply(unique(colData(input)[, batch]),
+               function(i) input[, colData(input)[, batch] == i])
   embed <- lapply(ll, function(x) reducedDim(x, reduction))
 
   n <- min(sapply(embed, function(x) length(rownames(x))))
-  # stopifnot("Error: N. of cells for a batch too small" = n >= 100)
-
   warning("Warning: The smallest number of cells per batch is less than 100")
 
   wass <- mclapply(1:rep, function(i) {

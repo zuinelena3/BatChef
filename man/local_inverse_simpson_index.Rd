@@ -26,6 +26,9 @@ local_inverse_simpson_index(
 
 \item{nn_eps}{Error bound for nearest neighbor search with `RANN:nn2()`.}
 }
+\value{
+A numeric value.
+}
 \description{
 Local Inverse Simpson’s Index (LISI) is a local level metric based on
 the kNN algorithm. This metric defines the effective number of datasets in

@@ -10,12 +10,11 @@
 #' @param params A \linkS4class{BatChefParams} object specifying
 #' the batch correction method to use and the parameters for its execution.
 #'
+#' @import methods
 #' @return A \linkS4class{SingleCellExperiment}, \linkS4class{Seurat}, or
 #' `AnnData` object, where the output of the method (such as the corrected
 #' gene expression matrix and/or the corrected dimensional reduction space) is
 #' stored within the original input object.
-#'
-#' @import methods
 #'
 #' @examples
 #' sim <- simulated_data(nGenes = 1000, batchCells = c(150, 200),
