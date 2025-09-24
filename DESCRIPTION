@@ -5,19 +5,21 @@ Version: 0.99.0
 Authors@R: c(
     person("Elena", "Zuin", email = "elena.zuin.3@phd.unipd.it", 
             role = c("aut", "cre"),
-            comment = c(affiliation = "Department of Biology, University of Padova")),
+            comment = c(ORCID = "0009-0006-3060-4835", 
+            affiliation = "Department of Biology, University of Padova")),
     person("Chiara", "Romualdi", role = "ctb", 
             comment = c(affiliation = "Department of Biology, University of Padova")),
     person("Davide", "Risso", role = "ctb",
             comment = c(affiliation = "Department of Statistical Sciences, University of Padova")),
     person("Gabriele", "Sales", role = "ctb", 
             comment = c(affiliation = "Department of Biology, University of Padova")))
-Description: A common interface for single-cell RNA_seq batch effects correction methods in 
-            R and Python environments. The package contains the performance evaluation metrics.
+Description: A common interface for single-cell RNA_seq batch effects 
+            correction methods in R and Python environments. 
+            The package contains the performance evaluation metrics.
 License: Artistic-2.0
 Encoding: UTF-8
 LazyData: false
-biocViews: BatchEffect
+biocViews: BatchEffect, SingleCell
 RoxygenNote: 7.3.3
 Imports: 
     anndata,
