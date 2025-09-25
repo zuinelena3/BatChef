@@ -32,6 +32,9 @@ seuratv3Input(input, batch, features, pca_name = NULL)
 
 \item{pca_name}{A string specifying the PCA.}
 }
+\value{
+A list of \linkS4class{Seurat} objects.
+}
 \description{
 Convert to a SeuratV3 compatible object
 }

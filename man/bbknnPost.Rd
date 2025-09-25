@@ -27,6 +27,10 @@ to represent the dissimilarities.}
 
 \item{method}{A string specifying the correction method}
 }
+\value{
+A \linkS4class{SingleCellExperiment},
+\linkS4class{Seurat} or `AnnData` object.
+}
 \description{
 Convert BBKNN output into a \linkS4class{SingleCellExperiment},
 \linkS4class{Seurat} or `AnnData` object.

@@ -11,6 +11,9 @@ capture_params(target, params)
 
 \item{params}{Parameters}
 }
+\value{
+Parameters
+}
 \description{
 Capture parameters of the correction methods
 }

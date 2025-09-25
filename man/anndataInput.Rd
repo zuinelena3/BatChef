@@ -22,6 +22,9 @@ anndataInput(input)
 \item{input}{A \linkS4class{SingleCellExperiment}, \linkS4class{Seurat} or
 `AnnData` object can be supplied.}
 }
+\value{
+A AnnData object.
+}
 \description{
 Convert into an AnnData object
 }

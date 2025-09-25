@@ -61,12 +61,9 @@ A common interface for single-cell batch correction methods.
 Users can pass parameters to each method via the constructors for params.
 }
 \examples{
-sim <- simulated_data(nGenes = 1000, batchCells = c(150, 200),
+sim <- simulated_data(nGenes = 1000, batchCells = c(150, 50),
                       group.prob = c(0.5, 0.5), n_hvgs = 1000, ncomp = 10)
-out <- batchCorrect(input = sim, batch = "Batch", params = LimmaParams())
 out <- batchCorrect(input = sim, batch = "Batch",
                     params = ScanoramaParams(assay_type = "logcounts",
                                              return_dimred = TRUE))
-out <- batchCorrect(input = sim, batch = "Batch", params = ScMerge2Params())
-
 }

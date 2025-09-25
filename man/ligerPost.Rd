@@ -26,6 +26,10 @@ ligerPost(input, output, method)
 
 \item{method}{A string specifying the correction method}
 }
+\value{
+A \linkS4class{SingleCellExperiment},
+\linkS4class{Seurat} or `AnnData` object.
+}
 \description{
 Convert the LIGER output into a \linkS4class{SingleCellExperiment},
 \linkS4class{Seurat} or `AnnData` object.

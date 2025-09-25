@@ -11,6 +11,8 @@
 #' @param method A string specifying the correction method.
 #'
 #' @import methods
+#' @return A \linkS4class{SingleCellExperiment},
+#' \linkS4class{Seurat} or `AnnData` object.
 #' @rdname fastMNNPost
 #'
 setGeneric("fastMNNPost", function(input, output, method)

@@ -7,6 +7,7 @@
 #' @param ... Named arguments to pass to individual methods upon dispatch.
 #'
 #' @import methods
+#' @return A LIGER compatible object
 #' @rdname ligerInput
 #'
 setGeneric("ligerInput", function(input, batch, features, ...)

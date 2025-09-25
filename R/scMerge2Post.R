@@ -10,6 +10,8 @@
 #' @param method A string specifying the correction method
 #'
 #' @import methods
+#' @return A \linkS4class{SingleCellExperiment},
+#' \linkS4class{Seurat} or `AnnData` object
 #' @rdname scMerge2Post
 #'
 setGeneric("scMerge2Post", function(input, output, method)

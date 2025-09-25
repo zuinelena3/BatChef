@@ -3,6 +3,7 @@
 #' @param path path of yml file
 #'
 #' @importFrom yaml read_yaml
+#' @return A list that contains channels, packages and pip packages informations.
 #'
 yml_convert <- function(path){
   yaml_txt <- yaml::read_yaml(file = path)

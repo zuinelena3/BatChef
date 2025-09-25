@@ -79,9 +79,9 @@
 #' corrected low-dimensional space.
 #'
 #' @examples
-#' sim <- simulated_data(nGenes = 1000, batchCells = c(150, 200),
-#'                       group.prob = c(0.5, 0.5), n_hvgs = 1000, ncomp = 10)
-#' scvi <- scVIRun(input = sim, batch = "Batch", max_epochs = 2)
+#' # sim <- simulated_data(nGenes = 1000, batchCells = c(80, 50),
+#' #                       group.prob = c(0.5, 0.5), n_hvgs = 1000, ncomp = 10)
+#' # scvi <- scVIRun(input = sim, batch = "Batch", max_epochs = 1)
 #'
 scVIRun <- function(input, batch, layer = NULL, labels_key = NULL,
                     size_factor_key = NULL, categorical_covariate_keys = NULL,

@@ -42,7 +42,7 @@ The ASW metric is computed using the `silhouette_score` function from the
 Python sklearn package.
 }
 \examples{
-sim <- simulated_data(nGenes = 1000, batchCells = c(150, 200),
+sim <- simulated_data(nGenes = 1000, batchCells = c(150, 50),
                       group.prob = c(0.5, 0.5), n_hvgs = 1000, ncomp = 10)
 asw <- average_silhouette_width(input = sim, label_true = "Group",
                                 reduction = "PCA")

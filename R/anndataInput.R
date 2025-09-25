@@ -4,6 +4,7 @@
 #' `AnnData` object can be supplied.
 #'
 #' @import methods
+#' @return A AnnData object.
 #' @rdname anndataInput
 #'
 setGeneric("anndataInput", function(input)

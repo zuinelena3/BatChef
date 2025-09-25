@@ -28,6 +28,10 @@ seuratv5Post(input, output, method, name)
 
 \item{name}{A string specifying the corrected reduce space name.}
 }
+\value{
+A \linkS4class{SingleCellExperiment},
+\linkS4class{Seurat} or `AnnData` object
+}
 \description{
 Convert the SeuratV5 output into a \linkS4class{SingleCellExperiment},
 \linkS4class{Seurat} or `AnnData` object

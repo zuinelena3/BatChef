@@ -6,6 +6,8 @@
 #' @param assay.type A string specifying the assay.
 #'
 #' @import methods
+#' @return List that contains the expression matrices for each batches and
+#'  the genes.
 #' @rdname scanoramaInput
 #'
 setGeneric("scanoramaInput", function(input, batch, assay.type = NULL)

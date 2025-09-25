@@ -9,6 +9,9 @@ yml_convert(path)
 \arguments{
 \item{path}{path of yml file}
 }
+\value{
+A list that contains channels, packages and pip packages informations.
+}
 \description{
 Yaml file convertion
 }

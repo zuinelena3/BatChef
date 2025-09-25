@@ -31,6 +31,10 @@ gene expression matrix and the corrected low-dimensional space.}
 
 \item{method}{A string specifying the correction method}
 }
+\value{
+A \linkS4class{SingleCellExperiment},
+\linkS4class{Seurat} or `AnnData` object.
+}
 \description{
 Convert the Scanorama output into a \linkS4class{SingleCellExperiment},
 \linkS4class{Seurat} or `AnnData` object.

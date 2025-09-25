@@ -13,6 +13,9 @@ merge_params(base, extra, class)
 
 \item{class}{class}
 }
+\value{
+Vector of strings of base and extra parameters.
+}
 \description{
 Parameters merging
 }

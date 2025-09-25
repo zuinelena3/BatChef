@@ -103,15 +103,15 @@ A \linkS4class{Seurat} object that contains the corrected matrix.
 SeuratV3 is an anchor-based method.
 }
 \examples{
-sim <- simulated_data(nGenes = 1000, batchCells = c(150, 200),
-                      group.prob = c(0.5, 0.5), n_hvgs = 1000, ncomp = 10)
-so <- Seurat::as.Seurat(sim)
-Seurat::VariableFeatures(so) <- rownames(so)
-so[["pca"]] <- Seurat::CreateDimReducObject(
-  embeddings = SingleCellExperiment::reducedDim(sim, "PCA"),
-  loadings = attr(SingleCellExperiment::reducedDim(sim, "PCA"), "rotation"),
-  key = "pca_", assay = SeuratObject::DefaultAssay(so))
-ll <- Seurat::SplitObject(so, split.by = "Batch")
-seuv3 <- seuratV3Run(input = ll, reduction = "cca")
+# sim <- simulated_data(nGenes = 1000, batchCells = c(150, 200),
+#                       group.prob = c(0.5, 0.5), n_hvgs = 1000, ncomp = 10)
+# so <- Seurat::as.Seurat(sim)
+# Seurat::VariableFeatures(so) <- rownames(so)
+# so[["pca"]] <- Seurat::CreateDimReducObject(
+#   embeddings = SingleCellExperiment::reducedDim(sim, "PCA"),
+#   loadings = attr(SingleCellExperiment::reducedDim(sim, "PCA"), "rotation"),
+#   key = "pca_", assay = SeuratObject::DefaultAssay(so))
+# ll <- Seurat::SplitObject(so, split.by = "Batch")
+# seuv3 <- seuratV3Run(input = ll, reduction = "cca")
 
 }

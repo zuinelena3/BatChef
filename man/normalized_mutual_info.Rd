@@ -34,7 +34,7 @@ After computing clustering using Leiden algorithm, the ARI metric is computed
 using the `normalized_mutual_info_score` function from the Python sklearn package.
 }
 \examples{
-sim <- simulated_data(nGenes = 1000, batchCells = c(150, 200),
+sim <- simulated_data(nGenes = 1000, batchCells = c(150, 50),
                       group.prob = c(0.5, 0.5), n_hvgs = 1000, ncomp = 10)
 nmi <- normalized_mutual_info(input = sim, label_true = "Group",
                               reduction = "PCA")

@@ -26,6 +26,9 @@ bbknnInput(input, batch, reduction)
 
 \item{reduction}{A string specifying the name of PCA.}
 }
+\value{
+A BBKNN compatible object
+}
 \description{
 Convert into a BBKNN compatible object
 }

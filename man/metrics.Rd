@@ -58,7 +58,7 @@ Index, Average Silhouette Width, Adjusted Rand Index, and
 Normalized Mutual Information.
 }
 \examples{
-sim <- simulated_data(nGenes = 1000, batchCells = c(150, 200),
+sim <- simulated_data(nGenes = 1000, batchCells = c(150, 50),
                       group.prob = c(0.5, 0.5), n_hvgs = 1000, ncomp = 10)
 metrics <- metrics(input = sim, batch = "Batch", group = "Group",
                    reduction = "PCA", rep = 5, mc.cores = 1)

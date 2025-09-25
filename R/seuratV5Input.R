@@ -6,6 +6,7 @@
 #' @param pca_name A string specifying the PCA.
 #'
 #' @import methods
+#' @return A \linkS4class{Seurat} object.
 #' @rdname seuratv5Input
 #'
 setGeneric("seuratv5Input", function(input, batch, pca_name = NULL)

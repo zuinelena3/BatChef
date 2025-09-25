@@ -5,6 +5,7 @@
 #' @param batch A string specifying the batch for each cell.
 #'
 #' @import methods
+#' @return A \linkS4class{SingleCellExperiment} object.
 #' @rdname sceInput
 #'
 setGeneric("sceInput", function(input, batch)

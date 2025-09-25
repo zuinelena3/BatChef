@@ -24,6 +24,9 @@ sceInput(input, batch)
 
 \item{batch}{A string specifying the batch for each cell.}
 }
+\value{
+A \linkS4class{SingleCellExperiment} object.
+}
 \description{
 Convert into a SingleCellExperiment object
 }

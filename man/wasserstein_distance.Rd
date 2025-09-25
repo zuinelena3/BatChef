@@ -25,11 +25,9 @@ The Wasserstein distance measures the minimal transport needed to shift one
 distribution to match another.
 }
 \examples{
-sim <- simulated_data(nGenes = 1000, batchCells = c(150, 200),
+sim <- simulated_data(nGenes = 1000, batchCells = c(150, 50),
                       group.prob = c(0.5, 0.5), n_hvgs = 1000, ncomp = 10)
-sim <- batchCorrect(input = sim, batch = "Batch",
-                    params = HarmonyParams())
 wass <- wasserstein_distance(input = sim, batch = "Batch",
-                             reduction = "harmony", rep = 2, mc.cores = 1)
+                             reduction = "PCA", rep = 1, mc.cores = 1)
 
 }

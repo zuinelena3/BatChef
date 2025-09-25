@@ -6,6 +6,7 @@
 #' @param reduction A string specifying the name of PCA.
 #'
 #' @import methods
+#' @return A BBKNN compatible object
 #' @rdname bbknnInput
 #'
 setGeneric("bbknnInput", function(input, batch, reduction)

@@ -26,6 +26,10 @@ seuratv3Post(input, output, method)
 
 \item{method}{A string specifying the correction method}
 }
+\value{
+A \linkS4class{SingleCellExperiment},
+\linkS4class{Seurat} or `AnnData` object
+}
 \description{
 Convert the SeuratV3 output into a \linkS4class{SingleCellExperiment},
 \linkS4class{Seurat} or `AnnData` object

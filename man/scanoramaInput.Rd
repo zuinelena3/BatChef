@@ -26,6 +26,10 @@ scanoramaInput(input, batch, assay.type = NULL)
 
 \item{assay.type}{layers name}
 }
+\value{
+List that contains the expression matrices for each batches and
+ the genes.
+}
 \description{
 Convert to a Scanorama compatible object
 }

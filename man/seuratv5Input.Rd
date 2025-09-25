@@ -26,6 +26,9 @@ seuratv5Input(input, batch, pca_name = NULL)
 
 \item{pca_name}{A string specifying the PCA.}
 }
+\value{
+A \linkS4class{Seurat} object.
+}
 \description{
 Convert to a SeuratV5 compatible object
 }

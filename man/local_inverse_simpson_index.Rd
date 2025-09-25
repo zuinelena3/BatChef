@@ -36,7 +36,7 @@ a neighborhood. In other words, LISI determines the number of neighbor cells
 necessary before one batch is observed twice.
 }
 \examples{
-sim <- simulated_data(nGenes = 1000, batchCells = c(150, 200),
+sim <- simulated_data(nGenes = 1000, batchCells = c(150, 50),
                       group.prob = c(0.5, 0.5), n_hvgs = 1000, ncomp = 10)
 lisi <- local_inverse_simpson_index(input = sim, label_true = "Group",
                                     reduction = "PCA")

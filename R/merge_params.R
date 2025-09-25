@@ -3,6 +3,7 @@
 #' @param base base params
 #' @param extra extra params
 #' @param class class
+#' @return Vector of strings of base and extra parameters.
 #'
 merge_params <- function(base, extra, class) {
   arg_base <- names(base)

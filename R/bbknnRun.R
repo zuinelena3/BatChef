@@ -32,7 +32,7 @@
 #' @return A matrix of the coordinates of the points chosen to represent
 #' the dissimilarities.
 #' @examples
-#' sim <- simulated_data(nGenes = 1000, batchCells = c(150, 200),
+#' sim <- simulated_data(nGenes = 1000, batchCells = c(150, 50),
 #'                       group.prob = c(0.5, 0.5), n_hvgs = 1000, ncomp = 10)
 #' bbknn <- bbknnRun(input = SingleCellExperiment::reducedDim(sim, "PCA"),
 #'                   batch = sim$Batch, n_pcs = 10)

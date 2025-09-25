@@ -28,6 +28,9 @@ ligerInput(input, batch, features, ...)
 
 \item{...}{Named arguments to pass to individual methods upon dispatch.}
 }
+\value{
+A LIGER compatible object
+}
 \description{
 Convert to a LIGER compatible object
 }
