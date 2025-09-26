@@ -19,7 +19,7 @@
 #' sim <- simulated_data(nGenes = 1000, batchCells = c(50, 50),
 #'                       group.prob = c(0.5, 0.5), n_hvgs = 1000, ncomp = 10)
 #' red <- SingleCellExperiment::reducedDim(sim, "PCA")
-#' lisi <- compute_lisi(X = red, meta_data = colData(sim),
+#' lisi <- compute_lisi(X = red, meta_data = SingleCellExperiment::colData(sim),
 #'                     label_colnames = "Group")
 #'
 compute_lisi <- function(X, meta_data, label_colnames, perplexity = 30,
