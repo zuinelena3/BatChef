@@ -161,7 +161,7 @@ Wasserstein distance.
 
 The Wasserstein distance is computed on a resampled data due to the different 
 number of cells in each batch. The parameter `rep` indicates how many times 
-the calculation should be repeated (in this case 10).
+the calculation should be repeated (in this case 5).
 
 ```{r, message=FALSE, warning=FALSE}
 red <- SingleCellExperiment::reducedDimNames(sce)
