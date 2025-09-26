@@ -16,11 +16,12 @@ Authors@R: c(
 Description: A common interface for single-cell RNA_seq batch effects 
             correction methods in R and Python environments. 
             The package contains the performance evaluation metrics.
-License: Artistic-2.0
+License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: false
 biocViews: BatchEffect, SingleCell
 RoxygenNote: 7.3.3
+LinkingTo: Rcpp, RcppArmadillo
 Imports: 
     anndata,
     basilisk,
@@ -28,10 +29,11 @@ Imports:
     DelayedArray,
     harmony,
     limma,
-    lisi,
     methods,
     parallel,
     purrr,
+    RANN,
+    Rcpp,
     reticulate,
     rliger,
     S4Vectors,
