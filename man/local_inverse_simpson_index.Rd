@@ -2,7 +2,7 @@
 % Please edit documentation in R/local_inverse_simpson_index.R
 \name{local_inverse_simpson_index}
 \alias{local_inverse_simpson_index}
-\title{Local Inverse Simposon Index (LISI)}
+\title{Median of Local Inverse Simposon Index (LISI)}
 \usage{
 local_inverse_simpson_index(
   input,

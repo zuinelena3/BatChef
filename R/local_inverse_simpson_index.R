@@ -1,4 +1,4 @@
-#' Local Inverse Simposon Index (LISI)
+#' Median of Local Inverse Simposon Index (LISI)
 #'
 #' Local Inverse Simpson’s Index (LISI) is a local level metric based on
 #' the kNN algorithm. This metric defines the effective number of datasets in
@@ -13,7 +13,6 @@
 #' @param nn_eps Error bound for nearest neighbor search with `RANN:nn2()`.
 #'
 #' @export
-#' @importFrom lisi compute_lisi
 #' @importFrom SingleCellExperiment reducedDim
 #' @importFrom stats median
 #'
@@ -32,4 +31,3 @@ local_inverse_simpson_index <- function(input, label_true, reduction,
                               label_colnames = label_true,
                               perplexity = perplexity, nn_eps = nn_eps)[, 1])
 }
-

@@ -3,3 +3,6 @@ inst/doc
 vignettes/*.html
 vignettes/*.R
 tests/testthat/*.pdf
+src/*.o
+src/*.so
+src/*.dll
