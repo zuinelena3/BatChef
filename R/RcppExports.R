@@ -2,7 +2,7 @@
 # Generator token: 10BE3573-1514-4C36-9D1C-5A225CD40393
 
 #' Compute the Local Inverse Simpson Index (LISI)
-#' 
+#'
 #' @param D Distance matrix of K nearest neighbors.
 #' @param knn_idx Adjacency matrix of K nearest neighbors.
 #' @param batch_labels A categorical variable.
