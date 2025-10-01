@@ -24,41 +24,33 @@ setGeneric("seuratv3Post", function(input, output, method)
 #'
 setMethod("seuratv3Post", "Seurat",  function(input, output, method) {
   mat <- LayerData(output)
-  mat <- mat[, order(match(colnames(mat), colnames(input)))]
-  mat <- mat[order(match(rownames(mat), rownames(input))), ]
-  input[[method]] <- CreateAssayObject(data = mat, slot = "data")
+  mat <- mat[order(match(rownames(mat), rownames(input))),
+             order(match(colnames(mat), colnames(input)))]
+  input[[method]] <- CreateAssayObject(counts = mat)
   return(input)
 })
 
 #' @rdname seuratv3Post
 #' @aliases seuratv3Post,SingleCellExperiment,SingleCellExperiment-method
 #' @import methods
-#' @importFrom SummarizedExperiment assay<-
+#' @importFrom SingleCellExperiment SingleCellExperiment altExp<-
 #' @importFrom SeuratObject LayerData
 #'
 setMethod("seuratv3Post", "SingleCellExperiment",  function(input, output, method) {
   mat <- LayerData(output)
-  mat <- mat[, order(match(colnames(mat), colnames(input)))]
-  mat <- mat[order(match(rownames(mat), rownames(input))), ]
+  alt_se <- SingleCellExperiment(assays = list(counts = mat))
 
-  if (length(rownames(input)) != length(rownames(output))) {
-    print("Warning: when the length of rownames of output is not identical
-          to input one, a subset SingleCellExperiment object is returned")
-    input <- input[rownames(mat), ]
-    assay(input, method) <- mat
-    return(input)
-  }
-  else {
-    assay(input, method) <- mat
-    return(input)
-  }
+  altExp(input, method) <- alt_se
+  return(input)
 })
 
 #' @rdname seuratv3Post
 #' @aliases seuratv3Post,AnnDataR6,AnnDataR6-method
-#' @importFrom anndata AnnData
 #' @importFrom SeuratObject LayerData
+#' @importFrom anndata AnnData
 #'
-setMethod("seuratv3Post", "list", function(input, output, method) {
-  SCE2AnnData(as.SingleCellExperiment(output))
+setMethod("seuratv3Post", "AnnDataR6", function(input, output, method) {
+  mat <- t(as.matrix(LayerData(output)))
+  list <- list(original = input, corrected = AnnData(X = mat, obs = input$obs))
+  return(list)
 })

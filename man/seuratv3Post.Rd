@@ -6,7 +6,7 @@
 \alias{seuratv3Post,Seurat,Seurat-method}
 \alias{seuratv3Post,SingleCellExperiment-method}
 \alias{seuratv3Post,SingleCellExperiment,SingleCellExperiment-method}
-\alias{seuratv3Post,list-method}
+\alias{seuratv3Post,AnnDataR6-method}
 \alias{seuratv3Post,AnnDataR6,AnnDataR6-method}
 \title{Convert the SeuratV3 output}
 \usage{
@@ -16,7 +16,7 @@ seuratv3Post(input, output, method)
 
 \S4method{seuratv3Post}{SingleCellExperiment}(input, output, method)
 
-\S4method{seuratv3Post}{list}(input, output, method)
+\S4method{seuratv3Post}{AnnDataR6}(input, output, method)
 }
 \arguments{
 \item{input}{A \linkS4class{SingleCellExperiment}, \linkS4class{Seurat} or

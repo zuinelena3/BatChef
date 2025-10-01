@@ -5,6 +5,7 @@
 #' @param input A \linkS4class{SingleCellExperiment}, \linkS4class{Seurat} or
 #' `AnnData` object can be supplied.
 #' @param batch A string specifying the batch for each cell.
+#' @param assay_type A string specifying the assay.
 #' @param layer A string specifying the key in adata.layers for raw count data.
 #' @param labels_key A string specifying the key in adata.obs for
 #' label information.
@@ -74,16 +75,18 @@
 #' @importFrom reticulate import
 #' @importFrom zellkonverter SCE2AnnData
 #' @importFrom Seurat as.SingleCellExperiment
+#' @importFrom reticulate r_to_py
 #'
 #' @return A list that contains the corrected gene expression matrix and the
 #' corrected low-dimensional space.
 #'
 #' @examples
-#' # sim <- simulated_data(nGenes = 1000, batchCells = c(80, 50),
-#' #                       group.prob = c(0.5, 0.5), n_hvgs = 1000, ncomp = 10)
-#' # scvi <- scVIRun(input = sim, batch = "Batch", max_epochs = 1)
+#' sim <- simulate_data(n_genes = 500, batch_cells = c(150, 50),
+#'                      group_prob = c(0.5, 0.5), n_hvgs = 500,
+#'                      compute_pca = TRUE, output_format = "SingleCellExperiment")
+#' scvi <- scVIRun(input = sim, batch = "Batch", max_epochs = 1)
 #'
-scVIRun <- function(input, batch, layer = NULL, labels_key = NULL,
+scVIRun <- function(input, batch, assay_type = "counts", layer = NULL, labels_key = NULL,
                     size_factor_key = NULL, categorical_covariate_keys = NULL,
                     continuous_covariate_keys = NULL, n_hidden = 128,
                     n_latent = 10, n_layers = 1, dropout_rate = 0.1,
@@ -102,8 +105,8 @@ scVIRun <- function(input, batch, layer = NULL, labels_key = NULL,
   proc <- basiliskStart(scvi_env)
   on.exit(basiliskStop(proc))
 
-  out <- basiliskRun(proc = proc, fun = function(input, batch, layer = NULL,
-                                                 labels_key = NULL,
+  out <- basiliskRun(proc = proc, fun = function(input, batch, assay_type = "counts",
+                                                 layer = NULL, labels_key = NULL,
                                                  size_factor_key = NULL,
                                                  categorical_covariate_keys = NULL,
                                                  continuous_covariate_keys = NULL,
@@ -134,19 +137,19 @@ scVIRun <- function(input, batch, layer = NULL, labels_key = NULL,
                                                  weights = NULL,
                                                  return_mean = TRUE,
                                                  return_numpy = NULL) {
-    scvi <- import("scvi")
+    scvi <- reticulate::import("scvi")
 
     if (is(input, "SingleCellExperiment")) {
       andata <- SCE2AnnData(input)
-      andata$layers["counts"] <- andata$X
+      andata$layers[assay_type] <- andata$X
     }
     else if (is(input, "Seurat")) {
       sce <- as.SingleCellExperiment(input)
       andata <- SCE2AnnData(sce)
-      andata$layers["counts"] <- andata$X
+      andata$layers[assay_type] <- andata$X
     }
     else {
-      andata <- input
+      andata <- reticulate::r_to_py(input, convert = TRUE)
     }
 
     arg <- c(list(adata = andata,layer = layer, batch_key = batch,

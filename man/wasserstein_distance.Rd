@@ -4,7 +4,7 @@
 \alias{wasserstein_distance}
 \title{Wasserstein distance}
 \usage{
-wasserstein_distance(input, batch, reduction, rep, mc.cores)
+wasserstein_distance(input, batch, reduction, rep, mc_cores)
 }
 \arguments{
 \item{input}{A \linkS4class{SingleCellExperiment} object.}
@@ -15,7 +15,7 @@ wasserstein_distance(input, batch, reduction, rep, mc.cores)
 
 \item{rep}{Number of times the Wasserstein distance is calculated.}
 
-\item{mc.cores}{The number of cores to use.}
+\item{mc_cores}{The number of cores to use.}
 }
 \value{
 A numeric value.
@@ -25,9 +25,10 @@ The Wasserstein distance measures the minimal transport needed to shift one
 distribution to match another.
 }
 \examples{
-sim <- simulated_data(nGenes = 1000, batchCells = c(150, 50),
-                      group.prob = c(0.5, 0.5), n_hvgs = 1000, ncomp = 10)
+sim <- simulate_data(n_genes = 1000, batch_cells = c(130, 110),
+                     group_prob = c(0.5, 0.5), n_hvgs = 500,
+                    compute_pca = TRUE, output_format = "SingleCellExperiment")
 wass <- wasserstein_distance(input = sim, batch = "Batch",
-                             reduction = "PCA", rep = 1, mc.cores = 1)
+                             reduction = "PCA", rep = 1, mc_cores = 1)
 
 }

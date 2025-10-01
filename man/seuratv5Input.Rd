@@ -10,19 +10,21 @@
 \alias{seuratv5Input,AnnDataR6,AnnDataR6-method}
 \title{Convert to a SeuratV5 compatible object}
 \usage{
-seuratv5Input(input, batch, pca_name = NULL)
+seuratv5Input(input, batch, features = NULL, pca_name = NULL)
 
-\S4method{seuratv5Input}{Seurat}(input, batch, pca_name = NULL)
+\S4method{seuratv5Input}{Seurat}(input, batch, features = NULL, pca_name = NULL)
 
-\S4method{seuratv5Input}{SingleCellExperiment}(input, batch, pca_name = NULL)
+\S4method{seuratv5Input}{SingleCellExperiment}(input, batch, features = NULL, pca_name = NULL)
 
-\S4method{seuratv5Input}{AnnDataR6}(input, batch, pca_name = NULL)
+\S4method{seuratv5Input}{AnnDataR6}(input, batch, features = NULL, pca_name = NULL)
 }
 \arguments{
 \item{input}{A \linkS4class{SingleCellExperiment}, \linkS4class{Seurat} or
 `AnnData` object can be supplied.}
 
 \item{batch}{A string specifying the batch variable.}
+
+\item{features}{Vector of features to use.}
 
 \item{pca_name}{A string specifying the PCA.}
 }

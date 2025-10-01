@@ -10,7 +10,7 @@ metrics(
   group,
   reduction,
   rep = 10,
-  mc.cores = 2,
+  mc_cores = 1,
   average_method = "arithmetic",
   metric = "euclidean",
   sample_size = NULL,
@@ -31,7 +31,7 @@ metrics(
 
 \item{rep}{Number of times the Wasserstein distance is calculated.}
 
-\item{mc.cores}{The number of cores to use.}
+\item{mc_cores}{The number of cores to use.}
 
 \item{average_method}{How to compute the normalizer in the denominator.}
 
@@ -58,9 +58,10 @@ Index, Average Silhouette Width, Adjusted Rand Index, and
 Normalized Mutual Information.
 }
 \examples{
-sim <- simulated_data(nGenes = 1000, batchCells = c(150, 50),
-                      group.prob = c(0.5, 0.5), n_hvgs = 1000, ncomp = 10)
+sim <- simulate_data(n_genes = 1000, batch_cells = c(150, 110),
+                     group_prob = c(0.5, 0.5), n_hvgs = 500,
+                     compute_pca = TRUE, output_format = "SingleCellExperiment")
 metrics <- metrics(input = sim, batch = "Batch", group = "Group",
-                   reduction = "PCA", rep = 5, mc.cores = 1)
+                   reduction = "PCA", rep = 5)
 
 }

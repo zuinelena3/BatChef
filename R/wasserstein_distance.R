@@ -7,7 +7,7 @@
 #' @param batch A string specifying batch variable.
 #' @param reduction A string specifying the dimensional reduction.
 #' @param rep Number of times the Wasserstein distance is calculated.
-#' @param mc.cores The number of cores to use.
+#' @param mc_cores The number of cores to use.
 #'
 #' @export
 #' @importFrom SummarizedExperiment colData
@@ -17,12 +17,13 @@
 #'
 #' @return A numeric value.
 #' @examples
-#' sim <- simulated_data(nGenes = 1000, batchCells = c(150, 50),
-#'                       group.prob = c(0.5, 0.5), n_hvgs = 1000, ncomp = 10)
+#' sim <- simulate_data(n_genes = 1000, batch_cells = c(130, 110),
+#'                      group_prob = c(0.5, 0.5), n_hvgs = 500,
+#'                     compute_pca = TRUE, output_format = "SingleCellExperiment")
 #' wass <- wasserstein_distance(input = sim, batch = "Batch",
-#'                              reduction = "PCA", rep = 1, mc.cores = 1)
+#'                              reduction = "PCA", rep = 1, mc_cores = 1)
 #'
-wasserstein_distance <- function(input, batch, reduction, rep, mc.cores) {
+wasserstein_distance <- function(input, batch, reduction, rep, mc_cores) {
   stopifnot(batch %in% colnames(colData(input)))
 
   stopifnot("Error: N. of batches has to be greater than 1" =
@@ -33,7 +34,7 @@ wasserstein_distance <- function(input, batch, reduction, rep, mc.cores) {
   embed <- lapply(ll, function(x) reducedDim(x, reduction))
 
   n <- min(sapply(embed, function(x) length(rownames(x))))
-  warning("Warning: The smallest number of cells per batch is less than 100")
+  message("Message: The smallest number of cells per batch is less than 100")
 
   wass <- mclapply(1:rep, function(i) {
     random <- lapply(embed, function(x) x[sample(nrow(x), n), ])
@@ -51,7 +52,7 @@ wasserstein_distance <- function(input, batch, reduction, rep, mc.cores) {
     }
     names(ll) <- pair
     return(ll)
-  }, mc.cores = mc.cores)
+  }, mc.cores = mc_cores)
   wass <- lapply(wass, function(x) {
     df <- data.frame(wasserstein = do.call(rbind, x), pair = names(x),
                      method = reduction)

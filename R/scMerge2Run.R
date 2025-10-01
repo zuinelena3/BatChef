@@ -13,9 +13,11 @@
 #'
 #' @return A list that contains the corrected gene expression matrix
 #' @examples
-#' sim <- simulated_data(nGenes = 1000, batchCells = c(150, 50),
-#'                       group.prob = c(0.5, 0.5), n_hvgs = 1000, ncomp = 10)
+#' sim <- simulate_data(n_genes = 1000, batch_cells = c(250, 200),
+#'                      group_prob = c(0.5, 0.5), n_hvgs = 500,
+#'                      compute_pca = TRUE, output_format = "SingleCellExperiment")
 #' scmerge2 <- scMerge2Run(input = sim, batch = "Batch", assay_type = "logcounts")
+#'
 scMerge2Run <- function(input, batch, assay_type = "logcounts", ...) {
   args <- c(list(exprsMat = assay(input, assay_type), batch = colData(input)[, batch]),
             capture_params(scMerge2, list(...)))

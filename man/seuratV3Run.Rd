@@ -8,29 +8,29 @@ seuratV3Run(
   input,
   assay = NULL,
   reference = NULL,
-  anchor.features = 2000,
+  anchor_features = 2000,
   scale = TRUE,
-  normalization.method = "LogNormalize",
-  sct.clip.range = NULL,
+  normalization_method = "LogNormalize",
+  sct_clip_range = NULL,
   reduction = "cca",
-  l2.norm = TRUE,
+  l2_norm = TRUE,
   dims = 1:30,
-  k.anchor = 5,
-  k.filter = 200,
-  k.score = 30,
-  max.features = 200,
-  nn.method = "annoy",
-  n.trees = 50,
+  k_anchor = 5,
+  k_filter = 200,
+  k_score = 30,
+  max_features = 200,
+  nn_method = "annoy",
+  n_trees = 50,
   eps = 0,
-  verbose = TRUE,
-  new.assay.name = "integrated",
+  verbose = FALSE,
+  new_assay_name = "integrated",
   features = NULL,
-  features.to.integrate = NULL,
-  k.weight = 100,
-  weight.reduction = NULL,
-  sd.weight = 1,
-  sample.tree = NULL,
-  preserve.order = FALSE
+  features_to_integrate = NULL,
+  k_weight = 100,
+  weight_reduction = NULL,
+  sd_weight = 1,
+  sample_tree = NULL,
+  preserve_order = FALSE
 )
 }
 \arguments{
@@ -42,58 +42,58 @@ constructing anchors.}
 \item{reference}{A vector specifying the object/s to be used as a reference
 during integration.}
 
-\item{anchor.features}{Number of features to be used in anchor finding.}
+\item{anchor_features}{Number of features to be used in anchor finding.}
 
 \item{scale}{A logical to scale the features provided.}
 
-\item{normalization.method}{Name of normalization method used:
+\item{normalization_method}{Name of normalization method used:
 LogNormalize (default) or SCT.}
 
-\item{sct.clip.range}{Numeric of length two specifying the min and max values
+\item{sct_clip_range}{Numeric of length two specifying the min and max values
 the Pearson residual will be clipped to.}
 
 \item{reduction}{Dimensional reduction to perform when finding anchors.}
 
-\item{l2.norm}{Perform L2 normalization on the CCA cell embeddings
+\item{l2_norm}{Perform L2 normalization on the CCA cell embeddings
 after dimensional reduction.}
 
 \item{dims}{Number of dimensions.}
 
-\item{k.anchor}{Number of neighbors (k) to use when picking anchors.}
+\item{k_anchor}{Number of neighbors (k) to use when picking anchors.}
 
-\item{k.filter}{Number of neighbors (k) to use when filtering anchors.}
+\item{k_filter}{Number of neighbors (k) to use when filtering anchors.}
 
-\item{k.score}{Number of neighbors (k) to use when scoring anchors.}
+\item{k_score}{Number of neighbors (k) to use when scoring anchors.}
 
-\item{max.features}{The maximum number of features to use when specifying
+\item{max_features}{The maximum number of features to use when specifying
 the neighborhood search space in the anchor filtering.}
 
-\item{nn.method}{Method for nearest neighbor finding.}
+\item{nn_method}{Method for nearest neighbor finding.}
 
-\item{n.trees}{More trees gives higher precision when using annoy
+\item{n_trees}{More trees gives higher precision when using annoy
 approximate nearest neighbor search.}
 
 \item{eps}{Error bound on the neighbor finding algorithm.}
 
 \item{verbose}{Print progress bars and output.}
 
-\item{new.assay.name}{Name for the new assay containing
+\item{new_assay_name}{Name for the new assay containing
 the integrated data.}
 
 \item{features}{Vector of features to use.}
 
-\item{features.to.integrate}{Vector of features to integrate.}
+\item{features_to_integrate}{Vector of features to integrate.}
 
-\item{k.weight}{Number of neighbors to consider when weighting anchors.}
+\item{k_weight}{Number of neighbors to consider when weighting anchors.}
 
-\item{weight.reduction}{Dimension reduction to use when calculating
+\item{weight_reduction}{Dimension reduction to use when calculating
 anchor weights.}
 
-\item{sd.weight}{Controls the bandwidth of the Gaussian kernel for weighting.}
+\item{sd_weight}{Controls the bandwidth of the Gaussian kernel for weighting.}
 
-\item{sample.tree}{Specify the order of integration.}
+\item{sample_tree}{Specify the order of integration.}
 
-\item{preserve.order}{Do not reorder objects based on size for each
+\item{preserve_order}{Do not reorder objects based on size for each
 pairwise integration.}
 }
 \value{
@@ -103,15 +103,13 @@ A \linkS4class{Seurat} object that contains the corrected matrix.
 SeuratV3 is an anchor-based method.
 }
 \examples{
-# sim <- simulated_data(nGenes = 1000, batchCells = c(150, 200),
-#                       group.prob = c(0.5, 0.5), n_hvgs = 1000, ncomp = 10)
-# so <- Seurat::as.Seurat(sim)
-# Seurat::VariableFeatures(so) <- rownames(so)
-# so[["pca"]] <- Seurat::CreateDimReducObject(
-#   embeddings = SingleCellExperiment::reducedDim(sim, "PCA"),
-#   loadings = attr(SingleCellExperiment::reducedDim(sim, "PCA"), "rotation"),
-#   key = "pca_", assay = SeuratObject::DefaultAssay(so))
-# ll <- Seurat::SplitObject(so, split.by = "Batch")
-# seuv3 <- seuratV3Run(input = ll, reduction = "cca")
+sim <- simulate_data(n_genes = 1000, batch_cells = c(250, 200),
+                     group_prob = c(0.5, 0.5), n_hvgs = 500,
+                     compute_pca = FALSE,
+                     output_format = "Seurat")
+feat <- Seurat::VariableFeatures(sim)
+sim <- Seurat::SplitObject(sim, split.by = "Batch")
+seuv3 <- seuratV3Run(input = sim, reduction = "cca",
+                     features = feat)
 
 }

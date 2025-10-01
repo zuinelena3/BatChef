@@ -26,7 +26,7 @@ setMethod("anndataInput", "Seurat",  function(input) {
 #' @aliases anndataInput,SingleCellExperiment,SingleCellExperiment-method
 #'
 setMethod("anndataInput", "SingleCellExperiment",  function(input) {
-  adata <- SCE2AnnData(input)
+  adata <- SCE2AnnData(input, X_name = "counts")
 })
 
 #' @rdname anndataInput

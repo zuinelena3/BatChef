@@ -7,29 +7,29 @@
 seuratV5Run(
   input,
   method = "CCAIntegration",
-  orig.reduction = "pca",
+  orig_reduction = "pca",
   assay = NULL,
   features = NULL,
   layers = NULL,
-  scale.layer = "scale.data",
-  new.reduction = "integrated.dr",
+  scale_layer = "scale.data",
+  new_reduction = "integrated.dr",
   reference = NULL,
-  normalization.method = "LogNormalize",
+  normalization_method = "LogNormalize",
   dims = 1:30,
-  k.filter = NA,
-  dims.to.integrate = NULL,
-  k.weight = 100,
-  weight.reduction = NULL,
-  sd.weight = 1,
-  sample.tree = NULL,
-  preserve.order = FALSE,
-  verbose = TRUE,
-  l2.norm = TRUE,
-  k.anchor = 5,
-  k.score = 30,
-  max.features = 200,
-  nn.method = "annoy",
-  n.trees = 50,
+  k_filter = NA,
+  dims_to_integrate = NULL,
+  k_weight = 100,
+  weight_reduction = NULL,
+  sd_weight = 1,
+  sample_tree = NULL,
+  preserve_order = FALSE,
+  verbose = FALSE,
+  l2_norm = TRUE,
+  k_anchor = 5,
+  k_score = 30,
+  max_features = 200,
+  nn_method = "annoy",
+  n_trees = 50,
   eps = 0
 )
 }
@@ -38,7 +38,7 @@ seuratV5Run(
 
 \item{method}{Integration method function.}
 
-\item{orig.reduction}{Name of dimensional reduction for correction.}
+\item{orig_reduction}{Name of dimensional reduction for correction.}
 
 \item{assay}{Name of assay for integration.}
 
@@ -46,48 +46,48 @@ seuratV5Run(
 
 \item{layers}{Names of normalized layers in assay.}
 
-\item{scale.layer}{Name(s) of scaled layer(s) in assay.}
+\item{scale_layer}{Name(s) of scaled layer(s) in assay.}
 
-\item{new.reduction}{Name of new integrated dimensional reduction.}
+\item{new_reduction}{Name of new integrated dimensional reduction.}
 
 \item{reference}{A reference Seurat object.}
 
-\item{normalization.method}{Name of normalization method used:
+\item{normalization_method}{Name of normalization method used:
 LogNormalize or SCT.}
 
 \item{dims}{Number of dimensions of dimensional reduction.}
 
-\item{k.filter}{Number of anchors to filter.}
+\item{k_filter}{Number of anchors to filter.}
 
-\item{dims.to.integrate}{Number of dimensions to return integrated values for.}
+\item{dims_to_integrate}{Number of dimensions to return integrated values for.}
 
-\item{k.weight}{Number of neighbors to consider when weighting anchors.}
+\item{k_weight}{Number of neighbors to consider when weighting anchors.}
 
-\item{weight.reduction}{Dimension reduction to use when calculating
+\item{weight_reduction}{Dimension reduction to use when calculating
 anchor weights.}
 
-\item{sd.weight}{Controls the bandwidth of the Gaussian kernel for weighting.}
+\item{sd_weight}{Controls the bandwidth of the Gaussian kernel for weighting.}
 
-\item{sample.tree}{Specify the order of integration.}
+\item{sample_tree}{Specify the order of integration.}
 
-\item{preserve.order}{Do not reorder objects based on size for each
+\item{preserve_order}{Do not reorder objects based on size for each
 pairwise integration.}
 
 \item{verbose}{Print progress bars and output.}
 
-\item{l2.norm}{Perform L2 normalization on the CCA cell embeddings after
+\item{l2_norm}{Perform L2 normalization on the CCA cell embeddings after
 dimensional reduction.}
 
-\item{k.anchor}{Number of neighbors (k) to use when picking anchors.}
+\item{k_anchor}{Number of neighbors (k) to use when picking anchors.}
 
-\item{k.score}{Number of neighbors (k) to use when scoring anchors.}
+\item{k_score}{Number of neighbors (k) to use when scoring anchors.}
 
-\item{max.features}{The maximum number of features to use when specifying
+\item{max_features}{The maximum number of features to use when specifying
 the neighborhood search space in the anchor filtering.}
 
-\item{nn.method}{Method for nearest neighbor finding.}
+\item{nn_method}{Method for nearest neighbor finding.}
 
-\item{n.trees}{More trees gives higher precision when using annoy approximate
+\item{n_trees}{More trees gives higher precision when using annoy approximate
 nearest neighbor search.}
 
 \item{eps}{Error bound on the neighbor finding algorithm.}
@@ -99,20 +99,14 @@ A \linkS4class{Seurat} object.
 SeuratV5 is an anchor-based method.
 }
 \examples{
-sim <- simulated_data(nGenes = 1000, batchCells = c(150, 200),
-                      group.prob = c(0.5, 0.5), n_hvgs = 1000, ncomp = 10)
-so <- Seurat::as.Seurat(sim)
-so@reductions[["pca"]] <- Seurat::CreateDimReducObject(
-  embeddings = SingleCellExperiment::reducedDim(sim, "PCA"),
-  loadings = attr(SingleCellExperiment::reducedDim(sim, "PCA"), "rotation"),
-  key = "pca_", assay = SeuratObject::DefaultAssay(so))
-
-so[[SeuratObject::DefaultAssay(so)]] <- as(object = so[[SeuratObject::DefaultAssay(so)]],
-                                           Class = "Assay5")
-so[[SeuratObject::DefaultAssay(so)]] <- split(x = so[[SeuratObject::DefaultAssay(so)]],
-                                              f = so[["Batch"]][, 1])
-so <- Seurat::ScaleData(so, verbose = FALSE)
-seuv5 <- seuratV5Run(input = so, method = "CCAIntegration",
-                     features = rownames(so), verbose = FALSE)
+sim <- simulate_data(n_genes = 1000, batch_cells = c(250, 200),
+                     group_prob = c(0.5, 0.5), n_hvgs = 500,
+                     compute_pca = TRUE,
+                     output_format = "Seurat")
+sim[[SeuratObject::DefaultAssay(sim)]] <- split(x = sim[[SeuratObject::DefaultAssay(sim)]],
+                                                f = sim[["Batch"]][, 1])
+sim <- Seurat::ScaleData(sim, verbose = FALSE)
+seuv5 <- seuratV5Run(input = sim, method = "CCAIntegration",
+                     features = rownames(sim))
 
 }

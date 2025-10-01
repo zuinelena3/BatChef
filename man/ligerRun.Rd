@@ -9,16 +9,16 @@ ligerRun(
   method = "iNMF",
   quantiles = 50,
   reference = NULL,
-  minCells = 20,
-  nNeighbors = 20,
-  useDims = NULL,
+  min_cells = 20,
+  n_neighbors = 20,
+  use_dims = NULL,
   center = FALSE,
-  maxSample = 1000,
+  max_sample = 1000,
   eps = 0.9,
-  refineKNN = TRUE,
-  clusterName = "quantileNorm_cluster",
+  refine_knn = TRUE,
+  cluster_name = "quantileNorm_cluster",
   seed = 1,
-  verbose = TRUE,
+  verbose = FALSE,
   ...
 )
 }
@@ -34,25 +34,25 @@ ligerRun(
 out of all available datasets in object, to use as a "reference" for
 quantile normalization.}
 
-\item{minCells}{Minimum number of cells to consider a cluster shared across
+\item{min_cells}{Minimum number of cells to consider a cluster shared across
 datasets}
 
-\item{nNeighbors}{Number of nearest neighbors for within-dataset knn graph.}
+\item{n_neighbors}{Number of nearest neighbors for within-dataset knn graph.}
 
-\item{useDims}{Indices of factors to use for shared nearest factor
+\item{use_dims}{Indices of factors to use for shared nearest factor
 determination.}
 
 \item{center}{A logical to center data.}
 
-\item{maxSample}{Maximum number of cells used for quantile normalization of
+\item{max_sample}{Maximum number of cells used for quantile normalization of
 each cluster and factor}
 
 \item{eps}{The error bound of the nearest neighbor search.}
 
-\item{refineKNN}{A logical to increase robustness of cluster assignments
+\item{refine_knn}{A logical to increase robustness of cluster assignments
 using KNN graph.}
 
-\item{clusterName}{Variable name that will store the clustering result
+\item{cluster_name}{Variable name that will store the clustering result
 in metadata of a liger object or a Seurat object.}
 
 \item{seed}{Random seed}
@@ -69,8 +69,10 @@ factor loadings.
 LIGER is a integrative non-negative matrix factorization method
 }
 \examples{
-sim <- simulated_data(nGenes = 1000, batchCells = c(150, 50),
-                      group.prob = c(0.5, 0.5), n_hvgs = 1000, ncomp = 10)
+sim <- simulate_data(n_genes = 1000, batch_cells = c(150, 50),
+                     group_prob = c(0.5, 0.5), n_hvgs = 500,
+                    compute_pca = TRUE, output_format = "SingleCellExperiment")
+
 ll <- lapply(unique(SingleCellExperiment::colData(sim)[, "Batch"]),
              function(i) sim[, SingleCellExperiment::colData(sim)[, "Batch"] == i])
 names(ll) <- unique(SingleCellExperiment::colData(sim)[, "Batch"])

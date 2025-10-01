@@ -15,14 +15,25 @@ setGeneric("seuratv3Input", function(input, batch, features, pca_name = NULL)
 
 #' @rdname seuratv3Input
 #' @import methods
-#' @importFrom Seurat SplitObject VariableFeatures<-
+#' @importFrom Seurat DefaultAssay SplitObject VariableFeatures<-
+#' @importFrom scCustomize Convert_Assay
 #' @aliases seuratv3Input,Seurat,Seurat-method
 #'
 setMethod("seuratv3Input", "Seurat", function(input, batch, features, pca_name) {
   stopifnot(batch %in% colnames(input[[]]))
   stopifnot("Error: 'pca' not found in this Seurat object" = "pca" %in% Reductions(input))
+
+  if (is(input[[DefaultAssay(input)]], "Assay5")) {
+    input <-  Convert_Assay(seurat_object = input, assay = DefaultAssay(input),
+                            convert_to = "V3")
+  }
+
+  else {
+    input <- input
+  }
+
   VariableFeatures(input) <- features
-  SplitObject(input, split.by = batch)
+  ll <- SplitObject(input, split.by = batch)
 })
 
 #' @rdname seuratv3Input
@@ -35,12 +46,16 @@ setMethod("seuratv3Input", "SingleCellExperiment", function(input, batch,
                                                             features, pca_name) {
   stopifnot(batch %in% colnames(colData(input)))
   stopifnot("Error: specify 'pca_name'" = !is.null(pca_name))
+
+  pca <- reducedDim(input, pca_name)
+  loadings <- attr(reducedDim(input, pca_name), "rotation")
+  reducedDim(input, pca_name) <- NULL
   so <- as.Seurat(input)
   VariableFeatures(so) <- features
-  so[["pca"]] <- CreateDimReducObject(embeddings = reducedDim(input, pca_name),
-                                      loadings = attr(reducedDim(input, pca_name), "rotation"),
+  so[["pca"]] <- CreateDimReducObject(embeddings = pca,
+                                      loadings = loadings,
                                       key = "pca_", assay = DefaultAssay(so))
-  SplitObject(so, split.by = batch)
+  ll <- SplitObject(so, split.by = batch)
 })
 
 #' @rdname seuratv3Input
@@ -55,20 +70,36 @@ setMethod("seuratv3Input", "AnnDataR6",  function(input, batch, features, pca_na
 #' @import methods
 #' @importFrom zellkonverter AnnData2SCE
 #' @importFrom Seurat CreateDimReducObject VariableFeatures<- ScaleData DefaultAssay
-#' @aliases seuratv3Input,list,list-method
+#' @aliases seuratv3Input,AnnDataR6,AnnDataR6-method
 #'
-setMethod("seuratv3Input", "list",  function(input, batch, features, pca_name) {
-  stopifnot("Error: elements inside the list must be an AnnData" = sapply(input, function(x) all(is(x, "AnnDataR6"))))
+setMethod("seuratv3Input", "AnnDataR6",  function(input, batch, features, pca_name) {
+  stopifnot("Error: 'batch' is not inside the obs" =  batch %in% colnames(input$obs))
 
-  stopifnot("Error: 'batch' is not inside the obs" = sapply(input, function(x) batch %in% colnames(x$obs)))
   stopifnot("Error: specify 'pca_name'" = !is.null(pca_name))
-  so_ll <- lapply(input, function(x) {
-    so <- as.Seurat(AnnData2SCE(x))
-    so@reductions[["pca"]] <- CreateDimReducObject(embeddings = as.matrix(x$obsm[pca_name][[1]]),
-                                                   loadings = as.matrix(x$varm$PCs),
-                                                   key = "pca_", assay = DefaultAssay(so))
-    so <- ScaleData(so, verbose = FALSE)
+
+  var <- unique(input$obs[[batch]])
+  ll <- lapply(var, function(v) {
+    sub <- input[input$obs[[batch]] == v, ]$copy()
+  })
+
+  so_ll <- lapply(ll, function(x) {
+    pca <- x$obsm[[pca_name]]
+    colnames(pca) <- paste0("PC_", 1:ncol(pca))
+    rownames(pca) <- x$obs_names
+    loadings <- x$varm[["PCs"]]
+    colnames(loadings) <- paste0("PC_", 1:ncol(pca))
+    rownames(loadings) <- x$var_names
+    x$obsm <- NULL
+    x$varm <- NULL
+
+    x <- r_to_py(x, convert = TRUE)
+    sce <- AnnData2SCE(x, X_name = "counts")
+    so <- as.Seurat(sce)
+    so@reductions[["pca"]] <- CreateDimReducObject(embeddings = pca,
+                                                   loadings = loadings,
+                                                   key = "pca_",
+                                                   assay = DefaultAssay(so))
     VariableFeatures(so) <- features
-    so
+    return(so)
   })
 })

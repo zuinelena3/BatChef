@@ -9,18 +9,18 @@
 #' @param reference Character, numeric or logical selection of one dataset,
 #' out of all available datasets in object, to use as a "reference" for
 #' quantile normalization.
-#' @param minCells Minimum number of cells to consider a cluster shared across
+#' @param min_cells Minimum number of cells to consider a cluster shared across
 #' datasets
-#' @param nNeighbors Number of nearest neighbors for within-dataset knn graph.
-#' @param useDims Indices of factors to use for shared nearest factor
+#' @param n_neighbors Number of nearest neighbors for within-dataset knn graph.
+#' @param use_dims Indices of factors to use for shared nearest factor
 #' determination.
 #' @param center A logical to center data.
-#' @param maxSample Maximum number of cells used for quantile normalization of
+#' @param max_sample Maximum number of cells used for quantile normalization of
 #' each cluster and factor
 #' @param eps The error bound of the nearest neighbor search.
-#' @param refineKNN A logical to increase robustness of cluster assignments
+#' @param refine_knn A logical to increase robustness of cluster assignments
 #'  using KNN graph.
-#' @param clusterName Variable name that will store the clustering result
+#' @param cluster_name Variable name that will store the clustering result
 #' in metadata of a liger object or a Seurat object.
 #' @param seed Random seed
 #' @param verbose Print progress bar/messages
@@ -33,8 +33,10 @@
 #' factor loadings.
 #'
 #' @examples
-#' sim <- simulated_data(nGenes = 1000, batchCells = c(150, 50),
-#'                       group.prob = c(0.5, 0.5), n_hvgs = 1000, ncomp = 10)
+#' sim <- simulate_data(n_genes = 1000, batch_cells = c(150, 50),
+#'                      group_prob = c(0.5, 0.5), n_hvgs = 500,
+#'                     compute_pca = TRUE, output_format = "SingleCellExperiment")
+#'
 #' ll <- lapply(unique(SingleCellExperiment::colData(sim)[, "Batch"]),
 #'              function(i) sim[, SingleCellExperiment::colData(sim)[, "Batch"] == i])
 #' names(ll) <- unique(SingleCellExperiment::colData(sim)[, "Batch"])
@@ -45,17 +47,17 @@
 #' liger <- ligerRun(input = lo)
 #'
 ligerRun <- function(input, method = "iNMF", quantiles = 50, reference = NULL,
-                     minCells = 20, nNeighbors = 20,
-                     useDims = NULL, center = FALSE, maxSample = 1000, eps = 0.9,
-                     refineKNN = TRUE, clusterName = "quantileNorm_cluster",
-                     seed = 1, verbose = TRUE, ...) {
+                     min_cells = 20, n_neighbors = 20,
+                     use_dims = NULL, center = FALSE, max_sample = 1000, eps = 0.9,
+                     refine_knn = TRUE, cluster_name = "quantileNorm_cluster",
+                     seed = 1, verbose = FALSE, ...) {
   args <- c(list(object = input, method = method),
             capture_params(runIntegration, list(...)))
   out <- do.call(runIntegration, args)
 
   out <- quantileNorm(object = out, quantiles = quantiles, reference = reference,
-                      minCells = minCells, nNeighbors = nNeighbors,
-                      useDims = useDims, center = center, maxSample = maxSample,
-                      eps = eps, refineKNN = refineKNN, clusterName = clusterName,
+                      minCells = min_cells, nNeighbors = n_neighbors,
+                      useDims = use_dims, center = center, maxSample = max_sample,
+                      eps = eps, refineKNN = refine_knn, clusterName = cluster_name,
                       seed = seed, verbose = verbose)
 }

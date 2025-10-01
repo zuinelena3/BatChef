@@ -15,8 +15,9 @@
 #' each row is a gene and each column is a cell. This contains a corrected
 #' low-dimensional coordinates and a reconstructed matrix in the assays slot.
 #' @examples
-#' sim <- simulated_data(nGenes = 1000, batchCells = c(150, 50),
-#'                       group.prob = c(0.5, 0.5), n_hvgs = 1000, ncomp = 10)
+#' sim <- simulate_data(n_genes = 1000, batch_cells = c(150, 50),
+#'                      group_prob = c(0.5, 0.5), n_hvgs = 500,
+#'                      compute_pca = TRUE, output_format = "SingleCellExperiment")
 #' fastmnn <- fastMNNRun(input = sim, batch = "Batch")
 #'
 fastMNNRun <- function(input, batch, ...) {

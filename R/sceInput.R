@@ -13,12 +13,21 @@ setGeneric("sceInput", function(input, batch)
 
 #' @rdname sceInput
 #' @import methods
-#' @importFrom Seurat as.SingleCellExperiment
+#' @importFrom Seurat VariableFeatures Embeddings
+#' @importFrom SingleCellExperiment SingleCellExperiment reducedDim
 #' @aliases sceInput,Seurat,Seurat-method
 #'
 setMethod("sceInput", "Seurat",  function(input, batch) {
   stopifnot(batch %in% colnames(input[[]]))
-  as.SingleCellExperiment(input)
+
+  hvgs <- rownames(input) == VariableFeatures(input)
+  pca <- Embeddings(input)
+  input <- SingleCellExperiment(assays = list(counts = input@assays$RNA$counts,
+                                              logcounts = input@assays$RNA$data),
+                                colData = input@meta.data,
+                                rowData = data.frame(hvgs = hvgs))
+  reducedDim(input, "PCA") <- pca
+  return(input)
 })
 
 #' @rdname sceInput
@@ -34,9 +43,26 @@ setMethod("sceInput", "SingleCellExperiment",  function(input, batch) {
 #' @rdname sceInput
 #' @import methods
 #' @importFrom zellkonverter AnnData2SCE
+#' @importFrom SingleCellExperiment reducedDims<-
+#' @importFrom reticulate r_to_py
+#'
 #' @aliases sceInput,AnnDataR6,AnnDataR6-method
 #'
 setMethod("sceInput", "AnnDataR6",  function(input, batch) {
   stopifnot(batch %in% colnames(input$obs))
-  input <- AnnData2SCE(input)
+
+  pca <- input$obsm[["X_pca"]]
+  colnames(pca) <- paste0("PC_", 1:ncol(pca))
+  rownames(pca) <- input$obs_names
+  loadings <- input$varm[["PCs"]]
+  colnames(loadings) <- paste0("PC_", 1:ncol(pca))
+  rownames(loadings) <- input$var_names
+  input$varm <- NULL
+  input$obsm <- NULL
+
+  input <- r_to_py(input, convert = TRUE)
+  input <- AnnData2SCE(input, X_name = "counts")
+  reducedDim(input, "PCA") <- pca
+  attr(reducedDim(input, "PCA"), "rotation") <- loadings
+  return(input)
 })

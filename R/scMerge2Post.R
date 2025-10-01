@@ -23,8 +23,7 @@ setGeneric("scMerge2Post", function(input, output, method)
 #' @importFrom Seurat CreateAssayObject
 #'
 setMethod("scMerge2Post", "Seurat",  function(input, output, method) {
-  input[[method]] <- CreateAssayObject(data = as.matrix(output[["newY"]]),
-                                       slot = 'data')
+  input[[method]] <- CreateAssayObject(counts = as.matrix(output[["newY"]]))
   return(input)
 })
 

@@ -21,33 +21,33 @@ setClass("CombatParams", contains = "BatChefParams",
 #' @rdname BatChefParams
 setClass("SeuratV3Params", contains = "BatChefParams",
          slots = c(features = "character", pca_name = "ANY", assay = "ANY",
-                   reference = "ANY", anchor.features = "numeric",
-                   scale = "logical", normalization.method = "character",
-                   sct.clip.range = "ANY", reduction = "character",
-                   l2.norm = "logical", dims = "numeric", k.anchor = "numeric",
-                   k.filter = "numeric", k.score = "numeric",
-                   max.features = "numeric", nn.method = "character",
-                   n.trees = "numeric", eps = "numeric",
-                   verbose = "logical", new.assay.name = "character",
-                   features.to.integrate = "ANY", k.weight = "numeric",
-                   weight.reduction = "ANY", sd.weight = "numeric",
-                   sample.tree = "ANY", preserve.order = "logical"))
+                   reference = "ANY", anchor_features = "numeric",
+                   scale = "logical", normalization_method = "character",
+                   sct_clip_range = "ANY", reduction = "character",
+                   l2_norm = "logical", dims = "numeric", k_anchor = "numeric",
+                   k_filter = "numeric", k_score = "numeric",
+                   max_features = "numeric", nn_method = "character",
+                   n_trees = "numeric", eps = "numeric",
+                   verbose = "logical", new_assay_name = "character",
+                   features_to_integrate = "ANY", k_weight = "numeric",
+                   weight_reduction = "ANY", sd_weight = "numeric",
+                   sample_tree = "ANY", preserve_order = "logical"))
 
 #' @export
 #' @rdname BatChefParams
 setClass("SeuratV5Params", contains = "BatChefParams",
          slots = c(pca_name = "ANY", method = "character",
-                   orig.reduction = "character", assay = "ANY",
-                   features = "ANY", layers = "ANY", scale.layer = "character",
-                   new.reduction = "character", reference = "ANY",
-                   normalization.method = "character", dims = "numeric",
-                   k.filter = "ANY", dims.to.integrate = "ANY",
-                   k.weight = "numeric", weight.reduction = "ANY",
-                   sd.weight = "numeric", sample.tree = "ANY",
-                   preserve.order = "logical", verbose = "logical",
-                   l2.norm = "logical", k.anchor = "numeric", k.score = "numeric",
-                   max.features = "numeric", nn.method = "character",
-                   n.trees = "numeric", eps = "numeric"))
+                   orig_reduction = "character", assay = "ANY",
+                   features = "ANY", layers = "ANY", scale_layer = "character",
+                   new_reduction = "character", reference = "ANY",
+                   normalization_method = "character", dims = "numeric",
+                   k_filter = "ANY", dims_to_integrate = "ANY",
+                   k_weight = "numeric", weight_reduction = "ANY",
+                   sd_weight = "numeric", sample_tree = "ANY",
+                   preserve_order = "logical", verbose = "logical",
+                   l2_norm = "logical", k_anchor = "numeric", k_score = "numeric",
+                   max_features = "numeric", nn_method = "character",
+                   n_trees = "numeric", eps = "numeric"))
 
 #' @export
 #' @rdname BatChefParams
@@ -66,8 +66,9 @@ setClass("ScanoramaParams", contains = "BatChefParams",
 #' @export
 #' @rdname BatChefParams
 setClass("SCVIParams", contains = "BatChefParams",
-         slots = c(layer = "ANY", labels_key = "ANY", size_factor_key = "ANY",
-                   categorical_covariate_keys = "ANY", continuous_covariate_keys = "ANY",
+         slots = c(assay_type = "ANY", layer = "ANY", labels_key = "ANY",
+                   size_factor_key = "ANY", categorical_covariate_keys = "ANY",
+                   continuous_covariate_keys = "ANY",
                    n_hidden = "numeric", n_latent = "numeric", n_layers = "numeric",
                    dropout_rate = "numeric", dispersion = "character",
                    gene_likelihood = "character", latent_distribution = "character",
@@ -97,7 +98,5 @@ setClass("BBKNNParams", contains = "BatChefParams",
 #' @export
 #' @rdname BatChefParams
 setClass("LigerParams", contains = "BatChefParams",
-         slots = c(features = "character", useDatasets = "ANY",
-                   verbose = "logical", format.type = "ANY",
-                   remove.missing = "ANY", extra_input = "list",
+         slots = c(features = "character",
                    method = "character", extra = "list"))

@@ -7,6 +7,7 @@
 scVIRun(
   input,
   batch,
+  assay_type = "counts",
   layer = NULL,
   labels_key = NULL,
   size_factor_key = NULL,
@@ -51,6 +52,8 @@ scVIRun(
 `AnnData` object can be supplied.}
 
 \item{batch}{A string specifying the batch for each cell.}
+
+\item{assay_type}{A string specifying the assay.}
 
 \item{layer}{A string specifying the key in adata.layers for raw count data.}
 
@@ -160,8 +163,9 @@ corrected low-dimensional space.
 scVI is a deep learning-based method.
 }
 \examples{
-# sim <- simulated_data(nGenes = 1000, batchCells = c(80, 50),
-#                       group.prob = c(0.5, 0.5), n_hvgs = 1000, ncomp = 10)
-# scvi <- scVIRun(input = sim, batch = "Batch", max_epochs = 1)
+sim <- simulate_data(n_genes = 500, batch_cells = c(150, 50),
+                     group_prob = c(0.5, 0.5), n_hvgs = 500,
+                     compute_pca = TRUE, output_format = "SingleCellExperiment")
+scvi <- scVIRun(input = sim, batch = "Batch", max_epochs = 1)
 
 }

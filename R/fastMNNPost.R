@@ -26,11 +26,14 @@ setGeneric("fastMNNPost", function(input, output, method)
 #' @importFrom SummarizedExperiment assay rowData
 #'
 setMethod("fastMNNPost", "Seurat",  function(input, output, method) {
-  input[[paste0(method, "_mat")]] <- CreateAssayObject(data = as.matrix(assay(output, "reconstructed")),
-                                                       slot = 'data')
-  input[[method]] <- CreateDimReducObject(embeddings = reducedDim(output, "corrected"),
+  input[[paste0(method, "_mat")]] <- CreateAssayObject(counts = as.matrix(assay(output, "reconstructed")))
+
+  embeddings <- reducedDim(output, "corrected")
+  colnames(embeddings) <- paste0("fastmnn_", 1:ncol(embeddings))
+  input[[method]] <- CreateDimReducObject(embeddings = embeddings,
                                           loadings = rowData(output)$rotation,
-                                          key = "fastmnn_", assay = DefaultAssay(input))
+                                          key = "fastmnn_",
+                                          assay = DefaultAssay(input))
   return(input)
 })
 

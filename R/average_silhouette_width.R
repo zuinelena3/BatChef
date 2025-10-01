@@ -24,10 +24,12 @@
 #'
 #' @return A numeric value
 #' @examples
-#' sim <- simulated_data(nGenes = 1000, batchCells = c(150, 50),
-#'                       group.prob = c(0.5, 0.5), n_hvgs = 1000, ncomp = 10)
+#' sim <- simulate_data(n_genes = 1000, batch_cells = c(150, 50),
+#'                      group_prob = c(0.5, 0.5), n_hvgs = 500,
+#'                      compute_pca = TRUE, output_format = "SingleCellExperiment")
 #' asw <- average_silhouette_width(input = sim, label_true = "Group",
 #'                                 reduction = "PCA")
+#'
 average_silhouette_width <- function(input, label_true, reduction,
                                      metric = "euclidean", sample_size = NULL,
                                      random_state = NULL) {

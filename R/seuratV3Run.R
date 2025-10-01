@@ -7,36 +7,36 @@
 #' constructing anchors.
 #' @param reference A vector specifying the object/s to be used as a reference
 #' during integration.
-#' @param anchor.features Number of features to be used in anchor finding.
+#' @param anchor_features Number of features to be used in anchor finding.
 #' @param scale A logical to scale the features provided.
-#' @param normalization.method Name of normalization method used:
+#' @param normalization_method Name of normalization method used:
 #' LogNormalize (default) or SCT.
-#' @param sct.clip.range Numeric of length two specifying the min and max values
+#' @param sct_clip_range Numeric of length two specifying the min and max values
 #'  the Pearson residual will be clipped to.
 #' @param reduction Dimensional reduction to perform when finding anchors.
-#' @param l2.norm Perform L2 normalization on the CCA cell embeddings
+#' @param l2_norm Perform L2 normalization on the CCA cell embeddings
 #' after dimensional reduction.
 #' @param dims Number of dimensions.
-#' @param k.anchor Number of neighbors (k) to use when picking anchors.
-#' @param k.filter Number of neighbors (k) to use when filtering anchors.
-#' @param k.score Number of neighbors (k) to use when scoring anchors.
-#' @param max.features The maximum number of features to use when specifying
+#' @param k_anchor Number of neighbors (k) to use when picking anchors.
+#' @param k_filter Number of neighbors (k) to use when filtering anchors.
+#' @param k_score Number of neighbors (k) to use when scoring anchors.
+#' @param max_features The maximum number of features to use when specifying
 #' the neighborhood search space in the anchor filtering.
-#' @param nn.method Method for nearest neighbor finding.
-#' @param n.trees More trees gives higher precision when using annoy
+#' @param nn_method Method for nearest neighbor finding.
+#' @param n_trees More trees gives higher precision when using annoy
 #' approximate nearest neighbor search.
 #' @param eps Error bound on the neighbor finding algorithm.
 #' @param verbose Print progress bars and output.
-#' @param new.assay.name Name for the new assay containing
+#' @param new_assay_name Name for the new assay containing
 #' the integrated data.
 #' @param features Vector of features to use.
-#' @param features.to.integrate Vector of features to integrate.
-#' @param k.weight Number of neighbors to consider when weighting anchors.
-#' @param weight.reduction Dimension reduction to use when calculating
+#' @param features_to_integrate Vector of features to integrate.
+#' @param k_weight Number of neighbors to consider when weighting anchors.
+#' @param weight_reduction Dimension reduction to use when calculating
 #' anchor weights.
-#' @param sd.weight Controls the bandwidth of the Gaussian kernel for weighting.
-#' @param sample.tree Specify the order of integration.
-#' @param preserve.order Do not reorder objects based on size for each
+#' @param sd_weight Controls the bandwidth of the Gaussian kernel for weighting.
+#' @param sample_tree Specify the order of integration.
+#' @param preserve_order Do not reorder objects based on size for each
 #' pairwise integration.
 #'
 #' @export
@@ -44,48 +44,45 @@
 #'
 #' @return A \linkS4class{Seurat} object that contains the corrected matrix.
 #' @examples
-#' # sim <- simulated_data(nGenes = 1000, batchCells = c(150, 200),
-#' #                       group.prob = c(0.5, 0.5), n_hvgs = 1000, ncomp = 10)
-#' # so <- Seurat::as.Seurat(sim)
-#' # Seurat::VariableFeatures(so) <- rownames(so)
-#' # so[["pca"]] <- Seurat::CreateDimReducObject(
-#' #   embeddings = SingleCellExperiment::reducedDim(sim, "PCA"),
-#' #   loadings = attr(SingleCellExperiment::reducedDim(sim, "PCA"), "rotation"),
-#' #   key = "pca_", assay = SeuratObject::DefaultAssay(so))
-#' # ll <- Seurat::SplitObject(so, split.by = "Batch")
-#' # seuv3 <- seuratV3Run(input = ll, reduction = "cca")
+#' sim <- simulate_data(n_genes = 1000, batch_cells = c(250, 200),
+#'                      group_prob = c(0.5, 0.5), n_hvgs = 500,
+#'                      compute_pca = FALSE,
+#'                      output_format = "Seurat")
+#' feat <- Seurat::VariableFeatures(sim)
+#' sim <- Seurat::SplitObject(sim, split.by = "Batch")
+#' seuv3 <- seuratV3Run(input = sim, reduction = "cca",
+#'                      features = feat)
 #'
 seuratV3Run <- function(input, assay = NULL, reference = NULL,
-                        anchor.features = 2000, scale = TRUE,
-                        normalization.method = "LogNormalize",
-                        sct.clip.range = NULL, reduction = "cca", l2.norm = TRUE,
-                        dims = 1:30, k.anchor = 5, k.filter = 200, k.score = 30,
-                        max.features = 200, nn.method = "annoy", n.trees = 50,
-                        eps = 0, verbose = TRUE, new.assay.name = "integrated",
-                        features = NULL, features.to.integrate = NULL,
-                        k.weight = 100, weight.reduction = NULL, sd.weight = 1,
-                        sample.tree = NULL, preserve.order = FALSE) {
+                        anchor_features = 2000, scale = TRUE,
+                        normalization_method = "LogNormalize",
+                        sct_clip_range = NULL, reduction = "cca", l2_norm = TRUE,
+                        dims = 1:30, k_anchor = 5, k_filter = 200, k_score = 30,
+                        max_features = 200, nn_method = "annoy", n_trees = 50,
+                        eps = 0, verbose = FALSE, new_assay_name = "integrated",
+                        features = NULL, features_to_integrate = NULL,
+                        k_weight = 100, weight_reduction = NULL, sd_weight = 1,
+                        sample_tree = NULL, preserve_order = FALSE) {
 
   anchorset <- FindIntegrationAnchors(object.list = input, assay = assay,
                                       reference = reference,
-                                      anchor.features = anchor.features,
+                                      anchor.features = anchor_features,
                                       scale = scale,
-                                      normalization.method = normalization.method,
-                                      sct.clip.range = sct.clip.range,
-                                      reduction = reduction, l2.norm = l2.norm,
-                                      dims = dims, k.anchor = k.anchor,
-                                      k.filter = k.filter,
-                                      k.score = k.score,
-                                      max.features = max.features,
-                                      nn.method = nn.method, n.trees = n.trees,
+                                      normalization.method = normalization_method,
+                                      sct.clip.range = sct_clip_range,
+                                      reduction = reduction, l2.norm = l2_norm,
+                                      dims = dims, k.anchor = k_anchor,
+                                      k.filter = k_filter, k.score = k_score,
+                                      max.features = max_features,
+                                      nn.method = nn_method, n.trees = n_trees,
                                       eps = eps, verbose = verbose)
-  out <- IntegrateData(anchorset = anchorset, new.assay.name = new.assay.name,
-                       normalization.method = normalization.method,
+  out <- IntegrateData(anchorset = anchorset, new.assay.name = new_assay_name,
+                       normalization.method = normalization_method,
                        features = features,
-                       features.to.integrate = features.to.integrate,
-                       dims = dims, k.weight = k.weight,
-                       weight.reduction = weight.reduction,
-                       sd.weight = sd.weight, sample.tree = sample.tree,
-                       preserve.order = preserve.order, eps = eps,
+                       features.to.integrate = features_to_integrate,
+                       dims = dims, k.weight = k_weight,
+                       weight.reduction = weight_reduction,
+                       sd.weight = sd_weight, sample.tree = sample_tree,
+                       preserve.order = preserve_order, eps = eps,
                        verbose = verbose)
 }
