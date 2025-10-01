@@ -22,7 +22,7 @@ setGeneric("linearPost", function(input, output, method)
 #' @importFrom SeuratObject CreateAssay5Object
 #'
 setMethod("linearPost", "Seurat",  function(input, output, method) {
-  input[[method]] <- CreateAssay5Object(data = output)
+  input[[method]] <- CreateAssayObject(counts = output)
   return(input)
 })
 
