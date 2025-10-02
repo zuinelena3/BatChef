@@ -163,7 +163,7 @@ corrected low-dimensional space.
 scVI is a deep learning-based method.
 }
 \examples{
-sim <- simulate_data(n_genes = 500, batch_cells = c(150, 50),
+sim <- simulate_data(n_genes = 500, batch_cells = c(100, 50),
                      group_prob = c(0.5, 0.5), n_hvgs = 500,
                      compute_pca = TRUE, output_format = "SingleCellExperiment")
 scvi <- scVIRun(input = sim, batch = "Batch", max_epochs = 1)

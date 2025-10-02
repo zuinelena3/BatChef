@@ -32,7 +32,7 @@ After computing Leiden clustering algorithm, the ARI metric is computed
 using the `adjusted_rand_score` function from the Python sklearn package.
 }
 \examples{
-sim <- simulate_data(n_genes = 1000, batch_cells = c(150, 50),
+sim <- simulate_data(n_genes = 500, batch_cells = c(150, 50),
                      group_prob = c(0.5, 0.5), n_hvgs = 500,
                      compute_pca = TRUE, output_format = "SingleCellExperiment")
 ari <- adjusted_rand_index(input = sim, label_true = "Group", reduction = "PCA",

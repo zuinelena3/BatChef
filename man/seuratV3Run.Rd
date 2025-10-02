@@ -103,7 +103,7 @@ A \linkS4class{Seurat} object that contains the corrected matrix.
 SeuratV3 is an anchor-based method.
 }
 \examples{
-sim <- simulate_data(n_genes = 1000, batch_cells = c(250, 200),
+sim <- simulate_data(n_genes = 1000, batch_cells = c(200, 200),
                      group_prob = c(0.5, 0.5), n_hvgs = 500,
                      compute_pca = FALSE,
                      output_format = "Seurat")
