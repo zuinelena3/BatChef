@@ -16,7 +16,7 @@ average_silhouette_width(
 \arguments{
 \item{input}{A \linkS4class{SingleCellExperiment} object.}
 
-\item{label_true}{A string specifying cell types.}
+\item{label_true}{A string specifying the ground truth label.}
 
 \item{reduction}{A string specifying the dimensional reduction.}
 

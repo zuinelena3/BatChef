@@ -7,19 +7,27 @@
 normalized_mutual_info(
   input,
   label_true,
-  average_method = "arithmetic",
-  reduction
+  reduction,
+  nmi_compute = FALSE,
+  resolution,
+  average_method = "arithmetic"
 )
 }
 \arguments{
 \item{input}{A \linkS4class{SingleCellExperiment}, \linkS4class{Seurat} or
 `AnnData` object can be supplied.}
 
-\item{label_true}{A string specifying cell types.}
+\item{label_true}{A string specifying the ground truth labels.}
+
+\item{reduction}{A string specifying the dimensional reduction
+on which the clustering analysis will be performed.}
+
+\item{nmi_compute}{A Boolean value indicating NMI metric calculation to
+identify the optimal clustering is to be performed (Default: FALSE).}
+
+\item{resolution}{A numeric value specifying the resolution parameter.}
 
 \item{average_method}{How to compute the normalizer in the denominator.}
-
-\item{reduction}{A string specifying the dimensional reduction.}
 }
 \value{
 A numeric value.
@@ -30,14 +38,14 @@ the overlap between the true cell-type and clustering labels computed after
 batch correction.
 }
 \details{
-After computing clustering using Leiden algorithm, the ARI metric is computed
+After computing clustering using Leiden algorithm, the NMI metric is computed
 using the `normalized_mutual_info_score` function from the Python sklearn package.
 }
 \examples{
 sim <- simulate_data(n_genes = 1000, batch_cells = c(150, 50),
                      group_prob = c(0.5, 0.5), n_hvgs = 500,
                      compute_pca = TRUE, output_format = "SingleCellExperiment")
-nmi <- normalized_mutual_info(input = sim, label_true = "Group",
-                              reduction = "PCA")
+nmi <- normalized_mutual_info(input = sim, label_true = "Group", reduction = "PCA",
+                           nmi_compute = FALSE, resolution = 0.5)
 
 }

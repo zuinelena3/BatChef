@@ -6,7 +6,7 @@ test_that("Performance evaluation", {
   sim <- batchCorrect(input = sim, batch = "Batch",
                       params = HarmonyParams())
   metrics <- metrics(input = sim, batch = "Batch", group = "Group",
-                     reduction = "harmony", rep = 2, mc_cores = 1)
+                     reduction = "harmony", rep = 5)
   expect_s3_class(metrics, "data.frame")
   expect_match(colnames(metrics), "wasserstein", all = FALSE)
   expect_match(colnames(metrics), "ari", all = FALSE)

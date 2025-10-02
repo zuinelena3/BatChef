@@ -61,7 +61,7 @@ bbknnRun <- function(input, batch, neighbors_within_batch = 3, n_pcs = 50,
                                                  approx = NULL, use_annoy = NULL,
                                                  use_faiss = NULL,
                                                  scanpy_logging = FALSE) {
-    bbknn <- import("bbknn")
+    bbknn <- reticulate::import("bbknn")
 
     args <- c(list(pca = input, batch_list = batch,
                    neighbors_within_batch = as.integer(neighbors_within_batch),
@@ -73,7 +73,9 @@ bbknnRun <- function(input, batch, neighbors_within_batch = 3, n_pcs = 50,
                    local_connectivity = as.integer(local_connectivity),
                    approx = approx, use_annoy = use_annoy, use_faiss = use_faiss,
                    scanpy_logging = scanpy_logging))
+
     out <- do.call(bbknn$matrix$bbknn, args)
+
     mds <- cmdscale(out[[1]], k = n_pcs)
     rownames(mds) <- rownames(input)
     colnames(mds) <- paste0("bbknn_", seq(n_pcs))

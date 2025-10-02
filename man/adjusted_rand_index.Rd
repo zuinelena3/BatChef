@@ -4,15 +4,21 @@
 \alias{adjusted_rand_index}
 \title{Adjusted Rand Index (ARI)}
 \usage{
-adjusted_rand_index(input, label_true, reduction)
+adjusted_rand_index(input, label_true, reduction, nmi_compute, resolution)
 }
 \arguments{
 \item{input}{A \linkS4class{SingleCellExperiment}, \linkS4class{Seurat} or
 `AnnData` object can be supplied.}
 
-\item{label_true}{A string specifying cell types.}
+\item{label_true}{A string specifying the ground truth labels.}
 
-\item{reduction}{A string specifying the name of dimensional reduction.}
+\item{reduction}{A string specifying the dimensional reduction
+on which the clustering analysis will be performed.}
+
+\item{nmi_compute}{A Boolean value indicating NMI metric calculation to
+identify the optimal clustering is to be performed.}
+
+\item{resolution}{A numeric value specifying the resolution parameter.}
 }
 \value{
 A numeric value
@@ -22,14 +28,14 @@ The Adjusted Rand Index (ARI) is a metric used to measure the similarity
 between the clustering and ground truth labels.
 }
 \details{
-After computing clustering using Leiden algorithm, the ARI metric is computed
+After computing Leiden clustering algorithm, the ARI metric is computed
 using the `adjusted_rand_score` function from the Python sklearn package.
 }
 \examples{
 sim <- simulate_data(n_genes = 1000, batch_cells = c(150, 50),
                      group_prob = c(0.5, 0.5), n_hvgs = 500,
                      compute_pca = TRUE, output_format = "SingleCellExperiment")
-ari <- adjusted_rand_index(input = sim, label_true = "Group",
-                           reduction = "PCA")
+ari <- adjusted_rand_index(input = sim, label_true = "Group", reduction = "PCA",
+                           nmi_compute = FALSE, resolution = 0.5)
 
 }

@@ -11,6 +11,8 @@ metrics(
   reduction,
   rep = 10,
   mc_cores = 1,
+  nmi_compute = TRUE,
+  resolution = NULL,
   average_method = "arithmetic",
   metric = "euclidean",
   sample_size = NULL,
@@ -21,17 +23,24 @@ metrics(
 )
 }
 \arguments{
-\item{input}{A \linkS4class{SingleCellExperiment} object.}
+\item{input}{A \linkS4class{SingleCellExperiment}, \linkS4class{Seurat} or
+`AnnData` object can be supplied.}
 
 \item{batch}{A string specifying batch variable.}
 
-\item{group}{A string specifying cell types.}
+\item{group}{A string specifying the ground truth label.}
 
-\item{reduction}{A string specifying the dimensional reduction.}
+\item{reduction}{A string specifying the dimensional reduction.
+on which the clustering analysis will be performed.}
 
 \item{rep}{Number of times the Wasserstein distance is calculated.}
 
 \item{mc_cores}{The number of cores to use.}
+
+\item{nmi_compute}{A Boolean value indicating NMI metric calculation to
+identify the optimal clustering is to be performed (Default: TRUE).}
+
+\item{resolution}{A numeric value specifying the resolution parameter.}
 
 \item{average_method}{How to compute the normalizer in the denominator.}
 
@@ -56,6 +65,10 @@ A data.frame object
 Performance evaluation metrics: Wasserstein distance, Local Inverse Simpson's
 Index, Average Silhouette Width, Adjusted Rand Index, and
 Normalized Mutual Information.
+}
+\details{
+This function performs Leiden clustering to facilitate the computation of
+the Adjusted Rand Index (ARI) and Normalized Mutual Information (NMI) metrics.
 }
 \examples{
 sim <- simulate_data(n_genes = 1000, batch_cells = c(150, 110),

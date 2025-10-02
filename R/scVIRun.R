@@ -140,12 +140,12 @@ scVIRun <- function(input, batch, assay_type = "counts", layer = NULL, labels_ke
     scvi <- reticulate::import("scvi")
 
     if (is(input, "SingleCellExperiment")) {
-      andata <- SCE2AnnData(input)
+      andata <- zellkonverter::SCE2AnnData(input)
       andata$layers[assay_type] <- andata$X
     }
     else if (is(input, "Seurat")) {
       sce <- as.SingleCellExperiment(input)
-      andata <- SCE2AnnData(sce)
+      andata <- zellkonverter::SCE2AnnData(sce)
       andata$layers[assay_type] <- andata$X
     }
     else {

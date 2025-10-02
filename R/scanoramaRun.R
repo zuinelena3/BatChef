@@ -52,7 +52,7 @@ scanoramaRun <- function(input, return_dimred = FALSE,
                                                  dimred, approx, sigma, alpha,
                                                  knn, return_dense, hvg, union,
                                                  seed) {
-    scanorama <- import("scanorama")
+    scanorama <- reticulate::import("scanorama")
 
     n <- length(input)
     n_batch <- n/2
