@@ -7,6 +7,9 @@
 #' @param assay_type A string specifying the assay.
 #' @param ... Named arguments to pass to individual methods upon dispatch.
 #'
+#' @return
+#' A BatChefParams object of the specified subclass, containing parameter
+#' settings for the corresponding batch correction method.
 #' @export
 #' @rdname BatChefParams
 #' @importFrom methods new

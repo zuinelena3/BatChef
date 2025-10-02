@@ -320,6 +320,10 @@ Overrides n_samples.}
 
 \item{return_numpy}{Return a ndarray instead of a DataFrame.}
 }
+\value{
+A BatChefParams object of the specified subclass, containing parameter
+settings for the corresponding batch correction method.
+}
 \description{
 Constructors and methods for the params parameter classes.
 BatChefParams objects contain method specific parameters
