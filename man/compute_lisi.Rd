@@ -2,7 +2,7 @@
 % Please edit documentation in R/compute_lisi.R
 \name{compute_lisi}
 \alias{compute_lisi}
-\title{Use this function to compute LISI scores of one or more labels.}
+\title{Local Inverse Simpson Index (LISI)}
 \usage{
 compute_lisi(X, meta_data, label_colnames, perplexity = 30, nn_eps = 0)
 }
@@ -23,7 +23,7 @@ A data frame of LISI values. Each row is a cell and each
 column is a different label variable.
 }
 \description{
-Use this function to compute LISI scores of one or more labels.
+Local Inverse Simpson Index (LISI) scores are computed for each cell.
 }
 \examples{
 sim <- simulate_data(n_genes = 1000, batch_cells = c(150, 50),

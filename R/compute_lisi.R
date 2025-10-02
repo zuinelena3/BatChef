@@ -1,7 +1,9 @@
 # NOTE: The code is copied from [https://github.com/immunogenomics/LISI/blob/master/R/utils.R].
 # Proper credit is given to the original author.
 
-#' Use this function to compute LISI scores of one or more labels.
+#' Local Inverse Simpson Index (LISI)
+#'
+#' Local Inverse Simpson Index (LISI) scores are computed for each cell.
 #'
 #' @param X A matrix with cells (rows) and features (columns).
 #' @param meta_data A data frame with one row per cell.

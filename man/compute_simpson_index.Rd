@@ -26,6 +26,9 @@ compute_simpson_index(
 
 \item{tol}{Stop when the score converges to this tolerance.}
 }
+\value{
+A vector of float values
+}
 \description{
 Compute the Local Inverse Simpson Index (LISI)
 }

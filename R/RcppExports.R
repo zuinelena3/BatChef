@@ -9,7 +9,8 @@
 #' @param n_batches The number of categories in the categorical variable.
 #' @param perplexity The effective number of neighbors around each cell.
 #' @param tol Stop when the score converges to this tolerance.
-#' @export
+#' @return A vector of float values
+#'
 compute_simpson_index <- function(D, knn_idx, batch_labels, n_batches, perplexity = 15, tol = 1e-5) {
     .Call('_BatChef_compute_simpson_index', PACKAGE = 'BatChef', D, knn_idx, batch_labels, n_batches, perplexity, tol)
 }

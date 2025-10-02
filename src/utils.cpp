@@ -27,7 +27,8 @@ float Hbeta(arma::mat& D, float beta, arma::vec& P, int idx) {
 //' @param n_batches The number of categories in the categorical variable.
 //' @param perplexity The effective number of neighbors around each cell.
 //' @param tol Stop when the score converges to this tolerance.
-//' @export
+//' @return A vector of float values
+//'
 // [[Rcpp::export]]
  arma::vec compute_simpson_index(
      arma::mat& D,
