@@ -10,4 +10,4 @@ py_env <- BasiliskEnvironment(envname = "py_env", pkgname = "BatChef",
                                            "anndata==0.10.7", "bbknn==1.6.0",
                                            "scvi-tools==1.1.2",
                                            "lightning==2.0.9.post0",
-                                           "openssl==3.2.0"))
+                                           "openssl==3.1.1"))
