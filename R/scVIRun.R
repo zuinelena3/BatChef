@@ -102,7 +102,7 @@ scVIRun <- function(input, batch, assay_type = "counts", layer = NULL, labels_ke
                     transform_batch = NULL, gene_list = NULL, library_size = 1,
                     n_samples = 1, n_samples_overall = NULL, weights = NULL,
                     return_mean = TRUE, return_numpy = NULL) {
-  proc <- basiliskStart(scvi_env)
+  proc <- basiliskStart(py_env)
   on.exit(basiliskStop(proc))
 
   out <- basiliskRun(proc = proc, fun = function(input, batch, assay_type = "counts",

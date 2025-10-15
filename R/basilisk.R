@@ -1,17 +1,13 @@
 #' @importFrom basilisk BasiliskEnvironment
 py_env <- BasiliskEnvironment(envname = "py_env",
                               pkgname = "BatChef",
-                              packages = c("python==3.10.12",
-                                           "scanorama==1.7.4",
-                                           "scanpy==1.10.1",
-                                           "python-igraph==0.11.4",
-                                           "leidenalg==0.10.2",
-                                           "scikit-learn==1.4.2",
-                                           "anndata==0.10.7",
-                                           "bbknn==1.6.0"))
-
-#' @importFrom basilisk BasiliskEnvironment
-scvi_env <- BasiliskEnvironment(envname = "scvi_env",
-                                pkgname = "BatChef",
-                                packages = c("python=3.10.12",
-                                             "scvi-tools=1.2.0"))
+                              packages = c("python=3.12.3",
+                                           "scanpy=1.11.4",
+                                           "scipy=1.16.2",
+                                           "anndata=0.12.2",
+                                           "scanorama=1.7.4",
+                                           "leidenalg=0.10.2",
+                                           "python-igraph=0.11.9",
+                                           "scikit-learn=1.7.2",
+                                           "bbknn=1.6.0",
+                                           "scvi-tools=1.4.0"))
