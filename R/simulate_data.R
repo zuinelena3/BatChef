@@ -105,7 +105,8 @@ simulate_data <- function(n_genes = 10000, batch_cells = 100,
   top_hvgs <- chooseHighlyVariableGenes(gene_var$statistics$residuals,
                                         top = n_hvgs)
 
-  rowdata <- data.frame(genes = rownames(normalized), hvgs = seq_along(rownames(normalized)) %in% top_hvgs)
+  rowdata <- data.frame(genes = rownames(normalized),
+                        hvgs = seq_along(rownames(normalized)) %in% top_hvgs)
 
   pca <- runPca(normalized[top_hvgs, ], num.threads = num_threads, number = pca_ncomp)
   loadings <- pca[[2]]
@@ -143,9 +144,11 @@ simulate_data <- function(n_genes = 10000, batch_cells = 100,
   }
 
   else {
+    counts <- counts[top_hvgs, ]
+    normalized <- normalized[top_hvgs, ]
     obs <- as.data.frame(coldata)
     rownames(obs) <- colnames(counts)
-    var <- rowdata
+    var <- rowdata[top_hvgs, ]
     rownames(var) <- rownames(counts)
     adata <- AnnData(X = t(as.matrix(counts)),
                      obs = obs,
