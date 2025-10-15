@@ -12,15 +12,15 @@ test_that("ComBat method works", {
   suppressMessages(capture.output({
     sim <- simulate_data(n_genes = 1000, batch_cells = c(150, 50),
                          group_prob = c(0.5, 0.5), n_hvgs = 500,
-                         compute_pca = FALSE, output_format = "Seurat")
+                         compute_pca = FALSE, output_format = "AnnData")
     sim <- batchCorrect(input = sim, batch = "Batch", params = CombatParams())
-    expect_s4_class(sim, "Seurat")
+    expect_true(inherits(sim, "AnnDataR6"))
   }))
 })
 
 test_that("SeuratV3 method works", {
   suppressMessages(capture.output({
-    sim <- simulate_data(n_genes = 500, batch_cells = c(250, 200),
+    sim <- simulate_data(n_genes = 1000, batch_cells = c(250, 200),
                          group_prob = c(0.5, 0.5), n_hvgs = 500,
                          compute_pca = TRUE, output_format = "AnnData")
     sim <- batchCorrect(input = sim, batch = "Batch",
