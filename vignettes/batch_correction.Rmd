@@ -111,19 +111,13 @@ The desired correction method can have these values:
 
 -   `HarmonyParams`
 
--   `ScanoramaParams`
-
--   `ScVIParams`
-
 -   `ScMerge2Params`
-
--   `BBKNNParams`
 
 -   `LigerParams`
 
 ## Examples 
 
-To illustrate, we correct the data using `Scanorama` and `Harmony`.
+To illustrate, we correct the data using `Harmony`.
 
 ### Harmony
 
@@ -136,19 +130,6 @@ Also, the `Seurat` object can be used as an input data.
 
 ```{r, message=FALSE, warning=FALSE}
 so <- batchCorrect(input = so, batch = "Batch", params = HarmonyParams())
-so
-```
-
-### Scanorama
-
-```{r, message=FALSE, warning=FALSE}
-sce <- batchCorrect(input = sce, batch = "Batch", 
-                    params = ScanoramaParams(assay_type = "logcounts",
-                                             return_dimred = TRUE))
-sce
-so <- batchCorrect(input = so, batch = "Batch", 
-                   params = ScanoramaParams(assay_type = "data", 
-                                            return_dimred = TRUE))
 so
 ```
 

@@ -8,10 +8,7 @@
 \alias{SeuratV5Params}
 \alias{FastMNNParams}
 \alias{HarmonyParams}
-\alias{ScanoramaParams}
-\alias{ScVIParams}
 \alias{ScMerge2Params}
-\alias{BBKNNParams}
 \alias{LigerParams}
 \alias{BatChefParams-class}
 \alias{LimmaParams-class}
@@ -93,52 +90,7 @@ FastMNNParams(...)
 
 HarmonyParams(...)
 
-ScanoramaParams(assay_type = NULL, return_dimred = FALSE, ...)
-
-ScVIParams(
-  assay_type = "counts",
-  layer = NULL,
-  labels_key = NULL,
-  size_factor_key = NULL,
-  categorical_covariate_keys = NULL,
-  continuous_covariate_keys = NULL,
-  n_hidden = 128,
-  n_latent = 10,
-  n_layers = 1,
-  dropout_rate = 0.1,
-  dispersion = "gene",
-  gene_likelihood = "zinb",
-  latent_distribution = "normal",
-  max_epochs = 400,
-  accelerator = "auto",
-  devices = 1,
-  train_size = 0.25,
-  validation_size = NULL,
-  shuffle_set_split = TRUE,
-  load_sparse_tensor = FALSE,
-  batch_size = 128,
-  early_stopping = FALSE,
-  datasplitter_kwargs = NULL,
-  plan_kwargs = NULL,
-  datamodule = NULL,
-  indices = NULL,
-  give_mean = TRUE,
-  mc_samples = 5000,
-  return_dist = FALSE,
-  dataloader = NULL,
-  transform_batch = NULL,
-  gene_list = NULL,
-  library_size = 1,
-  n_samples = 1,
-  n_samples_overall = NULL,
-  weights = NULL,
-  return_mean = TRUE,
-  return_numpy = NULL
-)
-
 ScMerge2Params(assay_type = "logcounts", ...)
-
-BBKNNParams(reduction, ...)
 
 LigerParams(features, method = "iNMF", ...)
 }
@@ -165,7 +117,7 @@ LogNormalize or SCT.}
 \item{sct_clip_range}{Numeric of length two specifying the min and max values
 the Pearson residual will be clipped to.}
 
-\item{reduction}{A string specifying the name of PCA.}
+\item{reduction}{Dimensional reduction to perform when finding anchors.}
 
 \item{l2_norm}{Perform L2 normalization on the CCA cell embeddings
 after dimensional reduction.}
@@ -217,108 +169,6 @@ integration.}
 \item{new_reduction}{Name of new integrated dimensional reduction.}
 
 \item{dims_to_integrate}{Number of dimensions to return integrated values for.}
-
-\item{return_dimred}{A logical to returning integrated low-dimesional
-embeddings.}
-
-\item{layer}{A string specifying the counts data.}
-
-\item{labels_key}{A string specifying the label information.}
-
-\item{size_factor_key}{A string specifying the size factor information.}
-
-\item{categorical_covariate_keys}{A string specifying the categorical
-covariates.}
-
-\item{continuous_covariate_keys}{A string specifying the continuous
-covariates.}
-
-\item{n_hidden}{Number of nodes per hidden layer.}
-
-\item{n_latent}{Number of dimensions of the latent space.}
-
-\item{n_layers}{Number of hidden layers used for encoder and decoder NNs.}
-
-\item{dropout_rate}{Dropout rate for neural networks.}
-
-\item{dispersion}{The dispersion parameter can take one of four values:
-'gene' (default): the dispersion of the negative binomial (NB) distribution
-is constant for each gene across all cells.
-'gene-batch': dispersion varies between different batches for each gene.
-'gene-label': dispersion varies between different labels for each gene.
-'gene-cell': dispersion differs for each gene in every individual cell.}
-
-\item{gene_likelihood}{Gene likelihood. 'nb' - Negative binomial distribution.
-'zinb' (default) - Zero-inflated negative binomial distribution.
-'poisson' - Poisson distribution. 'normal' - EXPERIMENTAL Normal distribution}
-
-\item{latent_distribution}{Distribution of latent space. Values:
-'normal' (default) - Normal distribution
-'ln' - Logistic normal distribution (Normal(0, I) transformed by softmax)}
-
-\item{max_epochs}{The maximum number of epochs to train the model}
-
-\item{accelerator}{Supports passing different accelerator types
-(“cpu”, “gpu”, “tpu”, “ipu”, “hpu”, “mps, “auto”) as well as custom
-accelerator instances.}
-
-\item{devices}{The devices to use.}
-
-\item{train_size}{Size of training set in the range [0.0, 1.0]. Default is NULL.}
-
-\item{validation_size}{Size of the test set}
-
-\item{shuffle_set_split}{Boolean (default: TRUE).
-Whether to shuffle indices before splitting.}
-
-\item{load_sparse_tensor}{Boolean value (default: FALSE). If TRUE, loads data
-with sparse CSR or CSC layout as a Tensor with the same layout.}
-
-\item{batch_size}{Minibatch size to use during training.}
-
-\item{early_stopping}{Boolean value (default: FALSE). Perform early stopping.}
-
-\item{datasplitter_kwargs}{Additional keyword arguments passed into DataSplitter.}
-
-\item{plan_kwargs}{Additional keyword arguments passed into TrainingPlan.}
-
-\item{datamodule}{A LightningDataModule instance to use for training
-in place of the default DataSplitter.}
-
-\item{indices}{Indices of observations in adata to use (default: NULL)}
-
-\item{give_mean}{Boolean value (default: TRUE). If TRUE, returns
-the mean of the latent distribution. If FALSE, returns an estimate of
-the mean using mc_samples Monte Carlo samples.}
-
-\item{mc_samples}{Number of Monte Carlo samples}
-
-\item{return_dist}{Boolean value (default: FALSE). If TRUE, returns
-the mean and variance of the latent distribution.
-Otherwise, returns the mean of the latent distribution.}
-
-\item{dataloader}{An iterator over minibatches of data on which to
-compute the metric.}
-
-\item{transform_batch}{Batch to condition on.  If transform_batch is:
-- NULL, then real observed batch is used.
-- int, then batch transform_batch is used.
-- Otherwise based on string}
-
-\item{gene_list}{Return frequencies of expression for a subset of genes.}
-
-\item{library_size}{Scale the expression frequencies to a common library size.}
-
-\item{n_samples}{Number of posterior samples to use for estimation.}
-
-\item{n_samples_overall}{Number of posterior samples to use for estimation.
-Overrides n_samples.}
-
-\item{weights}{Weights to use for sampling. If None, defaults to “uniform”.}
-
-\item{return_mean}{Whether to return the mean of the samples}
-
-\item{return_numpy}{Return a ndarray instead of a DataFrame.}
 }
 \value{
 A BatChefParams object of the specified subclass, containing parameter

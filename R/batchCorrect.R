@@ -20,9 +20,7 @@
 #' sim <- simulate_data(n_genes = 1000, batch_cells = c(150, 50),
 #'                      group_prob = c(0.5, 0.5), n_hvgs = 500,
 #'                      compute_pca = TRUE, output_format = "SingleCellExperiment")
-#' out <- batchCorrect(input = sim, batch = "Batch",
-#'                     params = ScanoramaParams(assay_type = "logcounts",
-#'                                              return_dimred = TRUE))
+#' out <- batchCorrect(input = sim, batch = "Batch", params = HarmonyParams())
 #' @rdname batchCorrect
 #'
 setMethod("batchCorrect", "LimmaParams", function(input, batch, params) {
@@ -135,47 +133,6 @@ setMethod("batchCorrect", "HarmonyParams", function(input, batch, params) {
 })
 
 #' @rdname batchCorrect
-setMethod("batchCorrect", "ScanoramaParams", function(input, batch, params) {
-  ll <- scanoramaInput(input = input, batch = batch, assay.type = params@assay_type)
-
-  args <- merge_params(list(input = ll, return_dimred = params@return_dimred),
-                       params@extra, "ScanoramaParams")
-  out <- do.call(scanoramaRun, args)
-
-  res <- scanoramaPost(input = input, list = ll, output = out,
-                       return_dimred = params@return_dimred, method = "scanorama")
-})
-
-#' @rdname batchCorrect
-setMethod("batchCorrect", "SCVIParams", function(input, batch, params) {
-  out <- scVIRun(input = input, batch = batch, assay_type = params@assay_type,
-                 layer = params@layer,
-                 labels_key = params@labels_key,
-                 size_factor_key = params@size_factor_key,
-                 categorical_covariate_keys = params@categorical_covariate_keys,
-                 continuous_covariate_keys = params@continuous_covariate_keys,
-                 n_hidden = params@n_hidden, n_latent = params@n_latent,
-                 n_layers = params@n_layers, dropout_rate = params@dropout_rate,
-                 dispersion = params@dispersion,
-                 gene_likelihood = params@gene_likelihood,
-                 latent_distribution = params@latent_distribution,
-                 max_epochs = params@max_epochs, accelerator = params@accelerator,
-                 devices = params@devices, train_size = params@train_size,
-                 validation_size = params@validation_size,
-                 shuffle_set_split = params@shuffle_set_split,
-                 load_sparse_tensor = params@load_sparse_tensor,
-                 batch_size = params@batch_size,
-                 early_stopping = params@early_stopping,
-                 datasplitter_kwargs = params@datasplitter_kwargs,
-                 plan_kwargs = params@plan_kwargs, datamodule = params@datamodule,
-                 indices = params@indices, give_mean = params@give_mean,
-                 mc_samples = params@mc_samples, return_dist = params@return_dist,
-                 dataloader = params@dataloader)
-
-  res <- scVIPost(input = input, output = out, method = "scvi")
-})
-
-#' @rdname batchCorrect
 setMethod("batchCorrect", "ScMerge2Params", function(input, batch, params) {
   sce <- sceInput(input = input, batch = batch)
 
@@ -185,17 +142,6 @@ setMethod("batchCorrect", "ScMerge2Params", function(input, batch, params) {
   out <- do.call(scMerge2Run, args)
 
   res <- scMerge2Post(input = input, output = out, method = "scmerge2")
-})
-
-#' @rdname batchCorrect
-setMethod("batchCorrect", "BBKNNParams", function(input, batch, params) {
-  ll <- bbknnInput(input = input, batch = batch, reduction = params@reduction)
-
-  args <- merge_params(list(input = ll$red, batch = ll$batch),
-                       params@extra, "BBKNNParams")
-  out <- do.call(bbknnRun, args)
-
-  res <- bbknnPost(input = input, output = out, method = "bbknn")
 })
 
 #' @rdname batchCorrect
