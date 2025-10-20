@@ -7,7 +7,7 @@
 wasserstein_distance(input, batch, reduction, rep, mc_cores)
 }
 \arguments{
-\item{input}{A \linkS4class{SingleCellExperiment} object.}
+\item{input}{A \link[SingleCellExperiment]{SingleCellExperiment} object.}
 
 \item{batch}{A string specifying batch variable.}
 

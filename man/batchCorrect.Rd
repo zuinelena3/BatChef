@@ -40,8 +40,8 @@ batchCorrect(input, batch, params)
 \S4method{batchCorrect}{LigerParams}(input, batch, params)
 }
 \arguments{
-\item{input}{A \linkS4class{SingleCellExperiment}, \linkS4class{Seurat} or
-`AnnData` object can be supplied.}
+\item{input}{A \link[SingleCellExperiment]{SingleCellExperiment}
+\link[Seurat]{Seurat} or `AnnData` object can be supplied.}
 
 \item{batch}{A string specifying the batch variable.}
 
@@ -49,10 +49,10 @@ batchCorrect(input, batch, params)
 the batch correction method to use and the parameters for its execution.}
 }
 \value{
-A \linkS4class{SingleCellExperiment}, \linkS4class{Seurat}, or
-`AnnData` object, where the output of the method (such as the corrected
-gene expression matrix and/or the corrected dimensional reduction space) is
-stored within the original input object.
+A \link[SingleCellExperiment]{SingleCellExperiment}
+\link[Seurat]{Seurat} or `AnnData` object, where the output of the method
+(such as the corrected gene expression matrix and/or the corrected
+dimensional reduction space) is stored within the original input object.
 }
 \description{
 A common interface for single-cell batch correction methods.

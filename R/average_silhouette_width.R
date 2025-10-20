@@ -8,7 +8,7 @@
 #' The ASW metric is computed using the `silhouette_score` function from the
 #' Python sklearn package.
 #'
-#' @param input A \linkS4class{SingleCellExperiment} object.
+#' @param input A \link[SingleCellExperiment]{SingleCellExperiment} object.
 #' @param label_true A string specifying the ground truth label.
 #' @param reduction A string specifying the dimensional reduction.
 #' @param metric The metric to use when calculating distance between instances.

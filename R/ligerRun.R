@@ -2,7 +2,7 @@
 #'
 #' LIGER is a integrative non-negative matrix factorization method
 #'
-#' @param input A \linkS4class{liger} object.
+#' @param input A \link[rliger]{liger} object.
 #' @param method A string specifyng the batch correction method. Choose from
 #' \code{"iNMF"}, \code{"onlineINMF"}, \code{"UINMF"}. Default \code{"iNMF"}.
 #' @param quantiles Number of quantiles to use for quantile normalization.
@@ -29,7 +29,7 @@
 #' @export
 #' @importFrom rliger runIntegration quantileNorm
 #'
-#' @returns A \linkS4class{liger} object, which contains the quantile align
+#' @returns A \link[rliger]{liger} object, which contains the quantile align
 #' factor loadings.
 #'
 #' @examples

@@ -1,17 +1,17 @@
 #' Convert the scVI output
 #'
-#' Convert the scVI output into a \linkS4class{SingleCellExperiment},
-#' \linkS4class{Seurat} or `AnnData` object
+#' Convert the scVI output into a \link[SingleCellExperiment]{SingleCellExperiment}
+#' \link[Seurat]{Seurat} or `AnnData` object.
 #'
-#' @param input A \linkS4class{SingleCellExperiment}, \linkS4class{Seurat} or
-#' `AnnData` object can be supplied.
+#' @param input A \link[SingleCellExperiment]{SingleCellExperiment}
+#' \link[Seurat]{Seurat} or `AnnData` object can be supplied.
 #' @param output scVI output: a list that contains the corrected
 #' gene expression matrix and the corrected low-dimensional space.
 #' @param method A string specifying the correction method
 #'
 #' @import methods
-#' @return A \linkS4class{SingleCellExperiment},
-#' \linkS4class{Seurat} or `AnnData` object
+#' @return A \link[SingleCellExperiment]{SingleCellExperiment}
+#' \link[Seurat]{Seurat} or `AnnData` object.
 #' @rdname scVIPost
 #'
 setGeneric("scVIPost", function(input, output, method)

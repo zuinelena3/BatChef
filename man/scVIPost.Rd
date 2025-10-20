@@ -19,8 +19,8 @@ scVIPost(input, output, method)
 \S4method{scVIPost}{AnnDataR6}(input, output, method)
 }
 \arguments{
-\item{input}{A \linkS4class{SingleCellExperiment}, \linkS4class{Seurat} or
-`AnnData` object can be supplied.}
+\item{input}{A \link[SingleCellExperiment]{SingleCellExperiment}
+\link[Seurat]{Seurat} or `AnnData` object can be supplied.}
 
 \item{output}{scVI output: a list that contains the corrected
 gene expression matrix and the corrected low-dimensional space.}
@@ -28,10 +28,10 @@ gene expression matrix and the corrected low-dimensional space.}
 \item{method}{A string specifying the correction method}
 }
 \value{
-A \linkS4class{SingleCellExperiment},
-\linkS4class{Seurat} or `AnnData` object
+A \link[SingleCellExperiment]{SingleCellExperiment}
+\link[Seurat]{Seurat} or `AnnData` object.
 }
 \description{
-Convert the scVI output into a \linkS4class{SingleCellExperiment},
-\linkS4class{Seurat} or `AnnData` object
+Convert the scVI output into a \link[SingleCellExperiment]{SingleCellExperiment}
+\link[Seurat]{Seurat} or `AnnData` object.
 }

@@ -7,15 +7,15 @@
 harmonyRun(input, batch, ...)
 }
 \arguments{
-\item{input}{A \linkS4class{SingleCellExperiment} object.}
+\item{input}{A \link[SingleCellExperiment]{SingleCellExperiment} object.}
 
 \item{batch}{A string specifying the batch variable.}
 
 \item{...}{Named arguments to pass to individual methods upon dispatch}
 }
 \value{
-A \linkS4class{SingleCellExperiment} object which contains a
-corrected low-dimensional space.
+A \link[SingleCellExperiment]{SingleCellExperiment} object
+which contains a corrected low-dimensional space.
 }
 \description{
 Harmony is a mixture-model based method.

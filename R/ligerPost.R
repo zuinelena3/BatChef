@@ -1,16 +1,16 @@
 #' Convert the LIGER output
 #'
-#' Convert the LIGER output into a \linkS4class{SingleCellExperiment},
-#' \linkS4class{Seurat} or `AnnData` object.
+#' Convert the LIGER output into a \link[SingleCellExperiment]{SingleCellExperiment}
+#' \link[Seurat]{Seurat} or `AnnData` object.
 #'
-#' @param input A \linkS4class{SingleCellExperiment}, \linkS4class{Seurat} or
-#' `AnnData` object can be supplied.
+#' @param input  A \link[SingleCellExperiment]{SingleCellExperiment}
+#' \link[Seurat]{Seurat} or `AnnData` object can be supplied.
 #' @param output LIGER output: liger object
 #' @param method A string specifying the correction method
 #'
 #' @import methods
-#' @return A \linkS4class{SingleCellExperiment},
-#' \linkS4class{Seurat} or `AnnData` object.
+#' @return  A \link[SingleCellExperiment]{SingleCellExperiment}
+#' \link[Seurat]{Seurat} or `AnnData` object.
 #' @rdname ligerPost
 #'
 setGeneric("ligerPost", function(input, output, method)

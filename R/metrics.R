@@ -7,8 +7,8 @@
 #' This function performs Leiden clustering to facilitate the computation of
 #' the Adjusted Rand Index (ARI) and Normalized Mutual Information (NMI) metrics.
 #'
-#' @param input A \linkS4class{SingleCellExperiment}, \linkS4class{Seurat} or
-#' `AnnData` object can be supplied.
+#' @param input A \link[SingleCellExperiment]{SingleCellExperiment}
+#' \link[Seurat]{Seurat} or `AnnData` object can be supplied.
 #' @param batch A string specifying batch variable.
 #' @param group A string specifying the ground truth label.
 #' @param reduction A string specifying the dimensional reduction.

@@ -1,17 +1,17 @@
 #' Convert Harmony output
 #'
-#' Convert Harmony output into a \linkS4class{SingleCellExperiment},
-#' \linkS4class{Seurat} or `AnnData` object.
+#' Convert Harmony output into a \link[SingleCellExperiment]{SingleCellExperiment}
+#' \link[Seurat]{Seurat} or `AnnData` object.
 #'
-#' @param input A \linkS4class{SingleCellExperiment}, \linkS4class{Seurat} or
-#' `AnnData` object can be supplied.
-#' @param output Harmony output: a \linkS4class{SingleCellExperiment} containing
-#' the corrected dimensionality reduction space.
+#' @param input A \link[SingleCellExperiment]{SingleCellExperiment}
+#' \link[Seurat]{Seurat} or `AnnData` object can be supplied.
+#' @param output Harmony output: a \link[SingleCellExperiment]{SingleCellExperiment}
+#' containing the corrected dimensionality reduction space.
 #' @param method A string specifying the correction method.
 #'
 #' @import methods
-#' @return A \linkS4class{SingleCellExperiment},
-#' \linkS4class{Seurat} or `AnnData` object.
+#' @return A \link[SingleCellExperiment]{SingleCellExperiment}
+#' \link[Seurat]{Seurat} or `AnnData` object.
 #' @rdname harmonyPost
 #'
 setGeneric("harmonyPost", function(input, output, method)

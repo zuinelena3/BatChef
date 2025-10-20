@@ -1,16 +1,16 @@
 #' Convert the SeuratV3 output
 #'
-#' Convert the SeuratV3 output into a \linkS4class{SingleCellExperiment},
-#' \linkS4class{Seurat} or `AnnData` object
+#' Convert the SeuratV3 output into a \link[SingleCellExperiment]{SingleCellExperiment}
+#' \link[Seurat]{Seurat} or `AnnData` object.
 #'
-#' @param input A \linkS4class{SingleCellExperiment}, \linkS4class{Seurat} or
-#' `AnnData` object can be supplied.
+#' @param input A \link[SingleCellExperiment]{SingleCellExperiment}
+#' \link[Seurat]{Seurat} or `AnnData` object can be supplied.
 #' @param output Seurat V3 output: a Seurat object
 #' @param method A string specifying the correction method
 #'
 #' @import methods
-#' @return A \linkS4class{SingleCellExperiment},
-#' \linkS4class{Seurat} or `AnnData` object
+#' @return A \link[SingleCellExperiment]{SingleCellExperiment}
+#' \link[Seurat]{Seurat} or `AnnData` object.
 #' @rdname seuratv3Post
 #'
 setGeneric("seuratv3Post", function(input, output, method)

@@ -5,7 +5,7 @@
 #' a neighborhood. In other words, LISI determines the number of neighbor cells
 #' necessary before one batch is observed twice.
 #'
-#' @param input A \linkS4class{SingleCellExperiment} object.
+#' @param input A A \link[SingleCellExperiment]{SingleCellExperiment} object.
 #' @param label_true A string specifying cell types.
 #' @param reduction A string specifying the dimensional reduction.
 #' @param meta_data A data frame with one row per cell.

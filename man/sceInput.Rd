@@ -19,13 +19,13 @@ sceInput(input, batch)
 \S4method{sceInput}{AnnDataR6}(input, batch)
 }
 \arguments{
-\item{input}{A \linkS4class{SingleCellExperiment}, \linkS4class{Seurat} or
-`AnnData` object can be supplied.}
+\item{input}{A \link[SingleCellExperiment]{SingleCellExperiment}
+\link[Seurat]{Seurat} or `AnnData` object can be supplied.}
 
 \item{batch}{A string specifying the batch for each cell.}
 }
 \value{
-A \linkS4class{SingleCellExperiment} object.
+A \link[SingleCellExperiment]{SingleCellExperiment} object.
 }
 \description{
 Convert into a SingleCellExperiment object

@@ -19,8 +19,8 @@ seuratv5Input(input, batch, features = NULL, pca_name = NULL)
 \S4method{seuratv5Input}{AnnDataR6}(input, batch, features = NULL, pca_name = NULL)
 }
 \arguments{
-\item{input}{A \linkS4class{SingleCellExperiment}, \linkS4class{Seurat} or
-`AnnData` object can be supplied.}
+\item{input}{A \link[SingleCellExperiment]{SingleCellExperiment}
+\link[Seurat]{Seurat} or `AnnData` object can be supplied.}
 
 \item{batch}{A string specifying the batch variable.}
 
@@ -29,7 +29,7 @@ seuratv5Input(input, batch, features = NULL, pca_name = NULL)
 \item{pca_name}{A string specifying the PCA.}
 }
 \value{
-A \linkS4class{Seurat} object.
+A \link[Seurat]{Seurat} object.
 }
 \description{
 Convert to a SeuratV5 compatible object

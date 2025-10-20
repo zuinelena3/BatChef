@@ -1,7 +1,7 @@
 #' Convert to a Scanorama compatible object
 #'
-#' @param input A \linkS4class{SingleCellExperiment}, \linkS4class{Seurat} or
-#' `AnnData` object can be supplied.
+#' @param input A \link[SingleCellExperiment]{SingleCellExperiment}
+#' \link[Seurat]{Seurat} or `AnnData` object can be supplied.
 #' @param batch A string specifying the batch for each cell.
 #' @param assay.type A string specifying the assay.
 #'

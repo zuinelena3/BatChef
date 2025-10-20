@@ -1,16 +1,16 @@
 #' Convert the output of linear models
 #'
-#' Convert a corrected matrix output into a \linkS4class{SingleCellExperiment},
-#' \linkS4class{Seurat} or `AnnData` object.
+#' Convert a corrected matrix output into a \link[SingleCellExperiment]{SingleCellExperiment}
+#' \link[Seurat]{Seurat} or `AnnData` object.
 #'
-#' @param input A \linkS4class{SingleCellExperiment}, \linkS4class{Seurat} or
-#' `AnnData` object can be supplied.
+#' @param input A \link[SingleCellExperiment]{SingleCellExperiment}
+#' \link[Seurat]{Seurat} or `AnnData` object can be supplied.
 #' @param output A corrected matrix.
 #' @param method A string specifying the correction method.
 #'
 #' @import methods
-#' @return A \linkS4class{SingleCellExperiment},
-#' \linkS4class{Seurat} or `AnnData` object.
+#' @return A \link[SingleCellExperiment]{SingleCellExperiment}
+#' \link[Seurat]{Seurat} or `AnnData` object.
 #' @rdname linearPost
 #'
 setGeneric("linearPost", function(input, output, method)

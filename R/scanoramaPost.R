@@ -1,10 +1,10 @@
 #' Convert the Scanorama output
 #'
-#' Convert the Scanorama output into a \linkS4class{SingleCellExperiment},
-#' \linkS4class{Seurat} or `AnnData` object.
+#' Convert the Scanorama output into a \link[SingleCellExperiment]{SingleCellExperiment}
+#' \link[Seurat]{Seurat} or `AnnData` object can be supplied.
 #'
-#' @param input A \linkS4class{SingleCellExperiment}, \linkS4class{Seurat} or
-#' `AnnData` object can be supplied.
+#' @param input A \link[SingleCellExperiment]{SingleCellExperiment}
+#' \link[Seurat]{Seurat} or `AnnData` object can be supplied.
 #' @param list List version of input.
 #' @param output Scanorama output: a list which contains the transposed corrected
 #' gene expression matrix and the corrected low-dimensional space.
@@ -12,8 +12,8 @@
 #' @param method A string specifying the correction method
 #'
 #' @import methods
-#' @return A \linkS4class{SingleCellExperiment},
-#' \linkS4class{Seurat} or `AnnData` object.
+#' @return A \link[SingleCellExperiment]{SingleCellExperiment}
+#' \link[Seurat]{Seurat} or `AnnData` object can be supplied.
 #' @rdname scanoramaPost
 #'
 setGeneric("scanoramaPost", function(input, list, output, return_dimred, method)

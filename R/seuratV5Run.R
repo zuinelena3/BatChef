@@ -2,7 +2,7 @@
 #'
 #' SeuratV5 is an anchor-based method.
 #'
-#' @param input A \linkS4class{Seurat} object.
+#' @param input A \link[Seurat]{Seurat} object.
 #' @param method Integration method function.
 #' @param orig_reduction Name of dimensional reduction for correction.
 #' @param assay Name of assay for integration.
@@ -38,7 +38,7 @@
 #' @export
 #' @importFrom Seurat IntegrateLayers
 #'
-#' @return A \linkS4class{Seurat} object.
+#' @return A \link[Seurat]{Seurat} object.
 #'
 #' @examples
 #' sim <- simulate_data(n_genes = 1000, batch_cells = c(250, 200),

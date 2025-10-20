@@ -2,7 +2,7 @@
 #'
 #' SeuratV3 is an anchor-based method.
 #'
-#' @param input A list of \linkS4class{Seurat} objects.
+#' @param input A list of \link[Seurat]{Seurat} objects.
 #' @param assay A vector of assay names specifying which assay to use when
 #' constructing anchors.
 #' @param reference A vector specifying the object/s to be used as a reference
@@ -42,7 +42,7 @@
 #' @export
 #' @importFrom Seurat FindIntegrationAnchors IntegrateData
 #'
-#' @return A \linkS4class{Seurat} object that contains the corrected matrix.
+#' @return A \link[Seurat]{Seurat} object that contains the corrected matrix.
 #' @examples
 #' sim <- simulate_data(n_genes = 1000, batch_cells = c(200, 200),
 #'                      group_prob = c(0.5, 0.5), n_hvgs = 500,

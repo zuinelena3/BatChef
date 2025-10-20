@@ -34,7 +34,7 @@ seuratV3Run(
 )
 }
 \arguments{
-\item{input}{A list of \linkS4class{Seurat} objects.}
+\item{input}{A list of \link[Seurat]{Seurat} objects.}
 
 \item{assay}{A vector of assay names specifying which assay to use when
 constructing anchors.}
@@ -97,7 +97,7 @@ anchor weights.}
 pairwise integration.}
 }
 \value{
-A \linkS4class{Seurat} object that contains the corrected matrix.
+A \link[Seurat]{Seurat} object that contains the corrected matrix.
 }
 \description{
 SeuratV3 is an anchor-based method.
