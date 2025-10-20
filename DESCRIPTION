@@ -16,9 +16,9 @@ Authors@R: c(
 Description: A common interface for single-cell RNA_seq batch effects 
             correction methods in R and Python environments. 
             The package contains the performance evaluation metrics.
+Depends: R (>= 4.1.0)
 License: GPL (>= 3)
 Encoding: UTF-8
-LazyData: false
 biocViews: BatchEffect, SingleCell
 RoxygenNote: 7.3.3
 LinkingTo: Rcpp, RcppArmadillo
@@ -55,6 +55,7 @@ VignetteBuilder: knitr
 Suggests: 
     BiocStyle,
     knitr,
+    R.devices,
     rmarkdown,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
