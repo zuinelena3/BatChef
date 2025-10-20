@@ -61,7 +61,7 @@ test_that("Harmony method works", {
                          compute_pca = TRUE, pca_ncomp = 10,
                          output_format = "AnnData")
 
-    final <- batchCorrect(input = sim, batch = "Batch", params = HarmonyParams())
+    sim <- batchCorrect(input = sim, batch = "Batch", params = HarmonyParams())
     expect_true(inherits(sim, "AnnDataR6"))
   }))
 })
@@ -79,15 +79,15 @@ test_that("Scanorama method works", {
 })
 
 test_that("scMerge2 method works", {
-  suppressMessages(capture.output({
+  R.devices::suppressGraphics(suppressMessages(capture.output({
     sim <- simulate_data(n_genes = 1000, batch_cells = c(200, 200),
                          group_prob = c(0.5, 0.5), n_hvgs = 1000,
                          compute_pca = TRUE, pca_ncomp = 10,
                          output_format = "Seurat")
 
-    final <- batchCorrect(input = sim, batch = "Batch", params = ScMerge2Params())
+    sim <- batchCorrect(input = sim, batch = "Batch", params = ScMerge2Params())
     expect_s4_class(sim, "Seurat")
-  }))
+  })))
 })
 
 test_that("scVI method works", {
