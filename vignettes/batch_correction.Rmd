@@ -38,8 +38,7 @@ mathematical approaches, using R and Python languages.
 `BatChef` is an R package that provides a common interface for batch effect 
 correction methods in single-cell RNA-seq data. It allows users to compute 
 various correction methods through a generic function by specifying the desired
-approach. The package contains multiple methods implemented in both R and Python,
-each based on different mathematical approach.
+approach. The package contains multiple methods, each based on different mathematical approach.
 
 Also, it provides metrics to evaluate the performance of the correction methods, 
 such as the Wasserstein distance, Local Inverse Simpson's Index (LISI), Average 
@@ -111,19 +110,13 @@ The desired correction method can have these values:
 
 -   `HarmonyParams`
 
--   `ScanoramaParams`
-
--   `ScVIParams`
-
 -   `ScMerge2Params`
-
--   `BBKNNParams`
 
 -   `LigerParams`
 
 ## Examples 
 
-To illustrate, we correct the data using `Scanorama` and `Harmony`.
+To illustrate, we correct the data using and `Harmony`.
 
 ### Harmony
 
@@ -136,19 +129,6 @@ Also, the `Seurat` object can be used as an input data.
 
 ```{r, message=FALSE, warning=FALSE}
 so <- batchCorrect(input = so, batch = "Batch", params = HarmonyParams())
-so
-```
-
-### Scanorama
-
-```{r, message=FALSE, warning=FALSE}
-sce <- batchCorrect(input = sce, batch = "Batch", 
-                    params = ScanoramaParams(assay_type = "logcounts",
-                                             return_dimred = TRUE))
-sce
-so <- batchCorrect(input = so, batch = "Batch", 
-                   params = ScanoramaParams(assay_type = "data", 
-                                            return_dimred = TRUE))
 so
 ```
 
