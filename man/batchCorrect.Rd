@@ -8,10 +8,7 @@
 \alias{batchCorrect,SeuratV5Params-method}
 \alias{batchCorrect,FastMNNParams-method}
 \alias{batchCorrect,HarmonyParams-method}
-\alias{batchCorrect,ScanoramaParams-method}
-\alias{batchCorrect,SCVIParams-method}
 \alias{batchCorrect,ScMerge2Params-method}
-\alias{batchCorrect,BBKNNParams-method}
 \alias{batchCorrect,LigerParams-method}
 \title{batchCorrect}
 \usage{
@@ -29,13 +26,7 @@ batchCorrect(input, batch, params)
 
 \S4method{batchCorrect}{HarmonyParams}(input, batch, params)
 
-\S4method{batchCorrect}{ScanoramaParams}(input, batch, params)
-
-\S4method{batchCorrect}{SCVIParams}(input, batch, params)
-
 \S4method{batchCorrect}{ScMerge2Params}(input, batch, params)
-
-\S4method{batchCorrect}{BBKNNParams}(input, batch, params)
 
 \S4method{batchCorrect}{LigerParams}(input, batch, params)
 }
@@ -64,7 +55,5 @@ Users can pass parameters to each method via the constructors for params.
 sim <- simulate_data(n_genes = 1000, batch_cells = c(150, 50),
                      group_prob = c(0.5, 0.5), n_hvgs = 500,
                      compute_pca = TRUE, output_format = "SingleCellExperiment")
-out <- batchCorrect(input = sim, batch = "Batch",
-                    params = ScanoramaParams(assay_type = "logcounts",
-                                             return_dimred = TRUE))
+out <- batchCorrect(input = sim, batch = "Batch", params = HarmonyParams())
 }
