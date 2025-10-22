@@ -49,6 +49,7 @@ leiden_clustering <- function(input, label_true = NULL, reduction,
     }
     if (inherits(input, "SingleCellExperiment")) {
       adata <- zellkonverter::SCE2AnnData(input, X_name = "counts")
+      adata <- reticulate::r_to_py(adata, convert = TRUE)
     } else {
       adata <- input
     }
