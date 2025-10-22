@@ -64,25 +64,30 @@ seuratV3Run <- function(input, assay = NULL, reference = NULL,
                         k_weight = 100, weight_reduction = NULL, sd_weight = 1,
                         sample_tree = NULL, preserve_order = FALSE) {
 
-  anchorset <- FindIntegrationAnchors(object.list = input, assay = assay,
-                                      reference = reference,
-                                      anchor.features = anchor_features,
-                                      scale = scale,
-                                      normalization.method = normalization_method,
-                                      sct.clip.range = sct_clip_range,
-                                      reduction = reduction, l2.norm = l2_norm,
-                                      dims = dims, k.anchor = k_anchor,
-                                      k.filter = k_filter, k.score = k_score,
-                                      max.features = max_features,
-                                      nn.method = nn_method, n.trees = n_trees,
-                                      eps = eps, verbose = verbose)
-  out <- IntegrateData(anchorset = anchorset, new.assay.name = new_assay_name,
-                       normalization.method = normalization_method,
-                       features = features,
-                       features.to.integrate = features_to_integrate,
-                       dims = dims, k.weight = k_weight,
-                       weight.reduction = weight_reduction,
-                       sd.weight = sd_weight, sample.tree = sample_tree,
-                       preserve.order = preserve_order, eps = eps,
-                       verbose = verbose)
+  # NOTE: until https://github.com/satijalab/seurat/issues/9850 is fixed.
+  suppressWarningsByMsg("deprecated",
+                        anchorset <- FindIntegrationAnchors(
+                          object.list = input, assay = assay,
+                          reference = reference, anchor.features = anchor_features,
+                          scale = scale, normalization.method = normalization_method,
+                          sct.clip.range = sct_clip_range, reduction = reduction,
+                          l2.norm = l2_norm, dims = dims, k.anchor = k_anchor,
+                          k.filter = k_filter, k.score = k_score,
+                          max.features = max_features, nn.method = nn_method,
+                          n.trees = n_trees, eps = eps, verbose = verbose)
+  )
+
+  # NOTE: until https://github.com/satijalab/seurat/issues/8938 is fixed.
+  suppressWarningsByMsg(
+    "counts isn't present",
+    IntegrateData(anchorset = anchorset, new.assay.name = new_assay_name,
+                  normalization.method = normalization_method,
+                  features = features,
+                  features.to.integrate = features_to_integrate,
+                  dims = dims, k.weight = k_weight,
+                  weight.reduction = weight_reduction,
+                  sd.weight = sd_weight, sample.tree = sample_tree,
+                  preserve.order = preserve_order, eps = eps,
+                  verbose = verbose)
+  )
 }
