@@ -34,7 +34,7 @@ seuratV5Run(
 )
 }
 \arguments{
-\item{input}{A \linkS4class{Seurat} object.}
+\item{input}{A \link[Seurat]{Seurat} object.}
 
 \item{method}{Integration method function.}
 
@@ -93,7 +93,7 @@ nearest neighbor search.}
 \item{eps}{Error bound on the neighbor finding algorithm.}
 }
 \value{
-A \linkS4class{Seurat} object.
+A \link[Seurat]{Seurat} object.
 }
 \description{
 SeuratV5 is an anchor-based method.

@@ -1,18 +1,18 @@
 #' Convert fastMNN output
 #'
-#' Convert fastMNN output into a \linkS4class{SingleCellExperiment},
-#' \linkS4class{Seurat} or `AnnData` object.
+#' Convert fastMNN output into a \link[SingleCellExperiment]{SingleCellExperiment}
+#' \link[Seurat]{Seurat} or `AnnData` object
 #'
-#' @param input A \linkS4class{SingleCellExperiment}, \linkS4class{Seurat} or
-#' `AnnData` object can be supplied.
-#' @param output fastMNN output: a \linkS4class{SingleCellExperiment} containing
-#' the reconstructed expression matrix and the corrected dimensionality
+#' @param input A \link[SingleCellExperiment]{SingleCellExperiment}
+#' \link[Seurat]{Seurat} or `AnnData` object can be supplied.
+#' @param output fastMNN output: a \link[SingleCellExperiment]{SingleCellExperiment}
+#' containing the reconstructed expression matrix and the corrected dimensionality
 #' reduction space.
 #' @param method A string specifying the correction method.
 #'
 #' @import methods
-#' @return A \linkS4class{SingleCellExperiment},
-#' \linkS4class{Seurat} or `AnnData` object.
+#' @return A \link[SingleCellExperiment]{SingleCellExperiment}
+#' \link[Seurat]{Seurat} or `AnnData` object.
 #' @rdname fastMNNPost
 #'
 setGeneric("fastMNNPost", function(input, output, method)

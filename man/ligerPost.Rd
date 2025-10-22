@@ -19,18 +19,18 @@ ligerPost(input, output, method)
 \S4method{ligerPost}{AnnDataR6}(input, output, method)
 }
 \arguments{
-\item{input}{A \linkS4class{SingleCellExperiment}, \linkS4class{Seurat} or
-`AnnData` object can be supplied.}
+\item{input}{A \link[SingleCellExperiment]{SingleCellExperiment}
+\link[Seurat]{Seurat} or `AnnData` object can be supplied.}
 
 \item{output}{LIGER output: liger object}
 
 \item{method}{A string specifying the correction method}
 }
 \value{
-A \linkS4class{SingleCellExperiment},
-\linkS4class{Seurat} or `AnnData` object.
+A \link[SingleCellExperiment]{SingleCellExperiment}
+\link[Seurat]{Seurat} or `AnnData` object.
 }
 \description{
-Convert the LIGER output into a \linkS4class{SingleCellExperiment},
-\linkS4class{Seurat} or `AnnData` object.
+Convert the LIGER output into a \link[SingleCellExperiment]{SingleCellExperiment}
+\link[Seurat]{Seurat} or `AnnData` object.
 }

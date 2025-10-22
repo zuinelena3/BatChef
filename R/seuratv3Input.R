@@ -1,13 +1,13 @@
 #' Convert to a SeuratV3 compatible object
 #'
-#' @param input A \linkS4class{SingleCellExperiment}, \linkS4class{Seurat} or
-#' `AnnData` object can be supplied.
+#' @param input A \link[SingleCellExperiment]{SingleCellExperiment}
+#' \link[Seurat]{Seurat} or `AnnData` object can be supplied.
 #' @param batch A string specifying the batch variable.
 #' @param features Vector of features to use.
 #' @param pca_name A string specifying the PCA.
 #'
 #' @import methods
-#' @return A list of \linkS4class{Seurat} objects.
+#' @return A list of \link[Seurat]{Seurat} objects.
 #' @rdname seuratv3Input
 #'
 setGeneric("seuratv3Input", function(input, batch, features, pca_name = NULL)

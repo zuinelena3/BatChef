@@ -7,8 +7,8 @@
 adjusted_rand_index(input, label_true, reduction, nmi_compute, resolution)
 }
 \arguments{
-\item{input}{A \linkS4class{SingleCellExperiment}, \linkS4class{Seurat} or
-`AnnData` object can be supplied.}
+\item{input}{A \link[SingleCellExperiment]{SingleCellExperiment}
+\link[Seurat]{Seurat} or `AnnData` object can be supplied.}
 
 \item{label_true}{A string specifying the ground truth labels.}
 

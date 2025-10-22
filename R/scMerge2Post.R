@@ -1,17 +1,17 @@
 #' Convert the scMerge2 output
 #'
-#' Convert the scMerge2 output into a \linkS4class{SingleCellExperiment},
-#' \linkS4class{Seurat} or `AnnData` object
+#' Convert the scMerge2 output into a  \link[SingleCellExperiment]{SingleCellExperiment}
+#' \link[Seurat]{Seurat} or `AnnData` object.
 #'
-#' @param input A \linkS4class{SingleCellExperiment}, \linkS4class{Seurat} or
-#' `AnnData` object can be supplied.
+#' @param input A  \link[SingleCellExperiment]{SingleCellExperiment}
+#' \link[Seurat]{Seurat} or `AnnData` object can be supplied.
 #' @param output scMerge2 output: a list that contains the corrected
 #' gene expression matrix
 #' @param method A string specifying the correction method
 #'
 #' @import methods
-#' @return A \linkS4class{SingleCellExperiment},
-#' \linkS4class{Seurat} or `AnnData` object
+#' @return A  \link[SingleCellExperiment]{SingleCellExperiment}
+#' \link[Seurat]{Seurat} or `AnnData` object.
 #' @rdname scMerge2Post
 #'
 setGeneric("scMerge2Post", function(input, output, method)

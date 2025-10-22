@@ -1,11 +1,11 @@
 #' Convert into a SingleCellExperiment object for linear model based methods
 #'
-#' @param input A \linkS4class{SingleCellExperiment}, \linkS4class{Seurat} or
-#' `AnnData` object can be supplied.
+#' @param input A \link[SingleCellExperiment]{SingleCellExperiment}
+#' \link[Seurat]{Seurat} or `AnnData` object can be supplied.
 #' @param batch A string specifying the batch for each cell.
 #'
 #' @import methods
-#' @return A \linkS4class{SingleCellExperiment} object.
+#' @return A \link[SingleCellExperiment]{SingleCellExperiment} object.
 #' @rdname linearInput
 #'
 setGeneric("linearInput", function(input, batch)

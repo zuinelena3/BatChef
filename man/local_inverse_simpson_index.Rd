@@ -14,7 +14,7 @@ local_inverse_simpson_index(
 )
 }
 \arguments{
-\item{input}{A \linkS4class{SingleCellExperiment} object.}
+\item{input}{A \link[SingleCellExperiment]{SingleCellExperiment} object.}
 
 \item{label_true}{A string specifying cell types.}
 

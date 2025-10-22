@@ -14,7 +14,7 @@ average_silhouette_width(
 )
 }
 \arguments{
-\item{input}{A \linkS4class{SingleCellExperiment} object.}
+\item{input}{A \link[SingleCellExperiment]{SingleCellExperiment} object.}
 
 \item{label_true}{A string specifying the ground truth label.}
 

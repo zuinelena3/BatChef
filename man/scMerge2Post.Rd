@@ -19,8 +19,8 @@ scMerge2Post(input, output, method)
 \S4method{scMerge2Post}{AnnDataR6}(input, output, method)
 }
 \arguments{
-\item{input}{A \linkS4class{SingleCellExperiment}, \linkS4class{Seurat} or
-`AnnData` object can be supplied.}
+\item{input}{A  \link[SingleCellExperiment]{SingleCellExperiment}
+\link[Seurat]{Seurat} or `AnnData` object can be supplied.}
 
 \item{output}{scMerge2 output: a list that contains the corrected
 gene expression matrix}
@@ -28,10 +28,10 @@ gene expression matrix}
 \item{method}{A string specifying the correction method}
 }
 \value{
-A \linkS4class{SingleCellExperiment},
-\linkS4class{Seurat} or `AnnData` object
+A  \link[SingleCellExperiment]{SingleCellExperiment}
+\link[Seurat]{Seurat} or `AnnData` object.
 }
 \description{
-Convert the scMerge2 output into a \linkS4class{SingleCellExperiment},
-\linkS4class{Seurat} or `AnnData` object
+Convert the scMerge2 output into a  \link[SingleCellExperiment]{SingleCellExperiment}
+\link[Seurat]{Seurat} or `AnnData` object.
 }

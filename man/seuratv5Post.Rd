@@ -19,8 +19,8 @@ seuratv5Post(input, output, method, name)
 \S4method{seuratv5Post}{AnnDataR6}(input, output, method, name)
 }
 \arguments{
-\item{input}{A \linkS4class{SingleCellExperiment}, \linkS4class{Seurat} or
-`AnnData` object can be supplied.}
+\item{input}{A \link[SingleCellExperiment]{SingleCellExperiment}
+\link[Seurat]{Seurat} or `AnnData` object can be supplied.}
 
 \item{output}{Seurat V5 output: a Seurat object}
 
@@ -29,10 +29,10 @@ seuratv5Post(input, output, method, name)
 \item{name}{A string specifying the corrected reduce space name.}
 }
 \value{
-A \linkS4class{SingleCellExperiment},
-\linkS4class{Seurat} or `AnnData` object
+\link[SingleCellExperiment]{SingleCellExperiment}
+\link[Seurat]{Seurat} or `AnnData` object.
 }
 \description{
-Convert the SeuratV5 output into a \linkS4class{SingleCellExperiment},
-\linkS4class{Seurat} or `AnnData` object
+Convert the SeuratV5 output into a \link[SingleCellExperiment]{SingleCellExperiment}
+\link[Seurat]{Seurat} or `AnnData` object.
 }

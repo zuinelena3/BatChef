@@ -23,7 +23,7 @@ ligerRun(
 )
 }
 \arguments{
-\item{input}{A \linkS4class{liger} object.}
+\item{input}{A \link[rliger]{liger} object.}
 
 \item{method}{A string specifyng the batch correction method. Choose from
 \code{"iNMF"}, \code{"onlineINMF"}, \code{"UINMF"}. Default \code{"iNMF"}.}
@@ -62,7 +62,7 @@ in metadata of a liger object or a Seurat object.}
 \item{...}{Named arguments to pass to individual methods upon dispatch.}
 }
 \value{
-A \linkS4class{liger} object, which contains the quantile align
+A \link[rliger]{liger} object, which contains the quantile align
 factor loadings.
 }
 \description{

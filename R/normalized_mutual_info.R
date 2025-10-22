@@ -7,8 +7,8 @@
 #' After computing clustering using Leiden algorithm, the NMI metric is computed
 #' using the `normalized_mutual_info_score` function from the Python sklearn package.
 #'
-#' @param input A \linkS4class{SingleCellExperiment}, \linkS4class{Seurat} or
-#' `AnnData` object can be supplied.
+#' @param input A \link[SingleCellExperiment]{SingleCellExperiment}
+#' \link[Seurat]{Seurat} or `AnnData` object can be supplied.
 #' @param label_true A string specifying the ground truth labels.
 #' @param reduction A string specifying the dimensional reduction
 #' on which the clustering analysis will be performed.

@@ -3,7 +3,7 @@
 #' Correct for batch effects in single-cell expression data using a fast
 #' version of the mutual nearest neighbors (MNN) method.
 #'
-#' @param input A \linkS4class{SingleCellExperiment} object.
+#' @param input \link[SingleCellExperiment]{SingleCellExperiment} object.
 #' @param batch A string specifying the batch variable.
 #' @param ... Named arguments to pass to individual methods upon dispatch
 #'
@@ -11,8 +11,8 @@
 #' @importFrom batchelor fastMNN
 #' @importFrom SingleCellExperiment colData
 #'
-#' @returns A \linkS4class{SingleCellExperiment} object is returned where
-#' each row is a gene and each column is a cell. This contains a corrected
+#' @returns \link[SingleCellExperiment]{SingleCellExperiment} object is returned
+#' where each row is a gene and each column is a cell. This contains a corrected
 #' low-dimensional coordinates and a reconstructed matrix in the assays slot.
 #' @examples
 #' sim <- simulate_data(n_genes = 1000, batch_cells = c(150, 50),

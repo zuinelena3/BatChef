@@ -10,8 +10,8 @@
 #' the optimal clustering can be useful to compute the performance evaluation of
 #' batch correction methods.
 #'
-#' @param input A \linkS4class{SingleCellExperiment}, \linkS4class{Seurat} or
-#' `AnnData` object can be supplied.
+#' @param input A \link[SingleCellExperiment]{SingleCellExperiment}
+#' \link[Seurat]{Seurat} or `AnnData` object.
 #' @param label_true A string specifying the ground truth label.
 #' @param reduction A string specifying the dimensional reduction
 #' on which the clustering analysis will be performed.

@@ -1,13 +1,13 @@
 #' Convert to a SeuratV5 compatible object
 #'
-#' @param input A \linkS4class{SingleCellExperiment}, \linkS4class{Seurat} or
-#' `AnnData` object can be supplied.
+#' @param input A \link[SingleCellExperiment]{SingleCellExperiment}
+#' \link[Seurat]{Seurat} or `AnnData` object can be supplied.
 #' @param batch A string specifying the batch variable.
 #' @param features Vector of features to use.
 #' @param pca_name A string specifying the PCA.
 #'
 #' @import methods
-#' @return A \linkS4class{Seurat} object.
+#' @return A \link[Seurat]{Seurat} object.
 #' @rdname seuratv5Input
 #'
 setGeneric("seuratv5Input", function(input, batch, features = NULL, pca_name = NULL)
