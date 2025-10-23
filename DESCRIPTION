@@ -48,7 +48,6 @@ Imports:
     SummarizedExperiment,
     sva,
     transport,
-    withr,
     zellkonverter
 BugReports: https://github.com/zuinelena3/BatChef/issues
 URL: https://github.com/zuinelena3/BatChef
