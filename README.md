@@ -4,7 +4,7 @@
 
 `BatChef` is an R package that provides a common interface for batch effect correction methods in single-cell RNA-seq data.
 
-It allows users to compute various correction methods through a generic function by specifying the desired approach. The package contains multiple methods implemented in both R and Python, each based on different mathematical approaches.
+It allows users to compute various correction methods through a generic function by specifying the desired approach. The package contains multiple methods, each based on different mathematical approaches.
 
 Also, it provides metrics to evaluate the performance of the correction methods, such as the Wasserstein distance, Local Inverse Simpson's Index (LISI), Average Silhouette Width (ASW), and Adjusted Rand Index (ARI).
 
