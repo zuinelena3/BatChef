@@ -1,3 +1,7 @@
+## Changes in version 0.99.5
+
+-   Delete Python correction methods to make lighter the package.
+
 ## Changes in version 0.99.4
 
 -   Migration to basilisk 1.21 and update Python to version 3.12.3.
