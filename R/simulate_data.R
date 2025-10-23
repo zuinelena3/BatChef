@@ -39,7 +39,7 @@
 #' @param compute_pca Boolean value. If TRUE, Principal Component Analysis (PCA)
 #' will be computed. Default is FALSE.
 #' @param pca_ncomp Number of principal component.
-#' @param output_formatA \link[SingleCellExperiment]{SingleCellExperiment}
+#' @param output_format A \link[SingleCellExperiment]{SingleCellExperiment}
 #' \link[Seurat]{Seurat} or `AnnData` object.
 #' @param seed Random seed.
 #'
