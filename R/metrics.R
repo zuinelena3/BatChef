@@ -4,33 +4,28 @@
 #' Index, Average Silhouette Width, Adjusted Rand Index, and
 #' Normalized Mutual Information.
 #'
-#' This function performs Leiden clustering to facilitate the computation of
-#' the Adjusted Rand Index (ARI) and Normalized Mutual Information (NMI) metrics.
+#' This function performs Leiden clustering before computing the evaluation
+#' metrics.
 #'
 #' @param input A \link[SingleCellExperiment]{SingleCellExperiment}
 #' \link[Seurat]{Seurat} or `AnnData` object can be supplied.
-#' @param batch A string specifying batch variable.
-#' @param group A string specifying the ground truth label.
+#' @param batch A string specifying the batch variable.
+#' @param group A string specifying the ground truth labels.
 #' @param reduction A string specifying the dimensional reduction.
 #' on which the clustering analysis will be performed.
 #' @param nmi_compute A Boolean value indicating NMI metric calculation to
 #' identify the optimal clustering is to be performed (Default: TRUE).
 #' @param resolution A numeric value specifying the resolution parameter.
+#' @param k An integer scalar specifying the number of nearest neighbors.
 #' @param rep Number of times the Wasserstein distance is calculated.
 #' @param mc_cores The number of cores to use.
-#' @param average_method How to compute the normalizer in the denominator.
+#' @param variant How to compute the normalizer in the denominator.
 #' @param metric The metric to use when calculating distance between instances.
-#' @param sample_size The size of the sample to use when computing the
-#' Silhouette Coefficient on a random subset of the data.
-#' @param random_state Determines random number generation for selecting
-#' a subset of samples.
 #' @param meta_data A data frame with one row per cell.
 #' @param perplexity The effective number of each cell's neighbors.
 #' @param nn_eps Error bound for nearest neighbor search with `RANN:nn2()`.
 #'
 #' @export
-#' @importFrom basilisk basiliskStart basiliskStop basiliskRun
-#' @importFrom reticulate import
 #'
 #' @return A data.frame object
 #' @examples
@@ -42,45 +37,23 @@
 #'
 metrics <- function(input, batch, group, reduction,
                     rep = 10, mc_cores = 1, nmi_compute = TRUE, resolution = NULL,
-                    average_method = "arithmetic", metric = "euclidean",
-                    sample_size = NULL, random_state = NULL,
+                    k = 10, metric = "euclidean", variant = "sum",
                     meta_data = colData(input), perplexity = 30, nn_eps = 0) {
 
-  adata <- leiden_clustering(input = input, label_true = group,
+  gr <- colData(input)[, group]
+  clust <- leiden_clustering(input = input, label_true = group,
                              reduction = reduction, nmi_compute = nmi_compute,
-                             resolution = resolution)
+                             resolution = resolution, k = k, store = FALSE)
 
-  proc <- basiliskStart(py_env)
-  on.exit(basiliskStop(proc))
+  ari <- adjustedRandIndex(x = clust, y = gr)
 
-  out <- basiliskRun(proc = proc, fun = function(input, label_true, reduction,
-                                                 average_method) {
-    scanpy <- reticulate::import("scanpy")
-    sklearn <- reticulate::import("sklearn")
-    np <- reticulate::import("numpy")
-
-    nmi <- sklearn$metrics$normalized_mutual_info_score(
-      labels_true = np$array(input$obs[, label_true]),
-      labels_pred = np$array(input$obs$cluster),
-      average_method = average_method)
-
-    ari <- sklearn$metrics$adjusted_rand_score(
-      labels_true = np$array(input$obs[, label_true]),
-      labels_pred = np$array(input$obs$cluster))
-
-    return(data.frame(nmi, ari))
-  }, input = adata, label_true = group, reduction = reduction,
-  average_method = average_method)
+  nmi <- NMI(c1 = as.vector(gr), c2 = as.vector(clust), variant = variant)
 
   casw <- average_silhouette_width(input = input, label_true = group,
-                                   reduction = reduction, metric = metric,
-                                   sample_size = sample_size,
-                                   random_state = random_state)
+                                   reduction = reduction, metric = metric)
 
   iasw <- average_silhouette_width(input = input, label_true = batch,
-                                   reduction = reduction, metric = metric,
-                                   sample_size = sample_size,
-                                   random_state = random_state)
+                                   reduction = reduction, metric = metric)
 
   clisi <- local_inverse_simpson_index(input = input, label_true = group,
                                        reduction = reduction,
@@ -96,5 +69,5 @@ metrics <- function(input, batch, group, reduction,
   wass <- mean(wass$wasserstein)
 
   return(data.frame(method = reduction, wasserstein = wass, iasw, ilisi,
-                    ari = out$ari, nmi = out$nmi, casw, clisi))
+                    ari = ari, nmi = nmi, casw, clisi))
 }

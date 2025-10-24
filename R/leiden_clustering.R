@@ -1,7 +1,6 @@
 #' Leiden clustering
 #'
-#' Leiden clustering algorithm is implemented and executed using
-#' the Scanpy Python package.
+#' Leiden clustering algorithm.
 #'
 #' The clustering algorithm can be executed by specifying either a single
 #' resolution parameter or range of resolution parameters (from 0.1 to 2).
@@ -18,14 +17,19 @@
 #' @param nmi_compute A Boolean value indicating NMI metric calculation to
 #' identify the optimal clustering is to be performed (Default: TRUE).
 #' @param resolution A numeric value specifying the resolution parameter.
+#' @param k An integer scalar specifying the number of nearest neighbors.
+#' @param store A Boolean value indicating whether cluster labels are stored
+#' within the input object (Default: FALSE).
 #'
 #' @export
-#' @import methods
-#' @importFrom basilisk basiliskStart basiliskStop basiliskRun
-#' @importFrom reticulate import
+#' @importFrom scran buildSNNGraph
+#' @importFrom igraph cluster_leiden membership
+#' @importFrom aricode NMI
 #'
-#' @return A `AnnData` object that contains the clustering labels.
+#' @return A A \link[SingleCellExperiment]{SingleCellExperiment}
+#' \link[Seurat]{Seurat} or `AnnData` object that contains the cluster labels.
 #' @examples
+#'
 #' sim <- simulate_data(n_genes = 1000, batch_cells = c(150, 50),
 #'                      group_prob = c(0.5, 0.5), n_hvgs = 500,
 #'                      compute_pca = TRUE, output_format = "SingleCellExperiment")
@@ -33,61 +37,46 @@
 #'                            nmi_compute = FALSE, resolution = 1)
 #'
 leiden_clustering <- function(input, label_true = NULL, reduction,
-                              nmi_compute = TRUE, resolution = NULL) {
-  proc <- basiliskStart(py_env)
-  on.exit(basiliskStop(proc))
+                       nmi_compute = TRUE, resolution = NULL, k = 10,
+                       store = FALSE) {
+  sce <- clustInput(input = input, reduction = reduction)
 
-  out <- basiliskRun(proc = proc, fun = function(input, label_true,
-                                                 reduction, nmi_compute,
-                                                 resolution) {
-    scanpy <- reticulate::import("scanpy")
-    sklearn <- reticulate::import("sklearn")
-    np <- reticulate::import("numpy")
+  neighbors <- buildSNNGraph(x = sce, use.dimred = reduction, k = k)
 
-    if (inherits(input, "Seurat")) {
-      input <- Seurat::as.SingleCellExperiment(input)
-    }
-    if (inherits(input, "SingleCellExperiment")) {
-      adata <- zellkonverter::SCE2AnnData(input, X_name = "counts")
-      adata <- reticulate::r_to_py(adata, convert = TRUE)
-    }
-    else {
-      adata <- input
-    }
+  if (nmi_compute == FALSE) {
+    stopifnot("Specify the resolution parameter" = !is.null(resolution))
 
-    scanpy$pp$neighbors(adata, use_rep = reduction)
+    clust <- cluster_leiden(graph = neighbors, resolution = resolution)
+    clust <- membership(clust)
+  }
 
-    if (nmi_compute == FALSE) {
-      stopifnot("Specify the resolution parameter" = !is.null(resolution))
+  else {
+    stopifnot("Specify the true label" = !is.null(label_true))
 
-      scanpy$tl$leiden(adata, resolution = resolution, key_added = "cluster",
-                       flavor = "leidenalg")
-      return(adata)
-    }
+    res <- seq(0.1, 2, by = 0.1)
+    max <- 0
 
-    else {
-      stopifnot("Specify the true label" = !is.null(label_true))
+    for (i in seq_along(res)) {
+      clust <- cluster_leiden(graph = neighbors, resolution = res[i])
 
-      res <- seq(0.1, 2, by = 0.1)
-      max <- 0
+      nmi <- NMI(c1 = as.vector(colData(sce)[, label_true]),
+                 c2 = as.vector(membership(clust)),
+                 variant = "sum")
 
-      for (i in seq_along(res)) {
-        scanpy$tl$leiden(adata, resolution = res[i], key_added = "cluster",
-                         flavor = "leidenalg")
-
-        nmi <- sklearn$metrics$normalized_mutual_info_score(
-          labels_true = np$array(adata$obs[, label_true]),
-          labels_pred = np$array(adata$obs$cluster))
-
-        if (nmi > max) {
-          max <- nmi
-          names(max) <- res[i]
-        }
+      if (nmi > max) {
+        max <- nmi
+        names(max) <- res[i]
       }
-      scanpy$tl$leiden(adata, resolution = as.numeric(names(max)),
-                       key_added = "cluster", flavor = "leidenalg")
-      return(adata)
     }
-  }, input = input, label_true = label_true, reduction = reduction,
-  nmi_compute = nmi_compute, resolution = resolution)
+    clust <- cluster_leiden(graph = neighbors, resolution = max)
+    clust <- membership(clust)
+  }
+
+  if (store == TRUE) {
+    ifelse(inherits(input, "AnnDataR6"),
+           input$obs$cluster <- clust, input$cluster <- clust)
+    return(input)
+  }
+
+  else return(clust)
 }

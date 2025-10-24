@@ -24,10 +24,13 @@ RoxygenNote: 7.3.3
 LinkingTo: Rcpp, RcppArmadillo
 Imports: 
     anndata,
-    basilisk,
+    aricode,
     batchelor,
+    cluster,
     harmony,
+    igraph,
     limma,
+    mclust,
     methods,
     parallel,
     purrr,
@@ -38,6 +41,7 @@ Imports:
     S4Vectors,
     scCustomize,
     scMerge,
+    scran,
     scrapper,
     Seurat,
     SeuratObject,
