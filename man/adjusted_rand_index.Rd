@@ -4,13 +4,20 @@
 \alias{adjusted_rand_index}
 \title{Adjusted Rand Index (ARI)}
 \usage{
-adjusted_rand_index(input, label_true, reduction, nmi_compute, resolution)
+adjusted_rand_index(
+  input,
+  label_true,
+  reduction,
+  nmi_compute = FALSE,
+  resolution,
+  k = 10
+)
 }
 \arguments{
 \item{input}{A \link[SingleCellExperiment]{SingleCellExperiment}
 \link[Seurat]{Seurat} or `AnnData` object can be supplied.}
 
-\item{label_true}{A string specifying the ground truth labels.}
+\item{label_true}{A string specifying the ground truth label.}
 
 \item{reduction}{A string specifying the dimensional reduction
 on which the clustering analysis will be performed.}
@@ -19,6 +26,8 @@ on which the clustering analysis will be performed.}
 identify the optimal clustering is to be performed.}
 
 \item{resolution}{A numeric value specifying the resolution parameter.}
+
+\item{k}{An integer scalar specifying the number of nearest neighbors.}
 }
 \value{
 A numeric value
@@ -28,8 +37,7 @@ The Adjusted Rand Index (ARI) is a metric used to measure the similarity
 between the clustering and ground truth labels.
 }
 \details{
-After computing Leiden clustering algorithm, the ARI metric is computed
-using the `adjusted_rand_score` function from the Python sklearn package.
+After computing Leiden clustering algorithm, the ARI metric is computed.
 }
 \examples{
 sim <- simulate_data(n_genes = 500, batch_cells = c(150, 50),

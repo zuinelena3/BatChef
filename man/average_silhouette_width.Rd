@@ -4,14 +4,7 @@
 \alias{average_silhouette_width}
 \title{Average Silhouette Width (ASW)}
 \usage{
-average_silhouette_width(
-  input,
-  label_true,
-  reduction,
-  metric = "euclidean",
-  sample_size = NULL,
-  random_state = NULL
-)
+average_silhouette_width(input, label_true, reduction, metric = "euclidean")
 }
 \arguments{
 \item{input}{A \link[SingleCellExperiment]{SingleCellExperiment} object.}
@@ -21,12 +14,6 @@ average_silhouette_width(
 \item{reduction}{A string specifying the dimensional reduction.}
 
 \item{metric}{The metric to use when calculating distance between instances.}
-
-\item{sample_size}{The size of the sample to use when computing
-the Silhouette Coefficient on a random subset of the data.}
-
-\item{random_state}{Determines random number generation for selecting
-a subset of samples.}
 }
 \value{
 A numeric value
@@ -36,10 +23,6 @@ The average silhouette width for each cell is defined as the difference
 between the average of  within-cluster distances to all cells and the average
 between-cluster distances of that cell to the closest cluster divided
 by their maximum.
-}
-\details{
-The ASW metric is computed using the `silhouette_score` function from the
-Python sklearn package.
 }
 \examples{
 sim <- simulate_data(n_genes = 1000, batch_cells = c(150, 50),

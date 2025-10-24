@@ -5,22 +5,15 @@
 #' between-cluster distances of that cell to the closest cluster divided
 #' by their maximum.
 #'
-#' The ASW metric is computed using the `silhouette_score` function from the
-#' Python sklearn package.
-#'
 #' @param input A \link[SingleCellExperiment]{SingleCellExperiment} object.
 #' @param label_true A string specifying the ground truth label.
 #' @param reduction A string specifying the dimensional reduction.
 #' @param metric The metric to use when calculating distance between instances.
-#' @param sample_size The size of the sample to use when computing
-#' the Silhouette Coefficient on a random subset of the data.
-#' @param random_state Determines random number generation for selecting
-#' a subset of samples.
 #'
 #' @export
-#' @importFrom reticulate import
-#' @importFrom basilisk basiliskStart basiliskStop basiliskRun
 #' @importFrom SingleCellExperiment reducedDim colData
+#' @importFrom cluster silhouette
+#' @importFrom stats dist
 #'
 #' @return A numeric value
 #' @examples
@@ -31,26 +24,15 @@
 #'                                 reduction = "PCA")
 #'
 average_silhouette_width <- function(input, label_true, reduction,
-                                     metric = "euclidean", sample_size = NULL,
-                                     random_state = NULL) {
+                                     metric = "euclidean") {
+  red <- reducedDim(input, reduction)
+  dist_matrix <- dist(red, method = metric)
 
-  proc <- basiliskStart(py_env)
-  on.exit(basiliskStop(proc))
+  group <- as.factor(colData(input)[, label_true])
+  levels(group) <- 1:length(levels(group))
 
-  out <- basiliskRun(proc = proc, fun = function(input, label_true, reduction,
-                                                 metric, sample_size,
-                                                 random_state) {
-    scanpy <- reticulate::import("scanpy")
-    sklearn <- reticulate::import("sklearn")
+  group <- as.numeric(group)
 
-    red <- SingleCellExperiment::reducedDim(input, reduction)
-    label <- SingleCellExperiment::colData(input)[, label_true]
-
-    asw <- sklearn$metrics$silhouette_score(X = red, labels = label,
-                                            metric = metric,
-                                            sample_size = sample_size,
-                                            random_state = random_state)
-
-  }, input = input, label_true = label_true, reduction = reduction,
-  metric = metric, sample_size = sample_size, random_state = random_state)
+  sil <- silhouette(x = group, dist = dist_matrix)
+  asw <- mean(sil[, "sil_width"])
 }
