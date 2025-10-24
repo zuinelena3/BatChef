@@ -1,3 +1,7 @@
+## Changes in version 0.99.7
+
+-   Delete Python environment, created with basilisk package.
+
 ## Changes in version 0.99.5
 
 -   Delete Python correction methods to make lighter the package.
