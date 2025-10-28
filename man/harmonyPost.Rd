@@ -19,19 +19,19 @@ harmonyPost(input, output, method)
 \S4method{harmonyPost}{AnnDataR6}(input, output, method)
 }
 \arguments{
-\item{input}{A \linkS4class{SingleCellExperiment}, \linkS4class{Seurat} or
-`AnnData` object can be supplied.}
+\item{input}{A \link[SingleCellExperiment]{SingleCellExperiment}
+\link[Seurat]{Seurat} or `AnnData` object can be supplied.}
 
-\item{output}{Harmony output: a \linkS4class{SingleCellExperiment} containing
-the corrected dimensionality reduction space.}
+\item{output}{Harmony output: a \link[SingleCellExperiment]{SingleCellExperiment}
+containing the corrected dimensionality reduction space.}
 
 \item{method}{A string specifying the correction method.}
 }
 \value{
-A \linkS4class{SingleCellExperiment},
-\linkS4class{Seurat} or `AnnData` object.
+A \link[SingleCellExperiment]{SingleCellExperiment}
+\link[Seurat]{Seurat} or `AnnData` object.
 }
 \description{
-Convert Harmony output into a \linkS4class{SingleCellExperiment},
-\linkS4class{Seurat} or `AnnData` object.
+Convert Harmony output into a \link[SingleCellExperiment]{SingleCellExperiment}
+\link[Seurat]{Seurat} or `AnnData` object.
 }

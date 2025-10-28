@@ -111,14 +111,14 @@ will be computed. Default is FALSE.}
 
 \item{pca_ncomp}{Number of principal component.}
 
-\item{output_format}{A \linkS4class{SingleCellExperiment},
-\linkS4class{Seurat}, or `AnnData` object.}
+\item{output_format}{A \link[SingleCellExperiment]{SingleCellExperiment}
+\link[Seurat]{Seurat} or `AnnData` object.}
 
 \item{seed}{Random seed.}
 }
 \value{
-A \linkS4class{SingleCellExperiment},
-\linkS4class{Seurat}, or `AnnData` object.
+A \link[SingleCellExperiment]{SingleCellExperiment}
+\link[Seurat]{Seurat} or `AnnData` object.
 }
 \description{
 The function allows to simulated single-cell RNA-seq data using Splatter

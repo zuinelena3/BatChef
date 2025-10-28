@@ -1,13 +1,13 @@
 #' Convert to a SeuratV5 compatible object
 #'
-#' @param input A \linkS4class{SingleCellExperiment}, \linkS4class{Seurat} or
-#' `AnnData` object can be supplied.
+#' @param input A \link[SingleCellExperiment]{SingleCellExperiment}
+#' \link[Seurat]{Seurat} or `AnnData` object can be supplied.
 #' @param batch A string specifying the batch variable.
 #' @param features Vector of features to use.
 #' @param pca_name A string specifying the PCA.
 #'
 #' @import methods
-#' @return A \linkS4class{Seurat} object.
+#' @return A \link[Seurat]{Seurat} object.
 #' @rdname seuratv5Input
 #'
 setGeneric("seuratv5Input", function(input, batch, features = NULL, pca_name = NULL)
@@ -59,10 +59,10 @@ setMethod("seuratv5Input", "SingleCellExperiment", function(input, batch, featur
                                                  assay = DefaultAssay(so))
 
   so <-  Convert_Assay(seurat_object = so, assay = DefaultAssay(so),
-                            convert_to = "V5")
+                       convert_to = "V5")
   VariableFeatures(so) <- features
   so[[DefaultAssay(so)]] <- split(x = so[[DefaultAssay(so)]],
-                                        f = so[[batch]][, 1])
+                                  f = so[[batch]][, 1])
   so <- ScaleData(so, verbose = FALSE)
 })
 

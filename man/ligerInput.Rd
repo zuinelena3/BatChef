@@ -19,8 +19,8 @@ ligerInput(input, batch, features, ...)
 \S4method{ligerInput}{AnnDataR6}(input, batch, features, ...)
 }
 \arguments{
-\item{input}{A \linkS4class{SingleCellExperiment}, \linkS4class{Seurat} or
-`AnnData` object can be supplied.}
+\item{input}{A \link[SingleCellExperiment]{SingleCellExperiment}
+\link[Seurat]{Seurat} or `AnnData` object can be supplied.}
 
 \item{batch}{A string specifying the batch variable.}
 

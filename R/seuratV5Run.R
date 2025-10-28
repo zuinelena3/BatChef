@@ -2,7 +2,7 @@
 #'
 #' SeuratV5 is an anchor-based method.
 #'
-#' @param input A \linkS4class{Seurat} object.
+#' @param input A \link[Seurat]{Seurat} object.
 #' @param method Integration method function.
 #' @param orig_reduction Name of dimensional reduction for correction.
 #' @param assay Name of assay for integration.
@@ -38,7 +38,7 @@
 #' @export
 #' @importFrom Seurat IntegrateLayers
 #'
-#' @return A \linkS4class{Seurat} object.
+#' @return A \link[Seurat]{Seurat} object.
 #'
 #' @examples
 #' sim <- simulate_data(n_genes = 1000, batch_cells = c(250, 200),
@@ -63,17 +63,20 @@ seuratV5Run <- function(input, method = "CCAIntegration", orig_reduction = "pca"
                         k_score = 30, max_features = 200, nn_method = "annoy",
                         n_trees = 50, eps = 0) {
 
-  IntegrateLayers(object = input, method = method, orig.reduction = orig_reduction,
-                  assay = assay, features = features, layers = layers,
-                  scale.layer = scale_layer,
-                  new.reduction = new_reduction, reference = reference,
-                  normalization.method = normalization_method,
-                  dims = dims, k.filter = k_filter,
-                  dims.to.integrate = dims_to_integrate,
-                  k.weight = k_weight, weight.reduction = weight_reduction,
-                  sd.weight = sd_weight, sample.tree = sample_tree,
-                  preserve.order = preserve_order, verbose = verbose,
-                  l2.norm = l2_norm, k.anchor = k_anchor,
-                  k.score = k_score, max.features = max_features,
-                  nn.method = nn_method, n.trees = n_trees, eps = eps)
+  suppressWarningsByMsg(
+    c("deprecate", "without the associated assay"),
+    IntegrateLayers(object = input, method = method, orig.reduction = orig_reduction,
+                    assay = assay, features = features, layers = layers,
+                    scale.layer = scale_layer,
+                    new.reduction = new_reduction, reference = reference,
+                    normalization.method = normalization_method,
+                    dims = dims, k.filter = k_filter,
+                    dims.to.integrate = dims_to_integrate,
+                    k.weight = k_weight, weight.reduction = weight_reduction,
+                    sd.weight = sd_weight, sample.tree = sample_tree,
+                    preserve.order = preserve_order, verbose = verbose,
+                    l2.norm = l2_norm, k.anchor = k_anchor,
+                    k.score = k_score, max.features = max_features,
+                    nn.method = nn_method, n.trees = n_trees, eps = eps)
+  )
 }

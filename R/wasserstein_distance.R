@@ -3,7 +3,7 @@
 #' The Wasserstein distance measures the minimal transport needed to shift one
 #' distribution to match another.
 #'
-#' @param input A \linkS4class{SingleCellExperiment} object.
+#' @param input A \link[SingleCellExperiment]{SingleCellExperiment} object.
 #' @param batch A string specifying batch variable.
 #' @param reduction A string specifying the dimensional reduction.
 #' @param rep Number of times the Wasserstein distance is calculated.

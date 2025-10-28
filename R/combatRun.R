@@ -3,7 +3,7 @@
 #' ComBat allows users to adjust for batch effects in datasets using an
 #' empirical Bayes framework.
 #'
-#' @param input A \linkS4class{SingleCellExperiment} object.
+#' @param input A \link[SingleCellExperiment]{SingleCellExperiment} object.
 #' @param batch A string specifying the batch for each cell.
 #' @param assay_type A string specifying the assay.
 #' @param ... Named arguments to pass to individual methods upon dispatch.

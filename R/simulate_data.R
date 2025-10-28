@@ -39,8 +39,8 @@
 #' @param compute_pca Boolean value. If TRUE, Principal Component Analysis (PCA)
 #' will be computed. Default is FALSE.
 #' @param pca_ncomp Number of principal component.
-#' @param output_format A \linkS4class{SingleCellExperiment},
-#' \linkS4class{Seurat}, or `AnnData` object.
+#' @param output_format A \link[SingleCellExperiment]{SingleCellExperiment}
+#' \link[Seurat]{Seurat} or `AnnData` object.
 #' @param seed Random seed.
 #'
 #' @export
@@ -54,8 +54,9 @@
 #' @importFrom SparseArray colSums
 #' @importFrom S4Vectors SimpleList
 #'
-#' @return A \linkS4class{SingleCellExperiment},
-#' \linkS4class{Seurat}, or `AnnData` object.
+#' @return A \link[SingleCellExperiment]{SingleCellExperiment}
+#' \link[Seurat]{Seurat} or `AnnData` object.
+#'
 #' @examples
 #' sim <- simulate_data(n_genes = 1000, batch_cells = c(150, 50),
 #'                      group_prob = c(0.5, 0.5), n_hvgs = 1000,

@@ -7,7 +7,7 @@
 scMerge2Run(input, batch, assay_type = "logcounts", ...)
 }
 \arguments{
-\item{input}{A \linkS4class{SingleCellExperiment} object.}
+\item{input}{A \link[SingleCellExperiment]{SingleCellExperiment} object.}
 
 \item{batch}{A string specifying the batch variable.}
 

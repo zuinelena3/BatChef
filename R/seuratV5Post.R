@@ -1,17 +1,17 @@
 #' Convert the SeuratV5 output
 #'
-#' Convert the SeuratV5 output into a \linkS4class{SingleCellExperiment},
-#' \linkS4class{Seurat} or `AnnData` object
+#' Convert the SeuratV5 output into a \link[SingleCellExperiment]{SingleCellExperiment}
+#' \link[Seurat]{Seurat} or `AnnData` object.
 #'
-#' @param input A \linkS4class{SingleCellExperiment}, \linkS4class{Seurat} or
-#' `AnnData` object can be supplied.
+#' @param input A \link[SingleCellExperiment]{SingleCellExperiment}
+#' \link[Seurat]{Seurat} or `AnnData` object can be supplied.
 #' @param output Seurat V5 output: a Seurat object
 #' @param method A string specifying the correction method.
 #' @param name A string specifying the corrected reduce space name.
 #'
 #' @import methods
-#' @return A \linkS4class{SingleCellExperiment},
-#' \linkS4class{Seurat} or `AnnData` object
+#' @return \link[SingleCellExperiment]{SingleCellExperiment}
+#' \link[Seurat]{Seurat} or `AnnData` object.
 #' @rdname seuratv5Post
 #'
 setGeneric("seuratv5Post", function(input, output, method, name)

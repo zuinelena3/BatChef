@@ -2,15 +2,15 @@
 #'
 #' Harmony is a mixture-model based method.
 #'
-#' @param input A \linkS4class{SingleCellExperiment} object.
+#' @param input A \link[SingleCellExperiment]{SingleCellExperiment} object.
 #' @param batch A string specifying the batch variable.
 #' @param ... Named arguments to pass to individual methods upon dispatch
 #'
 #' @export
 #' @importFrom harmony RunHarmony
 #'
-#' @return A \linkS4class{SingleCellExperiment} object which contains a
-#' corrected low-dimensional space.
+#' @return A \link[SingleCellExperiment]{SingleCellExperiment} object which
+#' contains a corrected low-dimensional space.
 #'
 #' @examples
 #' sim <- simulate_data(n_genes = 1000, batch_cells = c(150, 50),

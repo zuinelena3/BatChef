@@ -2,8 +2,8 @@
 #'
 #' scVI is a deep learning-based method.
 #'
-#' @param input A \linkS4class{SingleCellExperiment}, \linkS4class{Seurat} or
-#' `AnnData` object can be supplied.
+#' @param input A \link[SingleCellExperiment]{SingleCellExperiment}
+#' \link[Seurat]{Seurat} or `AnnData` object can be supplied.
 #' @param batch A string specifying the batch for each cell.
 #' @param assay_type A string specifying the assay.
 #' @param layer A string specifying the key in adata.layers for raw count data.
@@ -172,7 +172,8 @@ scVIRun <- function(input, batch, assay_type = "counts", layer = NULL, labels_ke
                   load_sparse_tensor = load_sparse_tensor,
                   batch_size = as.integer(batch_size), early_stopping = early_stopping,
                   datasplitter_kwargs = datasplitter_kwargs,
-                  plan_kwargs = plan_kwargs, datamodule = datamodule))
+                  plan_kwargs = plan_kwargs, datamodule = datamodule,
+                  logger = FALSE))
     do.call(model_scvi$train, arg)
 
     latent <- model_scvi$get_latent_representation(adata = andata,

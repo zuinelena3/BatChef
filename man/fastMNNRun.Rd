@@ -7,15 +7,15 @@
 fastMNNRun(input, batch, ...)
 }
 \arguments{
-\item{input}{A \linkS4class{SingleCellExperiment} object.}
+\item{input}{\link[SingleCellExperiment]{SingleCellExperiment} object.}
 
 \item{batch}{A string specifying the batch variable.}
 
 \item{...}{Named arguments to pass to individual methods upon dispatch}
 }
 \value{
-A \linkS4class{SingleCellExperiment} object is returned where
-each row is a gene and each column is a cell. This contains a corrected
+\link[SingleCellExperiment]{SingleCellExperiment} object is returned
+where each row is a gene and each column is a cell. This contains a corrected
 low-dimensional coordinates and a reconstructed matrix in the assays slot.
 }
 \description{

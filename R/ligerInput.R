@@ -1,7 +1,7 @@
 #' Convert to a LIGER compatible object
 #'
-#' @param input A \linkS4class{SingleCellExperiment}, \linkS4class{Seurat} or
-#' `AnnData` object can be supplied.
+#' @param input A \link[SingleCellExperiment]{SingleCellExperiment}
+#' \link[Seurat]{Seurat} or `AnnData` object can be supplied.
 #' @param batch A string specifying the batch variable.
 #' @param features Vector of features to use.
 #' @param ... Named arguments to pass to individual methods upon dispatch.

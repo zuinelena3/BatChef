@@ -1,13 +1,13 @@
 #' Convert to a SeuratV3 compatible object
 #'
-#' @param input A \linkS4class{SingleCellExperiment}, \linkS4class{Seurat} or
-#' `AnnData` object can be supplied.
+#' @param input A \link[SingleCellExperiment]{SingleCellExperiment}
+#' \link[Seurat]{Seurat} or `AnnData` object can be supplied.
 #' @param batch A string specifying the batch variable.
 #' @param features Vector of features to use.
 #' @param pca_name A string specifying the PCA.
 #'
 #' @import methods
-#' @return A list of \linkS4class{Seurat} objects.
+#' @return A list of \link[Seurat]{Seurat} objects.
 #' @rdname seuratv3Input
 #'
 setGeneric("seuratv3Input", function(input, batch, features, pca_name = NULL)
@@ -50,7 +50,12 @@ setMethod("seuratv3Input", "SingleCellExperiment", function(input, batch,
   pca <- reducedDim(input, pca_name)
   loadings <- attr(reducedDim(input, pca_name), "rotation")
   reducedDim(input, pca_name) <- NULL
-  so <- as.Seurat(input)
+
+  # NOTE: until https://github.com/satijalab/seurat/issues/9850 is fixed.
+  suppressWarningsByMsg("deprecated", {
+    so <- as.Seurat(input)
+  })
+
   VariableFeatures(so) <- features
   so[["pca"]] <- CreateDimReducObject(embeddings = pca,
                                       loadings = loadings,
@@ -74,7 +79,6 @@ setMethod("seuratv3Input", "AnnDataR6",  function(input, batch, features, pca_na
 #'
 setMethod("seuratv3Input", "AnnDataR6",  function(input, batch, features, pca_name) {
   stopifnot("Error: 'batch' is not inside the obs" =  batch %in% colnames(input$obs))
-
   stopifnot("Error: specify 'pca_name'" = !is.null(pca_name))
 
   var <- unique(input$obs[[batch]])
@@ -82,19 +86,24 @@ setMethod("seuratv3Input", "AnnDataR6",  function(input, batch, features, pca_na
     sub <- input[input$obs[[batch]] == v, ]$copy()
   })
 
-  so_ll <- lapply(ll, function(x) {
+  lapply(ll, function(x) {
     pca <- x$obsm[[pca_name]]
-    colnames(pca) <- paste0("PC_", 1:ncol(pca))
+    colnames(pca) <- paste0("PC_", seq_len(ncol(pca)))
     rownames(pca) <- x$obs_names
     loadings <- x$varm[["PCs"]]
-    colnames(loadings) <- paste0("PC_", 1:ncol(pca))
+    colnames(loadings) <- paste0("PC_", seq_len(ncol(pca)))
     rownames(loadings) <- x$var_names
     x$obsm <- NULL
     x$varm <- NULL
 
     x <- r_to_py(x, convert = TRUE)
     sce <- AnnData2SCE(x, X_name = "counts")
-    so <- as.Seurat(sce)
+
+    # NOTE: until https://github.com/satijalab/seurat/issues/9850 is fixed.
+    suppressWarningsByMsg("deprecated", {
+      so <- as.Seurat(sce)
+    })
+
     so@reductions[["pca"]] <- CreateDimReducObject(embeddings = pca,
                                                    loadings = loadings,
                                                    key = "pca_",

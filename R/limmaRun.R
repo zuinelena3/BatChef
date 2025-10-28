@@ -1,6 +1,6 @@
 #' limma method
 #'
-#' @param input A \linkS4class{SingleCellExperiment} object.
+#' @param input A \link[SingleCellExperiment]{SingleCellExperiment} object.
 #' @param batch A string specifying the batch variable.
 #' @param assay_type A string specifying the assay.
 #' @param ... Named arguments to pass to individual methods upon dispatch.

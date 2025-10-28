@@ -10,21 +10,21 @@
 \alias{anndatasInput,AnnDataR6,AnnDataR6-method}
 \title{Convert to a Scanorama compatible object}
 \usage{
-scanoramaInput(input, batch, assay.type = NULL)
+scanoramaInput(input, batch, assay_type = NULL)
 
-\S4method{scanoramaInput}{Seurat}(input, batch, assay.type = NULL)
+\S4method{scanoramaInput}{Seurat}(input, batch, assay_type = NULL)
 
-\S4method{scanoramaInput}{SingleCellExperiment}(input, batch, assay.type = NULL)
+\S4method{scanoramaInput}{SingleCellExperiment}(input, batch, assay_type = NULL)
 
-\S4method{scanoramaInput}{AnnDataR6}(input, batch, assay.type = NULL)
+\S4method{scanoramaInput}{AnnDataR6}(input, batch, assay_type = NULL)
 }
 \arguments{
-\item{input}{A \linkS4class{SingleCellExperiment}, \linkS4class{Seurat} or
-`AnnData` object can be supplied.}
+\item{input}{A \link[SingleCellExperiment]{SingleCellExperiment}
+\link[Seurat]{Seurat} or `AnnData` object can be supplied.}
 
 \item{batch}{A string specifying the batch for each cell.}
 
-\item{assay.type}{layers name}
+\item{assay_type}{A string specifying the assay.}
 }
 \value{
 List that contains the expression matrices for each batches and
