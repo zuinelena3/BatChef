@@ -6,3 +6,6 @@
 ^tests/testthat/lightning_logs$
 ^tests/testthat/Rplots\.pdf$
 ^\.Rhistory$
+^lightning_logs$
+^doc$
+^Meta$
