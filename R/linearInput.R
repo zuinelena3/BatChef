@@ -20,7 +20,7 @@ setGeneric("linearInput", function(input, batch)
 setMethod("linearInput", "Seurat",  function(input, batch) {
   stopifnot(batch %in% colnames(input[[]]))
 
-  hvgs <- rownames(input) == VariableFeatures(input)
+  hvgs <- rownames(input) %in% VariableFeatures(input)
   input <- SingleCellExperiment(assays = list(counts = input@assays$RNA$counts,
                                               logcounts = input@assays$RNA$data),
                                 colData = input@meta.data,
