@@ -27,6 +27,9 @@ Imports:
     aricode,
     batchelor,
     cluster,
+    datawizard,
+    e1071,
+    fitdistrplus,
     harmony,
     igraph,
     limma,
@@ -63,3 +66,4 @@ Suggests:
     rmarkdown,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
+LazyData: true

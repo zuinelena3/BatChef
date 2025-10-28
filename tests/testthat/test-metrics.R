@@ -17,3 +17,4 @@ test_that("Performance evaluation", {
   expect_match(colnames(metrics), "clisi", all = FALSE)
   }))
 })
+
