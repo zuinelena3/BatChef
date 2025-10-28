@@ -9,12 +9,14 @@ leiden_clustering(
   label_true = NULL,
   reduction,
   nmi_compute = TRUE,
-  resolution = NULL
+  resolution = NULL,
+  k = 10,
+  store = FALSE
 )
 }
 \arguments{
-\item{input}{A \linkS4class{SingleCellExperiment}, \linkS4class{Seurat} or
-`AnnData` object can be supplied.}
+\item{input}{A \link[SingleCellExperiment]{SingleCellExperiment}
+\link[Seurat]{Seurat} or `AnnData` object can be supplied.}
 
 \item{label_true}{A string specifying the ground truth label.}
 
@@ -25,13 +27,18 @@ on which the clustering analysis will be performed.}
 identify the optimal clustering is to be performed (Default: TRUE).}
 
 \item{resolution}{A numeric value specifying the resolution parameter.}
+
+\item{k}{An integer scalar specifying the number of nearest neighbors.}
+
+\item{store}{A Boolean value indicating whether cluster labels are stored
+within the input object (Default: FALSE).}
 }
 \value{
-A `AnnData` object that contains the clustering labels.
+A A \link[SingleCellExperiment]{SingleCellExperiment}
+\link[Seurat]{Seurat} or `AnnData` object that contains the cluster labels.
 }
 \description{
-Leiden clustering algorithm is implemented and executed using
-the Scanpy Python package.
+Leiden clustering algorithm.
 }
 \details{
 The clustering algorithm can be executed by specifying either a single
@@ -42,6 +49,7 @@ the optimal clustering can be useful to compute the performance evaluation of
 batch correction methods.
 }
 \examples{
+
 sim <- simulate_data(n_genes = 1000, batch_cells = c(150, 50),
                      group_prob = c(0.5, 0.5), n_hvgs = 500,
                      compute_pca = TRUE, output_format = "SingleCellExperiment")

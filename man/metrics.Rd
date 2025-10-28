@@ -13,22 +13,21 @@ metrics(
   mc_cores = 1,
   nmi_compute = TRUE,
   resolution = NULL,
-  average_method = "arithmetic",
+  k = 10,
   metric = "euclidean",
-  sample_size = NULL,
-  random_state = NULL,
+  variant = "sum",
   meta_data = colData(input),
   perplexity = 30,
   nn_eps = 0
 )
 }
 \arguments{
-\item{input}{A \linkS4class{SingleCellExperiment}, \linkS4class{Seurat} or
-`AnnData` object can be supplied.}
+\item{input}{A \link[SingleCellExperiment]{SingleCellExperiment}
+\link[Seurat]{Seurat} or `AnnData` object can be supplied.}
 
-\item{batch}{A string specifying batch variable.}
+\item{batch}{A string specifying the batch variable.}
 
-\item{group}{A string specifying the ground truth label.}
+\item{group}{A string specifying the ground truth labels.}
 
 \item{reduction}{A string specifying the dimensional reduction.
 on which the clustering analysis will be performed.}
@@ -42,15 +41,11 @@ identify the optimal clustering is to be performed (Default: TRUE).}
 
 \item{resolution}{A numeric value specifying the resolution parameter.}
 
-\item{average_method}{How to compute the normalizer in the denominator.}
+\item{k}{An integer scalar specifying the number of nearest neighbors.}
 
 \item{metric}{The metric to use when calculating distance between instances.}
 
-\item{sample_size}{The size of the sample to use when computing the
-Silhouette Coefficient on a random subset of the data.}
-
-\item{random_state}{Determines random number generation for selecting
-a subset of samples.}
+\item{variant}{How to compute the normalizer in the denominator.}
 
 \item{meta_data}{A data frame with one row per cell.}
 
@@ -67,8 +62,8 @@ Index, Average Silhouette Width, Adjusted Rand Index, and
 Normalized Mutual Information.
 }
 \details{
-This function performs Leiden clustering to facilitate the computation of
-the Adjusted Rand Index (ARI) and Normalized Mutual Information (NMI) metrics.
+This function performs Leiden clustering before computing the evaluation
+metrics.
 }
 \examples{
 sim <- simulate_data(n_genes = 1000, batch_cells = c(150, 110),

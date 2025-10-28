@@ -8,6 +8,5 @@ py_env <- BasiliskEnvironment(envname = "py_env",
                                            "scanorama=1.7.4",
                                            "leidenalg=0.10.2",
                                            "python-igraph=0.11.9",
-                                           "scikit-learn=1.7.2",
                                            "bbknn=1.6.0",
                                            "scvi-tools=1.4.0"))
