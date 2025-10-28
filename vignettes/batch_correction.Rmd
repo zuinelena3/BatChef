@@ -1,5 +1,5 @@
 ---
-title: "BatChef: A common interface for batch effect correction methods in single-cell RNA-seq data"
+title: "BatChef package introduction"
 author: 
 - name: Elena Zuin
   affiliation: Department of Biology, University of Padova, Italy
@@ -27,29 +27,23 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Introduction
 
-Combining single-cell RNA-sequencing (scRNA-seq) datasets from different sources 
-introduces technical variability known as batch effects, caused by factors like 
-operators, reagent batches, platforms, and timing. These batch effects distort 
-analyses and obscure true biological signals, making accurate data interpretation difficult.
+Combining single-cell RNA-sequencing (scRNA-seq) datasets from different sources introduces technical variability known as batch effects, caused by factors like operators, reagent batches, platforms, and timing. These batch effects distort analyses and obscure true biological signals, making accurate data interpretation difficult.
 
-In the literature there are various batch correction methods, based on different
-mathematical approaches, using R and Python languages.
+In the literature there are various batch correction methods, based on different mathematical approaches, using R and Python languages. However, the performance of batch correction methods depends on the data characteristics.
 
-`BatChef` is an R package that provides a common interface for batch effect 
-correction methods in single-cell RNA-seq data. It allows users to compute 
-various correction methods through a generic function by specifying the desired
-approach. The package contains multiple methods implemented in both R and Python,
-each based on different mathematical approach.
+`BatChef` is an R package that:
 
-Also, it provides metrics to evaluate the performance of the correction methods, 
-such as the Wasserstein distance, Local Inverse Simpson's Index (LISI), Average 
-Silhouette Width (ASW), and Adjusted Rand Index (ARI).
+-   implements a variety of correction methods in R and Python. It allows users to compute the desired approach through a generic function.
+
+-   provides metrics to evaluate the performance of the correction methods, such as the Wasserstein distance, Local Inverse Simpson's Index (LISI), Average Silhouette Width (ASW), and Adjusted Rand Index (ARI).
+
+-   can be used as a guideline to identify the optimal batch effects correction method based on the data features.
 
 # Installation
 
 ```{r,eval=FALSE}
 # install.packages("devtools")
-devtools::install_github("zuinelena3/BatChef")
+devtools::install_github("zuinelena3/BatChef", ref = "main")
 ```
 
 # Setting up
@@ -59,11 +53,7 @@ devtools::install_github("zuinelena3/BatChef")
 library(BatChef)
 ```
 
-To demonstrate, we simulate a dataset with 2,000 genes, 2,000 cells, 
-2 batches and 2 cell types, using the `simulate_data` function. This function 
-applies the same parameters as the Splatter package’s ones. 
-Additionally, it normalizes the data, identifies highly variable genes and 
-performs principal component analysis using the `scrapper` package. 
+To demonstrate, we simulate a dataset with 2,000 genes, 2,000 cells, 2 batches and 2 cell types, using the `simulate_data` function. This function applies the same parameters as the Splatter package’s ones. Additionally, it normalizes the data, identifies highly variable genes and performs principal component analysis using the `scrapper` package.
 
 ```{r}
 sce <- simulate_data(n_genes = 2000, batch_cells = c(1200, 800),
@@ -75,10 +65,7 @@ sce
 
 # Batch effects correction
 
-The `batchCorrect` function allows to specify the desired correction method and 
-performs the correction with three different input data: `SingleCellExperiment`,
-`Seurat` and `AnnData`. We can simulate three different objects using the
-the `output_format` parameter in the `simulate_data` function.
+The `batchCorrect` function allows to specify the desired correction method and performs the correction with three different input data: `SingleCellExperiment`, `Seurat` and `AnnData`. We can simulate three different objects using the the `output_format` parameter in the `simulate_data` function.
 
 ```{r, message=FALSE, warning=FALSE}
 so <- simulate_data(n_genes = 2000, batch_cells = c(1200, 800),
@@ -95,7 +82,6 @@ so
 #                      output_format = "AnnData")
 # adata
 ```
-
 
 The desired correction method can have these values:
 
@@ -121,7 +107,7 @@ The desired correction method can have these values:
 
 -   `LigerParams`
 
-## Examples 
+## Examples
 
 To illustrate, we correct the data using `Scanorama` and `Harmony`.
 
@@ -154,14 +140,9 @@ so
 
 # Performance evaluation
 
-Last, the `metrics`()` function computes the evaluation metrics, such as 
-Normalized Mutual Information (NMI), Adjusted Rand Index (ARI), 
-Local Inverse Simpson's Index (LISI), Average Silhouette Width (ASW), and 
-Wasserstein distance.
+Last, the `metrics()` function computes the evaluation metrics, such as Normalized Mutual Information (NMI), Adjusted Rand Index (ARI), Local Inverse Simpson's Index (LISI), Average Silhouette Width (ASW), and Wasserstein distance.
 
-The Wasserstein distance is computed on a resampled data due to the different 
-number of cells in each batch. The parameter `rep` indicates how many times 
-the calculation should be repeated (in this case 5).
+The Wasserstein distance is computed on a resampled data due to the different number of cells in each batch. The parameter `rep` indicates how many times the calculation should be repeated (in this case 5).
 
 ```{r, message=FALSE, warning=FALSE}
 red <- SingleCellExperiment::reducedDimNames(sce)
@@ -172,7 +153,17 @@ metrics <- do.call(rbind, metrics)
 metrics
 ```
 
+# Optimal batch correction method
+
+The `suggested_method()` function determinates the optimal batch correction method for a specific dataset. Initially, this function calculates the features and subsequently predicts the recommended method.
+
+```{r, message=FALSE, warning=FALSE}
+pred <- suggested_method(input = sce, batch = "Batch")
+pred
+```
+
+# sessionInfo()
+
 ```{r}
 sessionInfo()
 ```
-
