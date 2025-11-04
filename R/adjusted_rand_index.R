@@ -10,10 +10,11 @@
 #' @param label_true A string specifying the ground truth label.
 #' @param reduction A string specifying the dimensional reduction
 #' on which the clustering analysis will be performed.
-#' @param nmi_compute A Boolean value indicating NMI metric calculation to
-#' identify the optimal clustering is to be performed.
 #' @param resolution A numeric value specifying the resolution parameter.
 #' @param k An integer scalar specifying the number of nearest neighbors.
+#' @param n_iter Number of iterations of the Leiden clustering algorithm to perform.
+#' Positive values above 2 define the total number of iterations to perform,
+#' -1 has the algorithm run until it reaches its optimal clustering
 #'
 #' @export
 #' @importFrom mclust adjustedRandIndex
@@ -24,14 +25,15 @@
 #'                      group_prob = c(0.5, 0.5), n_hvgs = 500,
 #'                      compute_pca = TRUE, output_format = "SingleCellExperiment")
 #' ari <- adjusted_rand_index(input = sim, label_true = "Group", reduction = "PCA",
-#'                            nmi_compute = FALSE, resolution = 0.5)
+#'                            resolution = 0.5, n_iter = 2)
 #'
-adjusted_rand_index <- function(input, label_true, reduction, nmi_compute = FALSE,
-                                resolution, k = 10) {
+adjusted_rand_index <- function(input, label_true, reduction,
+                                resolution, k = 15, n_iter = -1) {
   group <- colData(input)[, label_true]
   clust <- leiden_clustering(input = input, label_true = label_true,
-                             reduction = reduction, nmi_compute = nmi_compute,
-                             resolution = resolution, k = k, store = FALSE)
+                             reduction = reduction, nmi_compute = FALSE,
+                             resolution = resolution, k = k, store = FALSE,
+                             n_iter = n_iter)
 
   ari <- adjustedRandIndex(x = clust, y = group)
 }

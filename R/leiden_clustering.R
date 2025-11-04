@@ -20,10 +20,13 @@
 #' @param k An integer scalar specifying the number of nearest neighbors.
 #' @param store A Boolean value indicating whether cluster labels are stored
 #' within the input object (Default: FALSE).
+#' @param n_iter Number of iterations of the Leiden clustering algorithm to perform.
+#' Positive values above 2 define the total number of iterations to perform,
+#' -1 has the algorithm run until it reaches its optimal clustering
 #'
 #' @export
 #' @importFrom scran buildSNNGraph
-#' @importFrom igraph cluster_leiden membership
+#' @importFrom leidenAlg leiden.community
 #' @importFrom aricode NMI
 #'
 #' @return A A \link[SingleCellExperiment]{SingleCellExperiment}
@@ -34,20 +37,20 @@
 #'                      group_prob = c(0.5, 0.5), n_hvgs = 500,
 #'                      compute_pca = TRUE, output_format = "SingleCellExperiment")
 #' clust <- leiden_clustering(input = sim, reduction = "PCA",
-#'                            nmi_compute = FALSE, resolution = 1)
+#'                            nmi_compute = FALSE, resolution = 1, n_iter = 2)
 #'
 leiden_clustering <- function(input, label_true = NULL, reduction,
-                              nmi_compute = TRUE, resolution = NULL, k = 10,
-                              store = FALSE) {
+                              nmi_compute = TRUE, resolution = NULL, k = 15,
+                              store = FALSE, n_iter = -1) {
   sce <- clustInput(input = input, reduction = reduction)
-
   neighbors <- buildSNNGraph(x = sce, use.dimred = reduction, k = k)
 
   if (nmi_compute == FALSE) {
     stopifnot("Specify the resolution parameter" = !is.null(resolution))
 
-    clust <- cluster_leiden(graph = neighbors, resolution = resolution)
-    clust <- membership(clust)
+    clust <- leiden.community(neighbors, resolution = resolution,
+                              n.iterations = n_iter)
+    clust <- clust$membership
   }
 
   else {
@@ -57,10 +60,11 @@ leiden_clustering <- function(input, label_true = NULL, reduction,
     max <- 0
 
     for (i in seq_along(res)) {
-      clust <- cluster_leiden(graph = neighbors, resolution = res[i])
+      clust <- leiden.community(neighbors, resolution = res[i],
+                                n.iterations = n_iter)
 
       nmi <- NMI(c1 = as.vector(colData(sce)[, label_true]),
-                 c2 = as.vector(membership(clust)),
+                 c2 = as.vector(clust$membership),
                  variant = "sum")
 
       if (nmi > max) {
@@ -68,8 +72,9 @@ leiden_clustering <- function(input, label_true = NULL, reduction,
         names(max) <- res[i]
       }
     }
-    clust <- cluster_leiden(graph = neighbors, resolution = max)
-    clust <- membership(clust)
+    clust <- leiden.community(neighbors, resolution = as.numeric(names(max)),
+                              n.iterations = n_iter)
+    clust <- clust$membership
   }
 
   if (store == TRUE) {

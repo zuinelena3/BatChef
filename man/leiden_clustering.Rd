@@ -10,8 +10,9 @@ leiden_clustering(
   reduction,
   nmi_compute = TRUE,
   resolution = NULL,
-  k = 10,
-  store = FALSE
+  k = 15,
+  store = FALSE,
+  n_iter = -1
 )
 }
 \arguments{
@@ -32,6 +33,10 @@ identify the optimal clustering is to be performed (Default: TRUE).}
 
 \item{store}{A Boolean value indicating whether cluster labels are stored
 within the input object (Default: FALSE).}
+
+\item{n_iter}{Number of iterations of the Leiden clustering algorithm to perform.
+Positive values above 2 define the total number of iterations to perform,
+-1 has the algorithm run until it reaches its optimal clustering}
 }
 \value{
 A A \link[SingleCellExperiment]{SingleCellExperiment}
@@ -54,6 +59,6 @@ sim <- simulate_data(n_genes = 1000, batch_cells = c(150, 50),
                      group_prob = c(0.5, 0.5), n_hvgs = 500,
                      compute_pca = TRUE, output_format = "SingleCellExperiment")
 clust <- leiden_clustering(input = sim, reduction = "PCA",
-                           nmi_compute = FALSE, resolution = 1)
+                           nmi_compute = FALSE, resolution = 1, n_iter = 2)
 
 }

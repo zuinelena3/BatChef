@@ -32,7 +32,7 @@ Imports:
     e1071,
     fitdistrplus,
     harmony,
-    igraph,
+    leidenAlg,
     limma,
     Matrix,
     mclust,

@@ -156,7 +156,8 @@ groups_params <- function(input, normalized) {
   rownames(pca) <- colnames(input)
   reducedDim(input, "PCA") <- pca
 
-  clust <- leiden_clustering(input = input, reduction = "PCA",
-                             nmi_compute = FALSE, resolution = 1, store = FALSE)
+  clust <- leiden_clustering(input = input, reduction = "PCA", k = 15,
+                             nmi_compute = FALSE, resolution = 1, store = FALSE,
+                             n_iter = -1)
   nclust <- data.frame(ngroup = length(unique(clust)))
 }
