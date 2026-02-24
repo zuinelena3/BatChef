@@ -30,13 +30,19 @@
 #' the corrected low-dimensional reduction
 #'
 #' @examples
-#' sim <- simulate_data(n_genes = 1000, batch_cells = c(150, 50),
-#'                      group_prob = c(0.5, 0.5), n_hvgs = 500,
-#'                      compute_pca = TRUE, output_format = "SingleCellExperiment")
-#' sim <- lapply(unique(SingleCellExperiment::colData(sim)[, "Batch"]),
-#'               function(i) sim[, SingleCellExperiment::colData(sim)[, "Batch"] == i])
-#' ll <- c(lapply(sim, function(x) t(as.matrix(SingleCellExperiment::logcounts(x)))),
-#'         lapply(sim, function(x) rownames(x)))
+#' sim <- simulate_data(
+#'   n_genes = 1000, batch_cells = c(150, 50),
+#'   group_prob = c(0.5, 0.5), n_hvgs = 500,
+#'   compute_pca = TRUE, output_format = "SingleCellExperiment"
+#' )
+#' sim <- lapply(
+#'   unique(SingleCellExperiment::colData(sim)[, "Batch"]),
+#'   function(i) sim[, SingleCellExperiment::colData(sim)[, "Batch"] == i]
+#' )
+#' ll <- c(
+#'   lapply(sim, function(x) t(as.matrix(SingleCellExperiment::logcounts(x)))),
+#'   lapply(sim, function(x) rownames(x))
+#' )
 #' scanorama <- scanoramaRun(input = ll, return_dimred = FALSE)
 #'
 scanoramaRun <- function(input, return_dimred = FALSE,
@@ -47,27 +53,31 @@ scanoramaRun <- function(input, return_dimred = FALSE,
   proc <- basiliskStart(py_env)
   on.exit(basiliskStop(proc))
 
-  out <- basiliskRun(proc = proc, fun = function(input, return_dimred,
-                                                 batch_size, verbose, ds_names,
-                                                 dimred, approx, sigma, alpha,
-                                                 knn, return_dense, hvg, union,
-                                                 seed) {
-    scanorama <- reticulate::import("scanorama")
+  out <- basiliskRun(
+    proc = proc, fun = function(input, return_dimred,
+                                batch_size, verbose, ds_names,
+                                dimred, approx, sigma, alpha,
+                                knn, return_dense, hvg, union,
+                                seed) {
+      scanorama <- reticulate::import("scanorama")
 
-    n <- length(input)
-    n_batch <- n/2
+      n <- length(input)
+      n_batch <- n / 2
 
-    arg <- c(list(datasets_full = input[1:n_batch],
-                  genes_list = input[(n_batch + 1):n],
-                  return_dimred = return_dimred,
-                  batch_size = as.integer(batch_size), verbose = verbose,
-                  ds_names = ds_names, dimred = as.integer(dimred),
-                  approx = approx, sigma = sigma, alpha = alpha,
-                  knn = as.integer(knn), return_dense = return_dense,
-                  hvg = hvg, union = union, seed = as.integer(seed)))
-    do.call(scanorama$correct, arg)
-  }, input = input, return_dimred = return_dimred, batch_size = batch_size,
-  verbose = verbose, ds_names = ds_names, dimred = dimred, approx = approx,
-  sigma = sigma, alpha = alpha, knn = knn, return_dense = return_dense,
-  hvg = hvg, union = union, seed = seed)
+      arg <- c(list(
+        datasets_full = input[1:n_batch],
+        genes_list = input[(n_batch + 1):n],
+        return_dimred = return_dimred,
+        batch_size = as.integer(batch_size), verbose = verbose,
+        ds_names = ds_names, dimred = as.integer(dimred),
+        approx = approx, sigma = sigma, alpha = alpha,
+        knn = as.integer(knn), return_dense = return_dense,
+        hvg = hvg, union = union, seed = as.integer(seed)
+      ))
+      do.call(scanorama$correct, arg)
+    }, input = input, return_dimred = return_dimred, batch_size = batch_size,
+    verbose = verbose, ds_names = ds_names, dimred = dimred, approx = approx,
+    sigma = sigma, alpha = alpha, knn = knn, return_dense = return_dense,
+    hvg = hvg, union = union, seed = seed
+  )
 }

@@ -16,8 +16,9 @@
 #' \link[Seurat]{Seurat} or `AnnData` object.
 #' @rdname scanoramaPost
 #'
-setGeneric("scanoramaPost", function(input, list, output, return_dimred, method)
-  standardGeneric("scanoramaPost"), signature = c("input"))
+setGeneric("scanoramaPost", function(input, list, output, return_dimred, method) {
+  standardGeneric("scanoramaPost")
+}, signature = c("input"))
 
 #' @rdname scanoramaPost
 #' @aliases scanoramaPost,Seurat,Seurat-method
@@ -27,15 +28,17 @@ setGeneric("scanoramaPost", function(input, list, output, return_dimred, method)
 setMethod("scanoramaPost", "Seurat", function(input, list, output,
                                               return_dimred, method) {
   n <- length(list)
-  n_batch <- n/2
+  n_batch <- n / 2
 
   indx <- length(output)
   mat <- t(as.matrix(do.call(rbind, output[[indx - 1]])))
   colnames(mat) <- unlist(lapply(list[1:n_batch], function(x) rownames(x)))
   rownames(mat) <- output[[indx]]
 
-  mat <- mat[order(match(rownames(mat), rownames(input))),
-             order(match(colnames(mat), colnames(input)))]
+  mat <- mat[
+    order(match(rownames(mat), rownames(input))),
+    order(match(colnames(mat), colnames(input)))
+  ]
 
   input[[paste0(method, "_mat")]] <- CreateAssayObject(counts = mat)
 
@@ -44,12 +47,13 @@ setMethod("scanoramaPost", "Seurat", function(input, list, output,
     colnames(embedding) <- paste0("scanorama_", seq(1, dim(embedding)[2]))
     rownames(embedding) <- colnames(mat)
     embedding <- embedding[order(match(rownames(embedding), colnames(input))), ]
-    input[[method]] <- CreateDimReducObject(embeddings = embedding,
-                                            key = "scanorama_",
-                                            assay = DefaultAssay(input))
+    input[[method]] <- CreateDimReducObject(
+      embeddings = embedding,
+      key = "scanorama_",
+      assay = DefaultAssay(input)
+    )
     return(input)
-  }
-  else {
+  } else {
     return(input)
   }
 })
@@ -60,19 +64,21 @@ setMethod("scanoramaPost", "Seurat", function(input, list, output,
 #' @importFrom SummarizedExperiment assay<- assay
 #' @importFrom SingleCellExperiment reducedDim<- reducedDim
 #'
-setMethod("scanoramaPost", "SingleCellExperiment",  function(input, list, output,
-                                                             return_dimred,
-                                                             method) {
+setMethod("scanoramaPost", "SingleCellExperiment", function(input, list, output,
+                                                            return_dimred,
+                                                            method) {
   n <- length(list)
-  n_batch <- n/2
+  n_batch <- n / 2
 
   indx <- length(output)
   mat <- t(as.matrix(do.call(rbind, output[[indx - 1]])))
   colnames(mat) <- unlist(lapply(list[1:n_batch], function(x) rownames(x)))
   rownames(mat) <- output[[indx]]
 
-  mat <- mat[order(match(rownames(mat), rownames(input))),
-             order(match(colnames(mat), colnames(input)))]
+  mat <- mat[
+    order(match(rownames(mat), rownames(input))),
+    order(match(colnames(mat), colnames(input)))
+  ]
 
   assay(input, method) <- mat
 
@@ -83,8 +89,7 @@ setMethod("scanoramaPost", "SingleCellExperiment",  function(input, list, output
     embedding <- embedding[order(match(rownames(embedding), colnames(input))), ]
     reducedDim(input, method) <- embedding
     return(input)
-  }
-  else {
+  } else {
     return(input)
   }
 })
@@ -92,18 +97,20 @@ setMethod("scanoramaPost", "SingleCellExperiment",  function(input, list, output
 #' @rdname scanoramaPost
 #' @aliases scanoramaPost,AnnDataR6,AnnDataR6-method
 #'
-setMethod("scanoramaPost", "AnnDataR6",  function(input, list, output,
-                                                  return_dimred, method) {
+setMethod("scanoramaPost", "AnnDataR6", function(input, list, output,
+                                                 return_dimred, method) {
   n <- length(list)
-  n_batch <- n/2
+  n_batch <- n / 2
 
   indx <- length(output)
   mat <- as.matrix(do.call(rbind, output[[indx - 1]]))
   rownames(mat) <- unlist(lapply(list[1:n_batch], function(x) rownames(x)))
   colnames(mat) <- output[[indx]]
 
-  mat <- mat[order(match(rownames(mat), rownames(input))),
-             order(match(colnames(mat), colnames(input)))]
+  mat <- mat[
+    order(match(rownames(mat), rownames(input))),
+    order(match(colnames(mat), colnames(input)))
+  ]
 
   input$layers[method] <- mat
 
@@ -114,8 +121,7 @@ setMethod("scanoramaPost", "AnnDataR6",  function(input, list, output,
     embedding <- embedding[order(match(rownames(embedding), rownames(input))), ]
     input$obsm[[method]] <- embedding
     return(input)
-  }
-  else {
+  } else {
     return(input)
   }
 })

@@ -14,8 +14,9 @@
 #' \link[Seurat]{Seurat} or `AnnData` object.
 #' @rdname seuratv5Post
 #'
-setGeneric("seuratv5Post", function(input, output, method, name)
-  standardGeneric("seuratv5Post"), signature = c("input"))
+setGeneric("seuratv5Post", function(input, output, method, name) {
+  standardGeneric("seuratv5Post")
+}, signature = c("input"))
 
 #' @rdname seuratv5Post
 #' @aliases seuratv5Post,Seurat,Seurat-method
@@ -23,11 +24,13 @@ setGeneric("seuratv5Post", function(input, output, method, name)
 #' @importFrom Seurat DefaultAssay
 #' @importFrom SeuratObject JoinLayers Embeddings
 #'
-setMethod("seuratv5Post", "Seurat",  function(input, output, method, name) {
+setMethod("seuratv5Post", "Seurat", function(input, output, method, name) {
   output[[DefaultAssay(output)]] <- JoinLayers(output[[DefaultAssay(output)]])
-  input[[method]] <- CreateDimReducObject(embeddings = Embeddings(output, name),
-                                          key = "seuratv5_",
-                                          assay = DefaultAssay(input))
+  input[[method]] <- CreateDimReducObject(
+    embeddings = Embeddings(output, name),
+    key = "seuratv5_",
+    assay = DefaultAssay(input)
+  )
 
   return(input)
 })
@@ -38,7 +41,7 @@ setMethod("seuratv5Post", "Seurat",  function(input, output, method, name) {
 #' @importFrom Seurat DefaultAssay as.SingleCellExperiment
 #' @importFrom SeuratObject JoinLayers Embeddings
 #'
-setMethod("seuratv5Post", "SingleCellExperiment",  function(input, output, method, name) {
+setMethod("seuratv5Post", "SingleCellExperiment", function(input, output, method, name) {
   output[[DefaultAssay(output)]] <- JoinLayers(output[[DefaultAssay(output)]])
   reducedDim(input, method) <- Embeddings(output, name)
   return(input)
@@ -50,7 +53,7 @@ setMethod("seuratv5Post", "SingleCellExperiment",  function(input, output, metho
 #' @importFrom SeuratObject JoinLayers
 #' @importFrom zellkonverter SCE2AnnData
 #'
-setMethod("seuratv5Post", "AnnDataR6",  function(input, output, method, name) {
+setMethod("seuratv5Post", "AnnDataR6", function(input, output, method, name) {
   output[[DefaultAssay(output)]] <- JoinLayers(output[[DefaultAssay(output)]])
   input$obsm[[method]] <- as.matrix(Embeddings(output, name))
   return(input)

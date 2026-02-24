@@ -1,4 +1,4 @@
-# NOTE: The code is copied from [https://github.com/immunogenomics/LISI/blob/master/R/utils.R].
+## NOTE: The code is copied from [https://github.com/immunogenomics/LISI/blob/master/R/utils.R].
 # Proper credit is given to the original author.
 
 #' Local Inverse Simpson Index (LISI)
@@ -19,12 +19,16 @@
 #' column is a different label variable.
 #'
 #' @examples
-#' sim <- simulate_data(n_genes = 1000, batch_cells = c(150, 50),
-#'                      group_prob = c(0.5, 0.5), n_hvgs = 500,
-#'                      compute_pca = TRUE, output_format = "SingleCellExperiment")
+#' sim <- simulate_data(
+#'   n_genes = 1000, batch_cells = c(150, 50),
+#'   group_prob = c(0.5, 0.5), n_hvgs = 500,
+#'   compute_pca = TRUE, output_format = "SingleCellExperiment"
+#' )
 #' red <- SingleCellExperiment::reducedDim(sim, "PCA")
-#' lisi <- compute_lisi(X = red, meta_data = SingleCellExperiment::colData(sim),
-#'                     label_colnames = "Group")
+#' lisi <- compute_lisi(
+#'   X = red, meta_data = SingleCellExperiment::colData(sim),
+#'   label_colnames = "Group"
+#' )
 #'
 compute_lisi <- function(X, meta_data, label_colnames, perplexity = 30,
                          nn_eps = 0) {
@@ -34,12 +38,11 @@ compute_lisi <- function(X, meta_data, label_colnames, perplexity = 30,
   lisi_df <- Reduce(cbind, lapply(label_colnames, function(label_colname) {
     labels <- data.frame(meta_data)[, label_colname, drop = TRUE]
     if (any(is.na(labels))) {
-      message('Cannot compute LISI on missing values')
+      message("Cannot compute LISI on missing values")
       return(rep(NA, N))
     } else {
-      ## don't count yourself in your neighborhood
-      dknn$nn.idx <- dknn$nn.idx[, 2:ncol(dknn$nn.idx)]
-      dknn$nn.dists <- dknn$nn.dists[, 2:ncol(dknn$nn.dists)]
+      dknn$nn.idx <- dknn$nn.idx[, 2:ncol(dknn$nn.idx), drop = TRUE]
+      dknn$nn.dists <- dknn$nn.dists[, 2:ncol(dknn$nn.dists), drop = TRUE]
       labels <- as.integer(factor(labels)) - 1
       n_batches <- length(unique(labels))
       simpson <- compute_simpson_index(

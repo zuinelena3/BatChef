@@ -9,8 +9,9 @@
 #' @return A BBKNN compatible object
 #' @rdname bbknnInput
 #'
-setGeneric("bbknnInput", function(input, batch, reduction)
-  standardGeneric("bbknnInput"), signature = c("input"))
+setGeneric("bbknnInput", function(input, batch, reduction) {
+  standardGeneric("bbknnInput")
+}, signature = c("input"))
 
 #' @rdname bbknnInput
 #' @import methods
@@ -31,7 +32,7 @@ setMethod("bbknnInput", "Seurat", function(input, batch, reduction) {
 #' @importFrom SingleCellExperiment colData reducedDim reducedDimNames
 #' @aliases bbknnInput,SingleCellExperiment,SingleCellExperiment-method
 #'
-setMethod("bbknnInput", "SingleCellExperiment",  function(input, batch, reduction) {
+setMethod("bbknnInput", "SingleCellExperiment", function(input, batch, reduction) {
   stopifnot(batch %in% colnames(colData(input)))
   stopifnot(reduction %in% reducedDimNames(input))
 
@@ -45,7 +46,7 @@ setMethod("bbknnInput", "SingleCellExperiment",  function(input, batch, reductio
 #' @importFrom zellkonverter AnnData2SCE
 #' @aliases bbknnInput,AnnDataR6,AnnDataR6-method
 #'
-setMethod("bbknnInput", "AnnDataR6",  function(input, batch, reduction) {
+setMethod("bbknnInput", "AnnDataR6", function(input, batch, reduction) {
   stopifnot(batch %in% colnames(input$obs))
   stopifnot(reduction %in% names(input$obsm))
 

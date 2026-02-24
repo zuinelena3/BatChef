@@ -41,15 +41,21 @@
 #' @return A \link[Seurat]{Seurat} object.
 #'
 #' @examples
-#' sim <- simulate_data(n_genes = 1000, batch_cells = c(250, 200),
-#'                      group_prob = c(0.5, 0.5), n_hvgs = 500,
-#'                      compute_pca = TRUE,
-#'                      output_format = "Seurat")
-#' sim[[SeuratObject::DefaultAssay(sim)]] <- split(x = sim[[SeuratObject::DefaultAssay(sim)]],
-#'                                                 f = sim[["Batch"]][, 1])
+#' sim <- simulate_data(
+#'   n_genes = 1000, batch_cells = c(250, 200),
+#'   group_prob = c(0.5, 0.5), n_hvgs = 500,
+#'   compute_pca = TRUE,
+#'   output_format = "Seurat"
+#' )
+#' sim[[SeuratObject::DefaultAssay(sim)]] <- split(
+#'   x = sim[[SeuratObject::DefaultAssay(sim)]],
+#'   f = sim[["Batch"]][, 1]
+#' )
 #' sim <- Seurat::ScaleData(sim, verbose = FALSE)
-#' seuv5 <- seuratV5Run(input = sim, method = "CCAIntegration",
-#'                      features = rownames(sim))
+#' seuv5 <- seuratV5Run(
+#'   input = sim, method = "CCAIntegration",
+#'   features = rownames(sim)
+#' )
 #'
 seuratV5Run <- function(input, method = "CCAIntegration", orig_reduction = "pca",
                         assay = NULL, features = NULL, layers = NULL,
@@ -62,21 +68,22 @@ seuratV5Run <- function(input, method = "CCAIntegration", orig_reduction = "pca"
                         verbose = FALSE, l2_norm = TRUE, k_anchor = 5,
                         k_score = 30, max_features = 200, nn_method = "annoy",
                         n_trees = 50, eps = 0) {
-
   suppressWarningsByMsg(
     c("deprecate", "without the associated assay"),
-    IntegrateLayers(object = input, method = method, orig.reduction = orig_reduction,
-                    assay = assay, features = features, layers = layers,
-                    scale.layer = scale_layer,
-                    new.reduction = new_reduction, reference = reference,
-                    normalization.method = normalization_method,
-                    dims = dims, k.filter = k_filter,
-                    dims.to.integrate = dims_to_integrate,
-                    k.weight = k_weight, weight.reduction = weight_reduction,
-                    sd.weight = sd_weight, sample.tree = sample_tree,
-                    preserve.order = preserve_order, verbose = verbose,
-                    l2.norm = l2_norm, k.anchor = k_anchor,
-                    k.score = k_score, max.features = max_features,
-                    nn.method = nn_method, n.trees = n_trees, eps = eps)
+    IntegrateLayers(
+      object = input, method = method, orig.reduction = orig_reduction,
+      assay = assay, features = features, layers = layers,
+      scale.layer = scale_layer,
+      new.reduction = new_reduction, reference = reference,
+      normalization.method = normalization_method,
+      dims = dims, k.filter = k_filter,
+      dims.to.integrate = dims_to_integrate,
+      k.weight = k_weight, weight.reduction = weight_reduction,
+      sd.weight = sd_weight, sample.tree = sample_tree,
+      preserve.order = preserve_order, verbose = verbose,
+      l2.norm = l2_norm, k.anchor = k_anchor,
+      k.score = k_score, max.features = max_features,
+      nn.method = nn_method, n.trees = n_trees, eps = eps
+    )
   )
 }

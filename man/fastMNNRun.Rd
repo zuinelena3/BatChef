@@ -23,9 +23,11 @@ Correct for batch effects in single-cell expression data using a fast
 version of the mutual nearest neighbors (MNN) method.
 }
 \examples{
-sim <- simulate_data(n_genes = 1000, batch_cells = c(150, 50),
-                     group_prob = c(0.5, 0.5), n_hvgs = 500,
-                     compute_pca = TRUE, output_format = "SingleCellExperiment")
+sim <- simulate_data(
+  n_genes = 1000, batch_cells = c(150, 50),
+  group_prob = c(0.5, 0.5), n_hvgs = 500,
+  compute_pca = TRUE, output_format = "SingleCellExperiment"
+)
 fastmnn <- fastMNNRun(input = sim, batch = "Batch")
 
 }

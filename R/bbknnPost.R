@@ -14,8 +14,9 @@
 #' \link[Seurat]{Seurat} or `AnnData` object.
 #' @rdname bbknnPost
 #'
-setGeneric("bbknnPost", function(input, output, method)
-  standardGeneric("bbknnPost"), signature = c("input"))
+setGeneric("bbknnPost", function(input, output, method) {
+  standardGeneric("bbknnPost")
+}, signature = c("input"))
 
 #' @rdname bbknnPost
 #' @aliases bbknnPost,Seurat,Seurat-method
@@ -23,10 +24,12 @@ setGeneric("bbknnPost", function(input, output, method)
 #' @importFrom Seurat CreateDimReducObject DefaultAssay
 #' @importFrom SingleCellExperiment reducedDim
 #'
-setMethod("bbknnPost", "Seurat",  function(input, output, method) {
-  input[[method]] <- CreateDimReducObject(embeddings = output,
-                                          key = "bbknn_",
-                                          assay = DefaultAssay(input))
+setMethod("bbknnPost", "Seurat", function(input, output, method) {
+  input[[method]] <- CreateDimReducObject(
+    embeddings = output,
+    key = "bbknn_",
+    assay = DefaultAssay(input)
+  )
   return(input)
 })
 
@@ -35,7 +38,7 @@ setMethod("bbknnPost", "Seurat",  function(input, output, method) {
 #' @import methods
 #' @importFrom SingleCellExperiment reducedDim<- reducedDim
 #'
-setMethod("bbknnPost", "SingleCellExperiment",  function(input, output, method) {
+setMethod("bbknnPost", "SingleCellExperiment", function(input, output, method) {
   reducedDim(input, method) <- output
   return(input)
 })
@@ -44,7 +47,7 @@ setMethod("bbknnPost", "SingleCellExperiment",  function(input, output, method) 
 #' @aliases bbknnPost,AnnDataR6,AnnDataR6-method
 #' @importFrom SingleCellExperiment reducedDim
 #'
-setMethod("bbknnPost", "AnnDataR6",  function(input, output, method) {
+setMethod("bbknnPost", "AnnDataR6", function(input, output, method) {
   input$obsm[[method]] <- as.matrix(output)
   return(input)
 })

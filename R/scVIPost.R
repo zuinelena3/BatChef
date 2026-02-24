@@ -14,8 +14,9 @@
 #' \link[Seurat]{Seurat} or `AnnData` object.
 #' @rdname scVIPost
 #'
-setGeneric("scVIPost", function(input, output, method)
-  standardGeneric("scVIPost"), signature = c("input"))
+setGeneric("scVIPost", function(input, output, method) {
+  standardGeneric("scVIPost")
+}, signature = c("input"))
 
 #' @rdname scVIPost
 #' @aliases scVIPost,Seurat,Seurat-method
@@ -23,9 +24,11 @@ setGeneric("scVIPost", function(input, output, method)
 #' @importFrom Seurat CreateDimReducObject DefaultAssay
 #' @importFrom SingleCellExperiment reducedDim
 
-setMethod("scVIPost", "Seurat",  function(input, output, method) {
-  input[[method]] <- CreateDimReducObject(embeddings = as.matrix(output[[2]]),
-                                          key = "scvi_", assay = DefaultAssay(input))
+setMethod("scVIPost", "Seurat", function(input, output, method) {
+  input[[method]] <- CreateDimReducObject(
+    embeddings = as.matrix(output[[2]]),
+    key = "scvi_", assay = DefaultAssay(input)
+  )
   return(input)
 })
 
@@ -34,7 +37,7 @@ setMethod("scVIPost", "Seurat",  function(input, output, method) {
 #' @import methods
 #' @importFrom SingleCellExperiment reducedDim<- reducedDim
 #'
-setMethod("scVIPost", "SingleCellExperiment",  function(input, output, method) {
+setMethod("scVIPost", "SingleCellExperiment", function(input, output, method) {
   assay(input, method) <- t(output[[1]])
   reducedDim(input, method) <- output[[2]]
   return(input)
@@ -44,7 +47,7 @@ setMethod("scVIPost", "SingleCellExperiment",  function(input, output, method) {
 #' @aliases scVIPost,AnnDataR6,AnnDataR6-method
 #' @import methods
 #'
-setMethod("scVIPost", "AnnDataR6",  function(input, output, method) {
+setMethod("scVIPost", "AnnDataR6", function(input, output, method) {
   input$layers["scvi"] <- output[[1]]
   input$obsm[["scvi"]] <- output[[2]]
 

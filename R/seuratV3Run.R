@@ -44,14 +44,18 @@
 #'
 #' @return A \link[Seurat]{Seurat} object that contains the corrected matrix.
 #' @examples
-#' sim <- simulate_data(n_genes = 1000, batch_cells = c(200, 200),
-#'                      group_prob = c(0.5, 0.5), n_hvgs = 500,
-#'                      compute_pca = FALSE,
-#'                      output_format = "Seurat")
+#' sim <- simulate_data(
+#'   n_genes = 1000, batch_cells = c(200, 200),
+#'   group_prob = c(0.5, 0.5), n_hvgs = 500,
+#'   compute_pca = FALSE,
+#'   output_format = "Seurat"
+#' )
 #' feat <- Seurat::VariableFeatures(sim)
 #' sim <- Seurat::SplitObject(sim, split.by = "Batch")
-#' seuv3 <- seuratV3Run(input = sim, reduction = "cca",
-#'                      features = feat)
+#' seuv3 <- seuratV3Run(
+#'   input = sim, reduction = "cca",
+#'   features = feat
+#' )
 #'
 seuratV3Run <- function(input, assay = NULL, reference = NULL,
                         anchor_features = 2000, scale = TRUE,
@@ -63,31 +67,34 @@ seuratV3Run <- function(input, assay = NULL, reference = NULL,
                         features = NULL, features_to_integrate = NULL,
                         k_weight = 100, weight_reduction = NULL, sd_weight = 1,
                         sample_tree = NULL, preserve_order = FALSE) {
-
   # NOTE: until https://github.com/satijalab/seurat/issues/9850 is fixed.
-  suppressWarningsByMsg("deprecated",
-                        anchorset <- FindIntegrationAnchors(
-                          object.list = input, assay = assay,
-                          reference = reference, anchor.features = anchor_features,
-                          scale = scale, normalization.method = normalization_method,
-                          sct.clip.range = sct_clip_range, reduction = reduction,
-                          l2.norm = l2_norm, dims = dims, k.anchor = k_anchor,
-                          k.filter = k_filter, k.score = k_score,
-                          max.features = max_features, nn.method = nn_method,
-                          n.trees = n_trees, eps = eps, verbose = verbose)
+  suppressWarningsByMsg(
+    "deprecated",
+    anchorset <- FindIntegrationAnchors(
+      object.list = input, assay = assay,
+      reference = reference, anchor.features = anchor_features,
+      scale = scale, normalization.method = normalization_method,
+      sct.clip.range = sct_clip_range, reduction = reduction,
+      l2.norm = l2_norm, dims = dims, k.anchor = k_anchor,
+      k.filter = k_filter, k.score = k_score,
+      max.features = max_features, nn.method = nn_method,
+      n.trees = n_trees, eps = eps, verbose = verbose
+    )
   )
 
   # NOTE: until https://github.com/satijalab/seurat/issues/8938 is fixed.
   suppressWarningsByMsg(
     "counts isn't present",
-    IntegrateData(anchorset = anchorset, new.assay.name = new_assay_name,
-                  normalization.method = normalization_method,
-                  features = features,
-                  features.to.integrate = features_to_integrate,
-                  dims = dims, k.weight = k_weight,
-                  weight.reduction = weight_reduction,
-                  sd.weight = sd_weight, sample.tree = sample_tree,
-                  preserve.order = preserve_order, eps = eps,
-                  verbose = verbose)
+    IntegrateData(
+      anchorset = anchorset, new.assay.name = new_assay_name,
+      normalization.method = normalization_method,
+      features = features,
+      features.to.integrate = features_to_integrate,
+      dims = dims, k.weight = k_weight,
+      weight.reduction = weight_reduction,
+      sd.weight = sd_weight, sample.tree = sample_tree,
+      preserve.order = preserve_order, eps = eps,
+      verbose = verbose
+    )
   )
 }

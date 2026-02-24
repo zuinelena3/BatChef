@@ -58,8 +58,10 @@ mean_params <- function(normalized) {
   means <- means[means != 0]
   means <- winsorize(means, q = 0.1)
 
-  fit <- fitdist(data = means, distr = "gamma",
-                 method = "mge", gof = "CvM")
+  fit <- fitdist(
+    data = means, distr = "gamma",
+    method = "mge", gof = "CvM"
+  )
   if (fit$convergence > 0) {
     warning(
       "Fitting means using the Goodness of Fit method failed, ",
@@ -68,9 +70,7 @@ mean_params <- function(normalized) {
     fit <- fitdist(means, "gamma", method = "mme")
     params <- data.frame(mean_rate = unname(fit$estimate["rate"]))
     return(params)
-  }
-
-  else {
+  } else {
     params <- data.frame(mean_rate = unname(fit$estimate["rate"]))
     return(params)
   }
@@ -146,7 +146,8 @@ groups_params <- function(input, normalized) {
   genes <- rownames(normalized)
   gene_var <- modelGeneVariances(normalized, num.threads = 1)
   top_hvgs <- chooseHighlyVariableGenes(gene_var$statistics$residuals,
-                                        top = 1000)
+    top = 1000
+  )
   top_hvgs <- rownames(gene_var$statistics[top_hvgs, ])
   normalized <- normalized[top_hvgs, ]
 
@@ -156,8 +157,10 @@ groups_params <- function(input, normalized) {
   rownames(pca) <- colnames(input)
   reducedDim(input, "PCA") <- pca
 
-  clust <- leiden_clustering(input = input, reduction = "PCA", k = 15,
-                             nmi_compute = FALSE, resolution = 1, store = FALSE,
-                             n_iter = -1)
+  clust <- leiden_clustering(
+    input = input, reduction = "PCA", k = 15,
+    nmi_compute = FALSE, resolution = 1, store = FALSE,
+    n_iter = -1
+  )
   nclust <- data.frame(ngroup = length(unique(clust)))
 }

@@ -17,8 +17,10 @@ extract_features <- function(input, batch) {
   counts <- counts[rowSums(counts) > 0, ]
   norm_counts <- normalized(counts)
 
-  batch_params <- batch_params(normalized = norm_counts,
-                               batch = colData(input)[, batch])
+  batch_params <- batch_params(
+    normalized = norm_counts,
+    batch = colData(input)[, batch]
+  )
 
   mean <- mean_params(norm_counts)
 
@@ -28,8 +30,10 @@ extract_features <- function(input, batch) {
 
   groups <- groups_params(input = input, normalized = norm_counts)
 
-  params <- data.frame(ncells = ncells, ngenes = ngenes, nbatch = nbatch,
-                       batch_params, mean, lib_size, out, groups)
+  params <- data.frame(
+    ncells = ncells, ngenes = ngenes, nbatch = nbatch,
+    batch_params, mean, lib_size, out, groups
+  )
   colnames(params) <- paste0("feature_", colnames(params))
   return(params)
 }

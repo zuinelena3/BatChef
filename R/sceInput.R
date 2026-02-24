@@ -8,8 +8,9 @@
 #' @return A \link[SingleCellExperiment]{SingleCellExperiment} object.
 #' @rdname sceInput
 #'
-setGeneric("sceInput", function(input, batch)
-  standardGeneric("sceInput"), signature = c("input"))
+setGeneric("sceInput", function(input, batch) {
+  standardGeneric("sceInput")
+}, signature = c("input"))
 
 #' @rdname sceInput
 #' @import methods
@@ -18,15 +19,19 @@ setGeneric("sceInput", function(input, batch)
 #' @importFrom S4Vectors DataFrame
 #' @aliases sceInput,Seurat,Seurat-method
 #'
-setMethod("sceInput", "Seurat",  function(input, batch) {
+setMethod("sceInput", "Seurat", function(input, batch) {
   stopifnot(batch %in% colnames(input[[]]))
 
-  hvgs <- rownames(input) %in%  VariableFeatures(input)
+  hvgs <- rownames(input) %in% VariableFeatures(input)
   pca <- Embeddings(input)
-  input <- SingleCellExperiment(assays = list(counts = input@assays$RNA$counts,
-                                              logcounts = input@assays$RNA$data),
-                                colData = DataFrame(input@meta.data),
-                                rowData = data.frame(hvgs = hvgs))
+  input <- SingleCellExperiment(
+    assays = list(
+      counts = input@assays$RNA$counts,
+      logcounts = input@assays$RNA$data
+    ),
+    colData = DataFrame(input@meta.data),
+    rowData = data.frame(hvgs = hvgs)
+  )
   reducedDim(input, "PCA") <- pca
   return(input)
 })
@@ -36,7 +41,7 @@ setMethod("sceInput", "Seurat",  function(input, batch) {
 #' @importFrom SingleCellExperiment colData
 #' @aliases sceInput,SingleCellExperiment,SingleCellExperiment-method
 #'
-setMethod("sceInput", "SingleCellExperiment",  function(input, batch) {
+setMethod("sceInput", "SingleCellExperiment", function(input, batch) {
   stopifnot(batch %in% colnames(colData(input)))
   input <- input
 })
@@ -49,14 +54,14 @@ setMethod("sceInput", "SingleCellExperiment",  function(input, batch) {
 #'
 #' @aliases sceInput,AnnDataR6,AnnDataR6-method
 #'
-setMethod("sceInput", "AnnDataR6",  function(input, batch) {
+setMethod("sceInput", "AnnDataR6", function(input, batch) {
   stopifnot(batch %in% colnames(input$obs))
 
   pca <- input$obsm[["X_pca"]]
-  colnames(pca) <- paste0("PC_", 1:ncol(pca))
+  colnames(pca) <- paste0("PC_", seq_len(ncol(pca)))
   rownames(pca) <- input$obs_names
   loadings <- input$varm[["PCs"]]
-  colnames(loadings) <- paste0("PC_", 1:ncol(pca))
+  colnames(loadings) <- paste0("PC_", seq_len(ncol(pca)))
   rownames(loadings) <- input$var_names
   input$varm <- NULL
   input$obsm <- NULL

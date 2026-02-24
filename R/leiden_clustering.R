@@ -33,11 +33,15 @@
 #' \link[Seurat]{Seurat} or `AnnData` object that contains the cluster labels.
 #' @examples
 #'
-#' sim <- simulate_data(n_genes = 1000, batch_cells = c(150, 50),
-#'                      group_prob = c(0.5, 0.5), n_hvgs = 500,
-#'                      compute_pca = TRUE, output_format = "SingleCellExperiment")
-#' clust <- leiden_clustering(input = sim, reduction = "PCA",
-#'                            nmi_compute = FALSE, resolution = 1, n_iter = 2)
+#' sim <- simulate_data(
+#'   n_genes = 1000, batch_cells = c(150, 50),
+#'   group_prob = c(0.5, 0.5), n_hvgs = 500,
+#'   compute_pca = TRUE, output_format = "SingleCellExperiment"
+#' )
+#' clust <- leiden_clustering(
+#'   input = sim, reduction = "PCA",
+#'   nmi_compute = FALSE, resolution = 1, n_iter = 2
+#' )
 #'
 leiden_clustering <- function(input, label_true = NULL, reduction,
                               nmi_compute = TRUE, resolution = NULL, k = 15,
@@ -48,40 +52,47 @@ leiden_clustering <- function(input, label_true = NULL, reduction,
   if (nmi_compute == FALSE) {
     stopifnot("Specify the resolution parameter" = !is.null(resolution))
 
-    clust <- leiden.community(neighbors, resolution = resolution,
-                              n.iterations = n_iter)
+    clust <- leiden.community(neighbors,
+      resolution = resolution,
+      n.iterations = n_iter
+    )
     clust <- clust$membership
-  }
-
-  else {
+  } else {
     stopifnot("Specify the true label" = !is.null(label_true))
 
     res <- seq(0.1, 2, by = 0.1)
     max <- 0
 
     for (i in seq_along(res)) {
-      clust <- leiden.community(neighbors, resolution = res[i],
-                                n.iterations = n_iter)
+      clust <- leiden.community(neighbors,
+        resolution = res[i],
+        n.iterations = n_iter
+      )
 
-      nmi <- NMI(c1 = as.vector(colData(sce)[, label_true]),
-                 c2 = as.vector(clust$membership),
-                 variant = "sum")
+      nmi <- NMI(
+        c1 = as.vector(colData(sce)[, label_true]),
+        c2 = as.vector(clust$membership),
+        variant = "sum"
+      )
 
       if (nmi > max) {
         max <- nmi
         names(max) <- res[i]
       }
     }
-    clust <- leiden.community(neighbors, resolution = as.numeric(names(max)),
-                              n.iterations = n_iter)
+    clust <- leiden.community(neighbors,
+      resolution = as.numeric(names(max)),
+      n.iterations = n_iter
+    )
     clust <- clust$membership
   }
 
   if (store == TRUE) {
     ifelse(inherits(input, "AnnDataR6"),
-           input$obs$cluster <- clust, input$cluster <- clust)
+      input$obs$cluster <- clust, input$cluster <- clust
+    )
     return(input)
+  } else {
+    return(clust)
   }
-
-  else return(clust)
 }

@@ -32,11 +32,15 @@
 #' @return A matrix of the coordinates of the points chosen to represent
 #' the dissimilarities.
 #' @examples
-#' sim <- simulate_data(n_genes = 1000, batch_cells = c(150, 50),
-#'                      group_prob = c(0.5, 0.5), n_hvgs = 500,
-#'                      compute_pca = TRUE, output_format = "SingleCellExperiment")
-#' bbknn <- bbknnRun(input = SingleCellExperiment::reducedDim(sim, "PCA"),
-#'                   batch = sim$Batch, n_pcs = 10)
+#' sim <- simulate_data(
+#'   n_genes = 1000, batch_cells = c(150, 50),
+#'   group_prob = c(0.5, 0.5), n_hvgs = 500,
+#'   compute_pca = TRUE, output_format = "SingleCellExperiment"
+#' )
+#' bbknn <- bbknnRun(
+#'   input = SingleCellExperiment::reducedDim(sim, "PCA"),
+#'   batch = sim$Batch, n_pcs = 10
+#' )
 #'
 bbknnRun <- function(input, batch, neighbors_within_batch = 3, n_pcs = 50,
                      trim = NULL, computation = "annoy", annoy_n_trees = 10,
@@ -44,47 +48,50 @@ bbknnRun <- function(input, batch, neighbors_within_batch = 3, n_pcs = 50,
                      metric = "euclidean", set_op_mix_ratio = 1,
                      local_connectivity = 1, approx = NULL, use_annoy = NULL,
                      use_faiss = NULL, scanpy_logging = FALSE) {
-
   proc <- basiliskStart(py_env)
   on.exit(basiliskStop(proc))
 
-  out <- basiliskRun(proc = proc, fun = function(input, batch,
-                                                 neighbors_within_batch = 3,
-                                                 n_pcs = 50, trim = NULL,
-                                                 computation = "annoy",
-                                                 annoy_n_trees = 10,
-                                                 pynndescent_n_neighbors = 30,
-                                                 pynndescent_random_state = 0,
-                                                 metric = "euclidean",
-                                                 set_op_mix_ratio = 1,
-                                                 local_connectivity = 1,
-                                                 approx = NULL, use_annoy = NULL,
-                                                 use_faiss = NULL,
-                                                 scanpy_logging = FALSE) {
-    bbknn <- reticulate::import("bbknn")
+  out <- basiliskRun(
+    proc = proc, fun = function(input, batch,
+                                neighbors_within_batch = 3,
+                                n_pcs = 50, trim = NULL,
+                                computation = "annoy",
+                                annoy_n_trees = 10,
+                                pynndescent_n_neighbors = 30,
+                                pynndescent_random_state = 0,
+                                metric = "euclidean",
+                                set_op_mix_ratio = 1,
+                                local_connectivity = 1,
+                                approx = NULL, use_annoy = NULL,
+                                use_faiss = NULL,
+                                scanpy_logging = FALSE) {
+      bbknn <- reticulate::import("bbknn")
 
-    args <- c(list(pca = input, batch_list = batch,
-                   neighbors_within_batch = as.integer(neighbors_within_batch),
-                   n_pcs = as.integer(n_pcs), trim = trim, computation = computation,
-                   annoy_n_trees = as.integer(annoy_n_trees),
-                   pynndescent_n_neighbors = as.integer(pynndescent_n_neighbors),
-                   pynndescent_random_state = as.integer(pynndescent_random_state),
-                   metric = metric, set_op_mix_ratio = as.integer(set_op_mix_ratio),
-                   local_connectivity = as.integer(local_connectivity),
-                   approx = approx, use_annoy = use_annoy, use_faiss = use_faiss,
-                   scanpy_logging = scanpy_logging))
+      args <- c(list(
+        pca = input, batch_list = batch,
+        neighbors_within_batch = as.integer(neighbors_within_batch),
+        n_pcs = as.integer(n_pcs), trim = trim, computation = computation,
+        annoy_n_trees = as.integer(annoy_n_trees),
+        pynndescent_n_neighbors = as.integer(pynndescent_n_neighbors),
+        pynndescent_random_state = as.integer(pynndescent_random_state),
+        metric = metric, set_op_mix_ratio = as.integer(set_op_mix_ratio),
+        local_connectivity = as.integer(local_connectivity),
+        approx = approx, use_annoy = use_annoy, use_faiss = use_faiss,
+        scanpy_logging = scanpy_logging
+      ))
 
-    out <- do.call(bbknn$matrix$bbknn, args)
+      out <- do.call(bbknn$matrix$bbknn, args)
 
-    mds <- cmdscale(out[[1]], k = n_pcs)
-    rownames(mds) <- rownames(input)
-    colnames(mds) <- paste0("bbknn_", seq(n_pcs))
-    return(mds)
-  }, input = input, batch = batch, neighbors_within_batch = neighbors_within_batch,
-  n_pcs = n_pcs, trim = trim, computation = computation,
-  annoy_n_trees = annoy_n_trees, pynndescent_n_neighbors = pynndescent_n_neighbors,
-  pynndescent_random_state = pynndescent_random_state, metric = metric,
-  set_op_mix_ratio = set_op_mix_ratio, local_connectivity = local_connectivity,
-  approx = approx, use_annoy = use_annoy, use_faiss = use_faiss,
-  scanpy_logging = scanpy_logging)
+      mds <- cmdscale(out[[1]], k = n_pcs)
+      rownames(mds) <- rownames(input)
+      colnames(mds) <- paste0("bbknn_", seq(n_pcs))
+      return(mds)
+    }, input = input, batch = batch, neighbors_within_batch = neighbors_within_batch,
+    n_pcs = n_pcs, trim = trim, computation = computation,
+    annoy_n_trees = annoy_n_trees, pynndescent_n_neighbors = pynndescent_n_neighbors,
+    pynndescent_random_state = pynndescent_random_state, metric = metric,
+    set_op_mix_ratio = set_op_mix_ratio, local_connectivity = local_connectivity,
+    approx = approx, use_annoy = use_annoy, use_faiss = use_faiss,
+    scanpy_logging = scanpy_logging
+  )
 }

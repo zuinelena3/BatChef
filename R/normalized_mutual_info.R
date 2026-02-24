@@ -21,19 +21,25 @@
 #'
 #' @return A numeric value.
 #' @examples
-#' sim <- simulate_data(n_genes = 1000, batch_cells = c(150, 50),
-#'                      group_prob = c(0.5, 0.5), n_hvgs = 500,
-#'                      compute_pca = TRUE, output_format = "SingleCellExperiment")
-#' nmi <- normalized_mutual_info(input = sim, label_true = "Group", reduction = "PCA",
-#'                               resolution = 0.5, n_iter = 2)
+#' sim <- simulate_data(
+#'   n_genes = 1000, batch_cells = c(150, 50),
+#'   group_prob = c(0.5, 0.5), n_hvgs = 500,
+#'   compute_pca = TRUE, output_format = "SingleCellExperiment"
+#' )
+#' nmi <- normalized_mutual_info(
+#'   input = sim, label_true = "Group", reduction = "PCA",
+#'   resolution = 0.5, n_iter = 2
+#' )
 #'
 normalized_mutual_info <- function(input, label_true, reduction,
                                    resolution = 1, k = 15, variant = "sum",
                                    n_iter = -1) {
-  clust <- leiden_clustering(input = input, label_true = label_true,
-                             reduction = reduction, nmi_compute = FALSE,
-                             resolution = resolution, k = k, store = FALSE,
-                             n_iter = n_iter)
+  clust <- leiden_clustering(
+    input = input, label_true = label_true,
+    reduction = reduction, nmi_compute = FALSE,
+    resolution = resolution, k = k, store = FALSE,
+    n_iter = n_iter
+  )
 
   group <- colData(input)[, label_true]
 

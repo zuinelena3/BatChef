@@ -13,8 +13,9 @@
 #' \link[Seurat]{Seurat} or `AnnData` object.
 #' @rdname seuratv3Post
 #'
-setGeneric("seuratv3Post", function(input, output, method)
-  standardGeneric("seuratv3Post"), signature = c("input"))
+setGeneric("seuratv3Post", function(input, output, method) {
+  standardGeneric("seuratv3Post")
+}, signature = c("input"))
 
 #' @rdname seuratv3Post
 #' @aliases seuratv3Post,Seurat,Seurat-method
@@ -22,10 +23,12 @@ setGeneric("seuratv3Post", function(input, output, method)
 #' @importFrom Seurat CreateAssayObject
 #' @importFrom SeuratObject LayerData
 #'
-setMethod("seuratv3Post", "Seurat",  function(input, output, method) {
+setMethod("seuratv3Post", "Seurat", function(input, output, method) {
   mat <- LayerData(output)
-  mat <- mat[order(match(rownames(mat), rownames(input))),
-             order(match(colnames(mat), colnames(input)))]
+  mat <- mat[
+    order(match(rownames(mat), rownames(input))),
+    order(match(colnames(mat), colnames(input)))
+  ]
   input[[method]] <- CreateAssayObject(counts = mat)
   return(input)
 })
@@ -36,7 +39,7 @@ setMethod("seuratv3Post", "Seurat",  function(input, output, method) {
 #' @importFrom SingleCellExperiment SingleCellExperiment altExp<-
 #' @importFrom SeuratObject LayerData
 #'
-setMethod("seuratv3Post", "SingleCellExperiment",  function(input, output, method) {
+setMethod("seuratv3Post", "SingleCellExperiment", function(input, output, method) {
   mat <- LayerData(output)
   alt_se <- SingleCellExperiment(assays = list(counts = mat))
 

@@ -78,16 +78,18 @@ SeuratV3Params <- function(features, pca_name = NULL, assay = NULL,
                            features_to_integrate = NULL, k_weight = 100,
                            weight_reduction = NULL, sd_weight = 1,
                            sample_tree = NULL, preserve_order = FALSE) {
-  new("SeuratV3Params", features = features, pca_name = pca_name, assay = assay,
-      reference = reference, anchor_features = anchor_features, scale = scale,
-      normalization_method = normalization_method,
-      sct_clip_range = sct_clip_range, reduction = reduction, l2_norm = l2_norm,
-      dims = dims, k_anchor = k_anchor, k_filter = k_filter, k_score = k_score,
-      max_features = max_features, nn_method = nn_method, n_trees = n_trees,
-      eps = eps, verbose = verbose, new_assay_name = new_assay_name,
-      features_to_integrate = features_to_integrate, k_weight = k_weight,
-      weight_reduction = weight_reduction, sd_weight = sd_weight,
-      sample_tree = sample_tree, preserve_order = preserve_order)
+  new("SeuratV3Params",
+    features = features, pca_name = pca_name, assay = assay,
+    reference = reference, anchor_features = anchor_features, scale = scale,
+    normalization_method = normalization_method,
+    sct_clip_range = sct_clip_range, reduction = reduction, l2_norm = l2_norm,
+    dims = dims, k_anchor = k_anchor, k_filter = k_filter, k_score = k_score,
+    max_features = max_features, nn_method = nn_method, n_trees = n_trees,
+    eps = eps, verbose = verbose, new_assay_name = new_assay_name,
+    features_to_integrate = features_to_integrate, k_weight = k_weight,
+    weight_reduction = weight_reduction, sd_weight = sd_weight,
+    sample_tree = sample_tree, preserve_order = preserve_order
+  )
 }
 
 #' @param pca_name  A string specifying the PCA name.
@@ -140,18 +142,20 @@ SeuratV5Params <- function(pca_name = NULL, method = "CCAIntegration",
                            l2_norm = TRUE, k_anchor = 5,
                            k_score = 30, max_features = 200, nn_method = "annoy",
                            n_trees = 50, eps = 0) {
-  new("SeuratV5Params", pca_name = pca_name, method = method,
-      orig_reduction = orig_reduction, assay = assay, features = features,
-      layers = layers, scale_layer = scale_layer,
-      new_reduction = new_reduction, reference = reference,
-      normalization_method = normalization_method,
-      dims = dims, k_filter = k_filter, dims_to_integrate = dims_to_integrate,
-      k_weight = k_weight, weight_reduction = weight_reduction,
-      sd_weight = sd_weight, sample_tree = sample_tree,
-      preserve_order = preserve_order,
-      verbose = verbose, l2_norm = l2_norm, k_anchor = k_anchor,
-      k_score = k_score, max_features = max_features, nn_method = nn_method,
-      n_trees = n_trees, eps = eps)
+  new("SeuratV5Params",
+    pca_name = pca_name, method = method,
+    orig_reduction = orig_reduction, assay = assay, features = features,
+    layers = layers, scale_layer = scale_layer,
+    new_reduction = new_reduction, reference = reference,
+    normalization_method = normalization_method,
+    dims = dims, k_filter = k_filter, dims_to_integrate = dims_to_integrate,
+    k_weight = k_weight, weight_reduction = weight_reduction,
+    sd_weight = sd_weight, sample_tree = sample_tree,
+    preserve_order = preserve_order,
+    verbose = verbose, l2_norm = l2_norm, k_anchor = k_anchor,
+    k_score = k_score, max_features = max_features, nn_method = nn_method,
+    n_trees = n_trees, eps = eps
+  )
 }
 
 #' @param ... Named arguments to pass to individual methods upon dispatch
@@ -181,8 +185,10 @@ HarmonyParams <- function(...) {
 #' @rdname BatChefParams
 #' @importFrom methods new
 ScanoramaParams <- function(assay_type = NULL, return_dimred = FALSE, ...) {
-  new("ScanoramaParams", assay_type = assay_type, return_dimred = return_dimred,
-      extra = list(...))
+  new("ScanoramaParams",
+    assay_type = assay_type, return_dimred = return_dimred,
+    extra = list(...)
+  )
 }
 
 #' @param layer A string specifying the counts data.
@@ -268,24 +274,26 @@ ScVIParams <- function(assay_type = "counts", layer = NULL, labels_key = NULL, s
                        library_size = 1, n_samples = 1,
                        n_samples_overall = NULL, weights = NULL,
                        return_mean = TRUE, return_numpy = NULL) {
-  new("SCVIParams", layer = layer, labels_key = labels_key,
-      size_factor_key = size_factor_key,
-      categorical_covariate_keys = categorical_covariate_keys,
-      continuous_covariate_keys = continuous_covariate_keys,
-      n_hidden = n_hidden, n_latent = n_latent, n_layers = n_layers,
-      dropout_rate = dropout_rate, dispersion = dispersion,
-      gene_likelihood = gene_likelihood, latent_distribution = latent_distribution,
-      max_epochs = max_epochs, accelerator = accelerator, devices = devices,
-      train_size = train_size, validation_size = validation_size,
-      shuffle_set_split = shuffle_set_split, load_sparse_tensor = load_sparse_tensor,
-      batch_size = batch_size, early_stopping = early_stopping,
-      datasplitter_kwargs = datasplitter_kwargs, plan_kwargs = plan_kwargs,
-      datamodule = datamodule, indices = indices, give_mean = give_mean,
-      mc_samples = mc_samples, return_dist = return_dist, dataloader = dataloader,
-      transform_batch = transform_batch, gene_list = gene_list,
-      library_size = library_size, n_samples = n_samples,
-      n_samples_overall = n_samples_overall, weights = weights,
-      return_mean = return_mean, return_numpy = return_numpy)
+  new("SCVIParams",
+    layer = layer, labels_key = labels_key,
+    size_factor_key = size_factor_key,
+    categorical_covariate_keys = categorical_covariate_keys,
+    continuous_covariate_keys = continuous_covariate_keys,
+    n_hidden = n_hidden, n_latent = n_latent, n_layers = n_layers,
+    dropout_rate = dropout_rate, dispersion = dispersion,
+    gene_likelihood = gene_likelihood, latent_distribution = latent_distribution,
+    max_epochs = max_epochs, accelerator = accelerator, devices = devices,
+    train_size = train_size, validation_size = validation_size,
+    shuffle_set_split = shuffle_set_split, load_sparse_tensor = load_sparse_tensor,
+    batch_size = batch_size, early_stopping = early_stopping,
+    datasplitter_kwargs = datasplitter_kwargs, plan_kwargs = plan_kwargs,
+    datamodule = datamodule, indices = indices, give_mean = give_mean,
+    mc_samples = mc_samples, return_dist = return_dist, dataloader = dataloader,
+    transform_batch = transform_batch, gene_list = gene_list,
+    library_size = library_size, n_samples = n_samples,
+    n_samples_overall = n_samples_overall, weights = weights,
+    return_mean = return_mean, return_numpy = return_numpy
+  )
 }
 
 #' @param assay_type A string specifying the assay to use for correction.

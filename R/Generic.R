@@ -9,5 +9,6 @@
 #' @export
 #' @import methods
 #
-setGeneric("batchCorrect", function(input, batch, params)
-  standardGeneric("batchCorrect"), signature = "params")
+setGeneric("batchCorrect", function(input, batch, params) {
+  standardGeneric("batchCorrect")
+}, signature = "params")

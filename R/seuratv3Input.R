@@ -10,8 +10,9 @@
 #' @return A list of \link[Seurat]{Seurat} objects.
 #' @rdname seuratv3Input
 #'
-setGeneric("seuratv3Input", function(input, batch, features, pca_name = NULL)
-  standardGeneric("seuratv3Input"), signature = c("input"))
+setGeneric("seuratv3Input", function(input, batch, features, pca_name = NULL) {
+  standardGeneric("seuratv3Input")
+}, signature = c("input"))
 
 #' @rdname seuratv3Input
 #' @import methods
@@ -24,11 +25,11 @@ setMethod("seuratv3Input", "Seurat", function(input, batch, features, pca_name) 
   stopifnot("Error: 'pca' not found in this Seurat object" = "pca" %in% Reductions(input))
 
   if (is(input[[DefaultAssay(input)]], "Assay5")) {
-    input <-  Convert_Assay(seurat_object = input, assay = DefaultAssay(input),
-                            convert_to = "V3")
-  }
-
-  else {
+    input <- Convert_Assay(
+      seurat_object = input, assay = DefaultAssay(input),
+      convert_to = "V3"
+    )
+  } else {
     input <- input
   }
 
@@ -57,9 +58,11 @@ setMethod("seuratv3Input", "SingleCellExperiment", function(input, batch,
   })
 
   VariableFeatures(so) <- features
-  so[["pca"]] <- CreateDimReducObject(embeddings = pca,
-                                      loadings = loadings,
-                                      key = "pca_", assay = DefaultAssay(so))
+  so[["pca"]] <- CreateDimReducObject(
+    embeddings = pca,
+    loadings = loadings,
+    key = "pca_", assay = DefaultAssay(so)
+  )
   ll <- SplitObject(so, split.by = batch)
 })
 
@@ -67,7 +70,7 @@ setMethod("seuratv3Input", "SingleCellExperiment", function(input, batch,
 #' @import methods
 #' @aliases seuratv3Input,AnnDataR6,AnnDataR6-method
 #'
-setMethod("seuratv3Input", "AnnDataR6",  function(input, batch, features, pca_name) {
+setMethod("seuratv3Input", "AnnDataR6", function(input, batch, features, pca_name) {
   stopifnot("The input is an AnnData object. Please create a list of AnnData!" = !is(input, "AnnDataR6"))
 })
 
@@ -77,8 +80,8 @@ setMethod("seuratv3Input", "AnnDataR6",  function(input, batch, features, pca_na
 #' @importFrom Seurat CreateDimReducObject VariableFeatures<- ScaleData DefaultAssay
 #' @aliases seuratv3Input,AnnDataR6,AnnDataR6-method
 #'
-setMethod("seuratv3Input", "AnnDataR6",  function(input, batch, features, pca_name) {
-  stopifnot("Error: 'batch' is not inside the obs" =  batch %in% colnames(input$obs))
+setMethod("seuratv3Input", "AnnDataR6", function(input, batch, features, pca_name) {
+  stopifnot("Error: 'batch' is not inside the obs" = batch %in% colnames(input$obs))
   stopifnot("Error: specify 'pca_name'" = !is.null(pca_name))
 
   var <- unique(input$obs[[batch]])
@@ -104,10 +107,12 @@ setMethod("seuratv3Input", "AnnDataR6",  function(input, batch, features, pca_na
       so <- as.Seurat(sce)
     })
 
-    so@reductions[["pca"]] <- CreateDimReducObject(embeddings = pca,
-                                                   loadings = loadings,
-                                                   key = "pca_",
-                                                   assay = DefaultAssay(so))
+    so@reductions[["pca"]] <- CreateDimReducObject(
+      embeddings = pca,
+      loadings = loadings,
+      key = "pca_",
+      assay = DefaultAssay(so)
+    )
     VariableFeatures(so) <- features
     return(so)
   })

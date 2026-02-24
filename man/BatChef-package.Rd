@@ -6,7 +6,7 @@
 \alias{BatChef-package}
 \title{BatChef: Single-cell RNA-seq batch effects correction methods interface}
 \description{
-A common interface for single-cell RNA_seq batch effects correction methods in R and Python environments. The package contains the performance evaluation metrics.
+This package implements a variety of methods for batch correction in single-cell RNA sequencing (scRNA-seq) data. It incorporates quantitative metrics (e.g. Wasserstein distance, Adjusted Rand Index) to evaluate their performance. Furthermore, the package assists users in identifying and applying the optimal method for specific datasets.
 }
 \seealso{
 Useful links:

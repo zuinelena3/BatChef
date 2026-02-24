@@ -22,9 +22,11 @@ A list that contains the corrected gene expression matrix
 scMerge2 is based on pseudo-replicates to remove unwanted batch effects.
 }
 \examples{
-sim <- simulate_data(n_genes = 1000, batch_cells = c(250, 200),
-                     group_prob = c(0.5, 0.5), n_hvgs = 500,
-                     compute_pca = TRUE, output_format = "SingleCellExperiment")
+sim <- simulate_data(
+  n_genes = 1000, batch_cells = c(250, 200),
+  group_prob = c(0.5, 0.5), n_hvgs = 500,
+  compute_pca = TRUE, output_format = "SingleCellExperiment"
+)
 scmerge2 <- scMerge2Run(input = sim, batch = "Batch", assay_type = "logcounts")
 
 }

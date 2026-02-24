@@ -13,8 +13,9 @@
 #' \link[Seurat]{Seurat} or `AnnData` object.
 #' @rdname ligerPost
 #'
-setGeneric("ligerPost", function(input, output, method)
-  standardGeneric("ligerPost"), signature = c("input"))
+setGeneric("ligerPost", function(input, output, method) {
+  standardGeneric("ligerPost")
+}, signature = c("input"))
 
 #' @rdname ligerPost
 #' @aliases ligerPost,Seurat,Seurat-method
@@ -22,13 +23,15 @@ setGeneric("ligerPost", function(input, output, method)
 #' @importFrom Seurat CreateDimReducObject DefaultAssay
 #' @importFrom SingleCellExperiment reducedDim
 #'
-setMethod("ligerPost", "Seurat",  function(input, output, method) {
+setMethod("ligerPost", "Seurat", function(input, output, method) {
   embedding <- as.data.frame(output@H.norm)
   rownames(embedding) <- colnames(input)
 
-  input[[method]] <- CreateDimReducObject(embeddings = as.matrix(embedding),
-                                          key = "liger_",
-                                          assay = DefaultAssay(input))
+  input[[method]] <- CreateDimReducObject(
+    embeddings = as.matrix(embedding),
+    key = "liger_",
+    assay = DefaultAssay(input)
+  )
   return(input)
 })
 
@@ -37,7 +40,7 @@ setMethod("ligerPost", "Seurat",  function(input, output, method) {
 #' @import methods
 #' @importFrom SingleCellExperiment reducedDim<- reducedDim
 #'
-setMethod("ligerPost", "SingleCellExperiment",  function(input, output, method) {
+setMethod("ligerPost", "SingleCellExperiment", function(input, output, method) {
   embedding <- as.data.frame(output@H.norm)
   rownames(embedding) <- colnames(input)
   reducedDim(input, method) <- embedding
@@ -48,10 +51,9 @@ setMethod("ligerPost", "SingleCellExperiment",  function(input, output, method) 
 #' @aliases ligerPost,AnnDataR6,AnnDataR6-method
 #' @importFrom SingleCellExperiment reducedDim
 #'
-setMethod("ligerPost", "AnnDataR6",  function(input, output, method) {
+setMethod("ligerPost", "AnnDataR6", function(input, output, method) {
   embedding <- as.data.frame(output@H.norm)
   rownames(embedding) <- input$obs_names
   input$obsm[[method]] <- as.matrix(embedding)
   return(input)
 })
-

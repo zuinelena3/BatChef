@@ -9,11 +9,10 @@ merge_params <- function(base, extra, class) {
   arg_base <- names(base)
   arg_extra <- names(extra)
 
+  class_msg <- paste(class, "arguments are duplicated!")
   if (any(arg_base %in% arg_extra)) {
-    message(paste(class, "arguments are duplicated!"))
+    message(class_msg)
+  } else {
+    return(c(base, extra))
   }
-  else return(c(base, extra))
 }
-
-
-

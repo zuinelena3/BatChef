@@ -26,9 +26,9 @@ on which the clustering analysis will be performed.}
 
 \item{k}{An integer scalar specifying the number of nearest neighbors.}
 
-\item{n_iter}{Number of iterations of the Leiden clustering algorithm to perform.
+\item{n_iter}{Number of iterations of the Leiden clustering algorithm.
 Positive values above 2 define the total number of iterations to perform,
--1 has the algorithm run until it reaches its optimal clustering}
+-1 has the algorithm run until it reaches its optimal clustering.}
 }
 \value{
 A numeric value
@@ -41,10 +41,14 @@ between the clustering and ground truth labels.
 After computing Leiden clustering algorithm, the ARI metric is computed.
 }
 \examples{
-sim <- simulate_data(n_genes = 500, batch_cells = c(150, 50),
-                     group_prob = c(0.5, 0.5), n_hvgs = 500,
-                     compute_pca = TRUE, output_format = "SingleCellExperiment")
-ari <- adjusted_rand_index(input = sim, label_true = "Group", reduction = "PCA",
-                           resolution = 0.5, n_iter = 2)
+sim <- simulate_data(
+  n_genes = 500, batch_cells = c(150, 50),
+  group_prob = c(0.5, 0.5), n_hvgs = 500,
+  compute_pca = TRUE, output_format = "SingleCellExperiment"
+)
+ari <- adjusted_rand_index(
+  input = sim, label_true = "Group", reduction = "PCA",
+  resolution = 0.5, n_iter = 2
+)
 
 }

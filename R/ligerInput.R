@@ -10,8 +10,9 @@
 #' @return A LIGER compatible object
 #' @rdname ligerInput
 #'
-setGeneric("ligerInput", function(input, batch, features, ...)
-  standardGeneric("ligerInput"), signature = c("input"))
+setGeneric("ligerInput", function(input, batch, features, ...) {
+  standardGeneric("ligerInput")
+}, signature = c("input"))
 
 #' @rdname ligerInput
 #' @import methods
@@ -19,7 +20,7 @@ setGeneric("ligerInput", function(input, batch, features, ...)
 #' @importFrom rliger createLiger normalize scaleNotCenter
 #' @aliases ligerInput,Seurat,Seurat-method
 #'
-setMethod("ligerInput", "Seurat",  function(input, batch, features, ...) {
+setMethod("ligerInput", "Seurat", function(input, batch, features, ...) {
   stopifnot(batch %in% colnames(input[[]]))
   so_ll <- SplitObject(input, split.by = batch)
   names(so_ll) <- unique(input[[batch]][, 1])
@@ -37,8 +38,8 @@ setMethod("ligerInput", "Seurat",  function(input, batch, features, ...) {
 #' @importFrom rliger createLiger normalize scaleNotCenter
 #' @aliases ligerInput,SingleCellExperiment,SingleCellExperiment-method
 #'
-setMethod("ligerInput", "SingleCellExperiment",  function(input, batch,
-                                                          features, ...) {
+setMethod("ligerInput", "SingleCellExperiment", function(input, batch,
+                                                         features, ...) {
   stopifnot(batch %in% colnames(colData(input)))
   ll <- lapply(unique(colData(input)[, batch]), function(i) input[, colData(input)[, batch] == i])
   names(ll) <- unique(colData(input)[, batch])
@@ -47,8 +48,10 @@ setMethod("ligerInput", "SingleCellExperiment",  function(input, batch,
   lo <- do.call(createLiger, args)
 
   lo <- normalize(object = lo)
-  lo <- scaleNotCenter(object = lo,
-                       features = features)
+  lo <- scaleNotCenter(
+    object = lo,
+    features = features
+  )
 })
 
 #' @rdname ligerInput
@@ -59,14 +62,14 @@ setMethod("ligerInput", "SingleCellExperiment",  function(input, batch,
 #' @importFrom reticulate r_to_py
 #' @aliases ligerInput,AnnDataR6,AnnDataR6-method
 #'
-setMethod("ligerInput", "AnnDataR6",  function(input, batch, features, ...) {
+setMethod("ligerInput", "AnnDataR6", function(input, batch, features, ...) {
   stopifnot(batch %in% colnames(input$obs))
 
   pca <- input$obsm[["X_pca"]]
-  colnames(pca) <- paste0("PC_", 1:ncol(pca))
+  colnames(pca) <- paste0("PC_", seq_len(ncol(pca)))
   rownames(pca) <- input$obs_names
   loadings <- input$varm[["PCs"]]
-  colnames(loadings) <- paste0("PC_", 1:ncol(pca))
+  colnames(loadings) <- paste0("PC_", seq_len(ncol(pca)))
   rownames(loadings) <- input$var_names
   input$obsm <- NULL
   input$varm <- NULL

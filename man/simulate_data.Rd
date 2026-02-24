@@ -126,8 +126,10 @@ package, normalize data, select highly variable genes and
 compute Principal Component Analysis.
 }
 \examples{
-sim <- simulate_data(n_genes = 1000, batch_cells = c(150, 50),
-                     group_prob = c(0.5, 0.5), n_hvgs = 1000,
-                     compute_pca = FALSE)
+sim <- simulate_data(
+  n_genes = 1000, batch_cells = c(150, 50),
+  group_prob = c(0.5, 0.5), n_hvgs = 1000,
+  compute_pca = FALSE
+)
 
 }

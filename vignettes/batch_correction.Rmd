@@ -41,25 +41,30 @@ In the literature there are various batch correction methods, based on different
 
 # Installation
 
-```{r,eval=FALSE}
-# install.packages("devtools")
-devtools::install_github("zuinelena3/BatChef", ref = "main")
+```{r installation,eval=FALSE}
+if (!requireNamespace("BiocManager", quietly = TRUE)) {
+  install.packages("BiocManager")
+}
+BiocManager::install("BatChef")
 ```
 
-# Setting up
+# Setup
 
-```{r, include=TRUE, results="hide", message=FALSE, warning=FALSE}
-#Load the packages
+Load the package:
+
+```{r setup, include=TRUE, results="hide", message=FALSE, warning=FALSE}
 library(BatChef)
 ```
 
 To demonstrate, we simulate a dataset with 2,000 genes, 2,000 cells, 2 batches and 2 cell types, using the `simulate_data` function. This function applies the same parameters as the Splatter package’s ones. Additionally, it normalizes the data, identifies highly variable genes and performs principal component analysis using the `scrapper` package.
 
-```{r}
-sce <- simulate_data(n_genes = 2000, batch_cells = c(1200, 800),
-                     group_prob = c(0.6, 0.4), n_hvgs = 1000,
-                     compute_pca = TRUE, pca_ncomp = 10, 
-                     output_format = "SingleCellExperiment")
+```{r sce}
+sce <- simulate_data(
+  n_genes = 2000, batch_cells = c(1200, 800),
+  group_prob = c(0.6, 0.4), n_hvgs = 1000,
+  compute_pca = TRUE, pca_ncomp = 10,
+  output_format = "SingleCellExperiment"
+)
 sce
 ```
 
@@ -67,18 +72,20 @@ sce
 
 The `batchCorrect` function allows to specify the desired correction method and performs the correction with three different input data: `SingleCellExperiment`, `Seurat` and `AnnData`. We can simulate three different objects using the the `output_format` parameter in the `simulate_data` function.
 
-```{r, message=FALSE, warning=FALSE}
-so <- simulate_data(n_genes = 2000, batch_cells = c(1200, 800),
-                     group_prob = c(0.6, 0.4), n_hvgs = 1000,
-                     compute_pca = TRUE, pca_ncomp = 10, 
-                     output_format = "Seurat")
+```{r so, message=FALSE, warning=FALSE}
+so <- simulate_data(
+  n_genes = 2000, batch_cells = c(1200, 800),
+  group_prob = c(0.6, 0.4), n_hvgs = 1000,
+  compute_pca = TRUE, pca_ncomp = 10,
+  output_format = "Seurat"
+)
 so
 ```
 
-```{r, eval=FALSE}
+```{r anndata, eval=FALSE}
 # adata <- simulate_data(n_genes = 2000, batch_cells = c(1200, 800),
 #                      group_prob = c(0.6, 0.4), n_hvgs = 1000,
-#                      compute_pca = TRUE, pca_ncomp = 10, 
+#                      compute_pca = TRUE, pca_ncomp = 10,
 #                      output_format = "AnnData")
 # adata
 ```
@@ -113,28 +120,36 @@ To illustrate, we correct the data using `Scanorama` and `Harmony`.
 
 ### Harmony
 
-```{r, message=FALSE, warning=FALSE}
+```{r harmony1, message=FALSE, warning=FALSE}
 sce <- batchCorrect(input = sce, batch = "Batch", params = HarmonyParams())
 sce
 ```
 
 Also, the `Seurat` object can be used as an input data.
 
-```{r, message=FALSE, warning=FALSE}
+```{r harmony2, message=FALSE, warning=FALSE}
 so <- batchCorrect(input = so, batch = "Batch", params = HarmonyParams())
 so
 ```
 
 ### Scanorama
 
-```{r, message=FALSE, warning=FALSE}
-sce <- batchCorrect(input = sce, batch = "Batch", 
-                    params = ScanoramaParams(assay_type = "logcounts",
-                                             return_dimred = TRUE))
+```{r scanorama, message=FALSE, warning=FALSE}
+sce <- batchCorrect(
+  input = sce, batch = "Batch",
+  params = ScanoramaParams(
+    assay_type = "logcounts",
+    return_dimred = TRUE
+  )
+)
 sce
-so <- batchCorrect(input = so, batch = "Batch", 
-                   params = ScanoramaParams(assay_type = "data", 
-                                            return_dimred = TRUE))
+so <- batchCorrect(
+  input = so, batch = "Batch",
+  params = ScanoramaParams(
+    assay_type = "data",
+    return_dimred = TRUE
+  )
+)
 so
 ```
 
@@ -144,11 +159,15 @@ Last, the `metrics()` function computes the evaluation metrics, such as Normaliz
 
 The Wasserstein distance is computed on a resampled data due to the different number of cells in each batch. The parameter `rep` indicates how many times the calculation should be repeated (in this case 5).
 
-```{r, message=FALSE, warning=FALSE}
+```{r perf, message=FALSE, warning=FALSE}
 red <- SingleCellExperiment::reducedDimNames(sce)
-metrics <- lapply(red, function(x) metrics(input = sce, batch = "Batch",
-                                           group = "Group", reduction = x, 
-                                           rep = 5))
+metrics <- lapply(red, function(x) {
+  metrics(
+    input = sce, batch = "Batch",
+    group = "Group", reduction = x,
+    rep = 5
+  )
+})
 metrics <- do.call(rbind, metrics)
 metrics
 ```
@@ -157,7 +176,7 @@ metrics
 
 The `suggested_method()` function determinates the optimal batch correction method for a specific dataset. Initially, this function calculates the features and subsequently predicts the recommended method.
 
-```{r, message=FALSE, warning=FALSE}
+```{r optimal, message=FALSE, warning=FALSE}
 pred <- suggested_method(input = sce, batch = "Batch")
 pred
 ```

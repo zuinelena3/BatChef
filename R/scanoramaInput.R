@@ -10,8 +10,9 @@
 #'  the genes.
 #' @rdname scanoramaInput
 #'
-setGeneric("scanoramaInput", function(input, batch, assay_type = NULL)
-  standardGeneric("scanoramaInput"), signature = c("input"))
+setGeneric("scanoramaInput", function(input, batch, assay_type = NULL) {
+  standardGeneric("scanoramaInput")
+}, signature = c("input"))
 
 #' @rdname scanoramaInput
 #' @import methods
@@ -19,17 +20,19 @@ setGeneric("scanoramaInput", function(input, batch, assay_type = NULL)
 #' @importFrom SeuratObject LayerData
 #' @aliases anndatasInput,Seurat,Seurat-method
 #'
-setMethod("scanoramaInput", "Seurat",  function(input, batch, assay_type) {
+setMethod("scanoramaInput", "Seurat", function(input, batch, assay_type) {
   stopifnot(batch %in% colnames(input[[]]))
   stopifnot("Error: assay_type has to be specified!" = !is.null(assay_type))
 
   ll <- SplitObject(input, split.by = batch)
   assaylist <- list()
   genelist <- list()
-  for(i in seq_along(ll)) {
-    assaylist[[i]] <- t(as.matrix(LayerData(object = ll[[i]],
-                                            assay = DefaultAssay(ll[[i]]),
-                                            layer = assay_type)))
+  for (i in seq_along(ll)) {
+    assaylist[[i]] <- t(as.matrix(LayerData(
+      object = ll[[i]],
+      assay = DefaultAssay(ll[[i]]),
+      layer = assay_type
+    )))
     genelist[[i]] <- rownames(ll[[i]])
   }
   return(c(assaylist, genelist))
@@ -48,7 +51,7 @@ setMethod("scanoramaInput", "SingleCellExperiment", function(input, batch,
   ll <- lapply(unique(colData(input)[, batch]), function(x) input[, colData(input)[, batch] == x])
   assaylist <- list()
   genelist <- list()
-  for(i in seq_along(ll)) {
+  for (i in seq_along(ll)) {
     assaylist[[i]] <- t(as.matrix(assay(ll[[i]], assay_type)))
     genelist[[i]] <- rownames(ll[[i]])
   }
@@ -59,7 +62,7 @@ setMethod("scanoramaInput", "SingleCellExperiment", function(input, batch,
 #' @import methods
 #' @aliases anndatasInput,AnnDataR6,AnnDataR6-method
 #'
-setMethod("scanoramaInput", "AnnDataR6",  function(input, batch, assay_type) {
+setMethod("scanoramaInput", "AnnDataR6", function(input, batch, assay_type) {
   stopifnot(batch %in% colnames(input$obs))
   stopifnot("Error: assay_type has to be specified!" = !is.null(assay_type))
 
@@ -69,7 +72,7 @@ setMethod("scanoramaInput", "AnnDataR6",  function(input, batch, assay_type) {
   assaylist <- list()
   genelist <- list()
 
-  for(i in seq_along(ll)) {
+  for (i in seq_along(ll)) {
     assaylist[[i]] <- ll[[i]]$layers[assay_type]
     genelist[[i]] <- ll[[i]]$var_names
   }
