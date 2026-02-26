@@ -7,10 +7,10 @@
 suggested_method(input, batch)
 }
 \arguments{
-\item{batch}{A string specifying the batch variable.}
-
-\item{A}{\link[SingleCellExperiment]{SingleCellExperiment}
+\item{input}{A \link[SingleCellExperiment]{SingleCellExperiment}
 \link[Seurat]{Seurat} or `AnnData` object can be supplied.}
+
+\item{batch}{A string specifying the batch variable.}
 }
 \value{
 A string specifying the suggested method.
@@ -19,9 +19,11 @@ A string specifying the suggested method.
 Suggested method prediction
 }
 \examples{
-sim <- simulate_data(n_genes = 1000, batch_cells = c(150, 50),
-                     group_prob = c(0.5, 0.5), n_hvgs = 1000,
-                     compute_pca = FALSE, output_format = "SingleCellExperiment")
+sim <- simulate_data(
+  n_genes = 1000, batch_cells = c(150, 50),
+  group_prob = c(0.5, 0.5), n_hvgs = 1000,
+  compute_pca = FALSE, output_format = "SingleCellExperiment"
+)
 pred <- suggested_method(input = sim, batch = "Batch")
 
 }

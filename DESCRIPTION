@@ -1,7 +1,7 @@
 Package: BatChef
 Type: Package
 Title: Single-cell RNA-seq batch effects correction methods interface
-Version: 0.99.7
+Version: 0.99.8
 Authors@R: c(
     person("Elena", "Zuin", email = "elena.zuin.3@phd.unipd.it", 
             role = c("aut", "cre"),
@@ -13,10 +13,13 @@ Authors@R: c(
             comment = c(affiliation = "Department of Statistical Sciences, University of Padova")),
     person("Gabriele", "Sales", role = "ctb", 
             comment = c(affiliation = "Department of Biology, University of Padova")))
-Description: A common interface for single-cell RNA_seq batch effects 
-            correction methods in R and Python environments. 
-            The package contains the performance evaluation metrics.
-Depends: R (>= 4.1.0)
+Description: This package implements a variety of methods for batch correction 
+            in single-cell RNA sequencing (scRNA-seq) data. It incorporates
+            quantitative metrics (e.g. Wasserstein distance, Adjusted Rand Index)
+            to evaluate their performance. 
+            Furthermore, the package assists users in identifying and applying 
+            the optimal method for specific datasets.
+Depends: R (>= 4.5.0)
 License: GPL (>= 3)
 Encoding: UTF-8
 biocViews: BatchEffect, SingleCell
@@ -27,12 +30,14 @@ Imports:
     aricode,
     batchelor,
     cluster,
-    datawizard,
     e1071,
     fitdistrplus,
+    ggplot2,
+    ggvoronoi,
     harmony,
-    igraph,
+    leidenAlg,
     limma,
+    Matrix,
     mclust,
     methods,
     parallel,
@@ -66,4 +71,4 @@ Suggests:
     rmarkdown,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
-LazyData: true
+LazyData: false

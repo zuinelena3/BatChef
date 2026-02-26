@@ -2,18 +2,18 @@
 % Please edit documentation in R/params.R
 \name{batch_params}
 \alias{batch_params}
-\title{Batch params}
+\title{Batch effects strength}
 \usage{
-batch_params(normalized, batch)
+batch_params(norm_counts, batch)
 }
 \arguments{
-\item{normalized}{Normalized counts matrix.}
+\item{norm_counts}{Normalized counts matrix.}
 
 \item{batch}{A string specifying the batch variable.}
 }
 \value{
-Batch factor location.
+Median of symmetric Kullback-Leibler (KL) divergence
 }
 \description{
-Batch params
+Batch effects strength
 }

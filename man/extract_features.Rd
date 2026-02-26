@@ -7,9 +7,9 @@
 extract_features(input, batch)
 }
 \arguments{
-\item{batch}{A string specifying the batch variable.}
+\item{input}{A \link[SingleCellExperiment]{SingleCellExperiment} object can be supplied.}
 
-\item{A}{\link[SingleCellExperiment]{SingleCellExperiment} object can be supplied.}
+\item{batch}{A string specifying the batch variable.}
 }
 \value{
 A data.frame that contains the features of input data.

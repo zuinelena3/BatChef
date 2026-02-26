@@ -11,152 +11,142 @@ normalized <- function(counts) {
   norm <- t(t(counts) / lib_sizes * lib_med)
 }
 
-#' Batch params
+#' Winsorization
 #'
-#' @param normalized Normalized counts matrix.
-#' @param batch A string specifying the batch variable.
+#' It's a transformation by limiting extreme values in data
+#' to reduce the effect of outliers.
 #'
-#' @returns Batch factor location.
-#' @importFrom fitdistrplus fitdist
+#' @param norm_counts A normalized matrix
+#' @returns Winsorized numeric vector
 #'
-batch_params <- function(normalized, batch) {
-  gene_means_overall <- rowMeans(normalized)
-  gene_means_overall <- gene_means_overall[gene_means_overall > 0]
+#' @importFrom stats quantile
+#'
+winsorization <- function(norm_counts) {
+  means <- rowMeans(norm_counts)
+  means <- means[means != 0]
 
-  levels <- unique(batch)
-  batch_facLoc <- numeric(length(levels))
-  batch_facScale <- numeric(length(levels))
+  q <- 0.1
 
-  batch_facloc <- lapply(seq_along(levels), function(i) {
-    batch_cells <- which(batch == levels[i])
-    gene_means_batch <- rowMeans(normalized[, batch_cells])
+  lohi <- quantile(means, c(q, 1 - q), na.rm = TRUE)
 
-    batch_factors <- gene_means_batch / gene_means_overall
-    # If batch_factors is zero
-    min_val <- 1e-6
-    batch_factors <- pmax(batch_factors, min_val)
+  if (diff(lohi) < 0) {
+    lohi <- rev(lohi)
+  }
 
-    fit <- fitdist(batch_factors, "lnorm")
-    facloc <- unname(fit$estimate["meanlog"])
-  })
-  batch_facloc <- do.call(rbind, batch_facloc)
-  batch_facloc <- median(batch_facloc[, 1])
-  return(data.frame(batch_facloc = batch_facloc))
+  means[!is.na(means) & means < lohi[1]] <- lohi[1]
+  means[!is.na(means) & means > lohi[2]] <- lohi[2]
+
+  return(means)
 }
 
-#' Mean parameters
+#' Gamma parameters estimation of batch factors
 #'
-#' @param normalized Normalized counts matrix.
-
+#' @param factors Batch factors
 #'
-#' @returns Mean rate parameter.
+#' @returns a data.frame with estimated shape and rate parameters
+#'
 #' @importFrom fitdistrplus fitdist
-#' @importFrom datawizard winsorize
 #'
-mean_params <- function(normalized) {
-  means <- rowMeans(normalized)
-  means <- means[means != 0]
-  means <- winsorize(means, q = 0.1)
-
-  fit <- fitdist(data = means, distr = "gamma",
-                               method = "mge", gof = "CvM")
-  if (fit$convergence > 0) {
-    warning(
-      "Fitting means using the Goodness of Fit method failed, ",
-      "using the Method of Moments instead"
+params_btc_factors <- function(factors) {
+  params <- lapply(factors, function(x) {
+    fit <- fitdistrplus::fitdist(x, "gamma", method = "mme")
+    params <- data.frame(
+      shape = unname(fit$estimate["shape"]),
+      rate = unname(fit$estimate["rate"])
     )
-    fit <- fitdist(means, "gamma", method = "mme")
-    params <- data.frame(mean_rate = unname(fit$estimate["rate"]))
-    return(params)
+  })
+  params <- do.call(rbind, params)
+}
+
+#' Kullback-Leibler (KL) divergence) between two Gamma distributions
+#'
+#' @param p Gamma parameters (shape and rate) of probability distribution P
+#' @param q Gamma parameters (shape and rate) of probability distribution Q
+#'
+#' @returns Kullback-Leibler (KL) divergence) between two Gamma distributions
+#'
+kl_gamma <- function(p, q) {
+  a1 <- p$shape
+  b1 <- p$rate
+
+  a2 <- q$shape
+  b2 <- q$rate
+
+  a2 * log(b1 / b2) - (lgamma(a1) - lgamma(a2)) +
+    (a1 - a2) * digamma(a1) - (b1 - b2) * (a1 / b1)
+}
+
+#' Batch effects strength
+#'
+#' @param norm_counts Normalized counts matrix.
+#' @param batch A string specifying the batch variable.
+#'
+#' @returns Median of symmetric Kullback-Leibler (KL) divergence
+#' @importFrom utils combn
+#'
+batch_params <- function(norm_counts, batch) {
+  over_means <- winsorization(norm_counts = norm_counts)
+
+  batches <- unique(batch)
+
+  batch_means <- lapply(batches, function(b) {
+    winsorization(norm_counts = norm_counts[, batch == b])
+  })
+
+  over_means <- lapply(batch_means, function(x) over_means[names(over_means) %in% names(x)])
+
+  batch_factors <- lapply(1:length(batches), function(x) batch_means[[x]] / over_means[[x]])
+
+  params <- params_btc_factors(factors = batch_factors)
+
+  combs <- combn(1:nrow(params), 2)
+
+  sym_kl <- numeric(ncol(combs))
+
+  for (i in 1:ncol(combs)) {
+    kl_pq <- kl_gamma(p = params[combs[1, i], ], q = params[combs[2, i], ])
+    kl_qp <- kl_gamma(p = params[combs[2, i], ], q = params[combs[1, i], ])
+    sym_kl[i] <- kl_pq + kl_qp
   }
 
-  else {
-    params <- data.frame(mean_rate = unname(fit$estimate["rate"]))
-    return(params)
-  }
+  params <- data.frame(batch_strength = median(sym_kl))
 }
 
 #' Library size parameters
 #'
 #' @param counts Raw counts matrix.
 #'
-#' @returns Library size parameters.
+#' @returns Median of sequencing depth
 #' @importFrom fitdistrplus fitdist
 #'
 lib_size_params <- function(counts) {
   lib_sizes <- colSums(counts)
 
-  if (length(lib_sizes) > 5000) {
-    lib_sizes_sampled <- sample(lib_sizes, 5000, replace = FALSE)
-  } else {
-    lib_sizes_sampled <- lib_sizes
-  }
+  params <- data.frame(seq_depth = median(lib_sizes))
 
-  norm_test <- shapiro.test(lib_sizes_sampled)
-  p_val <- norm_test$p.value
-
-  if (p_val >= 0.05) {
-    fit <- fitdist(lib_sizes, "norm")
-    lib_loc <- unname(fit$estimate["mean"])
-    lib_scale <- unname(fit$estimate["sd"])
-  } else {
-    fit <- fitdist(lib_sizes, "lnorm")
-    lib_loc <- unname(fit$estimate["meanlog"])
-    lib_scale <- unname(fit$estimate["sdlog"])
-  }
-
-  params <- data.frame(seq_depth = median(lib_sizes), lib_loc, lib_scale)
   return(params)
 }
 
-#' Expression outlier parameters
+#' Highly espressed genes probability
 #'
-#' @param counts Normalized counts matrix.
+#' @param norm_counts A normalized matrix
 #'
-#' @returns Probability that genes will be selected to be expression outliers.
+#' @returns Highly espressed genes probability
 #'
-outlier_params <- function(normalized) {
-  means <- rowMeans(normalized)
+outlier_params <- function(norm_counts) {
+  means <- rowMeans(norm_counts)
   lmeans <- log(means)
 
   med <- median(lmeans)
   mad <- mad(lmeans)
 
   bound <- med + 2 * mad
+
   outs <- which(lmeans > bound)
 
-  prob <- length(outs) / nrow(normalized)
+  out_prob <- length(outs) / nrow(norm_counts)
 
-  params <- data.frame(prob)
+  params <- data.frame(out_prob)
+
   return(params)
 }
-
-#' Groups parameters
-#'
-#' @param input A \link[SingleCellExperiment]{SingleCellExperiment}
-#' \link[Seurat]{Seurat} or `AnnData` object can be supplied.
-#' @param normalized A normalized counts matrix.
-#'
-#' @returns The number of clusters.
-#'
-#' @importFrom scrapper modelGeneVariances chooseHighlyVariableGenes runPca
-#'
-groups_params <- function(input, normalized) {
-  genes <- rownames(normalized)
-  gene_var <- modelGeneVariances(normalized, num.threads = 1)
-  top_hvgs <- chooseHighlyVariableGenes(gene_var$statistics$residuals,
-                                        top = 1000)
-  top_hvgs <- rownames(gene_var$statistics[top_hvgs, ])
-  normalized <- normalized[top_hvgs, ]
-
-  pca <- runPca(normalized, num.threads = 1, number = 10)
-  pca <- t(pca[[1]])
-  colnames(pca) <- paste0("PC_", 1:10)
-  rownames(pca) <- colnames(input)
-  reducedDim(input, "PCA") <- pca
-
-  clust <- leiden_clustering(input = input, reduction = "PCA",
-                             nmi_compute = FALSE, resolution = 1, store = FALSE)
-  nclust <- data.frame(ngroup = length(unique(clust)))
-}
-
