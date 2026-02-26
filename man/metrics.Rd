@@ -66,10 +66,14 @@ This function performs Leiden clustering before computing the evaluation
 metrics.
 }
 \examples{
-sim <- simulate_data(n_genes = 1000, batch_cells = c(150, 110),
-                     group_prob = c(0.5, 0.5), n_hvgs = 500,
-                     compute_pca = TRUE, output_format = "SingleCellExperiment")
-metrics <- metrics(input = sim, batch = "Batch", group = "Group",
-                   reduction = "PCA", rep = 5)
+sim <- simulate_data(
+  n_genes = 1000, batch_cells = c(150, 110),
+  group_prob = c(0.5, 0.5), n_hvgs = 500,
+  compute_pca = TRUE, output_format = "SingleCellExperiment"
+)
+metrics <- metrics(
+  input = sim, batch = "Batch", group = "Group",
+  reduction = "PCA", rep = 5
+)
 
 }

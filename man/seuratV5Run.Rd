@@ -99,14 +99,20 @@ A \link[Seurat]{Seurat} object.
 SeuratV5 is an anchor-based method.
 }
 \examples{
-sim <- simulate_data(n_genes = 1000, batch_cells = c(250, 200),
-                     group_prob = c(0.5, 0.5), n_hvgs = 500,
-                     compute_pca = TRUE,
-                     output_format = "Seurat")
-sim[[SeuratObject::DefaultAssay(sim)]] <- split(x = sim[[SeuratObject::DefaultAssay(sim)]],
-                                                f = sim[["Batch"]][, 1])
+sim <- simulate_data(
+  n_genes = 1000, batch_cells = c(250, 200),
+  group_prob = c(0.5, 0.5), n_hvgs = 500,
+  compute_pca = TRUE,
+  output_format = "Seurat"
+)
+sim[[SeuratObject::DefaultAssay(sim)]] <- split(
+  x = sim[[SeuratObject::DefaultAssay(sim)]],
+  f = sim[["Batch"]][, 1]
+)
 sim <- Seurat::ScaleData(sim, verbose = FALSE)
-seuv5 <- seuratV5Run(input = sim, method = "CCAIntegration",
-                     features = rownames(sim))
+seuv5 <- seuratV5Run(
+  input = sim, method = "CCAIntegration",
+  features = rownames(sim)
+)
 
 }

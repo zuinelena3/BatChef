@@ -29,45 +29,62 @@
 #'
 #' @return A data.frame object
 #' @examples
-#' sim <- simulate_data(n_genes = 1000, batch_cells = c(150, 110),
-#'                      group_prob = c(0.5, 0.5), n_hvgs = 500,
-#'                      compute_pca = TRUE, output_format = "SingleCellExperiment")
-#' metrics <- metrics(input = sim, batch = "Batch", group = "Group",
-#'                    reduction = "PCA", rep = 5)
+#' sim <- simulate_data(
+#'   n_genes = 1000, batch_cells = c(150, 110),
+#'   group_prob = c(0.5, 0.5), n_hvgs = 500,
+#'   compute_pca = TRUE, output_format = "SingleCellExperiment"
+#' )
+#' metrics <- metrics(
+#'   input = sim, batch = "Batch", group = "Group",
+#'   reduction = "PCA", rep = 5
+#' )
 #'
 metrics <- function(input, batch, group, reduction,
                     rep = 10, mc_cores = 1, nmi_compute = TRUE, resolution = NULL,
                     k = 10, metric = "euclidean", variant = "sum",
                     meta_data = colData(input), perplexity = 30, nn_eps = 0) {
-
   gr <- colData(input)[, group]
-  clust <- leiden_clustering(input = input, label_true = group,
-                             reduction = reduction, nmi_compute = nmi_compute,
-                             resolution = resolution, k = k, store = FALSE)
+  clust <- leiden_clustering(
+    input = input, label_true = group,
+    reduction = reduction, nmi_compute = nmi_compute,
+    resolution = resolution, k = k, store = FALSE
+  )
 
   ari <- adjustedRandIndex(x = clust, y = gr)
 
   nmi <- NMI(c1 = as.vector(gr), c2 = as.vector(clust), variant = variant)
 
-  casw <- average_silhouette_width(input = input, label_true = group,
-                                   reduction = reduction, metric = metric)
+  casw <- average_silhouette_width(
+    input = input, label_true = group,
+    reduction = reduction, metric = metric
+  )
 
-  iasw <- average_silhouette_width(input = input, label_true = batch,
-                                   reduction = reduction, metric = metric)
+  iasw <- average_silhouette_width(
+    input = input, label_true = batch,
+    reduction = reduction, metric = metric
+  )
 
-  clisi <- local_inverse_simpson_index(input = input, label_true = group,
-                                       reduction = reduction,
-                                       meta_data = meta_data,
-                                       perplexity = perplexity, nn_eps = nn_eps)
+  clisi <- local_inverse_simpson_index(
+    input = input, label_true = group,
+    reduction = reduction,
+    meta_data = meta_data,
+    perplexity = perplexity, nn_eps = nn_eps
+  )
 
-  ilisi <- local_inverse_simpson_index(input = input, label_true = batch,
-                                       reduction = reduction, meta_data = meta_data,
-                                       perplexity = perplexity, nn_eps = nn_eps)
+  ilisi <- local_inverse_simpson_index(
+    input = input, label_true = batch,
+    reduction = reduction, meta_data = meta_data,
+    perplexity = perplexity, nn_eps = nn_eps
+  )
 
-  wass <- wasserstein_distance(input = input, batch = batch, reduction = reduction,
-                               rep = rep, mc_cores = mc_cores)
+  wass <- wasserstein_distance(
+    input = input, batch = batch, reduction = reduction,
+    rep = rep, mc_cores = mc_cores
+  )
   wass <- mean(wass$wasserstein)
 
-  return(data.frame(method = reduction, wasserstein = wass, iasw, ilisi,
-                    ari = ari, nmi = nmi, casw, clisi))
+  return(data.frame(
+    method = reduction, wasserstein = wass, iasw, ilisi,
+    ari = ari, nmi = nmi, casw, clisi
+  ))
 }

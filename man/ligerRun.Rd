@@ -69,12 +69,16 @@ factor loadings.
 LIGER is a integrative non-negative matrix factorization method
 }
 \examples{
-sim <- simulate_data(n_genes = 1000, batch_cells = c(150, 50),
-                     group_prob = c(0.5, 0.5), n_hvgs = 500,
-                    compute_pca = TRUE, output_format = "SingleCellExperiment")
+sim <- simulate_data(
+  n_genes = 1000, batch_cells = c(150, 50),
+  group_prob = c(0.5, 0.5), n_hvgs = 500,
+  compute_pca = TRUE, output_format = "SingleCellExperiment"
+)
 
-ll <- lapply(unique(SingleCellExperiment::colData(sim)[, "Batch"]),
-             function(i) sim[, SingleCellExperiment::colData(sim)[, "Batch"] == i])
+ll <- lapply(
+  unique(SingleCellExperiment::colData(sim)[, "Batch"]),
+  function(i) sim[, SingleCellExperiment::colData(sim)[, "Batch"] == i]
+)
 names(ll) <- unique(SingleCellExperiment::colData(sim)[, "Batch"])
 # Create a liger object
 lo <- rliger::createLiger(rawData = ll)

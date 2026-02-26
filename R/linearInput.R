@@ -8,8 +8,9 @@
 #' @return A \link[SingleCellExperiment]{SingleCellExperiment} object.
 #' @rdname linearInput
 #'
-setGeneric("linearInput", function(input, batch)
-  standardGeneric("linearInput"), signature = c("input"))
+setGeneric("linearInput", function(input, batch) {
+  standardGeneric("linearInput")
+}, signature = c("input"))
 
 #' @rdname linearInput
 #' @import methods
@@ -17,15 +18,16 @@ setGeneric("linearInput", function(input, batch)
 #' @importFrom SingleCellExperiment SingleCellExperiment
 #' @aliases linearInput,Seurat,Seurat-method
 #'
-setMethod("linearInput", "Seurat",  function(input, batch) {
+setMethod("linearInput", "Seurat", function(input, batch) {
   stopifnot(batch %in% colnames(input[[]]))
 
-  hvgs <- rownames(input) %in% VariableFeatures(input)
-  input <- SingleCellExperiment(assays = list(counts = input@assays$RNA$counts,
-                                              logcounts = input@assays$RNA$data),
-                                colData = input@meta.data,
-                                rowData = data.frame(hvgs = hvgs))
-  return(input)
+  input <- SingleCellExperiment(
+    assays = list(
+      counts = input@assays$RNA$counts,
+      logcounts = input@assays$RNA$data
+    ),
+    colData = input@meta.data
+  )
 })
 
 #' @rdname linearInput
@@ -33,7 +35,7 @@ setMethod("linearInput", "Seurat",  function(input, batch) {
 #' @importFrom SingleCellExperiment colData
 #' @aliases linearInput,SingleCellExperiment,SingleCellExperiment-method
 #'
-setMethod("linearInput", "SingleCellExperiment",  function(input, batch) {
+setMethod("linearInput", "SingleCellExperiment", function(input, batch) {
   stopifnot(batch %in% colnames(colData(input)))
   input <- input
 })
@@ -45,7 +47,7 @@ setMethod("linearInput", "SingleCellExperiment",  function(input, batch) {
 #'
 #' @aliases linearInput,AnnDataR6,AnnDataR6-method
 #'
-setMethod("linearInput", "AnnDataR6",  function(input, batch) {
+setMethod("linearInput", "AnnDataR6", function(input, batch) {
   stopifnot(batch %in% colnames(input$obs))
   input$varm <- NULL
   input$obsm <- NULL

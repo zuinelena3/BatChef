@@ -17,11 +17,15 @@
 #'
 #' @return A numeric value
 #' @examples
-#' sim <- simulate_data(n_genes = 1000, batch_cells = c(150, 50),
-#'                      group_prob = c(0.5, 0.5), n_hvgs = 500,
-#'                      compute_pca = TRUE, output_format = "SingleCellExperiment")
-#' asw <- average_silhouette_width(input = sim, label_true = "Group",
-#'                                 reduction = "PCA")
+#' sim <- simulate_data(
+#'   n_genes = 1000, batch_cells = c(150, 50),
+#'   group_prob = c(0.5, 0.5), n_hvgs = 500,
+#'   compute_pca = TRUE, output_format = "SingleCellExperiment"
+#' )
+#' asw <- average_silhouette_width(
+#'   input = sim, label_true = "Group",
+#'   reduction = "PCA"
+#' )
 #'
 average_silhouette_width <- function(input, label_true, reduction,
                                      metric = "euclidean") {
@@ -29,7 +33,7 @@ average_silhouette_width <- function(input, label_true, reduction,
   dist_matrix <- dist(red, method = metric)
 
   group <- as.factor(colData(input)[, label_true])
-  levels(group) <- 1:length(levels(group))
+  levels(group) <- seq_along(levels(group))
 
   group <- as.numeric(group)
 

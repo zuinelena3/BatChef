@@ -20,18 +20,24 @@
 #'
 #' @return A numeric value
 #' @examples
-#' sim <- simulate_data(n_genes = 500, batch_cells = c(150, 50),
-#'                      group_prob = c(0.5, 0.5), n_hvgs = 500,
-#'                      compute_pca = TRUE, output_format = "SingleCellExperiment")
-#' ari <- adjusted_rand_index(input = sim, label_true = "Group", reduction = "PCA",
-#'                            nmi_compute = FALSE, resolution = 0.5)
+#' sim <- simulate_data(
+#'   n_genes = 500, batch_cells = c(150, 50),
+#'   group_prob = c(0.5, 0.5), n_hvgs = 500,
+#'   compute_pca = TRUE, output_format = "SingleCellExperiment"
+#' )
+#' ari <- adjusted_rand_index(
+#'   input = sim, label_true = "Group", reduction = "PCA",
+#'   nmi_compute = FALSE, resolution = 0.5
+#' )
 #'
 adjusted_rand_index <- function(input, label_true, reduction, nmi_compute = FALSE,
                                 resolution, k = 10) {
   group <- colData(input)[, label_true]
-  clust <- leiden_clustering(input = input, label_true = label_true,
-                      reduction = reduction, nmi_compute = nmi_compute,
-                      resolution = resolution, k = k, store = FALSE)
+  clust <- leiden_clustering(
+    input = input, label_true = label_true,
+    reduction = reduction, nmi_compute = nmi_compute,
+    resolution = resolution, k = k, store = FALSE
+  )
 
   ari <- adjustedRandIndex(x = clust, y = group)
 }

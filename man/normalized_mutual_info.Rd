@@ -41,10 +41,14 @@ the overlap between the true cell-type and clustering labels computed after
 batch correction.
 }
 \examples{
-sim <- simulate_data(n_genes = 1000, batch_cells = c(150, 50),
-                     group_prob = c(0.5, 0.5), n_hvgs = 500,
-                     compute_pca = TRUE, output_format = "SingleCellExperiment")
-nmi <- normalized_mutual_info(input = sim, label_true = "Group", reduction = "PCA",
-                           nmi_compute = FALSE, resolution = 0.5)
+sim <- simulate_data(
+  n_genes = 1000, batch_cells = c(150, 50),
+  group_prob = c(0.5, 0.5), n_hvgs = 500,
+  compute_pca = TRUE, output_format = "SingleCellExperiment"
+)
+nmi <- normalized_mutual_info(
+  input = sim, label_true = "Group", reduction = "PCA",
+  nmi_compute = FALSE, resolution = 0.5
+)
 
 }

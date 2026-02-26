@@ -33,12 +33,16 @@
 #' factor loadings.
 #'
 #' @examples
-#' sim <- simulate_data(n_genes = 1000, batch_cells = c(150, 50),
-#'                      group_prob = c(0.5, 0.5), n_hvgs = 500,
-#'                     compute_pca = TRUE, output_format = "SingleCellExperiment")
+#' sim <- simulate_data(
+#'   n_genes = 1000, batch_cells = c(150, 50),
+#'   group_prob = c(0.5, 0.5), n_hvgs = 500,
+#'   compute_pca = TRUE, output_format = "SingleCellExperiment"
+#' )
 #'
-#' ll <- lapply(unique(SingleCellExperiment::colData(sim)[, "Batch"]),
-#'              function(i) sim[, SingleCellExperiment::colData(sim)[, "Batch"] == i])
+#' ll <- lapply(
+#'   unique(SingleCellExperiment::colData(sim)[, "Batch"]),
+#'   function(i) sim[, SingleCellExperiment::colData(sim)[, "Batch"] == i]
+#' )
 #' names(ll) <- unique(SingleCellExperiment::colData(sim)[, "Batch"])
 #' # Create a liger object
 #' lo <- rliger::createLiger(rawData = ll)
@@ -51,13 +55,17 @@ ligerRun <- function(input, method = "iNMF", quantiles = 50, reference = NULL,
                      use_dims = NULL, center = FALSE, max_sample = 1000, eps = 0.9,
                      refine_knn = TRUE, cluster_name = "quantileNorm_cluster",
                      seed = 1, verbose = FALSE, ...) {
-  args <- c(list(object = input, method = method),
-            capture_params(runIntegration, list(...)))
+  args <- c(
+    list(object = input, method = method),
+    capture_params(runIntegration, list(...))
+  )
   out <- do.call(runIntegration, args)
 
-  out <- quantileNorm(object = out, quantiles = quantiles, reference = reference,
-                      minCells = min_cells, nNeighbors = n_neighbors,
-                      useDims = use_dims, center = center, maxSample = max_sample,
-                      eps = eps, refineKNN = refine_knn, clusterName = cluster_name,
-                      seed = seed, verbose = verbose)
+  out <- quantileNorm(
+    object = out, quantiles = quantiles, reference = reference,
+    minCells = min_cells, nNeighbors = n_neighbors,
+    useDims = use_dims, center = center, maxSample = max_sample,
+    eps = eps, refineKNN = refine_knn, clusterName = cluster_name,
+    seed = seed, verbose = verbose
+  )
 }

@@ -78,16 +78,18 @@ SeuratV3Params <- function(features, pca_name = NULL, assay = NULL,
                            features_to_integrate = NULL, k_weight = 100,
                            weight_reduction = NULL, sd_weight = 1,
                            sample_tree = NULL, preserve_order = FALSE) {
-  new("SeuratV3Params", features = features, pca_name = pca_name, assay = assay,
-      reference = reference, anchor_features = anchor_features, scale = scale,
-      normalization_method = normalization_method,
-      sct_clip_range = sct_clip_range, reduction = reduction, l2_norm = l2_norm,
-      dims = dims, k_anchor = k_anchor, k_filter = k_filter, k_score = k_score,
-      max_features = max_features, nn_method = nn_method, n_trees = n_trees,
-      eps = eps, verbose = verbose, new_assay_name = new_assay_name,
-      features_to_integrate = features_to_integrate, k_weight = k_weight,
-      weight_reduction = weight_reduction, sd_weight = sd_weight,
-      sample_tree = sample_tree, preserve_order = preserve_order)
+  new("SeuratV3Params",
+    features = features, pca_name = pca_name, assay = assay,
+    reference = reference, anchor_features = anchor_features, scale = scale,
+    normalization_method = normalization_method,
+    sct_clip_range = sct_clip_range, reduction = reduction, l2_norm = l2_norm,
+    dims = dims, k_anchor = k_anchor, k_filter = k_filter, k_score = k_score,
+    max_features = max_features, nn_method = nn_method, n_trees = n_trees,
+    eps = eps, verbose = verbose, new_assay_name = new_assay_name,
+    features_to_integrate = features_to_integrate, k_weight = k_weight,
+    weight_reduction = weight_reduction, sd_weight = sd_weight,
+    sample_tree = sample_tree, preserve_order = preserve_order
+  )
 }
 
 #' @param pca_name  A string specifying the PCA name.
@@ -140,18 +142,20 @@ SeuratV5Params <- function(pca_name = NULL, method = "CCAIntegration",
                            l2_norm = TRUE, k_anchor = 5,
                            k_score = 30, max_features = 200, nn_method = "annoy",
                            n_trees = 50, eps = 0) {
-  new("SeuratV5Params", pca_name = pca_name, method = method,
-      orig_reduction = orig_reduction, assay = assay, features = features,
-      layers = layers, scale_layer = scale_layer,
-      new_reduction = new_reduction, reference = reference,
-      normalization_method = normalization_method,
-      dims = dims, k_filter = k_filter, dims_to_integrate = dims_to_integrate,
-      k_weight = k_weight, weight_reduction = weight_reduction,
-      sd_weight = sd_weight, sample_tree = sample_tree,
-      preserve_order = preserve_order,
-      verbose = verbose, l2_norm = l2_norm, k_anchor = k_anchor,
-      k_score = k_score, max_features = max_features, nn_method = nn_method,
-      n_trees = n_trees, eps = eps)
+  new("SeuratV5Params",
+    pca_name = pca_name, method = method,
+    orig_reduction = orig_reduction, assay = assay, features = features,
+    layers = layers, scale_layer = scale_layer,
+    new_reduction = new_reduction, reference = reference,
+    normalization_method = normalization_method,
+    dims = dims, k_filter = k_filter, dims_to_integrate = dims_to_integrate,
+    k_weight = k_weight, weight_reduction = weight_reduction,
+    sd_weight = sd_weight, sample_tree = sample_tree,
+    preserve_order = preserve_order,
+    verbose = verbose, l2_norm = l2_norm, k_anchor = k_anchor,
+    k_score = k_score, max_features = max_features, nn_method = nn_method,
+    n_trees = n_trees, eps = eps
+  )
 }
 
 #' @param ... Named arguments to pass to individual methods upon dispatch

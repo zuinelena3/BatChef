@@ -40,10 +40,14 @@ between the clustering and ground truth labels.
 After computing Leiden clustering algorithm, the ARI metric is computed.
 }
 \examples{
-sim <- simulate_data(n_genes = 500, batch_cells = c(150, 50),
-                     group_prob = c(0.5, 0.5), n_hvgs = 500,
-                     compute_pca = TRUE, output_format = "SingleCellExperiment")
-ari <- adjusted_rand_index(input = sim, label_true = "Group", reduction = "PCA",
-                           nmi_compute = FALSE, resolution = 0.5)
+sim <- simulate_data(
+  n_genes = 500, batch_cells = c(150, 50),
+  group_prob = c(0.5, 0.5), n_hvgs = 500,
+  compute_pca = TRUE, output_format = "SingleCellExperiment"
+)
+ari <- adjusted_rand_index(
+  input = sim, label_true = "Group", reduction = "PCA",
+  nmi_compute = FALSE, resolution = 0.5
+)
 
 }

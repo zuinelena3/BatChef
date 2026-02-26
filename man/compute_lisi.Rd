@@ -26,11 +26,15 @@ column is a different label variable.
 Local Inverse Simpson Index (LISI) scores are computed for each cell.
 }
 \examples{
-sim <- simulate_data(n_genes = 1000, batch_cells = c(150, 50),
-                     group_prob = c(0.5, 0.5), n_hvgs = 500,
-                     compute_pca = TRUE, output_format = "SingleCellExperiment")
+sim <- simulate_data(
+  n_genes = 1000, batch_cells = c(150, 50),
+  group_prob = c(0.5, 0.5), n_hvgs = 500,
+  compute_pca = TRUE, output_format = "SingleCellExperiment"
+)
 red <- SingleCellExperiment::reducedDim(sim, "PCA")
-lisi <- compute_lisi(X = red, meta_data = SingleCellExperiment::colData(sim),
-                    label_colnames = "Group")
+lisi <- compute_lisi(
+  X = red, meta_data = SingleCellExperiment::colData(sim),
+  label_colnames = "Group"
+)
 
 }

@@ -25,10 +25,14 @@ The Wasserstein distance measures the minimal transport needed to shift one
 distribution to match another.
 }
 \examples{
-sim <- simulate_data(n_genes = 1000, batch_cells = c(130, 110),
-                     group_prob = c(0.5, 0.5), n_hvgs = 500,
-                    compute_pca = TRUE, output_format = "SingleCellExperiment")
-wass <- wasserstein_distance(input = sim, batch = "Batch",
-                             reduction = "PCA", rep = 1, mc_cores = 1)
+sim <- simulate_data(
+  n_genes = 1000, batch_cells = c(130, 110),
+  group_prob = c(0.5, 0.5), n_hvgs = 500,
+  compute_pca = TRUE, output_format = "SingleCellExperiment"
+)
+wass <- wasserstein_distance(
+  input = sim, batch = "Batch",
+  reduction = "PCA", rep = 1, mc_cores = 1
+)
 
 }
