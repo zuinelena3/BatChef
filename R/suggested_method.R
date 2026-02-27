@@ -26,7 +26,7 @@ suggested_method <- function(input, batch) {
 
   pred <- as.character(predict(svm_best, params))
 
-  message <- paste0("Optimal method: ", pred)
-  print(message)
+  msg <- paste0("Optimal method: ", pred)
+  message(msg)
   predition_plot(params = params)
 }
