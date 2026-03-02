@@ -81,7 +81,6 @@ metrics <- function(input, batch, group, reduction,
     input = input, batch = batch, reduction = reduction,
     rep = rep, mc_cores = mc_cores
   )
-  wass <- mean(wass$wasserstein)
 
   return(data.frame(
     method = reduction, wasserstein = wass, iasw, ilisi,

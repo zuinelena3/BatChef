@@ -4,7 +4,7 @@
 \alias{wasserstein_distance}
 \title{Wasserstein distance}
 \usage{
-wasserstein_distance(input, batch, reduction, rep, mc_cores)
+wasserstein_distance(input, batch, reduction, rep, mc_cores = 1)
 }
 \arguments{
 \item{input}{A \link[SingleCellExperiment]{SingleCellExperiment} object.}
@@ -18,7 +18,7 @@ wasserstein_distance(input, batch, reduction, rep, mc_cores)
 \item{mc_cores}{The number of cores to use.}
 }
 \value{
-A numeric value.
+A numeric value
 }
 \description{
 The Wasserstein distance measures the minimal transport needed to shift one
