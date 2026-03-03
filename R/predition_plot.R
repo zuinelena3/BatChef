@@ -25,12 +25,12 @@ log_transf <- function(mat, base = exp(1)) {
 #'
 #' @returns A ggplot object
 #'
-#' @importFrom ggplot2 ggplot aes scale_fill_manual geom_point
-#' @importFrom ggplot2 theme_classic theme labs element_text
-#' @importFrom ggvoronoi geom_voronoi
+#' @importFrom ggplot2 ggplot aes scale_fill_manual geom_point geom_sf
+#' @importFrom ggplot2 theme_classic theme xlab ylab labs element_text
 #' @importFrom grDevices chull
 #' @importFrom stats predict
-#' @importFrom sf st_as_sf st_sfc st_intersects st_sf st_polygon
+#' @importFrom sf st_as_sf st_sfc st_intersects st_sf st_polygon st_voronoi
+#' @importFrom sf st_union st_collection_extract st_intersection st_join st_nearest_feature
 #'
 predition_plot <- function(params) {
   files <- c("pca.rda", "coords.rda", "palette.rda")
@@ -47,6 +47,7 @@ predition_plot <- function(params) {
   polygon_coords <- coords[hull, ]
   poly <- polygon_coords[-11, ]
 
+  points_sf <- st_as_sf(coords, coords = c("PC1", "PC2"))
   points <- st_as_sf(new_coords, coords = c("PC1", "PC2"), crs = NA)
   polygon_sf <- st_sfc(st_polygon(list(as.matrix(polygon_coords[, 1:2]))))
   polygon_sf <- st_sf(polygon_sf)
@@ -56,12 +57,19 @@ predition_plot <- function(params) {
    message("WARNING: data point is outside the boundaries!")
   }
 
-  p <- ggplot(coords, aes(x = PC1, y = PC2, fill = svm_best)) +
-    geom_voronoi(outline = poly, color = 1, linewidth = 0.1) +
+  voronoi <- st_voronoi(st_union(points_sf))
+  vor_sf <- st_collection_extract(voronoi)
+  vor_clip <- st_intersection(st_as_sf(vor_sf), polygon_sf)
+
+  vor_colored <- st_join(vor_clip, points_sf, join = st_nearest_feature)
+
+  p <- ggplot() +
+    geom_sf(data = vor_colored, aes(fill = svm_best), color = "black") +
+    geom_sf(data = polygon_sf, fill = NA, color = "black", linewidth = 0.1) +
     scale_fill_manual(values = pltt) +
     theme_classic() +
     theme(text = element_text(size = 20)) +
-    labs(fill = "Method")
+    labs(fill = "Method") + xlab("PC1") + ylab("PC2")
 
   p <- p + geom_point(
     data = new_coords, aes(x = PC1, y = PC2),
@@ -73,3 +81,5 @@ predition_plot <- function(params) {
     print(p)
     )
 }
+
+
