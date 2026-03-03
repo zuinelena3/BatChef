@@ -90,7 +90,6 @@ Users can predict the optimal batch correction method for a given dataset via th
 
 ```{r pred, warning=FALSE}
 pred <- suggested_method(input = sce, batch = "Batch")
-pred
 ```
 
 In this case, the optimal batch correction is scMerge2 (unsupervised) for our data.

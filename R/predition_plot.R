@@ -25,15 +25,13 @@ log_transf <- function(mat, base = exp(1)) {
 #'
 #' @returns A ggplot object
 #'
-#' @importFrom ggplot2 ggplot aes scale_fill_manual geom_point
-#' @importFrom ggplot2 theme_classic theme labs element_text
-#' @importFrom ggvoronoi geom_voronoi
+#' @importFrom ggplot2 aes geom_point
 #' @importFrom grDevices chull
 #' @importFrom stats predict
 #' @importFrom sf st_as_sf st_sfc st_intersects st_sf st_polygon
 #'
 predition_plot <- function(params) {
-  files <- c("pca.rda", "coords.rda", "palette.rda")
+  files <- c("pca.rda", "coords.rda", "palette.rda", "plot.rda")
   file_paths <- system.file("extdata", files, package = "BatChef")
   lapply(file_paths, load, envir = .GlobalEnv)
 
@@ -55,13 +53,6 @@ predition_plot <- function(params) {
   if (!inside) {
    message("WARNING: data point is outside the boundaries!")
   }
-
-  p <- ggplot(coords, aes(x = PC1, y = PC2, fill = svm_best)) +
-    geom_voronoi(outline = poly, color = 1, linewidth = 0.1) +
-    scale_fill_manual(values = pltt) +
-    theme_classic() +
-    theme(text = element_text(size = 20)) +
-    labs(fill = "Method")
 
   p <- p + geom_point(
     data = new_coords, aes(x = PC1, y = PC2),
