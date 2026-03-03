@@ -7,7 +7,7 @@
 #'
 log_transf <- function(mat, base = exp(1)) {
   apply(mat, 2, function(x) {
-    sapply(x, function(val) {
+    vapply(x, function(val) {
       if (val < 0) {
         -log((-val) + 1, base)
       } else if (val == 0) {
@@ -15,7 +15,7 @@ log_transf <- function(mat, base = exp(1)) {
       } else {
         log(val + 1, base)
       }
-    })
+    }, FUN.VALUE = numeric(1))
   })
 }
 
@@ -30,6 +30,7 @@ log_transf <- function(mat, base = exp(1)) {
 #' @importFrom ggvoronoi geom_voronoi
 #' @importFrom grDevices chull
 #' @importFrom stats predict
+#' @importFrom sf st_as_sf st_sfc st_intersects st_sf st_polygon
 #'
 predition_plot <- function(params) {
   files <- c("pca.rda", "coords.rda", "palette.rda")
@@ -46,6 +47,15 @@ predition_plot <- function(params) {
   polygon_coords <- coords[hull, ]
   poly <- polygon_coords[-11, ]
 
+  points <- st_as_sf(new_coords, coords = c("PC1", "PC2"), crs = NA)
+  polygon_sf <- st_sfc(st_polygon(list(as.matrix(polygon_coords[, 1:2]))))
+  polygon_sf <- st_sf(polygon_sf)
+  inside <- st_intersects(points, polygon_sf, sparse = FALSE)[, 1]
+
+  if (!inside) {
+   message("WARNING: data point is outside the boundaries!")
+  }
+
   p <- ggplot(coords, aes(x = PC1, y = PC2, fill = svm_best)) +
     geom_voronoi(outline = poly, color = 1, linewidth = 0.1) +
     scale_fill_manual(values = pltt) +
@@ -56,10 +66,10 @@ predition_plot <- function(params) {
   p <- p + geom_point(
     data = new_coords, aes(x = PC1, y = PC2),
     fill = "red", color = "red", size = 6
-  )
+    )
 
   suppressWarningsByMsg(
     "deprecated",
     print(p)
-  )
+    )
 }

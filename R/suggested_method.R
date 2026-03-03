@@ -4,7 +4,10 @@
 #' \link[Seurat]{Seurat} or `AnnData` object can be supplied.
 #' @param batch A string specifying the batch variable.
 #'
-#' @returns A string specifying the suggested method.
+#' @returns A list containing two elements:a string specifying the recommended method;
+#' a ggplot object that visualizes the data points in a two-dimensional space
+#' derived from the characteristics of 130 datasets.
+#'
 #' @export
 #'
 #' @import e1071

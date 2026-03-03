@@ -22,7 +22,7 @@ Description: This package implements a variety of methods for batch correction
 Depends: R (>= 4.5.0)
 License: GPL (>= 3)
 Encoding: UTF-8
-biocViews: BatchEffect, SingleCell
+biocViews: BatchEffect, SingleCell, Sequencing
 RoxygenNote: 7.3.3
 LinkingTo: Rcpp, RcppArmadillo
 Imports: 
@@ -53,6 +53,7 @@ Imports:
     scrapper,
     Seurat,
     SeuratObject,
+    sf,
     SingleCellExperiment,
     SparseArray,
     splatter,
@@ -69,6 +70,7 @@ Suggests:
     knitr,
     R.devices,
     rmarkdown,
+    scater,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
 LazyData: false
