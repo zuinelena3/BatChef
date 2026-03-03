@@ -33,6 +33,7 @@ Imports:
     e1071,
     fitdistrplus,
     ggplot2,
+    ggvoronoi,
     harmony,
     leidenAlg,
     limma,
