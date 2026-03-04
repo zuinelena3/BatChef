@@ -1,3 +1,7 @@
+## Changes in version 0.99.8
+
+-   Add optimal method prediction and two-dimensional space visualization based on characteristics of 130 real datasets.
+
 ## Changes in version 0.99.7
 
 -   Delete Python environment, created with basilisk package.
