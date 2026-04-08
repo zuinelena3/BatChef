@@ -3,7 +3,7 @@
 #' LIGER is a integrative non-negative matrix factorization method
 #'
 #' @param input A \link[rliger]{liger} object.
-#' @param method A string specifyng the batch correction method. Choose from
+#' @param method A string specifying the batch correction method. Choose from
 #' \code{"iNMF"}, \code{"onlineINMF"}, \code{"UINMF"}. Default \code{"iNMF"}.
 #' @param quantiles Number of quantiles to use for quantile normalization.
 #' @param reference Character, numeric or logical selection of one dataset,

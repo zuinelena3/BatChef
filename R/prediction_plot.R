@@ -32,16 +32,16 @@ log_transf <- function(mat, base = exp(1)) {
 #' @importFrom sf st_as_sf st_sfc st_intersects st_sf st_polygon st_voronoi
 #' @importFrom sf st_union st_collection_extract st_intersection st_join st_nearest_feature
 #'
-predition_plot <- function(params) {
-  files <- c("pca.rda", "coords.rda", "palette.rda")
-  file_paths <- system.file("extdata", files, package = "BatChef")
-  lapply(file_paths, load, envir = .GlobalEnv)
+prediction_plot <- function(params) {
+  file_path <- system.file("extdata", "svm.rda", package = "BatChef")
+  load(file_path)
 
   params <- as.data.frame(t(as.matrix(log_transf(params))))
 
-  new_coords <- predict(pca, params)
+  new_coords <- predict(res$pca, params)
   new_coords <- data.frame(PC1 = new_coords[, 1], PC2 = new_coords[, 2])
 
+  coords <- res$coords
   hull <- chull(coords[, 1], coords[, 2])
   hull <- c(hull, hull[1])
   polygon_coords <- coords[hull, ]
@@ -66,7 +66,7 @@ predition_plot <- function(params) {
   p <- ggplot() +
     geom_sf(data = vor_colored, aes(fill = svm_best), color = "black") +
     geom_sf(data = polygon_sf, fill = NA, color = "black", linewidth = 0.1) +
-    scale_fill_manual(values = pltt) +
+    scale_fill_manual(values = res$color) +
     theme_classic() +
     theme(text = element_text(size = 20)) +
     labs(fill = "Method") + xlab("PC1") + ylab("PC2")
@@ -75,9 +75,5 @@ predition_plot <- function(params) {
     data = new_coords, aes(x = PC1, y = PC2),
     fill = "red", color = "red", size = 6
   )
-
-  suppressWarningsByMsg(
-    "deprecated",
-    print(p)
-  )
+  return(p)
 }

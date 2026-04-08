@@ -22,9 +22,10 @@ setGeneric("ligerPost", function(input, output, method) {
 #' @import methods
 #' @importFrom Seurat CreateDimReducObject DefaultAssay
 #' @importFrom SingleCellExperiment reducedDim
+#' @importFrom rliger getMatrix
 #'
 setMethod("ligerPost", "Seurat", function(input, output, method) {
-  embedding <- as.data.frame(output@H.norm)
+  embedding <- as.data.frame(getMatrix(output, "H.norm"))
   rownames(embedding) <- colnames(input)
 
   input[[method]] <- CreateDimReducObject(
@@ -39,9 +40,10 @@ setMethod("ligerPost", "Seurat", function(input, output, method) {
 #' @aliases ligerPost,SingleCellExperiment,SingleCellExperiment-method
 #' @import methods
 #' @importFrom SingleCellExperiment reducedDim<- reducedDim
+#' @importFrom rliger getMatrix
 #'
 setMethod("ligerPost", "SingleCellExperiment", function(input, output, method) {
-  embedding <- as.data.frame(output@H.norm)
+  embedding <- as.data.frame(getMatrix(output, "H.norm"))
   rownames(embedding) <- colnames(input)
   reducedDim(input, method) <- embedding
   return(input)
@@ -50,9 +52,10 @@ setMethod("ligerPost", "SingleCellExperiment", function(input, output, method) {
 #' @rdname ligerPost
 #' @aliases ligerPost,AnnDataR6,AnnDataR6-method
 #' @importFrom SingleCellExperiment reducedDim
+#' @importFrom rliger getMatrix
 #'
 setMethod("ligerPost", "AnnDataR6", function(input, output, method) {
-  embedding <- as.data.frame(output@H.norm)
+  embedding <- as.data.frame(getMatrix(output, "H.norm"))
   rownames(embedding) <- input$obs_names
   input$obsm[[method]] <- as.matrix(embedding)
   return(input)

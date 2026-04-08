@@ -14,19 +14,22 @@ setGeneric("linearInput", function(input, batch) {
 
 #' @rdname linearInput
 #' @import methods
-#' @importFrom Seurat VariableFeatures
+#' @importFrom Seurat VariableFeatures GetAssayData
 #' @importFrom SingleCellExperiment SingleCellExperiment
+#' @importFrom S4Vectors DataFrame
 #' @aliases linearInput,Seurat,Seurat-method
 #'
 setMethod("linearInput", "Seurat", function(input, batch) {
   stopifnot(batch %in% colnames(input[[]]))
 
+  hvgs <- rownames(input) %in% VariableFeatures(input)
   input <- SingleCellExperiment(
     assays = list(
-      counts = input@assays$RNA$counts,
-      logcounts = input@assays$RNA$data
+      counts = GetAssayData(input, assay = "RNA", layer = "counts"),
+      data = GetAssayData(input, assay = "RNA", layer = "data")
     ),
-    colData = input@meta.data
+    colData = DataFrame(input[[]]),
+    rowData = DataFrame(hvgs = hvgs, row.names = rownames(input))
   )
 })
 

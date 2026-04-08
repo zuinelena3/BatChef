@@ -14,7 +14,7 @@ setGeneric("clustInput", function(input, reduction) {
 
 #' @rdname clustInput
 #' @import methods
-#' @importFrom Seurat VariableFeatures Embeddings
+#' @importFrom Seurat VariableFeatures Embeddings GetAssayData
 #' @importFrom SingleCellExperiment SingleCellExperiment reducedDim
 #' @importFrom S4Vectors DataFrame
 #' @aliases clustInput,Seurat,Seurat-method
@@ -25,11 +25,11 @@ setMethod("clustInput", "Seurat", function(input, reduction) {
   red <- Embeddings(object = input, reduction = reduction)
   input <- SingleCellExperiment(
     assays = list(
-      counts = input@assays$RNA$counts,
-      logcounts = input@assays$RNA$data
+      counts = GetAssayData(input, assay = "RNA", layer = "counts"),
+      logcounts = GetAssayData(input, assay = "RNA", layer = "data")
     ),
-    colData = DataFrame(input@meta.data),
-    rowData = data.frame(hvgs = hvgs)
+    colData = DataFrame(input[[]]),
+    rowData = DataFrame(hvgs = hvgs, row.names = rownames(input))
   )
   reducedDim(input, reduction) <- red
   return(input)

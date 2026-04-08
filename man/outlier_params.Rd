@@ -2,7 +2,7 @@
 % Please edit documentation in R/params.R
 \name{outlier_params}
 \alias{outlier_params}
-\title{Highly espressed genes probability}
+\title{Highly expressed genes probability}
 \usage{
 outlier_params(norm_counts)
 }
@@ -10,8 +10,8 @@ outlier_params(norm_counts)
 \item{norm_counts}{A normalized matrix}
 }
 \value{
-Highly espressed genes probability
+Highly expressed genes probability
 }
 \description{
-Highly espressed genes probability
+Highly expressed genes probability
 }

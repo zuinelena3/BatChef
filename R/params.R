@@ -95,20 +95,17 @@ batch_params <- function(norm_counts, batch) {
 
   over_means <- lapply(batch_means, function(x) over_means[names(over_means) %in% names(x)])
 
-  batch_factors <- lapply(1:length(batches), function(x) batch_means[[x]] / over_means[[x]])
+  batch_factors <- lapply(seq_along(batches), function(x) batch_means[[x]] / over_means[[x]])
 
   params <- params_btc_factors(factors = batch_factors)
 
-  combs <- combn(1:nrow(params), 2)
+  combs <- combn(seq_len(nrow(params)), 2)
 
-  sym_kl <- numeric(ncol(combs))
-
-  for (i in 1:ncol(combs)) {
-    kl_pq <- kl_gamma(p = params[combs[1, i], ], q = params[combs[2, i], ])
-    kl_qp <- kl_gamma(p = params[combs[2, i], ], q = params[combs[1, i], ])
-    sym_kl[i] <- kl_pq + kl_qp
-  }
-
+  sym_kl <- vapply(seq_len(ncol(combs)), function(x) {
+    kl_pq <- kl_gamma(p = params[combs[1, x], ], q = params[combs[2, x], ])
+    kl_qp <- kl_gamma(p = params[combs[2, x], ], q = params[combs[1, x], ])
+    kl_pq + kl_qp
+  }, numeric(1))
   params <- data.frame(batch_strength = median(sym_kl))
 }
 
@@ -127,11 +124,11 @@ lib_size_params <- function(counts) {
   return(params)
 }
 
-#' Highly espressed genes probability
+#' Highly expressed genes probability
 #'
 #' @param norm_counts A normalized matrix
 #'
-#' @returns Highly espressed genes probability
+#' @returns Highly expressed genes probability
 #'
 outlier_params <- function(norm_counts) {
   means <- rowMeans(norm_counts)
@@ -146,7 +143,7 @@ outlier_params <- function(norm_counts) {
 
   out_prob <- length(outs) / nrow(norm_counts)
 
-  params <- data.frame(out_prob)
+  params <- data.frame(overexpr_prop = out_prob)
 
   return(params)
 }

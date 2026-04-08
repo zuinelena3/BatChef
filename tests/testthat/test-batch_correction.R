@@ -5,7 +5,8 @@ test_that("Limma method works", {
       group_prob = c(0.5, 0.5), n_hvgs = 500,
       compute_pca = FALSE, output_format = "Seurat"
     )
-    sim <- batchCorrect(input = sim, batch = "Batch", params = LimmaParams())
+    sim <- batchCorrect(input = sim, batch = "Batch",
+                        params = LimmaParams(assay_type = "data"))
     expect_s4_class(sim, "Seurat")
   }))
 })
@@ -17,7 +18,8 @@ test_that("ComBat method works", {
       group_prob = c(0.5, 0.5), n_hvgs = 500,
       compute_pca = FALSE, output_format = "Seurat"
     )
-    sim <- batchCorrect(input = sim, batch = "Batch", params = CombatParams())
+    sim <- batchCorrect(input = sim, batch = "Batch",
+                        params = CombatParams(assay_type = "data"))
     expect_s4_class(sim, "Seurat")
   }))
 })
@@ -65,10 +67,10 @@ test_that("fastMNN method works", {
       n_genes = 500, batch_cells = c(150, 100),
       group_prob = c(0.5, 0.5), n_hvgs = 500,
       compute_pca = TRUE, pca_ncomp = 10,
-      output_format = "Seurat"
+      output_format = "SingleCellExperiment"
     )
     sim <- batchCorrect(input = sim, batch = "Batch", params = FastMNNParams())
-    expect_s4_class(sim, "Seurat")
+    expect_s4_class(sim, "SingleCellExperiment")
   }))
 })
 
@@ -95,7 +97,8 @@ test_that("scMerge2 method works", {
       output_format = "Seurat"
     )
 
-    sim <- batchCorrect(input = sim, batch = "Batch", params = ScMerge2Params())
+    sim <- batchCorrect(input = sim, batch = "Batch",
+                        params = ScMerge2Params(assay_type = "data"))
     expect_s4_class(sim, "Seurat")
   })))
 })
