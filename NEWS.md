@@ -1,3 +1,7 @@
+## Changes in version 0.99.10
+
+- Remove direct slot access, remove ggplot print, and add README.md for extdata.
+
 ## Changes in version 0.99.9
 
 ## Changes in version 0.99.8
