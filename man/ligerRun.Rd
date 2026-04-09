@@ -25,7 +25,7 @@ ligerRun(
 \arguments{
 \item{input}{A \link[rliger]{liger} object.}
 
-\item{method}{A string specifyng the batch correction method. Choose from
+\item{method}{A string specifying the batch correction method. Choose from
 \code{"iNMF"}, \code{"onlineINMF"}, \code{"UINMF"}. Default \code{"iNMF"}.}
 
 \item{quantiles}{Number of quantiles to use for quantile normalization.}

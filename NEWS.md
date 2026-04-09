@@ -1,5 +1,16 @@
+<<<<<<< HEAD
 ## Changes in version 0.99.9
 
+=======
+## Changes in version 0.99.10
+
+- Remove direct slot access, remove ggplot print, and add README.md for extdata.
+
+## Changes in version 0.99.9
+
+## Changes in version 0.99.8
+
+>>>>>>> devel
 -   Add optimal method prediction and two-dimensional space visualization based on characteristics of 130 real datasets.
 
 ## Changes in version 0.99.7

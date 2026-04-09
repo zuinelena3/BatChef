@@ -81,7 +81,6 @@ setMethod("ligerInput", "AnnDataR6", function(input, batch, features, ...) {
 
   ll <- lapply(unique(colData(input)[, batch]), function(i) input[, colData(input)[, batch] == i])
   names(ll) <- unique(colData(input)[, batch])
-
   args <- c(list(rawData = ll), capture_params(createLiger, list(...)))
   lo <- do.call(createLiger, args)
 

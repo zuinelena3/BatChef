@@ -14,7 +14,7 @@ setGeneric("sceInput", function(input, batch) {
 
 #' @rdname sceInput
 #' @import methods
-#' @importFrom Seurat VariableFeatures Embeddings
+#' @importFrom Seurat VariableFeatures Embeddings GetAssayData
 #' @importFrom SingleCellExperiment SingleCellExperiment reducedDim
 #' @importFrom S4Vectors DataFrame
 #' @aliases sceInput,Seurat,Seurat-method
@@ -23,14 +23,15 @@ setMethod("sceInput", "Seurat", function(input, batch) {
   stopifnot(batch %in% colnames(input[[]]))
 
   hvgs <- rownames(input) %in% VariableFeatures(input)
+
   pca <- Embeddings(input)
   input <- SingleCellExperiment(
     assays = list(
-      counts = input@assays$RNA$counts,
-      logcounts = input@assays$RNA$data
+      counts = GetAssayData(input, assay = "RNA", layer = "counts"),
+      data = GetAssayData(input, assay = "RNA", layer = "data")
     ),
-    colData = DataFrame(input@meta.data),
-    rowData = data.frame(hvgs = hvgs)
+    colData = DataFrame(input[[]]),
+    rowData = DataFrame(hvgs = hvgs, row.names = rownames(input))
   )
   reducedDim(input, "PCA") <- pca
   return(input)

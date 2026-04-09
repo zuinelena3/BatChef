@@ -24,12 +24,13 @@ suggested_method <- function(input, batch) {
   sce <- linearInput(input = input, batch = batch)
   params <- extract_features(input = sce, batch = batch)
 
-  file_path <- system.file("extdata", "svmfit.rda", package = "BatChef")
+  file_path <- system.file("extdata", "svm.rda", package = "BatChef")
   load(file_path)
 
+  svm_best <- res$svm
   pred <- as.character(predict(svm_best, params))
 
   msg <- paste0("Optimal method: ", pred)
   message(msg)
-  predition_plot(params = params)
+  prediction_plot(params = params)
 }
