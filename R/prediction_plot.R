@@ -66,11 +66,7 @@ prediction_plot <- function(params) {
   p <- ggplot() +
     geom_sf(data = vor_colored, aes(fill = svm_best), color = "black") +
     geom_sf(data = polygon_sf, fill = NA, color = "black", linewidth = 0.1) +
-<<<<<<< HEAD:R/predition_plot.R
-    scale_fill_manual(values = pltt) +
-=======
     scale_fill_manual(values = res$color) +
->>>>>>> devel:R/prediction_plot.R
     theme_classic() +
     theme(text = element_text(size = 20)) +
     labs(fill = "Method") + xlab("PC1") + ylab("PC2")
@@ -81,5 +77,3 @@ prediction_plot <- function(params) {
   )
   return(p)
 }
-
-
