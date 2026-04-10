@@ -1,3 +1,7 @@
+## Changes in version 0.99.11
+
+- Solve warning messages caused by deprecated functions in scran package.
+
 ## Changes in version 0.99.10
 
 - Remove direct slot access, remove ggplot print, and add README.md for extdata.
