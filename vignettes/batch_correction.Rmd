@@ -117,7 +117,7 @@ The `batchCorrect()` function allows to specify the desired correction method. I
 To illustrate the functionality of the package, batch correction was performed using the scMerge2 method. To improve computational efficiency, the analysis was restricted to the first 1,000 highly variable genes.
 
 ```{r scmerge2, message=FALSE, warning=FALSE, results='hide', fig.keep='none'}
-sce <- sce[SingleCellExperiment::rowData(sce)$hvgs, ]
+sce <- sce[SingleCellExperiment::rowData(sce)$hvg, ]
 sce <- batchCorrect(input = sce, batch = "Batch", params = ScMerge2Params())
 library(scater)
 sce <- runPCA(sce,
