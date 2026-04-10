@@ -34,7 +34,7 @@ test_that("SeuratV3 method works", {
     sim <- batchCorrect(
       input = sim, batch = "Batch",
       params = SeuratV3Params(
-        features = rownames(sim)[rowData(sim)$hvgs],
+        features = rownames(sim)[rowData(sim)$hvg],
         pca_name = "PCA"
       )
     )
@@ -54,7 +54,7 @@ test_that("SeuratV5 method works", {
       input = sim, batch = "Batch",
       params = SeuratV5Params(
         pca_name = "PCA",
-        features = rownames(sim)[rowData(sim)$hvgs]
+        features = rownames(sim)[rowData(sim)$hvg]
       )
     )
     expect_s4_class(sim, "SingleCellExperiment")
@@ -98,7 +98,7 @@ test_that("scMerge2 method works", {
     )
 
     sim <- batchCorrect(input = sim, batch = "Batch",
-                        params = ScMerge2Params(assay_type = "data"))
+                        params = ScMerge2Params(assay_type = "data", cosineNorm = FALSE))
     expect_s4_class(sim, "Seurat")
   })))
 })
