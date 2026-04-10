@@ -54,7 +54,7 @@
 #' @importFrom SummarizedExperiment assays<- assay rowData<-
 #' @importFrom anndata AnnData
 #' @importFrom SparseArray colSums
-#' @importFrom S4Vectors SimpleList metadata<-
+#' @importFrom S4Vectors SimpleList metadata<- metadata
 #'
 #' @return A \link[SingleCellExperiment]{SingleCellExperiment}
 #' \link[Seurat]{Seurat} or `AnnData` object.
@@ -119,7 +119,6 @@ simulate_data <- function(n_genes = 10000, batch_cells = 100,
   colnames(reducedDim(sim, "PCA")) <- paste0("PC_", seq_len(pca_ncomp))
 
   pca <- reducedDim(sim, "PCA")
-  # colnames(pca) <- paste0("PC_", seq_len(pca_ncomp))
 
   loadings <- metadata(sim)$PCA$rotation
   colnames(loadings) <- paste0("PC_", seq_len(pca_ncomp))
