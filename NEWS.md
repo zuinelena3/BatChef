@@ -1,3 +1,7 @@
+## Changes in version 0.99.12
+
+- Solve errors in tests.
+
 ## Changes in version 0.99.11
 
 - Solve warning messages caused by deprecated functions in scran package.
