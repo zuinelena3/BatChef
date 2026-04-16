@@ -83,7 +83,7 @@ test_that("Harmony method works", {
       output_format = "AnnData"
     )
 
-    final <- batchCorrect(input = sim, batch = "Batch", params = HarmonyParams())
+    sim <- batchCorrect(input = sim, batch = "Batch", params = HarmonyParams())
     expect_true(inherits(sim, "AnnDataR6"))
   }))
 })

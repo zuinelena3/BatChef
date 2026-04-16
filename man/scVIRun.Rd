@@ -166,7 +166,7 @@ scVI is a deep learning-based method.
 sim <- simulate_data(
   n_genes = 500, batch_cells = c(100, 50),
   group_prob = c(0.5, 0.5), n_hvgs = 500,
-  compute_pca = TRUE, output_format = "SingleCellExperiment"
+  output_format = "SingleCellExperiment"
 )
 scvi <- scVIRun(input = sim, batch = "Batch", n_latent = 10, max_epochs = 1)
 
