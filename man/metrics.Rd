@@ -14,7 +14,6 @@ metrics(
   nmi_compute = TRUE,
   resolution = NULL,
   k = 10,
-  n_iter = -1,
   metric = "euclidean",
   variant = "sum",
   meta_data = colData(input),
@@ -43,10 +42,6 @@ identify the optimal clustering is to be performed (Default: TRUE).}
 \item{resolution}{A numeric value specifying the resolution parameter.}
 
 \item{k}{An integer scalar specifying the number of nearest neighbors.}
-
-\item{n_iter}{Number of iterations of the Leiden clustering algorithm to perform.
-Positive values above 2 define the total number of iterations to perform,
--1 has the algorithm run until it reaches its optimal clustering}
 
 \item{metric}{The metric to use when calculating distance between instances.}
 
@@ -78,7 +73,7 @@ sim <- simulate_data(
 )
 metrics <- metrics(
   input = sim, batch = "Batch", group = "Group",
-  reduction = "PCA", rep = 5, n_iter = 2
+  reduction = "PCA", rep = 5
 )
 
 }

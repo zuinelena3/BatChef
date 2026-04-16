@@ -46,13 +46,15 @@
 #' @export
 #' @importFrom splatter newSplatParams splatSimulateGroups
 #' @importFrom SummarizedExperiment assays
-#' @importFrom scrapper centerSizeFactors normalizeCounts modelGeneVariances chooseHighlyVariableGenes runPca
+#' @importFrom scrapper centerSizeFactors normalizeRnaCounts.se chooseRnaHvgs.se  runPca.se
 #' @importFrom Seurat CreateSeuratObject VariableFeatures<- CreateDimReducObject DefaultAssay
 #' @importFrom SeuratObject CreateAssay5Object
-#' @importFrom SingleCellExperiment SingleCellExperiment reducedDim
+#' @importFrom SingleCellExperiment reducedDim rowData colData logcounts counts
+#' @importFrom SingleCellExperiment logcounts<-
+#' @importFrom SummarizedExperiment assays<- assay rowData<-
 #' @importFrom anndata AnnData
 #' @importFrom SparseArray colSums
-#' @importFrom S4Vectors SimpleList
+#' @importFrom S4Vectors SimpleList metadata<- metadata
 #'
 #' @return A \link[SingleCellExperiment]{SingleCellExperiment}
 #' \link[Seurat]{Seurat} or `AnnData` object.
@@ -99,36 +101,36 @@ simulate_data <- function(n_genes = 10000, batch_cells = 100,
     path.sigmaFac = path_sigma_fac, seed = seed
   )
   sim <- splatSimulateGroups(params, verbose = FALSE)
+  assays(sim) <- list(counts = assay(sim, "counts"))
+  rowData(sim) <- NULL
 
   counts <- as(assay(sim, "counts"), "dgCMatrix")
-  coldata <- colData(sim)
+  coldata <- as.data.frame(colData(sim))
 
   size_factors <- centerSizeFactors(colSums(counts))
-  normalized <- as(normalizeCounts(counts, size_factors), "dgCMatrix")
+  sim <- normalizeRnaCounts.se(sim, size.factors = size_factors)
+  logcounts(sim) <- as(assay(sim, "logcounts"), "dgCMatrix")
 
-  gene_var <- modelGeneVariances(normalized, num.threads = num_threads)
-  top_hvgs <- chooseHighlyVariableGenes(gene_var$statistics$residuals,
-    top = n_hvgs
-  )
+  sim <- chooseRnaHvgs.se(sim, num.threads = num_threads)
 
-  rowdata <- data.frame(
-    genes = rownames(normalized),
-    hvgs = seq_along(rownames(normalized)) %in% top_hvgs
-  )
+  rowdata <- as.data.frame(rowData(sim))
 
-  pca <- runPca(normalized[top_hvgs, , drop = TRUE], num.threads = num_threads, number = pca_ncomp)
-  loadings <- pca[[2]]
+  sim <- runPca.se(sim, features = rowData(sim)$hvg, num.threads = num_threads, number = pca_ncomp)
+  colnames(reducedDim(sim, "PCA")) <- paste0("PC_", seq_len(pca_ncomp))
+
+  pca <- reducedDim(sim, "PCA")
+
+  loadings <- metadata(sim)$PCA$rotation
   colnames(loadings) <- paste0("PC_", seq_len(pca_ncomp))
-  rownames(loadings) <- rownames(sim)[top_hvgs]
 
-  pca <- t(pca[[1]])
-  colnames(pca) <- paste0("PC_", seq_len(pca_ncomp))
-  rownames(pca) <- colnames(sim)
+  attr(reducedDim(sim, "PCA"), "rotation") <- loadings
+
+  metadata(sim) <- list()
 
   if (output_format == "Seurat") {
-    assay <- CreateAssay5Object(counts = counts, data = normalized)
-    so <- CreateSeuratObject(assay, meta.data = as.data.frame(coldata))
-    VariableFeatures(so) <- rowdata$genes[rowdata$hvgs]
+    assay <- CreateAssay5Object(counts = counts(sim), data = logcounts(sim))
+    so <- CreateSeuratObject(assay, meta.data = coldata)
+    VariableFeatures(so) <- rowdata$genes[rowdata$hvg]
 
     if (compute_pca == TRUE) {
       so[["pca"]] <- CreateDimReducObject(
@@ -141,24 +143,16 @@ simulate_data <- function(n_genes = 10000, batch_cells = 100,
       return(so)
     }
   } else if (output_format == "SingleCellExperiment") {
-    sce <- SingleCellExperiment(
-      assays = list(counts = counts, logcounts = normalized),
-      colData = coldata, rowData = rowdata
-    )
-
-    if (compute_pca == TRUE) {
-      reducedDim(sce, "PCA") <- pca
-      attr(reducedDim(sce, "PCA"), "rotation") <- loadings
-      return(sce)
-    } else {
-      return(sce)
-    }
+    sce <- sim
   } else {
-    counts <- counts[top_hvgs, , drop = TRUE]
-    normalized <- normalized[top_hvgs, , drop = TRUE]
-    obs <- as.data.frame(coldata)
+    counts <- counts(sim)
+    counts <- counts[rowData(sim)$hvg, , drop = TRUE]
+
+    normalized <- logcounts(sim)
+    normalized <- normalized[rowData(sim)$hvg, , drop = TRUE]
+    obs <- coldata
     rownames(obs) <- colnames(counts)
-    var <- rowdata[top_hvgs, , drop = TRUE]
+    var <- rowdata[rowData(sim)$hvg, , drop = TRUE]
     rownames(var) <- rownames(counts)
     adata <- AnnData(
       X = t(as.matrix(counts)),

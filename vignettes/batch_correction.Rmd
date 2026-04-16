@@ -21,23 +21,23 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, echo=FALSE, results="hide", message=FALSE}
+```{r intro, echo=FALSE, results="hide", message=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
 # Introduction
 
-Combining single-cell RNA-sequencing (scRNA-seq) datasets from different sources introduces technical variability known as batch effects, caused by factors like operators, reagent batches, platforms, and timing. These batch effects distort analyses and obscure true biological signals, making accurate data interpretation difficult.
+Aggregating single-cell RNA sequencing (scRNA-seq) datasets from multiple sources introduces technical variability, known as batch effects, arising from differences in operator handling, reagent lots, sequencing platforms, and experimental timing. Batch effects can distort downstream analyses and obscure the true biological variation, compromising the interpretability of the results.
 
-In the literature there are various batch correction methods, based on different mathematical approaches, using R and Python languages. However, the performance of batch correction methods depends on the data characteristics.
+Numerous batch correction methods have been proposed in the literature, based on different mathematical approaches. However, their performance is highly dependent on the intrinsic characteristics of the data.
 
 `BatChef` is an R package that:
 
--   implements a variety of correction methods in R and Python. It allows users to compute the desired approach through a generic function.
+-   implements a variety of correction methods;
 
--   provides metrics to evaluate the performance of the correction methods, such as the Wasserstein distance, Local Inverse Simpson's Index (LISI), Average Silhouette Width (ASW), and Adjusted Rand Index (ARI).
+-   provides quantitative metrics to evaluate the performance of the correction methods, including the Wasserstein distance, Local Inverse Simpson's Index (LISI), Average Silhouette Width (ASW), and Adjusted Rand Index (ARI).
 
--   can be used as a guideline to identify the optimal batch effects correction method based on the data features.
+-   can be used as a guideline to identify the most appropriate batch effects correction method based on data-specific characteristics.
 
 # Installation
 
@@ -50,47 +50,53 @@ BiocManager::install("BatChef")
 
 # Setup
 
-Load the package:
+To demonstrate, we simulate a dataset with 2,148 genes, 3,461 cells, 2 batches and 3 cell types, using the `simulate_data()` function. This function applies the same parameters as the Splatter package’s ones. Additionally, it normalizes the data, identifies highly variable genes and performs principal component analysis using the `scrapper` package.
 
-```{r setup, include=TRUE, results="hide", message=FALSE, warning=FALSE}
+The `BatChef` package allows to use three different input data: `SingleCellExperiment`, `Seurat` and `AnnData`. These can be simulated using the the `output_format` parameter in the `simulate_data()` function.
+
+```{r sce,  include=TRUE, message=FALSE, warning=FALSE}
 library(BatChef)
-```
-
-To demonstrate, we simulate a dataset with 2,000 genes, 2,000 cells, 2 batches and 2 cell types, using the `simulate_data` function. This function applies the same parameters as the Splatter package’s ones. Additionally, it normalizes the data, identifies highly variable genes and performs principal component analysis using the `scrapper` package.
-
-```{r sce}
 sce <- simulate_data(
-  n_genes = 2000, batch_cells = c(1200, 800),
-  group_prob = c(0.6, 0.4), n_hvgs = 1000,
-  compute_pca = TRUE, pca_ncomp = 10,
-  output_format = "SingleCellExperiment"
+  n_genes = 2148, batch_cells = c(1210, 2251), compute_hvgs = TRUE,
+  batch_fac_loc = c(0.1, 0.1), batch_fac_scale = c(0.1, 0.1),
+  mean_shape = 0.4, lib_loc = 11.5,
+  group_prob = c(0.17, 0.46, 0.37),
+  compute_pca = TRUE, pca_ncomp = 10, output_format = "SingleCellExperiment"
 )
 sce
 ```
 
+```{r so, eval=FALSE}
+so <- simulate_data(
+  n_genes = 2148, batch_cells = c(1210, 2251), compute_hvgs = TRUE,
+  batch_fac_loc = c(0.1, 0.1), batch_fac_scale = c(0.1, 0.1),
+  mean_shape = 0.4, lib_loc = 11.5,
+  group_prob = c(0.17, 0.46, 0.37),
+  compute_pca = TRUE, pca_ncomp = 10, output_format = "Seurat"
+)
+
+adata <- simulate_data(
+  n_genes = 2148, batch_cells = c(1210, 2251), compute_hvgs = TRUE,
+  batch_fac_loc = c(0.1, 0.1), batch_fac_scale = c(0.1, 0.1),
+  mean_shape = 0.4, lib_loc = 11.5,
+  group_prob = c(0.17, 0.46, 0.37),
+  compute_pca = TRUE, pca_ncomp = 10, output_format = "AnnData"
+)
+```
+
+# Batch correction method prediction
+
+Users can predict the optimal batch correction method for a given dataset via the `suggested_method()` function. This function employs a Support Vector Machine (SVM) algorithm to predict the most suitable batch correction method and visualize the dataset's position within a two-dimensional embedding space. The embedding was constructed by analyzing 130 datasets and their associated characteristics.
+
+```{r pred, warning=FALSE}
+pred <- suggested_method(input = sce, batch = "Batch")
+```
+
+In this case, the optimal batch correction is scMerge2 (unsupervised) for our data.
+
 # Batch effects correction
 
-The `batchCorrect` function allows to specify the desired correction method and performs the correction with three different input data: `SingleCellExperiment`, `Seurat` and `AnnData`. We can simulate three different objects using the the `output_format` parameter in the `simulate_data` function.
-
-```{r so, message=FALSE, warning=FALSE}
-so <- simulate_data(
-  n_genes = 2000, batch_cells = c(1200, 800),
-  group_prob = c(0.6, 0.4), n_hvgs = 1000,
-  compute_pca = TRUE, pca_ncomp = 10,
-  output_format = "Seurat"
-)
-so
-```
-
-```{r anndata, eval=FALSE}
-# adata <- simulate_data(n_genes = 2000, batch_cells = c(1200, 800),
-#                      group_prob = c(0.6, 0.4), n_hvgs = 1000,
-#                      compute_pca = TRUE, pca_ncomp = 10,
-#                      output_format = "AnnData")
-# adata
-```
-
-The desired correction method can have these values:
+The `batchCorrect()` function allows to specify the desired correction method. It can have these values:
 
 -   `LimmaParams`
 
@@ -104,60 +110,33 @@ The desired correction method can have these values:
 
 -   `HarmonyParams`
 
--   `ScanoramaParams`
-
--   `ScVIParams`
-
 -   `ScMerge2Params`
-
--   `BBKNNParams`
 
 -   `LigerParams`
 
-## Examples
+To illustrate the functionality of the package, batch correction was performed using the scMerge2 method. To improve computational efficiency, the analysis was restricted to the first 1,000 highly variable genes.
 
-To illustrate, we correct the data using `Scanorama` and `Harmony`.
-
-### Harmony
-
-```{r harmony1, message=FALSE, warning=FALSE}
-sce <- batchCorrect(input = sce, batch = "Batch", params = HarmonyParams())
-sce
+```{r scmerge2, message=FALSE, warning=FALSE, results='hide', fig.keep='none'}
+sce <- sce[SingleCellExperiment::rowData(sce)$hvg, ]
+sce <- batchCorrect(input = sce, batch = "Batch", params = ScMerge2Params())
+library(scater)
+sce <- runPCA(sce,
+  subset_row = rownames(sce),
+  assay.type = "scmerge2", name = "scmerge2", ncomponent = 10
+)
 ```
 
-Also, the `Seurat` object can be used as an input data.
+The `batchCorrect()` function returns an object of the same class as the input. In this example, the output is therefore a `SingleCellExperiment` object. The corrected gene expression matrix and/or the corrected dimensionality reduction are stored in the returned object.
 
-```{r harmony2, message=FALSE, warning=FALSE}
-so <- batchCorrect(input = so, batch = "Batch", params = HarmonyParams())
-so
-```
-
-### Scanorama
-
-```{r scanorama, message=FALSE, warning=FALSE}
-sce <- batchCorrect(
-  input = sce, batch = "Batch",
-  params = ScanoramaParams(
-    assay_type = "logcounts",
-    return_dimred = TRUE
-  )
-)
+```{r out}
 sce
-so <- batchCorrect(
-  input = so, batch = "Batch",
-  params = ScanoramaParams(
-    assay_type = "data",
-    return_dimred = TRUE
-  )
-)
-so
 ```
 
 # Performance evaluation
 
-Last, the `metrics()` function computes the evaluation metrics, such as Normalized Mutual Information (NMI), Adjusted Rand Index (ARI), Local Inverse Simpson's Index (LISI), Average Silhouette Width (ASW), and Wasserstein distance.
+To evaluate batch correction performance, the user can use the `metrics()` function to compute multiple quantitative metrics, including Normalized Mutual Information (NMI), Adjusted Rand Index (ARI), Local Inverse Simpson’s Index (LISI), Average Silhouette Width (ASW), and the Wasserstein distance.
 
-The Wasserstein distance is computed on a resampled data due to the different number of cells in each batch. The parameter `rep` indicates how many times the calculation should be repeated (in this case 5).
+The Wasserstein distance is computed on resampled data to account for the different numbers of cells in each batch. The parameter `rep` specifies how many times the calculation is repeated (in this case, 1).
 
 ```{r perf, message=FALSE, warning=FALSE}
 red <- SingleCellExperiment::reducedDimNames(sce)
@@ -165,24 +144,23 @@ metrics <- lapply(red, function(x) {
   metrics(
     input = sce, batch = "Batch",
     group = "Group", reduction = x,
-    rep = 5
+    rep = 1
   )
 })
 metrics <- do.call(rbind, metrics)
 metrics
 ```
 
-# Optimal batch correction method
+To interpret the results, we focused on the Wasserstein distance and the ARI score, which measure batch effect removal and the preservation of biological effects, respectively.
 
-The `suggested_method()` function determinates the optimal batch correction method for a specific dataset. Initially, this function calculates the features and subsequently predicts the recommended method.
-
-```{r optimal, message=FALSE, warning=FALSE}
-pred <- suggested_method(input = sce, batch = "Batch")
-pred
+```{r wassari}
+metrics[, c(1:2, 5)]
 ```
+
+A low Wasserstein distance indicates that the method effectively removes batch effects, while a high Adjusted Rand Index (ARI) indicates that the biological effects are well preserved. Overall, scMerge2 performs well on both metrics.
 
 # sessionInfo()
 
-```{r}
+```{r sessioninfo}
 sessionInfo()
 ```

@@ -86,7 +86,7 @@
 #'   group_prob = c(0.5, 0.5), n_hvgs = 500,
 #'   compute_pca = TRUE, output_format = "SingleCellExperiment"
 #' )
-#' scvi <- scVIRun(input = sim, batch = "Batch", max_epochs = 1)
+#' scvi <- scVIRun(input = sim, batch = "Batch", n_latent = 10, max_epochs = 1)
 #'
 scVIRun <- function(input, batch, assay_type = "counts", layer = NULL, labels_key = NULL,
                     size_factor_key = NULL, categorical_covariate_keys = NULL,

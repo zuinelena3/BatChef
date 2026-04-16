@@ -10,7 +10,7 @@ lib_size_params(counts)
 \item{counts}{Raw counts matrix.}
 }
 \value{
-Library size parameters.
+Median of sequencing depth
 }
 \description{
 Library size parameters

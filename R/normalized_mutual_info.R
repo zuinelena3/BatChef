@@ -9,12 +9,11 @@
 #' @param label_true A string specifying the ground truth labels.
 #' @param reduction A string specifying the dimensional reduction
 #' on which the clustering analysis will be performed.
+#' @param nmi_compute A Boolean value indicating NMI metric calculation to
+#' identify the optimal clustering is to be performed (Default: FALSE).
 #' @param resolution A numeric value specifying the resolution parameter.
 #' @param k An integer scalar specifying the number of nearest neighbors.
 #' @param variant How to compute the normalizer in the denominator.
-#' @param n_iter Number of iterations of the Leiden clustering algorithm to perform.
-#' Positive values above 2 define the total number of iterations to perform,
-#' -1 has the algorithm run until it reaches its optimal clustering
 #'
 #' @export
 #' @importFrom aricode NMI
@@ -28,17 +27,15 @@
 #' )
 #' nmi <- normalized_mutual_info(
 #'   input = sim, label_true = "Group", reduction = "PCA",
-#'   resolution = 0.5, n_iter = 2
+#'   nmi_compute = FALSE, resolution = 0.5
 #' )
 #'
-normalized_mutual_info <- function(input, label_true, reduction,
-                                   resolution = 1, k = 15, variant = "sum",
-                                   n_iter = -1) {
+normalized_mutual_info <- function(input, label_true, reduction, nmi_compute = FALSE,
+                                   resolution = 1, k = 10, variant = "sum") {
   clust <- leiden_clustering(
     input = input, label_true = label_true,
-    reduction = reduction, nmi_compute = FALSE,
-    resolution = resolution, k = k, store = FALSE,
-    n_iter = n_iter
+    reduction = reduction, nmi_compute = nmi_compute,
+    resolution = resolution, k = k, store = FALSE
   )
 
   group <- colData(input)[, label_true]

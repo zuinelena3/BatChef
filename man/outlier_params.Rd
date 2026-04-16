@@ -2,16 +2,16 @@
 % Please edit documentation in R/params.R
 \name{outlier_params}
 \alias{outlier_params}
-\title{Expression outlier parameters}
+\title{Highly expressed genes probability}
 \usage{
-outlier_params(normalized)
+outlier_params(norm_counts)
 }
 \arguments{
-\item{normalized}{Normalized counts matrix.}
+\item{norm_counts}{A normalized matrix}
 }
 \value{
-Probability that genes will be selected to be expression outliers.
+Highly expressed genes probability
 }
 \description{
-Expression outlier parameters
+Highly expressed genes probability
 }

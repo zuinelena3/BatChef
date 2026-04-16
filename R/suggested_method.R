@@ -4,8 +4,13 @@
 #' \link[Seurat]{Seurat} or `AnnData` object can be supplied.
 #' @param batch A string specifying the batch variable.
 #'
-#' @returns A string specifying the suggested method.
+#' @returns A list containing two elements:a string specifying the recommended method;
+#' a ggplot object that visualizes the data points in a two-dimensional space
+#' derived from the characteristics of 130 datasets.
+#'
 #' @export
+#'
+#' @import e1071
 #'
 #' @examples
 #' sim <- simulate_data(
@@ -15,15 +20,17 @@
 #' )
 #' pred <- suggested_method(input = sim, batch = "Batch")
 #'
-#' @import e1071
-#' @importFrom stats predict
-#'
 suggested_method <- function(input, batch) {
   sce <- linearInput(input = input, batch = batch)
   params <- extract_features(input = sce, batch = batch)
 
-  file_path <- system.file("extdata", "svmfit.rda", package = "BatChef")
+  file_path <- system.file("extdata", "svm.rda", package = "BatChef")
   load(file_path)
 
-  pred <- as.character(predict(svmfit, params))
+  svm_best <- res$svm
+  pred <- as.character(predict(svm_best, params))
+
+  msg <- paste0("Optimal method: ", pred)
+  message(msg)
+  prediction_plot(params = params)
 }

@@ -15,7 +15,7 @@
 #' @importFrom parallel mclapply
 #' @importFrom transport pp wasserstein
 #'
-#' @return A numeric value.
+#' @return A numeric value
 #' @examples
 #' sim <- simulate_data(
 #'   n_genes = 1000, batch_cells = c(130, 110),
@@ -27,7 +27,7 @@
 #'   reduction = "PCA", rep = 1, mc_cores = 1
 #' )
 #'
-wasserstein_distance <- function(input, batch, reduction, rep, mc_cores) {
+wasserstein_distance <- function(input, batch, reduction, rep, mc_cores = 1) {
   stopifnot(batch %in% colnames(colData(input)))
 
   stopifnot(
@@ -43,15 +43,16 @@ wasserstein_distance <- function(input, batch, reduction, rep, mc_cores) {
 
   n <- min(vapply(embed, function(x) length(rownames(x)), FUN.VALUE = numeric(1)))
 
-  wass <- mclapply(seq_along(rep), function(i) {
+  wass <- mclapply(seq_len(rep), function(i) {
     random <- lapply(embed, function(x) x[sample(nrow(x), n), ])
     pp <- lapply(random, function(x) pp(as.matrix(x)))
 
     ll <- list()
     pair <- numeric(0)
     ind <- 0
-    for (i in seq_len(length(pp))) {
-      for (j in seq_len(length(pp))) {
+    n <- length(pp)
+    for (i in seq_len(n - 1)) {
+      for (j in (i + 1):n) {
         ind <- ind + 1
         pair[ind] <- paste(i, j, sep = "_")
         ll[[ind]] <- wasserstein(pp[[i]], pp[[j]], p = 2, prob = TRUE)
@@ -69,5 +70,5 @@ wasserstein_distance <- function(input, batch, reduction, rep, mc_cores) {
     df
   })
   wass <- do.call(rbind, wass)
-  wass <- wass[wass$wasserstein > 0, , drop = TRUE]
+  wass <- mean(wass$wasserstein)
 }

@@ -11,7 +11,7 @@ test_that("Performance evaluation", {
     )
     metrics <- metrics(
       input = sim, batch = "Batch", group = "Group",
-      reduction = "harmony", rep = 5, n_iter = 2
+      reduction = "harmony", rep = 5
     )
     expect_s3_class(metrics, "data.frame")
     expect_match(colnames(metrics), "wasserstein", all = FALSE)

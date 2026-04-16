@@ -7,6 +7,6 @@ test_that("Suggested method", {
     )
 
     pred <- suggested_method(input = sim, batch = "Batch")
-    expect_true(inherits(pred, "character"))
+    expect_true(inherits(pred, "ggplot"))
   })
 })

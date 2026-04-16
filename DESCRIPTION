@@ -1,7 +1,7 @@
 Package: BatChef
 Type: Package
 Title: Single-cell RNA-seq batch effects correction methods interface
-Version: 0.99.8
+Version: 0.99.12
 Authors@R: c(
     person("Elena", "Zuin", email = "elena.zuin.3@phd.unipd.it", 
             role = c("aut", "cre"),
@@ -30,10 +30,11 @@ Imports:
     aricode,
     basilisk,
     batchelor,
+    bluster,
     cluster,
-    datawizard,
     e1071,
     fitdistrplus,
+    ggplot2,
     harmony,
     leidenAlg,
     limma,
@@ -49,10 +50,10 @@ Imports:
     S4Vectors,
     scCustomize,
     scMerge,
-    scran,
     scrapper,
     Seurat,
     SeuratObject,
+    sf,
     SingleCellExperiment,
     SparseArray,
     splatter,
@@ -69,6 +70,7 @@ Suggests:
     knitr,
     R.devices,
     rmarkdown,
+    scater,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
 LazyData: false

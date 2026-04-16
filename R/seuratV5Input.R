@@ -57,7 +57,7 @@ setMethod("seuratv5Input", "SingleCellExperiment", function(input, batch, featur
 
   so <- as.Seurat(input)
 
-  so@reductions[["pca"]] <- CreateDimReducObject(
+  so[["pca"]] <- CreateDimReducObject(
     embeddings = pca,
     loadings = loadings,
     key = "pca_",
@@ -99,7 +99,7 @@ setMethod("seuratv5Input", "AnnDataR6", function(input, batch, features, pca_nam
   sce <- AnnData2SCE(input, X_name = "counts")
   so <- as.Seurat(sce)
 
-  so@reductions[["pca"]] <- CreateDimReducObject(
+  so[["pca"]] <- CreateDimReducObject(
     embeddings = pca,
     loadings = loadings,
     key = "pca_",

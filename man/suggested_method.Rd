@@ -13,7 +13,9 @@ suggested_method(input, batch)
 \item{batch}{A string specifying the batch variable.}
 }
 \value{
-A string specifying the suggested method.
+A list containing two elements:a string specifying the recommended method;
+a ggplot object that visualizes the data points in a two-dimensional space
+derived from the characteristics of 130 datasets.
 }
 \description{
 Suggested method prediction

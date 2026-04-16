@@ -25,7 +25,7 @@
 #' -1 has the algorithm run until it reaches its optimal clustering
 #'
 #' @export
-#' @importFrom scran buildSNNGraph
+#' @importFrom bluster makeSNNGraph
 #' @importFrom leidenAlg leiden.community
 #' @importFrom aricode NMI
 #'
@@ -47,14 +47,14 @@ leiden_clustering <- function(input, label_true = NULL, reduction,
                               nmi_compute = TRUE, resolution = NULL, k = 15,
                               store = FALSE, n_iter = -1) {
   sce <- clustInput(input = input, reduction = reduction)
-  neighbors <- buildSNNGraph(x = sce, use.dimred = reduction, k = k)
+  neighbors <- makeSNNGraph(x = reducedDim(sce, reduction), k = 10)
 
   if (nmi_compute == FALSE) {
     stopifnot("Specify the resolution parameter" = !is.null(resolution))
 
     clust <- leiden.community(neighbors,
-      resolution = resolution,
-      n.iterations = n_iter
+                              resolution = resolution,
+                              n.iterations = n_iter
     )
     clust <- clust$membership
   } else {
@@ -65,8 +65,8 @@ leiden_clustering <- function(input, label_true = NULL, reduction,
 
     for (i in seq_along(res)) {
       clust <- leiden.community(neighbors,
-        resolution = res[i],
-        n.iterations = n_iter
+                                resolution = res[i],
+                                n.iterations = n_iter
       )
 
       nmi <- NMI(
@@ -81,15 +81,15 @@ leiden_clustering <- function(input, label_true = NULL, reduction,
       }
     }
     clust <- leiden.community(neighbors,
-      resolution = as.numeric(names(max)),
-      n.iterations = n_iter
+                              resolution = as.numeric(names(max)),
+                              n.iterations = n_iter
     )
     clust <- clust$membership
   }
 
   if (store == TRUE) {
     ifelse(inherits(input, "AnnDataR6"),
-      input$obs$cluster <- clust, input$cluster <- clust
+           input$obs$cluster <- clust, input$cluster <- clust
     )
     return(input)
   } else {
