@@ -110,7 +110,13 @@ The `batchCorrect()` function allows to specify the desired correction method. I
 
 -   `HarmonyParams`
 
+-   `ScanoramaParams`
+
 -   `ScMerge2Params`
+
+-   `ScVIParams`
+
+-   `BBKNNParams`
 
 -   `LigerParams`
 
