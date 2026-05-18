@@ -1,7 +1,8 @@
 Package: BatChef
 Type: Package
 Title: Single-cell RNA-seq batch effects correction methods interface
-Version: 1.1.0
+Version: 1.0.1
+>>>>>>> 6a4be04 (Bump version: 1.0.1)
 Authors@R: c(
     person("Elena", "Zuin", email = "elena.zuin.3@phd.unipd.it", 
             role = c("aut", "cre"),
@@ -23,7 +24,6 @@ Depends: R (>= 4.5.0)
 License: GPL (>= 3)
 Encoding: UTF-8
 biocViews: BatchEffect, SingleCell, Sequencing
-RoxygenNote: 7.3.3
 LinkingTo: Rcpp, RcppArmadillo
 Imports: 
     anndata,
@@ -73,3 +73,4 @@ Suggests:
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
 LazyData: false
+Config/roxygen2/version: 8.0.0
