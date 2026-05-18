@@ -32,8 +32,8 @@ Aggregating single-cell RNA sequencing (scRNA-seq) datasets from multiple source
 Numerous batch correction methods have been proposed in the literature, based on different mathematical approaches. However, their performance is highly dependent on the intrinsic characteristics of the data.
 
 `BatChef` is an R package that:
-
--   implements a variety of correction methods;
+  
+  -   implements a variety of correction methods;
 
 -   provides quantitative metrics to evaluate the performance of the correction methods, including the Wasserstein distance, Local Inverse Simpson's Index (LISI), Average Silhouette Width (ASW), and Adjusted Rand Index (ARI).
 
@@ -63,7 +63,7 @@ sce <- simulate_data(
   group_prob = c(0.17, 0.46, 0.37),
   compute_pca = TRUE, pca_ncomp = 10, output_format = "SingleCellExperiment"
 )
-sce
+ sce
 ```
 
 ```{r so, eval=FALSE}
@@ -90,6 +90,7 @@ Users can predict the optimal batch correction method for a given dataset via th
 
 ```{r pred, warning=FALSE}
 pred <- suggested_method(input = sce, batch = "Batch")
+pred
 ```
 
 In this case, the optimal batch correction is scMerge2 (unsupervised) for our data.
@@ -97,8 +98,8 @@ In this case, the optimal batch correction is scMerge2 (unsupervised) for our da
 # Batch effects correction
 
 The `batchCorrect()` function allows to specify the desired correction method. It can have these values:
-
--   `LimmaParams`
+  
+  -   `LimmaParams`
 
 -   `CombatParams`
 
@@ -121,8 +122,8 @@ sce <- sce[SingleCellExperiment::rowData(sce)$hvg, ]
 sce <- batchCorrect(input = sce, batch = "Batch", params = ScMerge2Params())
 library(scater)
 sce <- runPCA(sce,
-  subset_row = rownames(sce),
-  assay.type = "scmerge2", name = "scmerge2", ncomponent = 10
+              subset_row = rownames(sce),
+              assay.type = "scmerge2", name = "scmerge2", ncomponent = 10
 )
 ```
 
