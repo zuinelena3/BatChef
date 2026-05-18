@@ -70,8 +70,8 @@ leiden_clustering <- function(input, label_true = NULL, reduction,
       )
 
       nmi <- NMI(
-        c1 = as.vector(colData(sce)[, label_true]),
-        c2 = as.vector(clust$membership),
+        c1 = as.integer(as.factor(colData(sce)[, label_true])),
+        c2 = as.integer(as.factor(clust$membership)),
         variant = "sum"
       )
 

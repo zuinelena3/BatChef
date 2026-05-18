@@ -37,8 +37,10 @@ normalized_mutual_info <- function(input, label_true, reduction, nmi_compute = F
     reduction = reduction, nmi_compute = nmi_compute,
     resolution = resolution, k = k, store = FALSE
   )
+  clust <- as.integer(as.factor(clust))
 
   group <- colData(input)[, label_true]
+  group <- as.integer(as.factor(group))
 
-  nmi <- NMI(c1 = as.vector(group), c2 = as.vector(clust), variant = variant)
+  nmi <- NMI(c1 = group, c2 = clust, variant = variant)
 }
