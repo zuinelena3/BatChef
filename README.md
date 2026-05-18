@@ -13,6 +13,8 @@
 ## Installation
 
 ``` r
-# install.packages("devtools")
-devtools::install_github("zuinelena3/BatChef")
+if (!requireNamespace("BiocManager", quietly = TRUE)) {
+  install.packages("BiocManager")
+}
+BiocManager::install("BatChef")
 ```
