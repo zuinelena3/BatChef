@@ -1,8 +1,7 @@
 Package: BatChef
 Type: Package
 Title: Single-cell RNA-seq batch effects correction methods interface
-Version: 1.0.1
->>>>>>> 6a4be04 (Bump version: 1.0.1)
+Version: 1.1.1
 Authors@R: c(
     person("Elena", "Zuin", email = "elena.zuin.3@phd.unipd.it", 
             role = c("aut", "cre"),

@@ -1,3 +1,15 @@
+## Changes in version 1.0.2
+
+- Update SVM for prediction
+
+## Changes in version 1.0.1
+
+- Fix bugs and add visualization of prediction on vignette
+
+## Changes in version 1.0.0
+
+- Upload to Bioconductor
+
 ## Changes in version 0.99.12
 
 - Solve errors in tests.
