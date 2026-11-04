@@ -24,3 +24,12 @@ ScanoramaParams <- function(assay_type = NULL, return_dimred = FALSE, ...) {
       extra = list(...)
   )
 }
+
+#' @export
+#' @param reduction reduction
+#' @rdname BatChefParams
+#' @importFrom methods new
+BBKNNParams <- function(reduction, ...) {
+  new("BBKNNParams", reduction = reduction, extra = list(...))
+}
+

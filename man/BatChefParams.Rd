@@ -3,11 +3,15 @@
 \docType{class}
 \name{ScanoramaParams}
 \alias{ScanoramaParams}
+\alias{BBKNNParams}
 \alias{BatChefParams-class}
 \alias{ScanoramaParams-class}
+\alias{BBKNNParams-class}
 \title{BatChefParams methods}
 \usage{
 ScanoramaParams(assay_type = NULL, return_dimred = FALSE, ...)
+
+BBKNNParams(reduction, ...)
 }
 \arguments{
 \item{assay_type}{A string specifying the assay.}
@@ -16,6 +20,8 @@ ScanoramaParams(assay_type = NULL, return_dimred = FALSE, ...)
 embeddings.}
 
 \item{...}{Named arguments to pass to individual methods upon dispatch}
+
+\item{reduction}{reduction}
 }
 \value{
 A BatChefParams object of the specified subclass, containing parameter

@@ -16,3 +16,10 @@ setClass("ScanoramaParams",
            return_dimred = "logical", extra = "list"
            )
 )
+
+#' @export
+#' @rdname BatChefParams
+setClass("BBKNNParams",
+         contains = "BatChefParams",
+         slots = c(reduction = "character", extra = "list")
+)

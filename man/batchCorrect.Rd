@@ -3,11 +3,14 @@
 \name{batchCorrect}
 \alias{batchCorrect}
 \alias{batchCorrect,ScanoramaParams-method}
+\alias{batchCorrect,BBKNNParams-method}
 \title{batchCorrect}
 \usage{
 batchCorrect(input, batch, params)
 
 \S4method{batchCorrect}{ScanoramaParams}(input, batch, params)
+
+\S4method{batchCorrect}{BBKNNParams}(input, batch, params)
 }
 \arguments{
 \item{input}{A \link[SingleCellExperiment]{SingleCellExperiment}
@@ -36,5 +39,4 @@ sim <- simulate_data(
   group_prob = c(0.5, 0.5), n_hvgs = 500,
   compute_pca = TRUE, output_format = "SingleCellExperiment"
 )
-out <- batchCorrect(input = sim, batch = "Batch", params = ScanoramaParams())
 }
