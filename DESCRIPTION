@@ -23,7 +23,6 @@ Depends: R (>= 4.5.0)
 License: GPL (>= 3)
 Encoding: UTF-8
 biocViews: BatchEffect, SingleCell, Sequencing
-RoxygenNote: 7.3.3
 LinkingTo: Rcpp, RcppArmadillo
 Imports: 
     anndata,
@@ -73,3 +72,4 @@ Suggests:
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
 LazyData: false
+Config/roxygen2/version: 8.1.1

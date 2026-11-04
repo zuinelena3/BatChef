@@ -1,1 +1,0 @@
-setOldClass("AnnDataR6")
