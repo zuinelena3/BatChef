@@ -1,0 +1,91 @@
+---
+title: "BatChef package introduction"
+author: 
+- name: Elena Zuin
+  affiliation: Department of Biology, University of Padova, Italy
+- name: Chiara Romualdi
+  affiliation: Department of Biology, University of Padova, Italy
+- name: Davide Risso
+  affiliation: Department of Statistical Sciences, University of Padova, Italy
+- name: Gabriele Sales
+  affiliation: Department of Biology, University of Padova, Italy
+output:
+  BiocStyle::html_document:
+      toc: true
+      toc_float:
+          collapsed: true
+package: BatChef
+vignette: >
+  %\VignetteIndexEntry{BatChef vignette}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r intro, echo=FALSE, results="hide", message=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Introduction
+
+Aggregating single-cell RNA sequencing (scRNA-seq) datasets from multiple sources introduces technical variability, known as batch effects, arising from differences in operator handling, reagent lots, sequencing platforms, and experimental timing. Batch effects can distort downstream analyses and obscure the true biological variation, compromising the interpretability of the results.
+
+Numerous batch correction methods have been proposed in the literature, based on different mathematical approaches. However, their performance is highly dependent on the intrinsic characteristics of the data.
+
+`BatChef` is an R package that:
+
+-   implements a variety of correction methods;
+
+-   provides quantitative metrics to evaluate the performance of the correction methods, including the Wasserstein distance, Local Inverse Simpson's Index (LISI), Average Silhouette Width (ASW), and Adjusted Rand Index (ARI).
+
+-   can be used as a guideline to identify the most appropriate batch effects correction method based on data-specific characteristics.
+
+# Installation
+
+```{r installation,eval=FALSE}
+if (!requireNamespace("BiocManager", quietly = TRUE)) {
+  install.packages("BiocManager")
+}
+BiocManager::install("BatChef")
+```
+
+# Setup
+
+To demonstrate, we simulate a dataset with 2,148 genes, 3,461 cells, 2 batches and 3 cell types, using the `simulate_data()` function. This function applies the same parameters as the Splatter package’s ones. Additionally, it normalizes the data, identifies highly variable genes and performs principal component analysis using the `scrapper` package.
+
+The `BatChef` package allows to use three different input data: `SingleCellExperiment`, `Seurat` and `AnnData`. These can be simulated using the the `output_format` parameter in the `simulate_data()` function.
+
+```{r sce,  include=TRUE, message=FALSE, warning=FALSE}
+library(BatChef)
+sce <- simulate_data(
+  n_genes = 2148, batch_cells = c(1210, 2251), compute_hvgs = TRUE,
+  batch_fac_loc = c(0.1, 0.1), batch_fac_scale = c(0.1, 0.1),
+  mean_shape = 0.4, lib_loc = 11.5,
+  group_prob = c(0.17, 0.46, 0.37),
+  compute_pca = TRUE, pca_ncomp = 10, output_format = "SingleCellExperiment"
+)
+sce
+```
+
+# Batch effects correction
+
+The `batchCorrect()` function allows to specify the desired correction method. It can have these values:
+
+-   `ScanoramaParams`
+
+-   `ScVIParams`
+
+-   `BBKNNParams`
+
+To illustrate the functionality of the package, batch correction was performed using the scMerge2 method. To improve computational efficiency, the analysis was restricted to the first 1,000 highly variable genes.
+
+```{r scmerge2, message=FALSE, warning=FALSE, results='hide', fig.keep='none'}
+sce <- sce[SingleCellExperiment::rowData(sce)$hvg, ]
+sce <- batchCorrect(input = sce, batch = "Batch", params = ScanoramaParams(assay_type = "logcounts", return_dimred = TRUE))
+sce
+```
+
+# sessionInfo()
+
+```{r sessioninfo}
+sessionInfo()
+```
