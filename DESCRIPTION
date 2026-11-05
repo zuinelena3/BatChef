@@ -34,7 +34,10 @@ Imports:
     zellkonverter
 BugReports: https://github.com/zuinelena3/BatChef/issues
 URL: https://github.com/zuinelena3/BatChef
+VignetteBuilder: knitr
 Suggests:
+    BiocStyle,
+    knitr,
     scater,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
