@@ -6,3 +6,4 @@
 ^tests/testthat/Rplots\.pdf$
 ^\.Rhistory$
 ^BatChef\.Rproj$
+^\.github$
