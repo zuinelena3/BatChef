@@ -16,10 +16,10 @@ test_that("ComBat method works", {
     sim <- simulate_data(
       n_genes = 1000, batch_cells = c(150, 50),
       group_prob = c(0.5, 0.5), n_hvgs = 500,
-      compute_pca = FALSE, output_format = "AnnData"
+      compute_pca = FALSE, output_format = "SingleCellExperiment"
     )
     sim <- batchCorrect(input = sim, batch = "Batch", params = CombatParams())
-    expect_true(inherits(sim, "AnnDataR6"))
+    expect_s4_class(sim, "SingleCellExperiment")
   }))
 })
 
@@ -80,11 +80,12 @@ test_that("Harmony method works", {
       n_genes = 500, batch_cells = c(150, 100),
       group_prob = c(0.5, 0.5), n_hvgs = 500,
       compute_pca = TRUE, pca_ncomp = 10,
-      output_format = "AnnData"
+      output_format = "Seurat"
     )
 
     sim <- batchCorrect(input = sim, batch = "Batch", params = HarmonyParams())
-    expect_true(inherits(sim, "AnnDataR6"))
+    expect_s4_class(sim, "Seurat")
+    # expect_true(inherits(sim, "AnnDataR6"))
   }))
 })
 
@@ -119,21 +120,6 @@ test_that("scMerge2 method works", {
   })))
 })
 
-test_that("scVI method works", {
-  suppressMessages(capture.output({
-    sim <- simulate_data(
-      n_genes = 500, batch_cells = c(100, 50),
-      group_prob = c(0.5, 0.5), n_hvgs = 500,
-      output_format = "SingleCellExperiment"
-    )
-    sim <- batchCorrect(
-      input = sim, batch = "Batch",
-      params = ScVIParams(n_latent = 10, max_epochs = 1)
-    )
-    expect_s4_class(sim, "SingleCellExperiment")
-  }))
-})
-
 test_that("BBKNN method works", {
   suppressMessages(capture.output({
     sim <- simulate_data(
@@ -155,15 +141,15 @@ test_that("LIGER method works", {
     sim <- simulate_data(
       n_genes = 500, batch_cells = c(100, 50),
       group_prob = c(0.5, 0.5), n_hvgs = 500,
-      compute_pca = TRUE, output_format = "AnnData"
+      compute_pca = TRUE, output_format = "SingleCellExperiment"
     )
     sim <- batchCorrect(
       input = sim, batch = "Batch",
       params = LigerParams(
-        features = sim$var_names,
+        features = rownames(sim),
         verbose = FALSE
       )
     )
-    expect_true(inherits(sim, "AnnDataR6"))
+    expect_s4_class(sim, "SingleCellExperiment")
   }))
 })

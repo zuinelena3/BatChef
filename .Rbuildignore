@@ -1,4 +1,3 @@
-^BatChef\.Rproj$
 ^\.Rproj\.user$
 ^LICENSE\.md$
 ^data-raw$
@@ -6,6 +5,5 @@
 ^tests/testthat/lightning_logs$
 ^tests/testthat/Rplots\.pdf$
 ^\.Rhistory$
-^lightning_logs$
-^doc$
-^Meta$
+^BatChef\.Rproj$
+^\.github$

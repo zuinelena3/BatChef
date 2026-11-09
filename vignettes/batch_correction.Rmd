@@ -114,8 +114,6 @@ The `batchCorrect()` function allows to specify the desired correction method. I
 
 -   `ScMerge2Params`
 
--   `ScVIParams`
-
 -   `BBKNNParams`
 
 -   `LigerParams`
