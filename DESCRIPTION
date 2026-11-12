@@ -25,7 +25,7 @@ Encoding: UTF-8
 biocViews: BatchEffect, SingleCell
 LinkingTo: Rcpp, RcppArmadillo
 Imports: 
-    anndata,
+    anndataR,
     aricode,
     basilisk,
     batchelor,
@@ -59,8 +59,7 @@ Imports:
     stats,
     SummarizedExperiment,
     sva,
-    transport,
-    zellkonverter
+    transport
 BugReports: https://github.com/zuinelena3/BatChef/issues
 URL: https://github.com/zuinelena3/BatChef
 VignetteBuilder: knitr

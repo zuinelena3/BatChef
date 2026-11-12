@@ -56,35 +56,28 @@ setMethod("ligerInput", "SingleCellExperiment", function(input, batch,
 
 #' @rdname ligerInput
 #' @import methods
-#' @importFrom zellkonverter AnnData2SCE
-#' @importFrom SingleCellExperiment colData reducedDim<-
+#' @importFrom SingleCellExperiment colData reducedDim<- reducedDim
 #' @importFrom rliger createLiger normalize scaleNotCenter
 #' @importFrom reticulate r_to_py
-#' @aliases ligerInput,AnnDataR6,AnnDataR6-method
+#' @aliases ligerInput,InMemoryAnnData,InMemoryAnnData-method
 #'
-setMethod("ligerInput", "AnnDataR6", function(input, batch, features, ...) {
+setMethod("ligerInput", "ANY", function(input, batch, features, ...) {
   stopifnot(batch %in% colnames(input$obs))
 
-  pca <- input$obsm[["X_pca"]]
-  colnames(pca) <- paste0("PC_", seq_len(ncol(pca)))
-  rownames(pca) <- input$obs_names
-  loadings <- input$varm[["PCs"]]
-  colnames(loadings) <- paste0("PC_", seq_len(ncol(pca)))
-  rownames(loadings) <- input$var_names
-  input$obsm <- NULL
-  input$varm <- NULL
+  if (is(input, "InMemoryAnnData")) {
+    input <- input$as_SingleCellExperiment(x_mapping = "counts",
+                                           assays_mapping = c(logcounts = "normalized"),
+                                           reducedDims_mapping = list(PCA = c(sampleFactors = "X_pca", featureLoadings = "PCs")))
+    reducedDim(input, "PCA") <- as.matrix(reducedDim(input, "PCA"))
+    ll <- lapply(unique(colData(input)[, batch]), function(i) input[, colData(input)[, batch] == i])
+    names(ll) <- unique(colData(input)[, batch])
 
-  input <- r_to_py(input, convert = TRUE)
-  input <- AnnData2SCE(input, X_name = "counts")
-  reducedDim(input, "PCA") <- pca
-  attr(reducedDim(input, "PCA"), "rotation") <- loadings
+    args <- c(list(rawData = ll), capture_params(createLiger, list(...)))
+    lo <- do.call(createLiger, args)
 
-  ll <- lapply(unique(colData(input)[, batch]), function(i) input[, colData(input)[, batch] == i])
-  names(ll) <- unique(colData(input)[, batch])
-
-  args <- c(list(rawData = ll), capture_params(createLiger, list(...)))
-  lo <- do.call(createLiger, args)
-
-  lo <- normalize(object = lo)
-  lo <- scaleNotCenter(object = lo, features = features)
+    lo <- normalize(object = lo)
+    lo <- scaleNotCenter(object = lo, features = features)
+  } else {
+    message("The input object must be of class 'InMemoryAnnData'.")
+  }
 })

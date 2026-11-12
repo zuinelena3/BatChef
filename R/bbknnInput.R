@@ -43,14 +43,17 @@ setMethod("bbknnInput", "SingleCellExperiment", function(input, batch, reduction
 
 #' @rdname bbknnInput
 #' @import methods
-#' @importFrom zellkonverter AnnData2SCE
-#' @aliases bbknnInput,AnnDataR6,AnnDataR6-method
+#' @aliases bbknnInput,InMemoryAnnData,InMemoryAnnData-method
 #'
-setMethod("bbknnInput", "AnnDataR6", function(input, batch, reduction) {
+setMethod("bbknnInput", "ANY", function(input, batch, reduction) {
   stopifnot(batch %in% colnames(input$obs))
   stopifnot(reduction %in% names(input$obsm))
 
-  red <- as.matrix(input$obsm[reduction][[1]])
-  batch <- input$obs[batch][, 1]
-  return(list(red = red, batch = batch))
+  if (is(input, "InMemoryAnnData")) {
+    red <- as.matrix(input$obsm[reduction][[1]])
+    batch <- input$obs[batch][, 1]
+    return(list(red = red, batch = batch))
+  } else {
+    message("The input object must be of class 'InMemoryAnnData'.")
+  }
 })

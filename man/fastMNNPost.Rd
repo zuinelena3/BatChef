@@ -6,8 +6,8 @@
 \alias{fastMNNPost,Seurat,Seurat-method}
 \alias{fastMNNPost,SingleCellExperiment-method}
 \alias{fastMNNPost,SingleCellExperiment,SingleCellExperiment-method}
-\alias{fastMNNPost,AnnDataR6-method}
-\alias{fastMNNPost,AnnDataR6,AnnDataR6-method}
+\alias{fastMNNPost,ANY-method}
+\alias{fastMNNPost,InMemoryAnnData,InMemoryAnnData-method}
 \title{Convert fastMNN output}
 \usage{
 fastMNNPost(input, output, method)
@@ -16,7 +16,7 @@ fastMNNPost(input, output, method)
 
 \S4method{fastMNNPost}{SingleCellExperiment}(input, output, method)
 
-\S4method{fastMNNPost}{AnnDataR6}(input, output, method)
+\S4method{fastMNNPost}{ANY}(input, output, method)
 }
 \arguments{
 \item{input}{A \link[SingleCellExperiment]{SingleCellExperiment}

@@ -44,10 +44,15 @@ setMethod("harmonyPost", "SingleCellExperiment", function(input, output, method)
 })
 
 #' @rdname harmonyPost
-#' @aliases harmonyPost,AnnDataR6,AnnDataR6-method
+#' @aliases harmonyPost,InMemoryAnnData,InMemoryAnnData-method
 #' @importFrom SingleCellExperiment reducedDim
 #'
-setMethod("harmonyPost", "AnnDataR6", function(input, output, method) {
-  input$obsm[[method]] <- as.matrix(reducedDim(output, "HARMONY"))
-  return(input)
+setMethod("harmonyPost", "ANY", function(input, output, method) {
+  if (is(input, "InMemoryAnnData")) {
+    input$obsm[[method]] <- as.matrix(reducedDim(output, "HARMONY"))
+    return(input)
+  } else {
+    message("The input object must be of class 'InMemoryAnnData'.")
+  }
+
 })

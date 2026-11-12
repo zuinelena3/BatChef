@@ -88,7 +88,7 @@ leiden_clustering <- function(input, label_true = NULL, reduction,
   }
 
   if (store == TRUE) {
-    ifelse(inherits(input, "AnnDataR6"),
+    ifelse(inherits(input, "InMemoryAnnData"),
            input$obs$cluster <- clust, input$cluster <- clust
     )
     return(input)

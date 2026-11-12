@@ -44,10 +44,13 @@ setMethod("bbknnPost", "SingleCellExperiment", function(input, output, method) {
 })
 
 #' @rdname bbknnPost
-#' @aliases bbknnPost,AnnDataR6,AnnDataR6-method
-#' @importFrom SingleCellExperiment reducedDim
+#' @aliases bbknnPost,InMemoryAnnData,InMemoryAnnData-method
 #'
-setMethod("bbknnPost", "AnnDataR6", function(input, output, method) {
-  input$obsm[[method]] <- as.matrix(output)
-  return(input)
+setMethod("bbknnPost", "ANY", function(input, output, method) {
+  if (is(input, "InMemoryAnnData")) {
+    input$obsm[[method]] <- as.matrix(output)
+    return(input)
+  } else {
+    message("The input object must be of class 'InMemoryAnnData'.")
+  }
 })

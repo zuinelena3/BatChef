@@ -101,7 +101,7 @@ importFrom(SummarizedExperiment,
   colData,
   rowData
 )
-importFrom(anndata,AnnData)
+importFrom(anndataR,AnnData)
 importFrom(aricode,NMI)
 importFrom(basilisk,
   BasiliskEnvironment,
@@ -185,9 +185,5 @@ importFrom(transport,
 importFrom(utils,
   combn,
   globalVariables
-)
-importFrom(zellkonverter,
-  AnnData2SCE,
-  SCE2AnnData
 )
 useDynLib(BatChef)

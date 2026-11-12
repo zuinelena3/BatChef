@@ -6,8 +6,8 @@
 \alias{bbknnPost,Seurat,Seurat-method}
 \alias{bbknnPost,SingleCellExperiment-method}
 \alias{bbknnPost,SingleCellExperiment,SingleCellExperiment-method}
-\alias{bbknnPost,AnnDataR6-method}
-\alias{bbknnPost,AnnDataR6,AnnDataR6-method}
+\alias{bbknnPost,ANY-method}
+\alias{bbknnPost,InMemoryAnnData,InMemoryAnnData-method}
 \title{Convert BBKNN output}
 \usage{
 bbknnPost(input, output, method)
@@ -16,7 +16,7 @@ bbknnPost(input, output, method)
 
 \S4method{bbknnPost}{SingleCellExperiment}(input, output, method)
 
-\S4method{bbknnPost}{AnnDataR6}(input, output, method)
+\S4method{bbknnPost}{ANY}(input, output, method)
 }
 \arguments{
 \item{input}{A \link[SingleCellExperiment]{SingleCellExperiment}
