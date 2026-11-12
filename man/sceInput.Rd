@@ -6,8 +6,8 @@
 \alias{sceInput,Seurat,Seurat-method}
 \alias{sceInput,SingleCellExperiment-method}
 \alias{sceInput,SingleCellExperiment,SingleCellExperiment-method}
-\alias{sceInput,AnnDataR6-method}
-\alias{sceInput,AnnDataR6,AnnDataR6-method}
+\alias{sceInput,ANY-method}
+\alias{sceInput,InMemoryAnnData,InMemoryAnnData-method}
 \title{Convert into a SingleCellExperiment object}
 \usage{
 sceInput(input, batch)
@@ -16,7 +16,7 @@ sceInput(input, batch)
 
 \S4method{sceInput}{SingleCellExperiment}(input, batch)
 
-\S4method{sceInput}{AnnDataR6}(input, batch)
+\S4method{sceInput}{ANY}(input, batch)
 }
 \arguments{
 \item{input}{A \link[SingleCellExperiment]{SingleCellExperiment}

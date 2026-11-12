@@ -48,12 +48,16 @@ setMethod("seuratv3Post", "SingleCellExperiment", function(input, output, method
 })
 
 #' @rdname seuratv3Post
-#' @aliases seuratv3Post,AnnDataR6,AnnDataR6-method
+#' @aliases seuratv3Post,InMemoryAnnData,InMemoryAnnData-method
 #' @importFrom SeuratObject LayerData
-#' @importFrom anndata AnnData
+#' @importFrom anndataR AnnData
 #'
-setMethod("seuratv3Post", "AnnDataR6", function(input, output, method) {
-  mat <- t(as.matrix(LayerData(output)))
-  list <- list(original = input, corrected = AnnData(X = mat, obs = input$obs))
-  return(list)
+setMethod("seuratv3Post", "ANY", function(input, output, method) {
+  if (is(input, "InMemoryAnnData")) {
+    mat <- t(as.matrix(LayerData(output)))
+    input$layers[[method]] <- mat
+    return(input)
+  } else {
+    message("The input object must be of class 'InMemoryAnnData'.")
+  }
 })

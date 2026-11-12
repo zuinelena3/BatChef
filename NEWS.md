@@ -1,3 +1,8 @@
+## Changes in version 1.1.2
+
+- Add python methods (Scanorama and BBKNN)
+- Change AnnData object
+
 ## Changes in version 1.0.2
 
 - Update SVM for prediction

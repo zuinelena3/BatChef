@@ -8,7 +8,9 @@
 \alias{SeuratV5Params}
 \alias{FastMNNParams}
 \alias{HarmonyParams}
+\alias{ScanoramaParams}
 \alias{ScMerge2Params}
+\alias{BBKNNParams}
 \alias{LigerParams}
 \alias{BatChefParams-class}
 \alias{LimmaParams-class}
@@ -18,7 +20,6 @@
 \alias{FastMNNParams-class}
 \alias{HarmonyParams-class}
 \alias{ScanoramaParams-class}
-\alias{SCVIParams-class}
 \alias{ScMerge2Params-class}
 \alias{BBKNNParams-class}
 \alias{LigerParams-class}
@@ -90,7 +91,11 @@ FastMNNParams(...)
 
 HarmonyParams(...)
 
+ScanoramaParams(assay_type = NULL, return_dimred = FALSE, ...)
+
 ScMerge2Params(assay_type = "logcounts", ...)
+
+BBKNNParams(reduction, ...)
 
 LigerParams(features, method = "iNMF", ...)
 }
@@ -117,7 +122,7 @@ LogNormalize or SCT.}
 \item{sct_clip_range}{Numeric of length two specifying the min and max values
 the Pearson residual will be clipped to.}
 
-\item{reduction}{Dimensional reduction to perform when finding anchors.}
+\item{reduction}{A string specifying the name of PCA.}
 
 \item{l2_norm}{Perform L2 normalization on the CCA cell embeddings
 after dimensional reduction.}
@@ -169,6 +174,9 @@ integration.}
 \item{new_reduction}{Name of new integrated dimensional reduction.}
 
 \item{dims_to_integrate}{Number of dimensions to return integrated values for.}
+
+\item{return_dimred}{A logical to returning integrated low-dimesional
+embeddings.}
 }
 \value{
 A BatChefParams object of the specified subclass, containing parameter

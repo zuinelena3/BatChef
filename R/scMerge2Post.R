@@ -1,16 +1,16 @@
 #' Convert the scMerge2 output
 #'
-#' Convert the scMerge2 output into a  \link[SingleCellExperiment]{SingleCellExperiment}
+#' Convert the scMerge2 output into a \link[SingleCellExperiment]{SingleCellExperiment}
 #' \link[Seurat]{Seurat} or `AnnData` object.
 #'
-#' @param input A  \link[SingleCellExperiment]{SingleCellExperiment}
+#' @param input A \link[SingleCellExperiment]{SingleCellExperiment}
 #' \link[Seurat]{Seurat} or `AnnData` object can be supplied.
 #' @param output scMerge2 output: a list that contains the corrected
 #' gene expression matrix
 #' @param method A string specifying the correction method
 #'
 #' @import methods
-#' @return A  \link[SingleCellExperiment]{SingleCellExperiment}
+#' @return A \link[SingleCellExperiment]{SingleCellExperiment}
 #' \link[Seurat]{Seurat} or `AnnData` object.
 #' @rdname scMerge2Post
 #'
@@ -38,9 +38,13 @@ setMethod("scMerge2Post", "SingleCellExperiment", function(input, output, method
 })
 
 #' @rdname scMerge2Post
-#' @aliases scMerge2Post,AnnDataR6,AnnDataR6-method
+#' @aliases scMerge2Post,InMemoryAnnData,InMemoryAnnData-method
 #'
-setMethod("scMerge2Post", "AnnDataR6", function(input, output, method) {
-  input$layers[method] <- t(as.matrix(output[["newY"]]))
-  return(input)
+setMethod("scMerge2Post", "ANY", function(input, output, method) {
+  if (is(input, "InMemoryAnnData")) {
+    input$layers[[method]] <- t(as.matrix(output[["newY"]]))
+    return(input)
+  } else {
+    message("The input object must be of class 'InMemoryAnnData'.")
+  }
 })

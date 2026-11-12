@@ -32,8 +32,8 @@ Aggregating single-cell RNA sequencing (scRNA-seq) datasets from multiple source
 Numerous batch correction methods have been proposed in the literature, based on different mathematical approaches. However, their performance is highly dependent on the intrinsic characteristics of the data.
 
 `BatChef` is an R package that:
-  
-  -   implements a variety of correction methods;
+
+-   implements a variety of correction methods;
 
 -   provides quantitative metrics to evaluate the performance of the correction methods, including the Wasserstein distance, Local Inverse Simpson's Index (LISI), Average Silhouette Width (ASW), and Adjusted Rand Index (ARI).
 
@@ -57,9 +57,9 @@ The `BatChef` package allows to use three different input data: `SingleCellExper
 ```{r sce,  include=TRUE, message=FALSE, warning=FALSE}
 library(BatChef)
 sce <- simulate_data(
-  n_genes = 2148, batch_cells = c(1215, 2251), compute_hvgs = TRUE,
-  batch_fac_loc = c(0.15, 0.15), batch_fac_scale = c(0.1, 0.1),
-  mean_shape = 0.1, lib_loc = 10,
+  n_genes = 2148, batch_cells = c(1210, 2251), compute_hvgs = TRUE,
+  batch_fac_loc = c(0.1, 0.1), batch_fac_scale = c(0.1, 0.1),
+  mean_shape = 0.4, lib_loc = 11.5,
   group_prob = c(0.17, 0.46, 0.37),
   compute_pca = TRUE, pca_ncomp = 10, output_format = "SingleCellExperiment"
 )
@@ -93,12 +93,12 @@ pred <- suggested_method(input = sce, batch = "Batch")
 pred
 ```
 
-In this case, the optimal batch correction is LIGER for our data.
+In this case, the optimal batch correction is scMerge2 (unsupervised) for our data.
 
 # Batch effects correction
 
 The `batchCorrect()` function allows to specify the desired correction method. It can have these values:
-  
+
 -   `LimmaParams`
 
 -   `CombatParams`
@@ -111,18 +111,24 @@ The `batchCorrect()` function allows to specify the desired correction method. I
 
 -   `HarmonyParams`
 
+-   `ScanoramaParams`
+
 -   `ScMerge2Params`
+
+-   `BBKNNParams`
 
 -   `LigerParams`
 
-To illustrate the functionality of the package, batch correction was performed using the LIGER method. To improve computational efficiency, the analysis was restricted to the first 1,000 highly variable genes.
+To illustrate the functionality of the package, batch correction was performed using the scMerge2 method. To improve computational efficiency, the analysis was restricted to the first 1,000 highly variable genes.
 
-```{r liger, message=FALSE, warning=FALSE, results='hide', fig.keep='none'}
-sce <- batchCorrect(input = sce, batch = "Batch", 
-                    params = LigerParams(
-                      features = rownames(sce)[SingleCellExperiment::rowData(sce)$hvg]
-                      )
-                    )
+```{r scmerge2, message=FALSE, warning=FALSE, results='hide', fig.keep='none'}
+sce <- sce[SingleCellExperiment::rowData(sce)$hvg, ]
+sce <- batchCorrect(input = sce, batch = "Batch", params = ScMerge2Params())
+library(scater)
+sce <- runPCA(sce,
+  subset_row = rownames(sce),
+  assay.type = "scmerge2", name = "scmerge2", ncomponent = 10
+)
 ```
 
 The `batchCorrect()` function returns an object of the same class as the input. In this example, the output is therefore a `SingleCellExperiment` object. The corrected gene expression matrix and/or the corrected dimensionality reduction are stored in the returned object.
@@ -156,7 +162,7 @@ To interpret the results, we focused on the Wasserstein distance and the ARI sco
 metrics[, c(1:2, 5)]
 ```
 
-A low Wasserstein distance indicates that the method effectively removes batch effects, while a high Adjusted Rand Index (ARI) indicates that the biological effects are well preserved. Overall, LIGER performs well on both metrics.
+A low Wasserstein distance indicates that the method effectively removes batch effects, while a high Adjusted Rand Index (ARI) indicates that the biological effects are well preserved. Overall, scMerge2 performs well on both metrics.
 
 # sessionInfo()
 

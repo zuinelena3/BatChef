@@ -53,12 +53,16 @@ setMethod("fastMNNPost", "SingleCellExperiment", function(input, output, method)
 })
 
 #' @rdname fastMNNPost
-#' @aliases fastMNNPost,AnnDataR6,AnnDataR6-method
+#' @aliases fastMNNPost,InMemoryAnnData,InMemoryAnnData-method
 #' @importFrom SummarizedExperiment assay
 #' @importFrom SingleCellExperiment reducedDim
 #'
-setMethod("fastMNNPost", "AnnDataR6", function(input, output, method) {
-  input$layers[method] <- t(as.matrix(assay(output, "reconstructed")))
-  input$obsm[[method]] <- as.matrix(reducedDim(output, "corrected"))
-  return(input)
+setMethod("fastMNNPost", "ANY", function(input, output, method) {
+  if (is(input, "InMemoryAnnData")) {
+    input$layers[[method]] <- t(as.matrix(assay(output, "reconstructed")))
+    input$obsm[[method]] <- as.matrix(reducedDim(output, "corrected"))
+    return(input)
+  } else {
+    message("The input object must be of class 'InMemoryAnnData'.")
+  }
 })

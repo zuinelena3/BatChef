@@ -53,8 +53,8 @@ leiden_clustering <- function(input, label_true = NULL, reduction,
     stopifnot("Specify the resolution parameter" = !is.null(resolution))
 
     clust <- leiden.community(neighbors,
-      resolution = resolution,
-      n.iterations = n_iter
+                              resolution = resolution,
+                              n.iterations = n_iter
     )
     clust <- clust$membership
   } else {
@@ -65,8 +65,8 @@ leiden_clustering <- function(input, label_true = NULL, reduction,
 
     for (i in seq_along(res)) {
       clust <- leiden.community(neighbors,
-        resolution = res[i],
-        n.iterations = n_iter
+                                resolution = res[i],
+                                n.iterations = n_iter
       )
 
       nmi <- NMI(
@@ -81,15 +81,15 @@ leiden_clustering <- function(input, label_true = NULL, reduction,
       }
     }
     clust <- leiden.community(neighbors,
-      resolution = as.numeric(names(max)),
-      n.iterations = n_iter
+                              resolution = as.numeric(names(max)),
+                              n.iterations = n_iter
     )
     clust <- clust$membership
   }
 
   if (store == TRUE) {
-    ifelse(inherits(input, "AnnDataR6"),
-      input$obs$cluster <- clust, input$cluster <- clust
+    ifelse(inherits(input, "InMemoryAnnData"),
+           input$obs$cluster <- clust, input$cluster <- clust
     )
     return(input)
   } else {

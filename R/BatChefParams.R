@@ -176,6 +176,21 @@ HarmonyParams <- function(...) {
   new("HarmonyParams", extra = list(...))
 }
 
+#' @param assay_type A string specifying the assay.
+#' @param return_dimred A logical to returning integrated low-dimesional
+#' embeddings.
+#' @param ... Named arguments to pass to individual methods upon dispatch
+#'
+#' @export
+#' @rdname BatChefParams
+#' @importFrom methods new
+ScanoramaParams <- function(assay_type = NULL, return_dimred = FALSE, ...) {
+  new("ScanoramaParams",
+    assay_type = assay_type, return_dimred = return_dimred,
+    extra = list(...)
+  )
+}
+
 #' @param assay_type A string specifying the assay to use for correction.
 #' @param ... Named arguments to pass to individual methods upon dispatch
 #'
@@ -184,6 +199,16 @@ HarmonyParams <- function(...) {
 #' @importFrom methods new
 ScMerge2Params <- function(assay_type = "logcounts", ...) {
   new("ScMerge2Params", assay_type = assay_type, extra = list(...))
+}
+
+#' @param reduction A string specifying the name of PCA.
+#' @param ... Named arguments to pass to individual methods upon dispatch
+
+#' @export
+#' @rdname BatChefParams
+#' @importFrom methods new
+BBKNNParams <- function(reduction, ...) {
+  new("BBKNNParams", reduction = reduction, extra = list(...))
 }
 
 #' @param features Vector of features to use.

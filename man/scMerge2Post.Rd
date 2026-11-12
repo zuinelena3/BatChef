@@ -6,8 +6,8 @@
 \alias{scMerge2Post,Seurat,Seurat-method}
 \alias{scMerge2Post,SingleCellExperiment-method}
 \alias{scMerge2Post,SingleCellExperiment,SingleCellExperiment-method}
-\alias{scMerge2Post,AnnDataR6-method}
-\alias{scMerge2Post,AnnDataR6,AnnDataR6-method}
+\alias{scMerge2Post,ANY-method}
+\alias{scMerge2Post,InMemoryAnnData,InMemoryAnnData-method}
 \title{Convert the scMerge2 output}
 \usage{
 scMerge2Post(input, output, method)
@@ -16,10 +16,10 @@ scMerge2Post(input, output, method)
 
 \S4method{scMerge2Post}{SingleCellExperiment}(input, output, method)
 
-\S4method{scMerge2Post}{AnnDataR6}(input, output, method)
+\S4method{scMerge2Post}{ANY}(input, output, method)
 }
 \arguments{
-\item{input}{A  \link[SingleCellExperiment]{SingleCellExperiment}
+\item{input}{A \link[SingleCellExperiment]{SingleCellExperiment}
 \link[Seurat]{Seurat} or `AnnData` object can be supplied.}
 
 \item{output}{scMerge2 output: a list that contains the corrected
@@ -28,10 +28,10 @@ gene expression matrix}
 \item{method}{A string specifying the correction method}
 }
 \value{
-A  \link[SingleCellExperiment]{SingleCellExperiment}
+A \link[SingleCellExperiment]{SingleCellExperiment}
 \link[Seurat]{Seurat} or `AnnData` object.
 }
 \description{
-Convert the scMerge2 output into a  \link[SingleCellExperiment]{SingleCellExperiment}
+Convert the scMerge2 output into a \link[SingleCellExperiment]{SingleCellExperiment}
 \link[Seurat]{Seurat} or `AnnData` object.
 }

@@ -8,7 +8,9 @@
 \alias{batchCorrect,SeuratV5Params-method}
 \alias{batchCorrect,FastMNNParams-method}
 \alias{batchCorrect,HarmonyParams-method}
+\alias{batchCorrect,ScanoramaParams-method}
 \alias{batchCorrect,ScMerge2Params-method}
+\alias{batchCorrect,BBKNNParams-method}
 \alias{batchCorrect,LigerParams-method}
 \title{batchCorrect}
 \usage{
@@ -26,7 +28,11 @@ batchCorrect(input, batch, params)
 
 \S4method{batchCorrect}{HarmonyParams}(input, batch, params)
 
+\S4method{batchCorrect}{ScanoramaParams}(input, batch, params)
+
 \S4method{batchCorrect}{ScMerge2Params}(input, batch, params)
+
+\S4method{batchCorrect}{BBKNNParams}(input, batch, params)
 
 \S4method{batchCorrect}{LigerParams}(input, batch, params)
 }
