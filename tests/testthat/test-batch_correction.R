@@ -44,13 +44,13 @@ test_that("SeuratV5 method works", {
       n_genes = 500, batch_cells = c(250, 200),
       group_prob = c(0.5, 0.5), compute_hvgs = TRUE,
       n_hvgs = 500, compute_pca = TRUE, pca_ncomp = 10,
-      output_format = "AnnData")
+      output_format = "SingleCellExperiment")
 
     sim <- batchCorrect(input = sim, batch = "Batch",
-                        params = SeuratV5Params(pca_name = "X_pca",
-                                                features = sim$var_names,
+                        params = SeuratV5Params(pca_name = "PCA",
+                                                features = rownames(sim),
                                                 dims = 1:5))
-    expect_true(inherits(sim, "InMemoryAnnData"))
+    expect_s4_class(sim, "SingleCellExperiment")
   }))
 })
 

@@ -11,6 +11,7 @@ py_env <- BasiliskEnvironment(
     "leidenalg=0.10.2",
     "python-igraph=0.11.9",
     "bbknn=1.6.0",
-    "scvi-tools=1.4.0"
+    "scvi-tools=1.4.0",
+    "llvmlite==0.45.1"
   )
 )
