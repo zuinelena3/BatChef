@@ -60,22 +60,27 @@ setMethod("scanoramaInput", "SingleCellExperiment", function(input, batch,
 
 #' @rdname scanoramaInput
 #' @import methods
-#' @aliases anndatasInput,AnnDataR6,AnnDataR6-method
+#' @aliases anndatasInput,InMemoryAnnData,InMemoryAnnData-method
 #'
-setMethod("scanoramaInput", "AnnDataR6", function(input, batch, assay_type) {
+setMethod("scanoramaInput", "ANY", function(input, batch, assay_type) {
   stopifnot(batch %in% colnames(input$obs))
   stopifnot("Error: assay_type has to be specified!" = !is.null(assay_type))
 
-  batches <- unique(input$obs[batch])[, 1]
-  ll <- lapply(batches, function(i) input[input$obs[batch] == i, ])
+  if (is(input, "InMemoryAnnData")) {
+    input$layers$X <- input$X
+    batches <- unique(input$obs[batch])[, 1]
+    ll <- lapply(batches, function(i) input[input$obs[batch] == i, ])
 
-  assaylist <- list()
-  genelist <- list()
+    assaylist <- list()
+    genelist <- list()
 
-  for (i in seq_along(ll)) {
-    assaylist[[i]] <- ll[[i]]$layers[assay_type]
-    genelist[[i]] <- ll[[i]]$var_names
+    for (i in seq_along(ll)) {
+      assaylist[[i]] <- ll[[i]]$layers[[assay_type]]
+      genelist[[i]] <- ll[[i]]$var_names
+    }
+
+    return(c(assaylist, genelist))
+  } else {
+    message("The input object must be of class 'InMemoryAnnData'.")
   }
-
-  return(c(assaylist, genelist))
 })

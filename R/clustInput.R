@@ -40,27 +40,26 @@ setMethod("clustInput", "Seurat", function(input, reduction) {
 #' @aliases clustInput,SingleCellExperiment,SingleCellExperiment-method
 #'
 setMethod("clustInput", "SingleCellExperiment", function(input, reduction) {
-  input <- input
+  reducedDim(input, "PCA") <- as.matrix(reducedDim(input, "PCA"))
+  input
 })
 
 #' @rdname clustInput
 #' @import methods
-#' @importFrom zellkonverter AnnData2SCE
-#' @importFrom SingleCellExperiment reducedDims<-
-#' @importFrom reticulate r_to_py
+#' @importFrom SingleCellExperiment reducedDim<- reducedDim
 #'
-#' @aliases clustInput,AnnDataR6,AnnDataR6-method
+#' @aliases clustInput,InMemoryAnnData,InMemoryAnnData-method
 #'
-setMethod("clustInput", "AnnDataR6", function(input, reduction) {
-  red <- input$obsm[[reduction]]
-  colnames(red) <- paste0(reduction, seq_len(ncol(red)))
-  rownames(red) <- input$obs_names
-
-  input$varm <- NULL
-  input$obsm <- NULL
-
-  input <- r_to_py(input, convert = TRUE)
-  input <- AnnData2SCE(input, X_name = "counts")
-  reducedDim(input, reduction) <- red
-  return(input)
+setMethod("clustInput", "ANY", function(input, reduction) {
+  if (is(input, "InMemoryAnnData")) {
+    input <- input$as_SingleCellExperiment(x_mapping = "counts",
+                                           assays_mapping = c(logcounts = "normalized"),
+                                           reducedDims_mapping = list(
+                                             PCA = c(sampleFactors = reduction,
+                                                     featureLoadings = names(input$varm))))
+    reducedDim(input, "PCA") <- as.matrix(reducedDim(input, "PCA"))
+    return(input)
+  } else {
+    message("The input object must be of class 'InMemoryAnnData'.")
+  }
 })

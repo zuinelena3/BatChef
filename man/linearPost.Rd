@@ -6,8 +6,8 @@
 \alias{linearPost,Seurat,Seurat-method}
 \alias{linearPost,SingleCellExperiment-method}
 \alias{linearPost,SingleCellExperiment,SingleCellExperiment-method}
-\alias{linearPost,AnnDataR6-method}
-\alias{linearPost,AnnDataR6,AnnDataR6-method}
+\alias{linearPost,ANY-method}
+\alias{linearPost,InMemoryAnnData,InMemoryAnnData-method}
 \title{Convert the output of linear models}
 \usage{
 linearPost(input, output, method)
@@ -16,7 +16,7 @@ linearPost(input, output, method)
 
 \S4method{linearPost}{SingleCellExperiment}(input, output, method)
 
-\S4method{linearPost}{AnnDataR6}(input, output, method)
+\S4method{linearPost}{ANY}(input, output, method)
 }
 \arguments{
 \item{input}{A \link[SingleCellExperiment]{SingleCellExperiment}

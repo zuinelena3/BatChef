@@ -26,8 +26,13 @@
 #' @rdname batchCorrect
 #'
 setMethod("batchCorrect", "LimmaParams", function(input, batch, params) {
-  sce <- linearInput(input = input, batch = batch)
+  if (is(input, "InMemoryAnnData")) {
+    input_copy <- input$clone()
+  } else {
+    input_copy <- input
+  }
 
+  sce <- linearInput(input = input, batch = batch)
   args <- merge_params(
     list(
       input = sce, batch = batch,
@@ -37,12 +42,18 @@ setMethod("batchCorrect", "LimmaParams", function(input, batch, params) {
   )
   out <- do.call(limmaRun, args)
 
-  res <- linearPost(input = input, output = out, method = "limma")
+  res <- linearPost(input = input_copy, output = out, method = "limma")
 })
 
 #' @rdname batchCorrect
 #'
 setMethod("batchCorrect", "CombatParams", function(input, batch, params) {
+  if (is(input, "InMemoryAnnData")) {
+    input_copy <- input$clone()
+  } else {
+    input_copy <- input
+  }
+
   sce <- linearInput(input = input, batch = batch)
 
   args <- merge_params(
@@ -54,12 +65,19 @@ setMethod("batchCorrect", "CombatParams", function(input, batch, params) {
   )
   out <- do.call(combatRun, args)
 
-  res <- linearPost(input = input, output = out, method = "combat")
+  res <- linearPost(input = input_copy, output = out, method = "combat")
 })
 
 #' @rdname batchCorrect
 setMethod("batchCorrect", "SeuratV3Params", function(input, batch, params) {
   options(Seurat.object.assay.version = "v3")
+
+  if (is(input, "InMemoryAnnData")) {
+    input_copy <- input$clone()
+  } else {
+    input_copy <- input
+  }
+
   ll <- seuratv3Input(
     input = input, batch = batch, features = params@features,
     pca_name = params@pca_name
@@ -90,13 +108,19 @@ setMethod("batchCorrect", "SeuratV3Params", function(input, batch, params) {
   )
 
   res <- seuratv3Post(
-    input = input, output = out,
+    input = input_copy, output = out,
     method = paste0("seuratv3_", params@reduction)
   )
 })
 
 #' @rdname batchCorrect
 setMethod("batchCorrect", "SeuratV5Params", function(input, batch, params) {
+  if (is(input, "InMemoryAnnData")) {
+    input_copy <- input$clone()
+  } else {
+    input_copy <- input
+  }
+
   so <- seuratv5Input(
     input = input, batch = batch, features = params@features,
     pca_name = params@pca_name
@@ -134,6 +158,12 @@ setMethod("batchCorrect", "SeuratV5Params", function(input, batch, params) {
 
 #' @rdname batchCorrect
 setMethod("batchCorrect", "FastMNNParams", function(input, batch, params) {
+  if (is(input, "InMemoryAnnData")) {
+    input_copy <- input$clone()
+  } else {
+    input_copy <- input
+  }
+
   sce <- sceInput(input = input, batch = batch)
 
   args <- merge_params(
@@ -142,11 +172,17 @@ setMethod("batchCorrect", "FastMNNParams", function(input, batch, params) {
   )
   out <- do.call(fastMNNRun, args)
 
-  res <- fastMNNPost(input = input, output = out, method = "fastmnn")
+  res <- fastMNNPost(input = input_copy, output = out, method = "fastmnn")
 })
 
 #' @rdname batchCorrect
 setMethod("batchCorrect", "HarmonyParams", function(input, batch, params) {
+  if (is(input, "InMemoryAnnData")) {
+    input_copy <- input$clone()
+  } else {
+    input_copy <- input
+  }
+
   sce <- sceInput(input = input, batch = batch)
 
   args <- merge_params(
@@ -155,11 +191,17 @@ setMethod("batchCorrect", "HarmonyParams", function(input, batch, params) {
   )
   out <- do.call(harmonyRun, args)
 
-  res <- harmonyPost(input = input, output = out, method = "harmony")
+  res <- harmonyPost(input = input_copy, output = out, method = "harmony")
 })
 
 #' @rdname batchCorrect
 setMethod("batchCorrect", "ScanoramaParams", function(input, batch, params) {
+  if (is(input, "InMemoryAnnData")) {
+    input_copy <- input$clone()
+  } else {
+    input_copy <- input
+  }
+
   ll <- scanoramaInput(input = input, batch = batch, assay_type = params@assay_type)
 
   args <- merge_params(
@@ -169,44 +211,19 @@ setMethod("batchCorrect", "ScanoramaParams", function(input, batch, params) {
   out <- do.call(scanoramaRun, args)
 
   res <- scanoramaPost(
-    input = input, list = ll, output = out,
+    input = input_copy, list = ll, output = out,
     return_dimred = params@return_dimred, method = "scanorama"
   )
 })
 
 #' @rdname batchCorrect
-setMethod("batchCorrect", "SCVIParams", function(input, batch, params) {
-  out <- scVIRun(
-    input = input, batch = batch, assay_type = params@assay_type,
-    layer = params@layer,
-    labels_key = params@labels_key,
-    size_factor_key = params@size_factor_key,
-    categorical_covariate_keys = params@categorical_covariate_keys,
-    continuous_covariate_keys = params@continuous_covariate_keys,
-    n_hidden = params@n_hidden, n_latent = params@n_latent,
-    n_layers = params@n_layers, dropout_rate = params@dropout_rate,
-    dispersion = params@dispersion,
-    gene_likelihood = params@gene_likelihood,
-    latent_distribution = params@latent_distribution,
-    max_epochs = params@max_epochs, accelerator = params@accelerator,
-    devices = params@devices, train_size = params@train_size,
-    validation_size = params@validation_size,
-    shuffle_set_split = params@shuffle_set_split,
-    load_sparse_tensor = params@load_sparse_tensor,
-    batch_size = params@batch_size,
-    early_stopping = params@early_stopping,
-    datasplitter_kwargs = params@datasplitter_kwargs,
-    plan_kwargs = params@plan_kwargs, datamodule = params@datamodule,
-    indices = params@indices, give_mean = params@give_mean,
-    mc_samples = params@mc_samples, return_dist = params@return_dist,
-    dataloader = params@dataloader
-  )
-
-  res <- scVIPost(input = input, output = out, method = "scvi")
-})
-
-#' @rdname batchCorrect
 setMethod("batchCorrect", "ScMerge2Params", function(input, batch, params) {
+  if (is(input, "InMemoryAnnData")) {
+    input_copy <- input$clone()
+  } else {
+    input_copy <- input
+  }
+
   sce <- sceInput(input = input, batch = batch)
 
   args <- merge_params(
@@ -218,11 +235,17 @@ setMethod("batchCorrect", "ScMerge2Params", function(input, batch, params) {
   )
   out <- do.call(scMerge2Run, args)
 
-  res <- scMerge2Post(input = input, output = out, method = "scmerge2")
+  res <- scMerge2Post(input = input_copy, output = out, method = "scmerge2")
 })
 
 #' @rdname batchCorrect
 setMethod("batchCorrect", "BBKNNParams", function(input, batch, params) {
+  if (is(input, "InMemoryAnnData")) {
+    input_copy <- input$clone()
+  } else {
+    input_copy <- input
+  }
+
   ll <- bbknnInput(input = input, batch = batch, reduction = params@reduction)
 
   args <- merge_params(
@@ -231,11 +254,17 @@ setMethod("batchCorrect", "BBKNNParams", function(input, batch, params) {
   )
   out <- do.call(bbknnRun, args)
 
-  res <- bbknnPost(input = input, output = out, method = "bbknn")
+  res <- bbknnPost(input = input_copy, output = out, method = "bbknn")
 })
 
 #' @rdname batchCorrect
 setMethod("batchCorrect", "LigerParams", function(input, batch, params) {
+  if (is(input, "InMemoryAnnData")) {
+    input_copy <- input$clone()
+  } else {
+    input_copy <- input
+  }
+
   lo <- ligerInput(input = input, batch = batch, features = params@features)
 
   args <- merge_params(
@@ -244,5 +273,5 @@ setMethod("batchCorrect", "LigerParams", function(input, batch, params) {
   )
   out <- do.call(ligerRun, args)
 
-  res <- ligerPost(input = input, output = out, method = "liger")
+  res <- ligerPost(input = input_copy, output = out, method = "liger")
 })

@@ -6,8 +6,8 @@
 \alias{scMerge2Post,Seurat,Seurat-method}
 \alias{scMerge2Post,SingleCellExperiment-method}
 \alias{scMerge2Post,SingleCellExperiment,SingleCellExperiment-method}
-\alias{scMerge2Post,AnnDataR6-method}
-\alias{scMerge2Post,AnnDataR6,AnnDataR6-method}
+\alias{scMerge2Post,ANY-method}
+\alias{scMerge2Post,InMemoryAnnData,InMemoryAnnData-method}
 \title{Convert the scMerge2 output}
 \usage{
 scMerge2Post(input, output, method)
@@ -16,7 +16,7 @@ scMerge2Post(input, output, method)
 
 \S4method{scMerge2Post}{SingleCellExperiment}(input, output, method)
 
-\S4method{scMerge2Post}{AnnDataR6}(input, output, method)
+\S4method{scMerge2Post}{ANY}(input, output, method)
 }
 \arguments{
 \item{input}{A \link[SingleCellExperiment]{SingleCellExperiment}

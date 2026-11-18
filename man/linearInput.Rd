@@ -6,8 +6,8 @@
 \alias{linearInput,Seurat,Seurat-method}
 \alias{linearInput,SingleCellExperiment-method}
 \alias{linearInput,SingleCellExperiment,SingleCellExperiment-method}
-\alias{linearInput,AnnDataR6-method}
-\alias{linearInput,AnnDataR6,AnnDataR6-method}
+\alias{linearInput,ANY-method}
+\alias{linearInput,InMemoryAnnData,InMemoryAnnData-method}
 \title{Convert into a SingleCellExperiment object for linear model based methods}
 \usage{
 linearInput(input, batch)
@@ -16,7 +16,7 @@ linearInput(input, batch)
 
 \S4method{linearInput}{SingleCellExperiment}(input, batch)
 
-\S4method{linearInput}{AnnDataR6}(input, batch)
+\S4method{linearInput}{ANY}(input, batch)
 }
 \arguments{
 \item{input}{A \link[SingleCellExperiment]{SingleCellExperiment}

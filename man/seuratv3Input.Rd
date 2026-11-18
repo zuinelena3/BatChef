@@ -6,8 +6,8 @@
 \alias{seuratv3Input,Seurat,Seurat-method}
 \alias{seuratv3Input,SingleCellExperiment-method}
 \alias{seuratv3Input,SingleCellExperiment,SingleCellExperiment-method}
-\alias{seuratv3Input,AnnDataR6-method}
-\alias{seuratv3Input,AnnDataR6,AnnDataR6-method}
+\alias{seuratv3Input,ANY-method}
+\alias{seuratv3Input,InMemoryAnnData,InMemoryAnnData-method}
 \title{Convert to a SeuratV3 compatible object}
 \usage{
 seuratv3Input(input, batch, features, pca_name = NULL)
@@ -16,9 +16,7 @@ seuratv3Input(input, batch, features, pca_name = NULL)
 
 \S4method{seuratv3Input}{SingleCellExperiment}(input, batch, features, pca_name = NULL)
 
-\S4method{seuratv3Input}{AnnDataR6}(input, batch, features, pca_name = NULL)
-
-\S4method{seuratv3Input}{AnnDataR6}(input, batch, features, pca_name = NULL)
+\S4method{seuratv3Input}{ANY}(input, batch, features, pca_name = NULL)
 }
 \arguments{
 \item{input}{A \link[SingleCellExperiment]{SingleCellExperiment}

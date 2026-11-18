@@ -52,7 +52,7 @@ metrics <- function(input, batch, group, reduction,
 
   ari <- adjustedRandIndex(x = clust, y = gr)
 
-  nmi <- NMI(c1 = as.vector(gr), c2 = as.vector(clust), variant = variant)
+  nmi <- NMI(c1 = as.integer(as.factor(gr)), c2 = as.integer(as.factor(clust)), variant = variant)
 
   casw <- average_silhouette_width(
     input = input, label_true = group,

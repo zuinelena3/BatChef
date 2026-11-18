@@ -45,16 +45,15 @@ setMethod("linearInput", "SingleCellExperiment", function(input, batch) {
 
 #' @rdname linearInput
 #' @import methods
-#' @importFrom zellkonverter AnnData2SCE
-#' @importFrom reticulate r_to_py
 #'
-#' @aliases linearInput,AnnDataR6,AnnDataR6-method
+#' @aliases linearInput,InMemoryAnnData,InMemoryAnnData-method
 #'
-setMethod("linearInput", "AnnDataR6", function(input, batch) {
+setMethod("linearInput", "ANY", function(input, batch) {
   stopifnot(batch %in% colnames(input$obs))
-  input$varm <- NULL
-  input$obsm <- NULL
-  input <- r_to_py(input, convert = TRUE)
-  input <- AnnData2SCE(input, X_name = "counts")
-  return(input)
+
+  if (is(input, "InMemoryAnnData")) {
+    input <- input$as_SingleCellExperiment()
+  } else {
+    message("The input object must be of class 'InMemoryAnnData'.")
+  }
 })

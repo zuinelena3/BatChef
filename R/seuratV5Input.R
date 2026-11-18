@@ -78,42 +78,28 @@ setMethod("seuratv5Input", "SingleCellExperiment", function(input, batch, featur
 
 #' @rdname seuratv5Input
 #' @import methods
-#' @importFrom zellkonverter AnnData2SCE
 #' @importFrom Seurat as.Seurat ScaleData DefaultAssay
-#' @aliases seuratv5Input,AnnDataR6,AnnDataR6-method
+#' @aliases seuratv5Input,InMemoryAnnData,InMemoryAnnData-method
 #'
-setMethod("seuratv5Input", "AnnDataR6", function(input, batch, features, pca_name) {
+setMethod("seuratv5Input", "ANY", function(input, batch, features, pca_name) {
   stopifnot(batch %in% colnames(input$obs))
   stopifnot("Error: specify 'pca_name'" = !is.null(pca_name))
 
-  pca <- input$obsm[[pca_name]]
-  colnames(pca) <- paste0("PC_", seq_len(ncol(pca)))
-  rownames(pca) <- input$obs_names
-  loadings <- input$varm[["PCs"]]
-  colnames(loadings) <- paste0("PC_", seq_len(ncol(pca)))
-  rownames(loadings) <- input$var_names
-  input$obsm <- NULL
-  input$varm <- NULL
+  if (is(input, "InMemoryAnnData")) {
+    input$X <- as(input$X, "dgCMatrix")
+    so <- input$as_Seurat(assay_name = "RNA", x_mapping = "counts",
+                          layers_mapping = c(data = "normalized"),
+                          reduction_mapping = list(pca = c(key = "PC_",
+                                                           embeddings = pca_name,
+                                                           loadings = names(input$varm))))
+    VariableFeatures(so) <- features
+    so[[DefaultAssay(so)]] <- split(
+      x = so[[DefaultAssay(so)]],
+      f = so[[batch]][, 1]
+    )
+    so <- ScaleData(so, verbose = FALSE)
+  } else {
+    message("The input object must be of class 'InMemoryAnnData'.")
+  }
 
-  input <- r_to_py(input, convert = TRUE)
-  sce <- AnnData2SCE(input, X_name = "counts")
-  so <- as.Seurat(sce)
-
-  so[["pca"]] <- CreateDimReducObject(
-    embeddings = pca,
-    loadings = loadings,
-    key = "pca_",
-    assay = DefaultAssay(so)
-  )
-
-  so <- Convert_Assay(
-    seurat_object = so, assay = DefaultAssay(so),
-    convert_to = "V5"
-  )
-  VariableFeatures(so) <- features
-  so[[DefaultAssay(so)]] <- split(
-    x = so[[DefaultAssay(so)]],
-    f = so[[batch]][, 1]
-  )
-  so <- ScaleData(so, verbose = FALSE)
 })

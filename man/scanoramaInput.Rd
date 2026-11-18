@@ -6,8 +6,8 @@
 \alias{anndatasInput,Seurat,Seurat-method}
 \alias{scanoramaInput,SingleCellExperiment-method}
 \alias{anndatasInput,SingleCellExperiment,SingleCellExperiment-method}
-\alias{scanoramaInput,AnnDataR6-method}
-\alias{anndatasInput,AnnDataR6,AnnDataR6-method}
+\alias{scanoramaInput,ANY-method}
+\alias{anndatasInput,InMemoryAnnData,InMemoryAnnData-method}
 \title{Convert to a Scanorama compatible object}
 \usage{
 scanoramaInput(input, batch, assay_type = NULL)
@@ -16,7 +16,7 @@ scanoramaInput(input, batch, assay_type = NULL)
 
 \S4method{scanoramaInput}{SingleCellExperiment}(input, batch, assay_type = NULL)
 
-\S4method{scanoramaInput}{AnnDataR6}(input, batch, assay_type = NULL)
+\S4method{scanoramaInput}{ANY}(input, batch, assay_type = NULL)
 }
 \arguments{
 \item{input}{A \link[SingleCellExperiment]{SingleCellExperiment}

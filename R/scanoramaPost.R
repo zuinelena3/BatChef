@@ -95,33 +95,37 @@ setMethod("scanoramaPost", "SingleCellExperiment", function(input, list, output,
 })
 
 #' @rdname scanoramaPost
-#' @aliases scanoramaPost,AnnDataR6,AnnDataR6-method
+#' @aliases scanoramaPost,InMemoryAnnData,InMemoryAnnData-method
 #'
-setMethod("scanoramaPost", "AnnDataR6", function(input, list, output,
+setMethod("scanoramaPost", "ANY", function(input, list, output,
                                                  return_dimred, method) {
-  n <- length(list)
-  n_batch <- n / 2
+  if (is(input, "InMemoryAnnData")) {
+    n <- length(list)
+    n_batch <- n / 2
 
-  indx <- length(output)
-  mat <- as.matrix(do.call(rbind, output[[indx - 1]]))
-  rownames(mat) <- unlist(lapply(list[1:n_batch], function(x) rownames(x)))
-  colnames(mat) <- output[[indx]]
+    indx <- length(output)
+    mat <- as.matrix(do.call(rbind, output[[indx - 1]]))
+    rownames(mat) <- unlist(lapply(list[1:n_batch], function(x) rownames(x)))
+    colnames(mat) <- output[[indx]]
 
-  mat <- mat[
-    order(match(rownames(mat), rownames(input))),
-    order(match(colnames(mat), colnames(input)))
-  ]
+    mat <- mat[
+      order(match(rownames(mat), rownames(input))),
+      order(match(colnames(mat), colnames(input)))
+    ]
 
-  input$layers[method] <- mat
+    input$layers[[method]] <- mat
 
-  if (return_dimred == TRUE) {
-    embedding <- do.call(rbind, output[[1]])
-    colnames(embedding) <- paste0("scanorama_", seq(1, dim(embedding)[2]))
-    rownames(embedding) <- rownames(mat)
-    embedding <- embedding[order(match(rownames(embedding), rownames(input))), ]
-    input$obsm[[method]] <- embedding
-    return(input)
+    if (return_dimred == TRUE) {
+      embedding <- do.call(rbind, output[[1]])
+      colnames(embedding) <- paste0("scanorama_", seq(1, dim(embedding)[2]))
+      rownames(embedding) <- rownames(mat)
+      embedding <- embedding[order(match(rownames(embedding), rownames(input))), ]
+      input$obsm[[method]] <- embedding
+      return(input)
+    } else {
+      return(input)
+      }
   } else {
-    return(input)
+    message("The input object must be of class 'InMemoryAnnData'.")
   }
 })

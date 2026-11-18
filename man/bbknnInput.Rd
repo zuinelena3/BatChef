@@ -6,8 +6,8 @@
 \alias{bbknnInput,Seurat,Seurat-method}
 \alias{bbknnInput,SingleCellExperiment-method}
 \alias{bbknnInput,SingleCellExperiment,SingleCellExperiment-method}
-\alias{bbknnInput,AnnDataR6-method}
-\alias{bbknnInput,AnnDataR6,AnnDataR6-method}
+\alias{bbknnInput,ANY-method}
+\alias{bbknnInput,InMemoryAnnData,InMemoryAnnData-method}
 \title{Convert into a BBKNN compatible object}
 \usage{
 bbknnInput(input, batch, reduction)
@@ -16,7 +16,7 @@ bbknnInput(input, batch, reduction)
 
 \S4method{bbknnInput}{SingleCellExperiment}(input, batch, reduction)
 
-\S4method{bbknnInput}{AnnDataR6}(input, batch, reduction)
+\S4method{bbknnInput}{ANY}(input, batch, reduction)
 }
 \arguments{
 \item{input}{A \link[SingleCellExperiment]{SingleCellExperiment}

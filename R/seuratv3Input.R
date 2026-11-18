@@ -57,63 +57,47 @@ setMethod("seuratv3Input", "SingleCellExperiment", function(input, batch,
     so <- as.Seurat(input)
   })
 
-  VariableFeatures(so) <- features
   so[["pca"]] <- CreateDimReducObject(
     embeddings = pca,
     loadings = loadings,
     key = "pca_", assay = DefaultAssay(so)
   )
   ll <- SplitObject(so, split.by = batch)
+  ll <- lapply(ll, function(x){
+    VariableFeatures(x) <- features
+    x
+  })
 })
 
 #' @rdname seuratv3Input
 #' @import methods
-#' @aliases seuratv3Input,AnnDataR6,AnnDataR6-method
-#'
-setMethod("seuratv3Input", "AnnDataR6", function(input, batch, features, pca_name) {
-  stopifnot("The input is an AnnData object. Please create a list of AnnData!" = !is(input, "AnnDataR6"))
-})
-
-#' @rdname seuratv3Input
-#' @import methods
-#' @importFrom zellkonverter AnnData2SCE
 #' @importFrom Seurat CreateDimReducObject VariableFeatures<- ScaleData DefaultAssay
-#' @aliases seuratv3Input,AnnDataR6,AnnDataR6-method
+#' @aliases seuratv3Input,InMemoryAnnData,InMemoryAnnData-method
 #'
-setMethod("seuratv3Input", "AnnDataR6", function(input, batch, features, pca_name) {
+setMethod("seuratv3Input", "ANY", function(input, batch, features, pca_name) {
   stopifnot("Error: 'batch' is not inside the obs" = batch %in% colnames(input$obs))
   stopifnot("Error: specify 'pca_name'" = !is.null(pca_name))
 
-  var <- unique(input$obs[[batch]])
-  ll <- lapply(var, function(v) {
-    sub <- input[input$obs[[batch]] == v, ]$copy()
-  })
+  if (is(input, "InMemoryAnnData")) {
+    input$X <- as(input$X, "dgCMatrix")
+    var <- unique(input$obs[[batch]])
 
-  lapply(ll, function(x) {
-    pca <- x$obsm[[pca_name]]
-    colnames(pca) <- paste0("PC_", seq_len(ncol(pca)))
-    rownames(pca) <- x$obs_names
-    loadings <- x$varm[["PCs"]]
-    colnames(loadings) <- paste0("PC_", seq_len(ncol(pca)))
-    rownames(loadings) <- x$var_names
-    x$obsm <- NULL
-    x$varm <- NULL
+    if (is.null(input$layers)) {
+      so <- input$as_Seurat(assay_name = "RNA", x_mapping = "counts")
+    } else {
+      so <- input$as_Seurat(assay_name = "RNA", x_mapping = "counts",
+                            layers_mapping = c(data = "normalized"),
+                            reduction_mapping = list(pca = c(key = "PC_",
+                                                             embeddings = pca_name,
+                                                             loadings = names(input$varm))))
+    }
 
-    x <- r_to_py(x, convert = TRUE)
-    sce <- AnnData2SCE(x, X_name = "counts")
-
-    # NOTE: until https://github.com/satijalab/seurat/issues/9850 is fixed.
-    suppressWarningsByMsg("deprecated", {
-      so <- as.Seurat(sce)
+    ll <- lapply(var, function(v) {
+      x <- so[, so@meta.data[[batch]] == v]
+      VariableFeatures(x) <- features
+      x
     })
-
-    so[["pca"]] <- CreateDimReducObject(
-      embeddings = pca,
-      loadings = loadings,
-      key = "pca_",
-      assay = DefaultAssay(so)
-    )
-    VariableFeatures(so) <- features
-    return(so)
-  })
+  } else {
+    message("The input object must be of class 'InMemoryAnnData'.")
+  }
 })

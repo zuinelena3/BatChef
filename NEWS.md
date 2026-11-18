@@ -1,3 +1,46 @@
+## Changes in version 1.1.2
+
+- Add python methods (Scanorama and BBKNN)
+- Change AnnData object
+
+## Changes in version 1.0.2
+
+- Update SVM for prediction
+
+## Changes in version 1.0.1
+
+- Fix bugs and add visualization of prediction on vignette
+
+## Changes in version 1.0.0
+
+- Upload to Bioconductor
+
+## Changes in version 0.99.12
+
+- Solve errors in tests.
+
+## Changes in version 0.99.11
+
+- Solve warning messages caused by deprecated functions in scran package.
+
+## Changes in version 0.99.10
+
+- Remove direct slot access, remove ggplot print, and add README.md for extdata.
+
+## Changes in version 0.99.9
+
+## Changes in version 0.99.8
+
+-   Add optimal method prediction and two-dimensional space visualization based on characteristics of 130 real datasets.
+
+## Changes in version 0.99.7
+
+-   Delete Python environment, created with basilisk package.
+
+## Changes in version 0.99.5
+
+-   Delete Python correction methods to make lighter the package.
+
 ## Changes in version 0.99.4
 
 -   Migration to basilisk 1.21 and update Python to version 3.12.3.

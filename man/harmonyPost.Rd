@@ -6,8 +6,8 @@
 \alias{harmonyPost,Seurat,Seurat-method}
 \alias{harmonyPost,SingleCellExperiment-method}
 \alias{harmonyPost,SingleCellExperiment,SingleCellExperiment-method}
-\alias{harmonyPost,AnnDataR6-method}
-\alias{harmonyPost,AnnDataR6,AnnDataR6-method}
+\alias{harmonyPost,ANY-method}
+\alias{harmonyPost,InMemoryAnnData,InMemoryAnnData-method}
 \title{Convert Harmony output}
 \usage{
 harmonyPost(input, output, method)
@@ -16,7 +16,7 @@ harmonyPost(input, output, method)
 
 \S4method{harmonyPost}{SingleCellExperiment}(input, output, method)
 
-\S4method{harmonyPost}{AnnDataR6}(input, output, method)
+\S4method{harmonyPost}{ANY}(input, output, method)
 }
 \arguments{
 \item{input}{A \link[SingleCellExperiment]{SingleCellExperiment}

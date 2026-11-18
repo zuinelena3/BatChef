@@ -48,13 +48,16 @@ setMethod("seuratv5Post", "SingleCellExperiment", function(input, output, method
 })
 
 #' @rdname seuratv5Post
-#' @aliases seuratv5Post,AnnDataR6,AnnDataR6-method
-#' @importFrom Seurat DefaultAssay as.SingleCellExperiment
+#' @aliases seuratv5Post,InMemoryAnnData,InMemoryAnnData-method
+#' @importFrom Seurat DefaultAssay Embeddings
 #' @importFrom SeuratObject JoinLayers
-#' @importFrom zellkonverter SCE2AnnData
 #'
-setMethod("seuratv5Post", "AnnDataR6", function(input, output, method, name) {
-  output[[DefaultAssay(output)]] <- JoinLayers(output[[DefaultAssay(output)]])
-  input$obsm[[method]] <- as.matrix(Embeddings(output, name))
-  return(input)
+setMethod("seuratv5Post", "ANY", function(input, output, method, name) {
+  if (is(input, "InMemoryAnnData")) {
+    output[[DefaultAssay(output)]] <- JoinLayers(output[[DefaultAssay(output)]])
+    input$obsm[[method]] <- as.matrix(Embeddings(output, name))
+    return(input)
+  } else {
+    message("The input object must be of class 'InMemoryAnnData'.")
+  }
 })

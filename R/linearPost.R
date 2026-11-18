@@ -38,9 +38,14 @@ setMethod("linearPost", "SingleCellExperiment", function(input, output, method) 
 })
 
 #' @rdname linearPost
-#' @aliases linearPost,AnnDataR6,AnnDataR6-method
+#' @aliases linearPost,InMemoryAnnData,InMemoryAnnData-method
 #'
-setMethod("linearPost", "AnnDataR6", function(input, output, method) {
-  input$layers[method] <- t(output)
-  return(input)
+setMethod("linearPost", "ANY", function(input, output, method) {
+  if (is(input, "InMemoryAnnData")) {
+    input$layers[[method]] <- t(output)
+    return(input)
+  } else {
+    message("The input object must be of class 'InMemoryAnnData'.")
+  }
+
 })

@@ -9,7 +9,6 @@
 \alias{batchCorrect,FastMNNParams-method}
 \alias{batchCorrect,HarmonyParams-method}
 \alias{batchCorrect,ScanoramaParams-method}
-\alias{batchCorrect,SCVIParams-method}
 \alias{batchCorrect,ScMerge2Params-method}
 \alias{batchCorrect,BBKNNParams-method}
 \alias{batchCorrect,LigerParams-method}
@@ -30,8 +29,6 @@ batchCorrect(input, batch, params)
 \S4method{batchCorrect}{HarmonyParams}(input, batch, params)
 
 \S4method{batchCorrect}{ScanoramaParams}(input, batch, params)
-
-\S4method{batchCorrect}{SCVIParams}(input, batch, params)
 
 \S4method{batchCorrect}{ScMerge2Params}(input, batch, params)
 

@@ -6,8 +6,8 @@
 \alias{scanoramaPost,Seurat,Seurat-method}
 \alias{scanoramaPost,SingleCellExperiment-method}
 \alias{scanoramaPost,SingleCellExperiment,SingleCellExperiment-method}
-\alias{scanoramaPost,AnnDataR6-method}
-\alias{scanoramaPost,AnnDataR6,AnnDataR6-method}
+\alias{scanoramaPost,ANY-method}
+\alias{scanoramaPost,InMemoryAnnData,InMemoryAnnData-method}
 \title{Convert the Scanorama output}
 \usage{
 scanoramaPost(input, list, output, return_dimred, method)
@@ -16,7 +16,7 @@ scanoramaPost(input, list, output, return_dimred, method)
 
 \S4method{scanoramaPost}{SingleCellExperiment}(input, list, output, return_dimred, method)
 
-\S4method{scanoramaPost}{AnnDataR6}(input, list, output, return_dimred, method)
+\S4method{scanoramaPost}{ANY}(input, list, output, return_dimred, method)
 }
 \arguments{
 \item{input}{A \link[SingleCellExperiment]{SingleCellExperiment}

@@ -52,7 +52,7 @@
 #' @importFrom SingleCellExperiment reducedDim rowData colData logcounts counts
 #' @importFrom SingleCellExperiment logcounts<-
 #' @importFrom SummarizedExperiment assays<- assay rowData<-
-#' @importFrom anndata AnnData
+#' @importFrom anndataR AnnData
 #' @importFrom SparseArray colSums
 #' @importFrom S4Vectors SimpleList metadata<- metadata
 #'
@@ -103,6 +103,7 @@ simulate_data <- function(n_genes = 10000, batch_cells = 100,
   sim <- splatSimulateGroups(params, verbose = FALSE)
   assays(sim) <- list(counts = assay(sim, "counts"))
   rowData(sim) <- NULL
+  metadata(sim) <- list()
 
   counts <- as(assay(sim, "counts"), "dgCMatrix")
   coldata <- as.data.frame(colData(sim))
@@ -111,26 +112,39 @@ simulate_data <- function(n_genes = 10000, batch_cells = 100,
   sim <- normalizeRnaCounts.se(sim, size.factors = size_factors)
   logcounts(sim) <- as(assay(sim, "logcounts"), "dgCMatrix")
 
-  sim <- chooseRnaHvgs.se(sim, num.threads = num_threads)
+  rowData(sim)$logical <- rep(TRUE, length(rownames(sim)))
+
+  if (compute_hvgs == TRUE) {
+    sim <- chooseRnaHvgs.se(sim, num.threads = num_threads, top = n_hvgs)
+    rowData(sim)$logical <- rowData(sim)$hvg
+  } else {
+    sim
+  }
 
   rowdata <- as.data.frame(rowData(sim))
 
-  sim <- runPca.se(sim, features = rowData(sim)$hvg, num.threads = num_threads, number = pca_ncomp)
-  colnames(reducedDim(sim, "PCA")) <- paste0("PC_", seq_len(pca_ncomp))
+  if (compute_pca == TRUE) {
+    sim <- runPca.se(sim, features = rowData(sim)$logical, num.threads = num_threads, number = pca_ncomp)
+    colnames(reducedDim(sim, "PCA")) <- paste0("PC_", seq_len(pca_ncomp))
 
-  pca <- reducedDim(sim, "PCA")
+    pca <- as.matrix(reducedDim(sim, "PCA"))
+    loadings <- metadata(sim)$PCA$rotation
+    colnames(loadings) <- paste0("PC_", seq_len(pca_ncomp))
 
-  loadings <- metadata(sim)$PCA$rotation
-  colnames(loadings) <- paste0("PC_", seq_len(pca_ncomp))
-
-  attr(reducedDim(sim, "PCA"), "rotation") <- loadings
-
-  metadata(sim) <- list()
+    lem_pca <- SingleCellExperiment::LinearEmbeddingMatrix(
+      sampleFactors = pca,
+      featureLoadings = as.matrix(loadings)
+    )
+    reducedDim(sim, "PCA") <- lem_pca
+  } else {
+    sim
+  }
 
   if (output_format == "Seurat") {
     assay <- CreateAssay5Object(counts = counts(sim), data = logcounts(sim))
     so <- CreateSeuratObject(assay, meta.data = coldata)
-    VariableFeatures(so) <- rowdata$genes[rowdata$hvg]
+
+    VariableFeatures(so) <- rowdata$genes[rowdata$features]
 
     if (compute_pca == TRUE) {
       so[["pca"]] <- CreateDimReducObject(
@@ -144,29 +158,26 @@ simulate_data <- function(n_genes = 10000, batch_cells = 100,
     }
   } else if (output_format == "SingleCellExperiment") {
     sce <- sim
-  } else {
-    counts <- counts(sim)
-    counts <- counts[rowData(sim)$hvg, , drop = TRUE]
-
-    normalized <- logcounts(sim)
-    normalized <- normalized[rowData(sim)$hvg, , drop = TRUE]
-    obs <- coldata
-    rownames(obs) <- colnames(counts)
-    var <- rowdata[rowData(sim)$hvg, , drop = TRUE]
-    rownames(var) <- rownames(counts)
-    adata <- AnnData(
-      X = t(as.matrix(counts)),
-      obs = obs,
-      var = var
-    )
-    adata$layers[["logcounts"]] <- t(as.matrix(normalized))
-
     if (compute_pca == TRUE) {
-      adata$obsm[["X_pca"]] <- pca
-      adata$varm[["PCs"]] <- loadings
+      reducedDim(sce, "PCA") <- pca
+      attr(reducedDim(sce, "PCA"), "rotation") <- loadings
+      sce
+    } else {
+      sce
+    }
+
+  } else {
+    sim <- sim[rowData(sim)$logical,]
+    if (compute_pca == TRUE) {
+      adata <- anndataR::as_AnnData(x = sim, x_mapping = "counts",
+                                    layers_mapping = c(normalized = "logcounts"),
+                                    obsm_mapping = c(X_pca = "PCA"),
+                                    varm_mapping = c(PCs = "PCA"))
       return(adata)
     } else {
-      return(adata)
+      adata <- anndataR::as_AnnData(x = sim, x_mapping = "counts",
+                                    layers_mapping = c(normalized = "logcounts"))
     }
   }
 }
+

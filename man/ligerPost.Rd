@@ -6,8 +6,8 @@
 \alias{ligerPost,Seurat,Seurat-method}
 \alias{ligerPost,SingleCellExperiment-method}
 \alias{ligerPost,SingleCellExperiment,SingleCellExperiment-method}
-\alias{ligerPost,AnnDataR6-method}
-\alias{ligerPost,AnnDataR6,AnnDataR6-method}
+\alias{ligerPost,ANY-method}
+\alias{ligerPost,InMemoryAnnData,InMemoryAnnData-method}
 \title{Convert the LIGER output}
 \usage{
 ligerPost(input, output, method)
@@ -16,7 +16,7 @@ ligerPost(input, output, method)
 
 \S4method{ligerPost}{SingleCellExperiment}(input, output, method)
 
-\S4method{ligerPost}{AnnDataR6}(input, output, method)
+\S4method{ligerPost}{ANY}(input, output, method)
 }
 \arguments{
 \item{input}{A \link[SingleCellExperiment]{SingleCellExperiment}

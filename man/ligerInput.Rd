@@ -6,8 +6,8 @@
 \alias{ligerInput,Seurat,Seurat-method}
 \alias{ligerInput,SingleCellExperiment-method}
 \alias{ligerInput,SingleCellExperiment,SingleCellExperiment-method}
-\alias{ligerInput,AnnDataR6-method}
-\alias{ligerInput,AnnDataR6,AnnDataR6-method}
+\alias{ligerInput,ANY-method}
+\alias{ligerInput,InMemoryAnnData,InMemoryAnnData-method}
 \title{Convert to a LIGER compatible object}
 \usage{
 ligerInput(input, batch, features, ...)
@@ -16,7 +16,7 @@ ligerInput(input, batch, features, ...)
 
 \S4method{ligerInput}{SingleCellExperiment}(input, batch, features, ...)
 
-\S4method{ligerInput}{AnnDataR6}(input, batch, features, ...)
+\S4method{ligerInput}{ANY}(input, batch, features, ...)
 }
 \arguments{
 \item{input}{A \link[SingleCellExperiment]{SingleCellExperiment}

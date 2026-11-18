@@ -17,13 +17,18 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Elena Zuin \email{elena.zuin.3@phd.unipd.it} (\href{https://orcid.org/0009-0006-3060-4835}{ORCID}) (Department of Biology, University of Padova)
+\strong{Maintainer}: Elena Zuin \email{elena.zuin.3@phd.unipd.it} (\href{https://orcid.org/0009-0006-3060-4835}{ORCID}) (affiliation: Department of Biology, University of Padova)
+
+Authors:
+\itemize{
+  \item Elena Zuin \email{elena.zuin.3@phd.unipd.it} (\href{https://orcid.org/0009-0006-3060-4835}{ORCID}) (affiliation: Department of Biology, University of Padova)
+}
 
 Other contributors:
 \itemize{
-  \item Chiara Romualdi (Department of Biology, University of Padova) [contributor]
-  \item Davide Risso (Department of Statistical Sciences, University of Padova) [contributor]
-  \item Gabriele Sales (Department of Biology, University of Padova) [contributor]
+  \item Chiara Romualdi (affiliation: Department of Biology, University of Padova) [contributor]
+  \item Davide Risso (affiliation: Department of Statistical Sciences, University of Padova) [contributor]
+  \item Gabriele Sales (affiliation: Department of Biology, University of Padova) [contributor]
 }
 
 }

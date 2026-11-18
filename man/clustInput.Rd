@@ -6,8 +6,8 @@
 \alias{clustInput,Seurat,Seurat-method}
 \alias{clustInput,SingleCellExperiment-method}
 \alias{clustInput,SingleCellExperiment,SingleCellExperiment-method}
-\alias{clustInput,AnnDataR6-method}
-\alias{clustInput,AnnDataR6,AnnDataR6-method}
+\alias{clustInput,ANY-method}
+\alias{clustInput,InMemoryAnnData,InMemoryAnnData-method}
 \title{Convert into a SingleCellExperiment object for clustering}
 \usage{
 clustInput(input, reduction)
@@ -16,7 +16,7 @@ clustInput(input, reduction)
 
 \S4method{clustInput}{SingleCellExperiment}(input, reduction)
 
-\S4method{clustInput}{AnnDataR6}(input, reduction)
+\S4method{clustInput}{ANY}(input, reduction)
 }
 \arguments{
 \item{input}{A \link[SingleCellExperiment]{SingleCellExperiment}

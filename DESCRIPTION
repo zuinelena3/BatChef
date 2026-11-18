@@ -1,7 +1,7 @@
 Package: BatChef
 Type: Package
 Title: Single-cell RNA-seq batch effects correction methods interface
-Version: 0.99.12
+Version: 1.0.0
 Authors@R: c(
     person("Elena", "Zuin", email = "elena.zuin.3@phd.unipd.it", 
             role = c("aut", "cre"),
@@ -22,11 +22,10 @@ Description: This package implements a variety of methods for batch correction
 Depends: R (>= 4.5.0)
 License: GPL (>= 3)
 Encoding: UTF-8
-biocViews: BatchEffect, SingleCell
-RoxygenNote: 7.3.3
+biocViews: BatchEffect, SingleCell, Sequencing
 LinkingTo: Rcpp, RcppArmadillo
 Imports: 
-    anndata,
+  anndataR,
     aricode,
     basilisk,
     batchelor,
@@ -60,8 +59,7 @@ Imports:
     stats,
     SummarizedExperiment,
     sva,
-    transport,
-    zellkonverter
+    transport
 BugReports: https://github.com/zuinelena3/BatChef/issues
 URL: https://github.com/zuinelena3/BatChef
 VignetteBuilder: knitr
@@ -74,3 +72,5 @@ Suggests:
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
 LazyData: false
+Config/roxygen2/version: 8.1.1
+OS_type: unix

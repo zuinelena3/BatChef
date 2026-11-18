@@ -49,27 +49,17 @@ setMethod("sceInput", "SingleCellExperiment", function(input, batch) {
 
 #' @rdname sceInput
 #' @import methods
-#' @importFrom zellkonverter AnnData2SCE
 #' @importFrom SingleCellExperiment reducedDims<-
-#' @importFrom reticulate r_to_py
 #'
-#' @aliases sceInput,AnnDataR6,AnnDataR6-method
+#' @aliases sceInput,InMemoryAnnData,InMemoryAnnData-method
 #'
-setMethod("sceInput", "AnnDataR6", function(input, batch) {
+setMethod("sceInput", "ANY", function(input, batch) {
   stopifnot(batch %in% colnames(input$obs))
-
-  pca <- input$obsm[["X_pca"]]
-  colnames(pca) <- paste0("PC_", seq_len(ncol(pca)))
-  rownames(pca) <- input$obs_names
-  loadings <- input$varm[["PCs"]]
-  colnames(loadings) <- paste0("PC_", seq_len(ncol(pca)))
-  rownames(loadings) <- input$var_names
-  input$varm <- NULL
-  input$obsm <- NULL
-
-  input <- r_to_py(input, convert = TRUE)
-  input <- AnnData2SCE(input, X_name = "counts")
-  reducedDim(input, "PCA") <- pca
-  attr(reducedDim(input, "PCA"), "rotation") <- loadings
+  if (is(input, "InMemoryAnnData")) {
+  input <- input$as_SingleCellExperiment(reducedDims_mapping = list(PCA = c(sampleFactors = "X_pca", featureLoadings = "PCs")))
+  reducedDim(input, "PCA") <- as.matrix(reducedDim(input, "PCA"))
   return(input)
+  } else {
+    message("The input object must be of class 'InMemoryAnnData'.")
+  }
 })
