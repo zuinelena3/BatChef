@@ -23,7 +23,8 @@ log_transf <- function(mat, base = exp(1)) {
 #'
 #' @param params A data.frame of data characteristics
 #'
-#' @returns A ggplot object
+#' @returns A list containing two elements: a logical indicator specifying
+#' whether the prediction falls within the polygon and a ggplot object.
 #'
 #' @importFrom ggplot2 ggplot aes scale_fill_manual geom_point geom_sf
 #' @importFrom ggplot2 theme_classic theme xlab ylab labs element_text
@@ -53,10 +54,6 @@ prediction_plot <- function(params) {
   polygon_sf <- st_sf(polygon_sf)
   inside <- st_intersects(points, polygon_sf, sparse = FALSE)[, 1]
 
-  if (!inside) {
-    message("WARNING: data point is outside the boundaries!")
-  }
-
   voronoi <- st_voronoi(st_union(points_sf))
   vor_sf <- st_collection_extract(voronoi)
   vor_clip <- st_intersection(st_as_sf(vor_sf), polygon_sf)
@@ -75,5 +72,5 @@ prediction_plot <- function(params) {
     data = new_coords, aes(x = PC1, y = PC2),
     fill = "red", color = "red", size = 6
   )
-  return(p)
+  return(list(inside = inside, p = p))
 }

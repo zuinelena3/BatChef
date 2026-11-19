@@ -10,7 +10,8 @@ prediction_plot(params)
 \item{params}{A data.frame of data characteristics}
 }
 \value{
-A ggplot object
+A list containing two elements: a logical indicator specifying
+whether the prediction falls within the polygon and a ggplot object.
 }
 \description{
 Prediction plot

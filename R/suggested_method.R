@@ -31,6 +31,15 @@ suggested_method <- function(input, batch) {
   pred <- as.character(predict(svm_best, params))
 
   msg <- paste0("Optimal method: ", pred)
-  message(msg)
-  prediction_plot(params = params)
+  plot <- prediction_plot(params = params)
+  inside <- plot$inside
+
+  if (!inside) {
+    message("WARNING: data point is outside the boundaries!")
+    plot$p
+  }
+  else {
+    message(msg)
+    plot$p
+  }
 }
