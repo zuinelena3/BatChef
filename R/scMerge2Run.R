@@ -25,5 +25,6 @@ scMerge2Run <- function(input, batch, assay_type = "logcounts", ...) {
     list(exprsMat = assay(input, assay_type), batch = colData(input)[, batch]),
     capture_params(scMerge2, list(...))
   )
-  do.call(scMerge2, args)
+  # NOTE: until scMerge stops calling soft-deprecated scater/scran functions
+  suppressWarningsByMsg("deprecated", do.call(scMerge2, args))
 }
