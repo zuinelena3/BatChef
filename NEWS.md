@@ -1,3 +1,7 @@
+## Changes in version 1.1.4
+
+- Update the prediction output
+
 ## Changes in version 1.1.2
 
 - Add python methods (Scanorama and BBKNN)
