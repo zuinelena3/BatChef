@@ -35,7 +35,10 @@ log_transf <- function(mat, base = exp(1)) {
 #'
 prediction_plot <- function(params) {
   file_path <- system.file("extdata", "svm.rda", package = "BatChef")
-  load(file_path)
+
+  model_env <- new.env()
+  load(file_path, envir = model_env)
+  res <- model_env$res
 
   params <- as.data.frame(t(as.matrix(log_transf(params))))
 
