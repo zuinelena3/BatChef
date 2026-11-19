@@ -27,5 +27,6 @@ fastMNNRun <- function(input, batch, ...) {
     list(counts = input, batch = colData(input)[, batch]),
     capture_params(fastMNN, list(...))
   )
-  do.call(fastMNN, args)
+  # NOTE: until batchelor stops calling soft-deprecated scater functions
+  suppressWarningsByMsg("deprecated", do.call(fastMNN, args))
 }
