@@ -25,7 +25,10 @@ suggested_method <- function(input, batch) {
   params <- extract_features(input = sce, batch = batch)
 
   file_path <- system.file("extdata", "svm.rda", package = "BatChef")
-  load(file_path)
+
+  model_env <- new.env()
+  load(file_path, envir = model_env)
+  res <- model_env$res
 
   svm_best <- res$svm
   pred <- as.character(predict(svm_best, params))
@@ -37,8 +40,7 @@ suggested_method <- function(input, batch) {
   if (!inside) {
     message("WARNING: data point is outside the boundaries!")
     plot$p
-  }
-  else {
+  } else {
     message(msg)
     plot$p
   }
