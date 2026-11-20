@@ -25,9 +25,6 @@
 #' -1 has the algorithm run until it reaches its optimal clustering
 #'
 #' @export
-#' @importFrom bluster makeSNNGraph
-#' @importFrom leidenAlg leiden.community
-#' @importFrom aricode NMI
 #'
 #' @return A A \link[SingleCellExperiment]{SingleCellExperiment}
 #' \link[Seurat]{Seurat} or `AnnData` object that contains the cluster labels.
@@ -47,12 +44,12 @@ leiden_clustering <- function(input, label_true = NULL, reduction,
                               nmi_compute = TRUE, resolution = NULL, k = 15,
                               store = FALSE, n_iter = -1) {
   sce <- clustInput(input = input, reduction = reduction)
-  neighbors <- makeSNNGraph(x = reducedDim(sce, reduction), k = 10)
+  neighbors <- bluster::makeSNNGraph(x = reducedDim(sce, reduction), k = 10)
 
   if (nmi_compute == FALSE) {
     stopifnot("Specify the resolution parameter" = !is.null(resolution))
 
-    clust <- leiden.community(neighbors,
+    clust <- leidenAlg::leiden.community(neighbors,
                               resolution = resolution,
                               n.iterations = n_iter
     )
@@ -64,12 +61,12 @@ leiden_clustering <- function(input, label_true = NULL, reduction,
     max <- 0
 
     for (i in seq_along(res)) {
-      clust <- leiden.community(neighbors,
+      clust <- leidenAlg::leiden.community(neighbors,
                                 resolution = res[i],
                                 n.iterations = n_iter
       )
 
-      nmi <- NMI(
+      nmi <- aricode::NMI(
         c1 = as.integer(as.factor(colData(sce)[, label_true])),
         c2 = as.integer(as.factor(clust$membership)),
         variant = "sum"
@@ -80,7 +77,7 @@ leiden_clustering <- function(input, label_true = NULL, reduction,
         names(max) <- res[i]
       }
     }
-    clust <- leiden.community(neighbors,
+    clust <- leidenAlg::leiden.community(neighbors,
                               resolution = as.numeric(names(max)),
                               n.iterations = n_iter
     )

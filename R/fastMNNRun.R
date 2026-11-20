@@ -8,7 +8,6 @@
 #' @param ... Named arguments to pass to individual methods upon dispatch
 #'
 #' @export
-#' @importFrom batchelor fastMNN
 #' @importFrom SingleCellExperiment colData
 #'
 #' @returns \link[SingleCellExperiment]{SingleCellExperiment} object is returned
@@ -25,7 +24,8 @@
 fastMNNRun <- function(input, batch, ...) {
   args <- c(
     list(counts = input, batch = colData(input)[, batch]),
-    capture_params(fastMNN, list(...))
+    capture_params(batchelor::fastMNN, list(...))
   )
-  do.call(fastMNN, args)
+  # NOTE: until batchelor stops calling soft-deprecated scater functions
+  suppressWarningsByMsg("deprecated", do.call(batchelor::fastMNN, args))
 }

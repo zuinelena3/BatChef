@@ -17,7 +17,6 @@
 #' -1 has the algorithm run until it reaches its optimal clustering.
 #'
 #' @export
-#' @importFrom mclust adjustedRandIndex
 #'
 #' @return A numeric value
 #' @examples
@@ -41,5 +40,5 @@ adjusted_rand_index <- function(input, label_true, reduction,
     resolution = resolution, k = k, store = FALSE,
     n_iter = n_iter
   )
-  ari <- adjustedRandIndex(x = clust, y = group)
+  ari <- mclust::adjustedRandIndex(x = clust, y = group)
 }

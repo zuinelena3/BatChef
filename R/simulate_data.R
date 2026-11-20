@@ -44,15 +44,13 @@
 #' @param seed Random seed.
 #'
 #' @export
-#' @importFrom splatter newSplatParams splatSimulateGroups
 #' @importFrom SummarizedExperiment assays
-#' @importFrom scrapper centerSizeFactors normalizeRnaCounts.se chooseRnaHvgs.se  runPca.se
 #' @importFrom Seurat CreateSeuratObject VariableFeatures<- CreateDimReducObject DefaultAssay
 #' @importFrom SeuratObject CreateAssay5Object
 #' @importFrom SingleCellExperiment reducedDim rowData colData logcounts counts
 #' @importFrom SingleCellExperiment logcounts<-
-#' @importFrom SummarizedExperiment assays<- assay rowData<-
 #' @importFrom anndataR AnnData
+#' @importFrom SummarizedExperiment assays<- assay rowData<-
 #' @importFrom SparseArray colSums
 #' @importFrom S4Vectors SimpleList metadata<- metadata
 #'
@@ -81,7 +79,7 @@ simulate_data <- function(n_genes = 10000, batch_cells = 100,
                           compute_hvgs = FALSE, n_hvgs = 1000, num_threads = 1,
                           compute_pca = FALSE, pca_ncomp = 10,
                           output_format = "SingleCellExperiment", seed = 333) {
-  params <- newSplatParams(
+  params <- splatter::newSplatParams(
     nGenes = n_genes, batchCells = batch_cells,
     batch.facLoc = batch_fac_loc,
     batch.facScale = batch_fac_scale,
@@ -100,7 +98,7 @@ simulate_data <- function(n_genes = 10000, batch_cells = 100,
     path.nonlinearProb = path_nonlinear_prob,
     path.sigmaFac = path_sigma_fac, seed = seed
   )
-  sim <- splatSimulateGroups(params, verbose = FALSE)
+  sim <- splatter::splatSimulateGroups(params, verbose = FALSE)
   assays(sim) <- list(counts = assay(sim, "counts"))
   rowData(sim) <- NULL
   metadata(sim) <- list()
@@ -108,14 +106,14 @@ simulate_data <- function(n_genes = 10000, batch_cells = 100,
   counts <- as(assay(sim, "counts"), "dgCMatrix")
   coldata <- as.data.frame(colData(sim))
 
-  size_factors <- centerSizeFactors(colSums(counts))
-  sim <- normalizeRnaCounts.se(sim, size.factors = size_factors)
+  size_factors <- scrapper::centerSizeFactors(colSums(counts))
+  sim <- scrapper::normalizeRnaCounts.se(sim, size.factors = size_factors)
   logcounts(sim) <- as(assay(sim, "logcounts"), "dgCMatrix")
 
   rowData(sim)$logical <- rep(TRUE, length(rownames(sim)))
 
   if (compute_hvgs == TRUE) {
-    sim <- chooseRnaHvgs.se(sim, num.threads = num_threads, top = n_hvgs)
+    sim <- scrapper::chooseRnaHvgs.se(sim, num.threads = num_threads, top = n_hvgs)
     rowData(sim)$logical <- rowData(sim)$hvg
   } else {
     sim
@@ -124,7 +122,7 @@ simulate_data <- function(n_genes = 10000, batch_cells = 100,
   rowdata <- as.data.frame(rowData(sim))
 
   if (compute_pca == TRUE) {
-    sim <- runPca.se(sim, features = rowData(sim)$logical, num.threads = num_threads, number = pca_ncomp)
+    sim <- scrapper::runPca.se(sim, features = rowData(sim)$logical, num.threads = num_threads, number = pca_ncomp)
     colnames(reducedDim(sim, "PCA")) <- paste0("PC_", seq_len(pca_ncomp))
 
     pca <- as.matrix(reducedDim(sim, "PCA"))

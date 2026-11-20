@@ -8,7 +8,6 @@
 #' @param ... Named arguments to pass to individual methods upon dispatch.
 #'
 #' @export
-#' @importFrom scMerge scMerge2
 #' @importFrom SummarizedExperiment assay colData
 #'
 #' @return A list that contains the corrected gene expression matrix
@@ -23,7 +22,8 @@
 scMerge2Run <- function(input, batch, assay_type = "logcounts", ...) {
   args <- c(
     list(exprsMat = assay(input, assay_type), batch = colData(input)[, batch]),
-    capture_params(scMerge2, list(...))
+    capture_params(scMerge::scMerge2, list(...))
   )
-  do.call(scMerge2, args)
+  # NOTE: until scMerge stops calling soft-deprecated scater/scran functions
+  suppressWarningsByMsg("deprecated", do.call(scMerge::scMerge2, args))
 }

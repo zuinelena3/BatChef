@@ -51,7 +51,7 @@ setMethod("ligerPost", "SingleCellExperiment", function(input, output, method) {
 #' @aliases ligerPost,InMemoryAnnData,InMemoryAnnData-method
 #'
 setMethod("ligerPost", "ANY", function(input, output, method) {
-  if (is(input , "InMemoryAnnData")) {
+  if (is(input, "InMemoryAnnData")) {
     embedding <- as.data.frame(output@H.norm)
     rownames(embedding) <- input$obs_names
     input$obsm[[method]] <- as.matrix(embedding)

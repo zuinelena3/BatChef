@@ -9,7 +9,6 @@
 #' @param ... Named arguments to pass to individual methods upon dispatch.
 #'
 #' @export
-#' @importFrom sva ComBat_seq
 #' @importFrom SummarizedExperiment assay
 #' @importFrom SingleCellExperiment counts colData
 #'
@@ -29,7 +28,7 @@ combatRun <- function(input, batch, assay_type = "counts", ...) {
       counts = as.matrix(assay(input, assay_type)),
       batch = colData(input)[, batch]
     ),
-    capture_params(ComBat_seq, list(...))
+    capture_params(sva::ComBat_seq, list(...))
   )
-  do.call(ComBat_seq, args)
+  do.call(sva::ComBat_seq, args)
 }
