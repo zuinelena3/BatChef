@@ -47,7 +47,6 @@ import(Rcpp)
 import(e1071)
 import(methods)
 importClassesFrom(S4Vectors,SimpleList)
-importFrom(RANN,nn2)
 importFrom(S4Vectors,
   "metadata<-",
   DataFrame,
@@ -102,17 +101,12 @@ importFrom(SummarizedExperiment,
   rowData
 )
 importFrom(anndataR,AnnData)
-importFrom(aricode,NMI)
 importFrom(basilisk,
   BasiliskEnvironment,
   basiliskRun,
   basiliskStart,
   basiliskStop
 )
-importFrom(batchelor,fastMNN)
-importFrom(bluster,makeSNNGraph)
-importFrom(cluster,silhouette)
-importFrom(fitdistrplus,fitdist)
 importFrom(ggplot2,
   aes,
   element_text,
@@ -127,10 +121,6 @@ importFrom(ggplot2,
   ylab
 )
 importFrom(grDevices,chull)
-importFrom(harmony,RunHarmony)
-importFrom(leidenAlg,leiden.community)
-importFrom(limma,removeBatchEffect)
-importFrom(mclust,adjustedRandIndex)
 importFrom(methods,new)
 importFrom(parallel,mclapply)
 importFrom(purrr,keep)
@@ -138,49 +128,12 @@ importFrom(reticulate,
   import,
   r_to_py
 )
-importFrom(rliger,
-  createLiger,
-  normalize,
-  quantileNorm,
-  runIntegration,
-  scaleNotCenter
-)
-importFrom(scCustomize,Convert_Assay)
-importFrom(scMerge,scMerge2)
-importFrom(scrapper,
-  centerSizeFactors,
-  chooseRnaHvgs.se,
-  normalizeRnaCounts.se,
-  runPca.se
-)
-importFrom(sf,
-  st_as_sf,
-  st_collection_extract,
-  st_intersection,
-  st_intersects,
-  st_join,
-  st_nearest_feature,
-  st_polygon,
-  st_sf,
-  st_sfc,
-  st_union,
-  st_voronoi
-)
-importFrom(splatter,
-  newSplatParams,
-  splatSimulateGroups
-)
 importFrom(stats,
   cmdscale,
   dist,
   median,
   predict,
   quantile
-)
-importFrom(sva,ComBat_seq)
-importFrom(transport,
-  pp,
-  wasserstein
 )
 importFrom(utils,
   combn,

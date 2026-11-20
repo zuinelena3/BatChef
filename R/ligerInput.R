@@ -17,7 +17,6 @@ setGeneric("ligerInput", function(input, batch, features, ...) {
 #' @rdname ligerInput
 #' @import methods
 #' @importFrom Seurat SplitObject
-#' @importFrom rliger createLiger normalize scaleNotCenter
 #' @aliases ligerInput,Seurat,Seurat-method
 #'
 setMethod("ligerInput", "Seurat", function(input, batch, features, ...) {
@@ -25,17 +24,16 @@ setMethod("ligerInput", "Seurat", function(input, batch, features, ...) {
   so_ll <- SplitObject(input, split.by = batch)
   names(so_ll) <- unique(input[[batch]][, 1])
 
-  args <- c(list(rawData = so_ll), capture_params(createLiger, list(...)))
-  lo <- do.call(createLiger, args)
+  args <- c(list(rawData = so_ll), capture_params(rliger::createLiger, list(...)))
+  lo <- do.call(rliger::createLiger, args)
 
-  lo <- normalize(object = lo)
-  lo <- scaleNotCenter(object = lo, features = features)
+  lo <- rliger::normalize(object = lo)
+  lo <- rliger::scaleNotCenter(object = lo, features = features)
 })
 
 #' @rdname ligerInput
 #' @import methods
 #' @importFrom SingleCellExperiment colData
-#' @importFrom rliger createLiger normalize scaleNotCenter
 #' @aliases ligerInput,SingleCellExperiment,SingleCellExperiment-method
 #'
 setMethod("ligerInput", "SingleCellExperiment", function(input, batch,
@@ -44,11 +42,11 @@ setMethod("ligerInput", "SingleCellExperiment", function(input, batch,
   ll <- lapply(unique(colData(input)[, batch]), function(i) input[, colData(input)[, batch] == i])
   names(ll) <- unique(colData(input)[, batch])
 
-  args <- c(list(rawData = ll), capture_params(createLiger, list(...)))
-  lo <- do.call(createLiger, args)
+  args <- c(list(rawData = ll), capture_params(rliger::createLiger, list(...)))
+  lo <- do.call(rliger::createLiger, args)
 
-  lo <- normalize(object = lo)
-  lo <- scaleNotCenter(
+  lo <- rliger::normalize(object = lo)
+  lo <- rliger::scaleNotCenter(
     object = lo,
     features = features
   )
@@ -57,7 +55,6 @@ setMethod("ligerInput", "SingleCellExperiment", function(input, batch,
 #' @rdname ligerInput
 #' @import methods
 #' @importFrom SingleCellExperiment colData reducedDim<- reducedDim
-#' @importFrom rliger createLiger normalize scaleNotCenter
 #' @importFrom reticulate r_to_py
 #' @aliases ligerInput,InMemoryAnnData,InMemoryAnnData-method
 #'
@@ -72,11 +69,11 @@ setMethod("ligerInput", "ANY", function(input, batch, features, ...) {
     ll <- lapply(unique(colData(input)[, batch]), function(i) input[, colData(input)[, batch] == i])
     names(ll) <- unique(colData(input)[, batch])
 
-    args <- c(list(rawData = ll), capture_params(createLiger, list(...)))
-    lo <- do.call(createLiger, args)
+    args <- c(list(rawData = ll), capture_params(rliger::createLiger, list(...)))
+    lo <- do.call(rliger::createLiger, args)
 
-    lo <- normalize(object = lo)
-    lo <- scaleNotCenter(object = lo, features = features)
+    lo <- rliger::normalize(object = lo)
+    lo <- rliger::scaleNotCenter(object = lo, features = features)
   } else {
     message("The input object must be of class 'InMemoryAnnData'.")
   }

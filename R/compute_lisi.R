@@ -13,7 +13,6 @@
 #' Default of 0.0 implies exact nearest neighbor search.
 #'
 #' @export
-#' @importFrom RANN nn2
 #'
 #' @return A data frame of LISI values. Each row is a cell and each
 #' column is a different label variable.
@@ -33,7 +32,7 @@
 compute_lisi <- function(X, meta_data, label_colnames, perplexity = 30,
                          nn_eps = 0) {
   N <- nrow(meta_data)
-  dknn <- nn2(X, k = perplexity * 3, eps = nn_eps)
+  dknn <- RANN::nn2(X, k = perplexity * 3, eps = nn_eps)
   lisi_df <- data.frame(matrix(NA, N, length(label_colnames)))
   lisi_df <- Reduce(cbind, lapply(label_colnames, function(label_colname) {
     labels <- data.frame(meta_data)[, label_colname, drop = TRUE]

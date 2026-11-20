@@ -27,7 +27,6 @@
 #' @param ... Named arguments to pass to individual methods upon dispatch.
 #'
 #' @export
-#' @importFrom rliger runIntegration quantileNorm
 #'
 #' @returns A \link[rliger]{liger} object, which contains the quantile align
 #' factor loadings.
@@ -57,11 +56,11 @@ ligerRun <- function(input, method = "iNMF", quantiles = 50, reference = NULL,
                      seed = 1, verbose = FALSE, ...) {
   args <- c(
     list(object = input, method = method),
-    capture_params(runIntegration, list(...))
+    capture_params(rliger::runIntegration, list(...))
   )
-  out <- do.call(runIntegration, args)
+  out <- do.call(rliger::runIntegration, args)
 
-  out <- quantileNorm(
+  out <- rliger::quantileNorm(
     object = out, quantiles = quantiles, reference = reference,
     minCells = min_cells, nNeighbors = n_neighbors,
     useDims = use_dims, center = center, maxSample = max_sample,

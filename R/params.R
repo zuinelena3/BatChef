@@ -45,7 +45,6 @@ winsorization <- function(norm_counts) {
 #'
 #' @returns a data.frame with estimated shape and rate parameters
 #'
-#' @importFrom fitdistrplus fitdist
 #'
 params_btc_factors <- function(factors) {
   params <- lapply(factors, function(x) {
@@ -114,7 +113,6 @@ batch_params <- function(norm_counts, batch) {
 #' @param counts Raw counts matrix.
 #'
 #' @returns Median of sequencing depth
-#' @importFrom fitdistrplus fitdist
 #'
 lib_size_params <- function(counts) {
   lib_sizes <- colSums(counts)

@@ -7,7 +7,6 @@
 #' @param ... Named arguments to pass to individual methods upon dispatch
 #'
 #' @export
-#' @importFrom harmony RunHarmony
 #'
 #' @return A \link[SingleCellExperiment]{SingleCellExperiment} object which
 #' contains a corrected low-dimensional space.
@@ -23,7 +22,7 @@
 harmonyRun <- function(input, batch, ...) {
   args <- c(
     list(object = input, group.by.vars = batch),
-    capture_params(RunHarmony, list(...))
+    capture_params(harmony::RunHarmony, list(...))
   )
-  do.call(RunHarmony, args)
+  do.call(harmony::RunHarmony, args)
 }

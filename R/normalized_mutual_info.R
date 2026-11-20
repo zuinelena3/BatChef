@@ -16,7 +16,6 @@
 #' @param variant How to compute the normalizer in the denominator.
 #'
 #' @export
-#' @importFrom aricode NMI
 #'
 #' @return A numeric value.
 #' @examples
@@ -42,5 +41,5 @@ normalized_mutual_info <- function(input, label_true, reduction, nmi_compute = F
   group <- colData(input)[, label_true]
   group <- as.integer(as.factor(group))
 
-  nmi <- NMI(c1 = group, c2 = clust, variant = variant)
+  nmi <- aricode::NMI(c1 = group, c2 = clust, variant = variant)
 }
