@@ -17,7 +17,6 @@ setGeneric("seuratv3Input", function(input, batch, features, pca_name = NULL) {
 #' @rdname seuratv3Input
 #' @import methods
 #' @importFrom Seurat DefaultAssay SplitObject VariableFeatures<-
-#' @importFrom scCustomize Convert_Assay
 #' @aliases seuratv3Input,Seurat,Seurat-method
 #'
 setMethod("seuratv3Input", "Seurat", function(input, batch, features, pca_name) {
@@ -25,7 +24,7 @@ setMethod("seuratv3Input", "Seurat", function(input, batch, features, pca_name) 
   stopifnot("Error: 'pca' not found in this Seurat object" = "pca" %in% Reductions(input))
 
   if (is(input[[DefaultAssay(input)]], "Assay5")) {
-    input <- Convert_Assay(
+    input <- scCustomize::Convert_Assay(
       seurat_object = input, assay = DefaultAssay(input),
       convert_to = "V3"
     )

@@ -13,7 +13,6 @@
 #' @importFrom SummarizedExperiment colData
 #' @importFrom SingleCellExperiment reducedDim
 #' @importFrom parallel mclapply
-#' @importFrom transport pp wasserstein
 #'
 #' @return A numeric value
 #' @examples
@@ -45,7 +44,7 @@ wasserstein_distance <- function(input, batch, reduction, rep, mc_cores = 1) {
 
   wass <- mclapply(seq_len(rep), function(i) {
     random <- lapply(embed, function(x) x[sample(nrow(x), n), ])
-    pp <- lapply(random, function(x) pp(as.matrix(x)))
+    pp <- lapply(random, function(x) transport::pp(as.matrix(x)))
 
     ll <- list()
     pair <- numeric(0)
@@ -55,7 +54,7 @@ wasserstein_distance <- function(input, batch, reduction, rep, mc_cores = 1) {
       for (j in (i + 1):n) {
         ind <- ind + 1
         pair[ind] <- paste(i, j, sep = "_")
-        ll[[ind]] <- wasserstein(pp[[i]], pp[[j]], p = 2, prob = TRUE)
+        ll[[ind]] <- transport::wasserstein(pp[[i]], pp[[j]], p = 2, prob = TRUE)
       }
     }
     names(ll) <- pair

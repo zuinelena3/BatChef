@@ -16,7 +16,6 @@
 #' )
 #' limma <- limmaRun(input = sim, batch = "Batch")
 #'
-#' @importFrom limma removeBatchEffect
 #' @importFrom SummarizedExperiment assay
 #' @importFrom SingleCellExperiment colData
 #'
@@ -27,7 +26,7 @@ limmaRun <- function(input, batch, assay_type = "logcounts", ...) {
       batch = colData(input)[, batch],
       design = matrix(1, ncol(input), 1)
     ),
-    capture_params(removeBatchEffect, list(...))
+    capture_params(limma::removeBatchEffect, list(...))
   )
-  do.call(removeBatchEffect, args)
+  do.call(limma::removeBatchEffect, args)
 }

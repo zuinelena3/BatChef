@@ -25,18 +25,15 @@ Encoding: UTF-8
 biocViews: BatchEffect, SingleCell, Sequencing
 LinkingTo: Rcpp, RcppArmadillo
 Imports: 
-  anndataR,
+    anndataR,
     aricode,
     basilisk,
-    batchelor,
     bluster,
     cluster,
     e1071,
     fitdistrplus,
     ggplot2,
-    harmony,
     leidenAlg,
-    limma,
     Matrix,
     mclust,
     methods,
@@ -45,30 +42,33 @@ Imports:
     RANN,
     Rcpp,
     reticulate,
-    rliger,
     S4Vectors,
-    scCustomize,
-    scMerge,
-    scrapper,
     Seurat,
     SeuratObject,
-    sf,
     SingleCellExperiment,
     SparseArray,
-    splatter,
+    sf,
     stats,
     SummarizedExperiment,
-    sva,
     transport
 BugReports: https://github.com/zuinelena3/BatChef/issues
 URL: https://github.com/zuinelena3/BatChef
 VignetteBuilder: knitr
 Suggests: 
+    batchelor,
     BiocStyle,
+    harmony,
     knitr,
+    limma,
     R.devices,
+    rliger,
     rmarkdown,
     scater,
+    scCustomize,
+    scMerge,
+    scrapper,
+    splatter,
+    sva,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
 LazyData: false

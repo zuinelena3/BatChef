@@ -12,7 +12,6 @@
 #'
 #' @export
 #' @importFrom SingleCellExperiment reducedDim colData
-#' @importFrom cluster silhouette
 #' @importFrom stats dist
 #'
 #' @return A numeric value
@@ -37,6 +36,6 @@ average_silhouette_width <- function(input, label_true, reduction,
 
   group <- as.numeric(group)
 
-  sil <- silhouette(x = group, dist = dist_matrix)
+  sil <- cluster::silhouette(x = group, dist = dist_matrix)
   asw <- mean(sil[, "sil_width"])
 }

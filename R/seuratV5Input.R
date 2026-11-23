@@ -17,7 +17,6 @@ setGeneric("seuratv5Input", function(input, batch, features = NULL, pca_name = N
 #' @rdname seuratv5Input
 #' @import methods
 #' @importFrom Seurat ScaleData DefaultAssay Reductions
-#' @importFrom scCustomize Convert_Assay
 #' @aliases seuratv5Input,Seurat,Seurat-method
 #'
 setMethod("seuratv5Input", "Seurat", function(input, batch, features, pca_name) {
@@ -25,7 +24,7 @@ setMethod("seuratv5Input", "Seurat", function(input, batch, features, pca_name) 
   stopifnot("Error: 'pca' not found in this Seurat object" = "pca" %in% Reductions(input))
 
   if (is(input[[DefaultAssay(input)]], "Assay")) {
-    input <- Convert_Assay(
+    input <- scCustomize::Convert_Assay(
       seurat_object = input, assay = DefaultAssay(input),
       convert_to = "V5"
     )
@@ -44,7 +43,6 @@ setMethod("seuratv5Input", "Seurat", function(input, batch, features, pca_name) 
 #' @import methods
 #' @importFrom Seurat as.Seurat ScaleData DefaultAssay CreateDimReducObject
 #' @importFrom SingleCellExperiment reducedDim
-#' @importFrom scCustomize Convert_Assay
 #' @aliases seuratv5Input,SingleCellExperiment,SingleCellExperiment-method
 #'
 setMethod("seuratv5Input", "SingleCellExperiment", function(input, batch, features, pca_name) {
@@ -64,7 +62,7 @@ setMethod("seuratv5Input", "SingleCellExperiment", function(input, batch, featur
     assay = DefaultAssay(so)
   )
 
-  so <- Convert_Assay(
+  so <- scCustomize::Convert_Assay(
     seurat_object = so, assay = DefaultAssay(so),
     convert_to = "V5"
   )

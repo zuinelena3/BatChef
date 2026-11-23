@@ -30,8 +30,6 @@ log_transf <- function(mat, base = exp(1)) {
 #' @importFrom ggplot2 theme_classic theme xlab ylab labs element_text
 #' @importFrom grDevices chull
 #' @importFrom stats predict
-#' @importFrom sf st_as_sf st_sfc st_intersects st_sf st_polygon st_voronoi
-#' @importFrom sf st_union st_collection_extract st_intersection st_join st_nearest_feature
 #'
 prediction_plot <- function(params) {
   file_path <- system.file("extdata", "svm.rda", package = "BatChef")
@@ -51,17 +49,17 @@ prediction_plot <- function(params) {
   polygon_coords <- coords[hull, ]
   poly <- polygon_coords[-11, ]
 
-  points_sf <- st_as_sf(coords, coords = c("PC1", "PC2"))
-  points <- st_as_sf(new_coords, coords = c("PC1", "PC2"), crs = NA)
-  polygon_sf <- st_sfc(st_polygon(list(as.matrix(polygon_coords[, 1:2]))))
-  polygon_sf <- st_sf(polygon_sf)
-  inside <- st_intersects(points, polygon_sf, sparse = FALSE)[, 1]
+  points_sf <- sf::st_as_sf(coords, coords = c("PC1", "PC2"))
+  points <- sf::st_as_sf(new_coords, coords = c("PC1", "PC2"), crs = NA)
+  polygon_sf <- sf::st_sfc(sf::st_polygon(list(as.matrix(polygon_coords[, 1:2]))))
+  polygon_sf <- sf::st_sf(polygon_sf)
+  inside <- sf::st_intersects(points, polygon_sf, sparse = FALSE)[, 1]
 
-  voronoi <- st_voronoi(st_union(points_sf))
-  vor_sf <- st_collection_extract(voronoi)
-  vor_clip <- st_intersection(st_as_sf(vor_sf), polygon_sf)
+  voronoi <- sf::st_voronoi(sf::st_union(points_sf))
+  vor_sf <- sf::st_collection_extract(voronoi)
+  vor_clip <- sf::st_intersection(sf::st_as_sf(vor_sf), polygon_sf)
 
-  vor_colored <- st_join(vor_clip, points_sf, join = st_nearest_feature)
+  vor_colored <- sf::st_join(vor_clip, points_sf, join = sf::st_nearest_feature)
 
   p <- ggplot() +
     geom_sf(data = vor_colored, aes(fill = svm_best), color = "black") +
