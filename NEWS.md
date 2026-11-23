@@ -1,35 +1,35 @@
-## Changes in version 1.1.4
+## Changes in Version 1.1.5
 
-- Update the prediction output
+In the new Bioconductor 3.24 release, we introduce support for two additional Python integration methods: Scanorama and BBKNN. We have also updated the AnnData object structure.
 
-## Changes in version 1.1.2
+Additional improvements: 
 
-- Add python methods (Scanorama and BBKNN)
-- Change AnnData object
+- Fixed an R CMD check NOTE related to undefined global variables. 
+- Updated the prediction output.
 
 ## Changes in version 1.0.2
 
-- Update SVM for prediction
+-   Update SVM for prediction
 
 ## Changes in version 1.0.1
 
-- Fix bugs and add visualization of prediction on vignette
+-   Fix bugs and add visualization of prediction on vignette
 
 ## Changes in version 1.0.0
 
-- Upload to Bioconductor
+-   Upload to Bioconductor
 
 ## Changes in version 0.99.12
 
-- Solve errors in tests.
+-   Solve errors in tests.
 
 ## Changes in version 0.99.11
 
-- Solve warning messages caused by deprecated functions in scran package.
+-   Solve warning messages caused by deprecated functions in scran package.
 
 ## Changes in version 0.99.10
 
-- Remove direct slot access, remove ggplot print, and add README.md for extdata.
+-   Remove direct slot access, remove ggplot print, and add README.md for extdata.
 
 ## Changes in version 0.99.9
 
